@@ -27,6 +27,7 @@ def make_conjunction(
     crossing_angle_deg: float = 60.0,
     norad_id: int = SYNTHETIC_ID_START,
     epoch: datetime | None = None,
+    speed_factor: float = 1.01,
 ) -> SpaceObject:
     """Fake secondary that crosses the primary's path at t_tca, `miss_km` above it.
 
@@ -49,6 +50,9 @@ def make_conjunction(
     # rotating about the radial direction keeps the radial speed equal, so the
     # relative velocity is horizontal and the radial offset is the minimum distance
     r_s = r_p + miss_km * r_hat
+    # Two orbits with the same period meet again every half orbit. A slightly
+    # different speed gives a different period, so this is a single encounter.
+    v_s = v_s * speed_factor
 
     fields = fit_omm_to_state(r_s, v_s, t_tca, epoch, norad_id, SYNTHETIC_NAME)
     return object_from_omm(fields, object_type="DEBRIS", operational=False, radius_m=1.0, synthetic=True)
