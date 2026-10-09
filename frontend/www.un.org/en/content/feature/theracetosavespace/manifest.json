@@ -1,0 +1,15 @@
+{
+  "name": "UNHQ Space",
+  "short_name": "UNHQ Space",
+  "icons": [
+    {
+      "src": "/android-chrome.png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "background_color": "#0A2F41",
+  "theme_color": "#0A2F41",
+  "display": "fullscreen",
+  "start_url": "/"
+}

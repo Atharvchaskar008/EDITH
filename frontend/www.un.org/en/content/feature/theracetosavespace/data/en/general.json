@@ -1,0 +1,36 @@
+{
+  "pauseMotion": "Pause animation",
+  "playMotion": "Play animation",
+  "share": {
+    "facebook": "Share on Facebook",
+    "twitter": "Share on X",
+    "copy": "Copy link",
+    "image": "share-en.jpg",
+    "close": "Close"
+  },
+  "cities": {
+    "New York": "New York",
+    "Montreal": "Montreal",
+    "Tokyo": "Tokyo",
+    "Kyoto": "Kyoto",
+    "Madrid": "Madrid",
+    "Lisbon": "Lisbon",
+    "Namibia": "Namibia",
+    "Botswana": "Botswana",
+    "Auckland": "Auckland",
+    "Wellington": "Wellington",
+    "Algeria": "Algeria",
+    "Morocco": "Morocco",
+    "Cabo Verde": "Cabo Verde",
+    "Senegal": "Senegal"
+  },
+  "regions": {
+    "Middle East and North Africa": "Middle East and North Africa",
+    "Eastern and Southern Africa ": "Eastern and Southern Africa ",
+    "Western & Central Africa": "Western & Central Africa",
+    "America": "America",
+    "Europe": "Europe",
+    "Asia": "Asia",
+    "Oceania": "Oceania"
+  }
+}
