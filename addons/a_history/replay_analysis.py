@@ -344,7 +344,7 @@ By 7 February 2009 (3 days before collision), updated TLEs predicted a miss dist
 
 On 10 February 2009 (the day of collision), the final pre-collision element sets (primary epoch {p_last['primary_epoch']} and secondary epoch {p_last['secondary_epoch']}) yielded a predicted minimum miss distance of **{p_last['predicted_miss_distance_km']} km** at **{p_last['predicted_tca']}**.
 
-Because SGP4 orbit propagation accuracy degrades over multi-day spans and unmodeled atmospheric drag introduces positional uncertainty (often tens of kilometers), a predicted miss distance of ~0.7–1.6 km in public TLE data is well within the combined error covariance ellipse. This demonstrates that public orbit data provided ample advance warning of a high-risk close approach, highlighting the critical need for automated conjunction assessment systems.
+Because SGP4 orbit propagation accuracy degrades over multi-day spans and unmodeled atmospheric drag introduces positional uncertainty (often tens of kilometers), a predicted miss distance of ~0.7–1.6 km in public TLE data is well within the combined error covariance ellipse. Public data therefore showed a close pass all week, but never one that stood out as a likely collision.
 """
 
     with open(notes_file, "w", encoding="utf-8") as fp:
