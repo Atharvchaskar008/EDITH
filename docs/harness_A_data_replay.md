@@ -68,6 +68,7 @@ A space object:
   "perigee_km": 776.2, "apogee_km": 779.8, "is_primary": true,
   "operational": true, "radius_m": 2.0 }
 object_type is one of PAYLOAD, DEBRIS, ROCKET_BODY, UNKNOWN.
+Whenever the source gives an OMM record (CelesTrak JSON, Space-Track gp or gp_history), also keep that record unchanged under the key "omm" in every object you save. Fill tle_line1 and tle_line2 whenever the source provides them.
 ```
 
 ## Setup (run this yourself, once)
@@ -196,7 +197,7 @@ Then implement enrich_catalog(objs: list[dict]) -> list[dict]:
 - object_type from the catalogue's object type field, mapped to PAYLOAD, DEBRIS, ROCKET_BODY or UNKNOWN.
 - operational from the catalogue's operational status field. Explain the status codes you found and which ones you treat as operational.
 - radius_m from the radar cross-section field if it is present and numeric: treat RCS as the area of a disc and take the radius, clipped to the range 0.05 m to 15 m. If it is missing, use 0.5 m for DEBRIS, 2.0 m for ROCKET_BODY and 2.0 m for PAYLOAD.
-- Never drop an object. Objects not found in the catalogue come back unchanged with radius_m defaulted.
+- Never drop an object, and never drop or rename a field: objects may carry extra fields (for example "omm" or "synthetic") that must come back unchanged. Objects not found in the catalogue come back unchanged with radius_m defaulted.
 
 Run it on the latest snapshot and save ./out/catalog_enriched.json. Print a table: count per object_type, how many are operational, how many had a real RCS value, and the median radius per type.
 

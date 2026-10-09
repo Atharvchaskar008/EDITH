@@ -113,7 +113,7 @@ Tasks 2, 3 and 7 matter most.
 ## Task 1: data models and sample runs
 
 ```text
-Write models.py with pydantic v2 models: ConjunctionEvent, ManeuverPlan, and Alert. Field names exactly as in the context. Fields that may be missing in real files (primary_name, secondary_name, pc_predicted_final, first_seen, history, sigma_source) are optional with sensible defaults.
+Write models.py with pydantic v2 models: ConjunctionEvent, ManeuverPlan, and Alert. Field names exactly as in the context. Fields that may be missing in real files (primary_name, secondary_name, pc_predicted_final, first_seen, history, sigma_source) are optional with sensible defaults. Every model must keep extra fields it does not know (pydantic extra='allow'), so that reading a file and writing it back never loses data the main system put there (for example a "synthetic" flag).
 
 Alert has: alert_id, run_id, event_id, kind (NEW, ESCALATED, DOWNGRADED, CLEARED, PLAN_READY), from_level, to_level (both optional), severity (INFO, WARNING, CRITICAL), message (one plain sentence), created (UTC time).
 
@@ -137,7 +137,7 @@ Write compare.py.
 
 compare_runs(previous: list[ConjunctionEvent], current: list[ConjunctionEvent], current_plans: list[ManeuverPlan], run_id: str) -> tuple[list[ConjunctionEvent], list[Alert]]
 
-Matching rule: two events are the same if they have the same primary_id and secondary_id and their TCA differs by less than 10 minutes. Event ids may differ between runs because the TCA shifts; a matched event keeps the event_id and first_seen from the previous run.
+Matching rule: two events are the same if they involve the same two objects (primary_id and secondary_id, in either order) and their TCA differs by less than 10 minutes. Event ids may differ between runs because the TCA shifts; a matched event keeps the event_id and first_seen from the previous run.
 
 For every matched event, append {run_id, pc_max, miss_distance_km} to its history, carrying the previous history forward. New events get first_seen = the run time and a one-entry history.
 
@@ -155,7 +155,7 @@ Use names when present, otherwise the catalogue numbers.
 
 Command line: python compare.py <previous_run_folder> <current_run_folder> writes alerts.json into the current run folder and rewrites its events.json with updated history, first_seen and event_id. With only one argument (the first run ever), every AMBER or RED event is NEW.
 
-Tests: one hand-written pair of event lists per alert kind; the TCA-shift case (matched at 9 minutes, not matched at 11); the ids-swapped case must NOT match (primary and secondary are not interchangeable); running the tool on the three sample runs produces the expected alerts, which you list in the test.
+Tests: one hand-written pair of event lists per alert kind; the TCA-shift case (matched at 9 minutes, not matched at 11); the ids-swapped case MUST match (the same two objects are the same event whichever is listed first); running the tool on the three sample runs produces the expected alerts, which you list in the test.
 ```
 
 **Done when:** run it on sample runs 1→2 and 2→3. Run 2 must produce an ESCALATED, a NEW, a PLAN_READY and no CLEARED for the vanished GREEN event. Read the messages aloud; they should make sense to someone who knows nothing about satellites.
@@ -171,7 +171,7 @@ Part 1: notify.py.
 - write_summary(events, plans, alerts, run_id, path): a "run summary" for an operator starting a shift, as a JSON file only (no HTML; the main system's dashboard renders it): the run time; counts of RED, AMBER and GREEN events and how each count changed since the previous run; the alerts of this run grouped by kind, one sentence each; the five most dangerous events with time to closest approach, miss distance and probability; and the manoeuvres recommended, one line each. Plain words, units on every number.
 
 Part 2: watch.py.
-Watches a folder (default ../../data/runs, configurable with --runs) for new run folders. A run is complete when it contains events.json and a file named DONE, or when events.json has not changed for 10 seconds. When a new complete run appears:
+Watches a folder (default ../../data/runs, configurable with --runs) for new run folders. Only folders whose name looks like a run id (for example 20261009T1200Z) are runs; ignore every other file and folder. A run is complete when it contains events.json and a file named DONE, or when events.json has not changed for 10 seconds. When a new complete run appears:
 1. find the previous run (the run folder that sorts just before it),
 2. run compare_runs,
 3. write alerts.json and the updated events.json into the new run folder,

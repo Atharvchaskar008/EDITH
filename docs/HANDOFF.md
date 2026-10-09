@@ -77,4 +77,18 @@ Notes for whoever continues:
 - `make_conjunction` takes a crossing angle between the two velocity vectors, not an inclination as the prompt text says. The test object lands within centimetres of the requested miss distance.
 - For bulk propagation in prompt 2 use `sgp4.api.SatrecArray` over `get_satrec(obj)` for each object.
 
+## How the main project must fit the teammate packs
+
+These points keep our code consistent with what the packs expect. Follow them when building prompts 3, 6, 10 and 11.
+
+- **Only real runs go in `data/runs/`.** Teammate C's watcher treats every run-id folder there as a run and compares it with the previous one. The 2009 replay is written to `data/replay_2009/` and the SOCRATES comparison to `data/validation.json`.
+- **Run ids are unique and sortable:** `YYYYMMDDTHHMMZ`. If a folder with that id already exists, wait for the next minute; never overwrite a run.
+- **The pair order in an event is stable.** If exactly one of the two objects is operational, it is the primary; otherwise the lower catalogue number is the primary. The same pair must come out the same way in every run.
+- **C's watcher rewrites `events.json`** after a run (adding history and `first_seen`) and adds `alerts.json` and `summary.json`. The server must re-read files from disk on every request.
+- **The packs take and return plain dicts,** not our pydantic models. Convert with `model_dump(mode="json")` and `model_validate`.
+- **A's objects may have TLE lines but no OMM record.** `get_satrec` handles both.
+- **A's test kit calls `screen(catalog, t0, hours, threshold_km)` with dict objects and expects a list of dicts.** Write a small adapter in our tests; do not change our signature for it.
+- **B's `measured_sigma(norad_id, object_type, tle_age_days)`** returns three RTN sigmas in km or `None`. Our hook in `fusion/addons.py` adapts the arguments.
+- **B's probability test cases** give RTN sigmas per object; build each covariance with `cov_rtn_to_teme` before calling our `pc_2d`.
+
 **Next step:** prompt 2 in `docs/harness_ATHARV.md` (download the catalogue and vectorised propagation), then create the fixture files, then prompt 3.

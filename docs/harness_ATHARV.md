@@ -241,7 +241,7 @@ Part 2: fusion/api/main.py (FastAPI) with every route in CONTRACTS.md.
 - GET /run/{id}/status returns stage, percent and log lines; works for finished runs from log.json.
 - GET /events, /events/{id}, /events/{id}/plan, /alerts serve from the latest run folder that has a DONE file. /events/{id} adds positions of both objects every 5 s for +-10 minutes around TCA, and, if a plan exists, the manoeuvred primary track too.
 - GET /objects/{norad_id}/track?hours=3 at 30 s steps.
-- GET /validation and GET /replay/2009 serve data/runs/validation.json and the replay run folder; return 404 with a clear message while they do not exist (prompts 10 and 11 create them from the add-on packs).
+- GET /validation and GET /replay/2009 serve data/validation.json and the replay run folder; return 404 with a clear message while they do not exist (prompts 10 and 11 create them from the add-on packs).
 - GET /addons reports which add-on packs are present and which outputs exist (validation report, briefings, alert feed), with their file paths served under /addons/files/.
 - The system always runs live on fresh data; there is no offline mode. While a run is in progress, every route keeps serving the previous completed run, so the dashboard is never empty.
 - If a download fails, retry twice with a pause, then fail the run with a clear message in the log; never fall back silently to old data.
@@ -300,7 +300,7 @@ Teammate A's finished pack should be in addons/a_history/. Read its README.md fi
 3. Replay: fusion/replay/replay_2009.py.
 - Load addons/a_history/out/replay_2009.json (element sets for Iridium 33 and Cosmos 2251 before the collision of 10 February 2009, plus background objects). We do not download any historical data ourselves.
 - Take the latest element set of each satellite with epoch before 2009-02-09T17:00Z, about 24 hours before the collision.
-- Call run_pipeline(t0 = 2009-02-09T17:00Z, catalog = those two plus the background, run_dir = data/runs/replay_2009).
+- Call run_pipeline(t0 = 2009-02-09T17:00Z, catalog = those two plus the background, run_dir = data/replay_2009).
 - Print what our system reports a day before: predicted time, miss distance, pc, pc_max, risk level, and the plan if one is produced. Report the numbers as they come out. If the event is not RED under our thresholds, say so plainly; do not change thresholds or sigmas to force it.
 - Copy addons/a_history/out/replay_2009_predictions.json and replay_2009_notes.md into the run folder if they exist.
 - Confirm GET /replay/2009 serves the run. Add one link on the test page that shows the replay events in the same table. Nothing more on the page.
@@ -316,7 +316,7 @@ Teammates' finished packs should be in addons/b_trust/ and addons/c_ops/. Read e
 B's pack:
 1. Uncertainty: confirm fusion.addons.measured_sigma loads addons/b_trust/tle_error.py and that new events show sigma_source MEASURED. Compare the top 20 events before and after and tell me what changed.
 2. Probability check: run the test that compares our pc_2d with addons/b_trust/out/pc_test_cases.json. If a case disagrees by more than 2%, the bug is probably ours: find it.
-3. Validation: use the pack's own loader and compare function (socrates.py and validate.py; read their signatures) to compare the events of our latest real run with CelesTrak SOCRATES, excluding the test object, and save the result as data/runs/validation.json. We do not write our own comparison. Print the summary.
+3. Validation: use the pack's own loader and compare function (socrates.py and validate.py; read their signatures) to compare the events of our latest real run with CelesTrak SOCRATES, excluding the test object, and save the result as data/validation.json. We do not write our own comparison. Print the summary.
 
 C's pack:
 4. Alerts: start addons/c_ops/watch.py pointed at data/runs. Make two runs and confirm that alerts.json, summary.json and the updated events.json (with history) appear in the second run folder and that /alerts serves them. Add the watcher's start command to the startup notes; do not import its code into ours.
