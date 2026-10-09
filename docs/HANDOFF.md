@@ -51,8 +51,28 @@ Atharv wants about 50 commits over the whole project, in plain natural language 
 
 | Prompt | Status |
 |---|---|
-| 1 Scaffold, contracts, fixtures | In progress: `config.py`, `contracts.py`, `frames.py` and their tests are done. Still to do: `fusion/synthetic.py` (test object generator), `data/fixtures/` sample files, empty module folders |
-| 2–12 | Not started |
+| 1 Scaffold, contracts, fixtures | Done except the sample files in `data/fixtures/` (they need real objects, so make them at the end of prompt 2 from a real download) |
+| 2 Ingest and propagate | Not started. Helpers already exist in `fusion/core/sat.py` |
+| 3 Screen and refine | Not started. The exact closest-approach step already exists in `fusion/core/refine.py` |
+| 4–12 | Not started |
 | D1–D6 | Not started |
 
-**Next step:** finish prompt 1 (the synthetic test object and fixtures, as described in `docs/harness_ATHARV.md`), then prompt 2.
+## What exists in the code (20 tests passing)
+
+| File | What it does |
+|---|---|
+| `fusion/config.py` | Every tunable number |
+| `fusion/contracts.py` | Pydantic models: `SpaceObject`, `ConjunctionEvent`, `ManeuverPlan`, `Alert`; `risk_level_for()` |
+| `fusion/frames.py` | RTN basis, vector and covariance rotation |
+| `fusion/core/sat.py` | `satrec_from_omm`, `get_satrec(obj)` (cached), `state_at`, `state_at_offset`, `period_s`, `perigee_apogee_km`, `object_from_omm`, `state_to_omm`, `fit_omm_to_state` |
+| `fusion/core/refine.py` | `closest_approach(sat1, sat2, t_lo, t_hi)`: exact time and distance of closest approach |
+| `fusion/synthetic.py` | `make_conjunction(primary, t_tca, miss_km)`: labelled test object passing a chosen distance from a real satellite |
+| `tests/conftest.py` | Made-up Iridium-like test satellite (`primary` fixture) |
+
+Notes for whoever continues:
+
+- A `SpaceObject` stores its raw OMM record in `.omm`; always get its `Satrec` with `get_satrec(obj)`. Never build a `Satrec` any other way, so saved objects reproduce the same orbit.
+- `make_conjunction` takes a crossing angle between the two velocity vectors, not an inclination as the prompt text says. The test object lands within centimetres of the requested miss distance.
+- For bulk propagation in prompt 2 use `sgp4.api.SatrecArray` over `get_satrec(obj)` for each object.
+
+**Next step:** prompt 2 in `docs/harness_ATHARV.md` (download the catalogue and vectorised propagation), then create the fixture files, then prompt 3.
