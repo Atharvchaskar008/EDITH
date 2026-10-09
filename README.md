@@ -34,7 +34,7 @@ The Python package is named `fusion`.
 - [Status](#status)
 - [Data sources and acknowledgements](#data-sources-and-acknowledgements)
 
-## What it does
+## What it does..
 
 - **Predicts** every close pass between tracked objects for the next 24 to 72 hours.
 - **Ranks** each pass by collision probability and by the worst case over the unknown uncertainty, and labels it red, amber or green.
