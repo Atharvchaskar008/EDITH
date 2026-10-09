@@ -57,8 +57,11 @@ Atharv wants about 50 commits over the whole project, in plain natural language 
 | 3 Screen and refine | Done, run on real data in both modes |
 | 4 Uncertainty and probability | Done, run on real data |
 | 5 Manoeuvre planner and verification | Done, run on real RED events |
-| 6 Pipeline and run folders | Not started. **This is next** |
-| 7–12 | Not started |
+| 6 Pipeline and run folders | Done, run end to end on real data |
+| 7 Server and scheduler | Done, checked against a real run |
+| 8 Basic test page | Done (`fusion/api/static/index.html`, served at `/`) |
+| 9 Harden the engine on real data | Not started. **This is next** |
+| 10–12 | Not started (10 and 11 need the teammate packs) |
 | D1–D6 | Not started |
 
 ## Measured on real data (9 October 2026, CelesTrak plus Space-Track)
@@ -80,7 +83,7 @@ What this means:
 - A full 72-hour `ALL_LEO` run takes about half an hour. For a live demo use the 24-hour quick window (about 11 minutes) or `PRIMARIES` mode, or add multiprocessing over time chunks in prompt 9.
 - Before Space-Track, with CelesTrak only (18,539 objects, every object assumed 5 m): `ALL_LEO` took 14 minutes and a third of events were RED. Those numbers are superseded.
 
-## What exists in the code (65 tests passing, 1 skipped until teammate B's cases arrive)
+## What exists in the code (77 tests passing, 1 skipped until teammate B's cases arrive)
 
 | File | What it does |
 |---|---|
@@ -99,6 +102,9 @@ What this means:
 | `fusion/maneuver/orbit.py` | `ManeuveredOrbit(obj, burn_time, dv_rtn_ms, duration_s, return_after_s)`: SGP4 orbit plus the integrated effect of a burn and its return burn; `.states(seconds)`, `.delta(seconds)` |
 | `fusion/maneuver/verify.py` | `closest_approach_to_orbit(orbit, other, centre_s, half_window_s)` and `new_conjunctions(orbit, catalog, exclude_ids, baseline=...)` |
 | `fusion/maneuver/planner.py` | `plan(event, catalog, now, baseline, force, verify)` returns a `ManeuverPlan`; `choose_mover()` decides which object burns |
+| `fusion/pipeline.py` | `run_pipeline(...)` runs every stage and writes the run folder; `new_run_id`, `load_run`, `write_json`; command line `python -m fusion.pipeline [--synthetic] [--quick] [--mode ...] [--hours H]` |
+| `fusion/monitor/scheduler.py` | `Monitor`: re-runs the pipeline every 6 hours; the first run is one interval after start-up |
+| `fusion/api/main.py` | FastAPI server. Start with `.venv\Scripts\python -m uvicorn fusion.api.main:app --port 8000`. Set `FUSION_SCHEDULER=0` to switch the scheduler off and `FUSION_RUNS_DIR` to move the runs folder |
 | `scripts/make_fixtures.py` | Rebuilds `data/fixtures/` from a real download |
 | `fusion/synthetic.py` | `make_conjunction(primary, t_tca, miss_km)`: labelled test object passing a chosen distance from a real satellite |
 | `tests/conftest.py` | Made-up Iridium-like test satellite (`primary` fixture) |
@@ -132,4 +138,14 @@ These points keep our code consistent with what the packs expect. Follow them wh
 - The grid uses a linear response (fast); the chosen burn is then recomputed exactly and re-screened for 24 hours (`VERIFY_HOURS`), not 72, because each re-screen propagates thousands of objects. One plan takes about 6 s in a small test and about 75 s against the full catalogue.
 - Plans carry extra fields beyond `docs/CONTRACTS.md`: `maneuvering_id`, `pc_max_before`, `pc_max_after`, and in the grid `pc_max_after` and the two comparison rows for radial and cross-track burns.
 
-**Next step:** prompt 6 in `docs/harness_ATHARV.md` (the pipeline that runs every stage and writes a run folder), then add `plan_sample.json` and `alerts_sample.json` to `data/fixtures/`. Plan at most `MAX_PLANS_PER_RUN` RED events per run, most dangerous first, because each plan takes about a minute on the full catalogue.
+## How the pipeline and server behave (so later steps match them)
+
+- A full run in `PRIMARIES` mode with a 24-hour window and one burn plan takes about 2.5 minutes on the full catalogue.
+- `catalog.json` in a run folder holds only the objects that appear in events, plus the primaries and any test object, not all 29,686. Anything that needs an object's orbit later (tracks, the event detail) reads it from there.
+- A run folder also has `run.json`: status, mode, window, catalogue and screening statistics, risk-level counts, duration.
+- Every RED event gets a plan entry. At most `MAX_PLANS_PER_RUN` of them become burns; the rest say the limit was reached. Every AMBER event gets a `MONITOR` entry. GREEN events have no plan entry.
+- The test object, when requested, is aimed at the first operational primary, 30 hours ahead (or 60% of the window if shorter), at 50 m.
+- Server routes beyond `docs/CONTRACTS.md`: `GET /latest` (the latest run's `run.json`), `GET /runs/latest/files/<path>` and `GET /addons/files/<path>` (serve add-on outputs; only json, md, png, txt, csv), `source=replay` on the event routes to read the 2009 replay folder.
+- `GET /events/{id}` returns `{event, plan, track, encounter}`. `track` has positions every 5 s for 10 minutes either side of closest approach for both objects, plus the manoeuvred track when a burn is planned. `encounter` has the miss vector and covariance in the encounter plane, the hard-body radius, and the miss vector after the burn. Prompt 12's API additions are therefore already done.
+
+**Next step:** prompt 9 in `docs/harness_ATHARV.md` (harden the engine on real data: repeat runs, sanity checks, failure handling, speed). Speed is the main issue: a 72-hour `ALL_LEO` run takes about 32 minutes single-process; splitting the search across CPU cores by time chunk is the obvious fix.

@@ -1,6 +1,6 @@
 """Build the sample files in data/fixtures/ from a real catalogue download.
 
-Run from the project root:  .venv\Scripts\python scripts\make_fixtures.py
+Run from the project root with the virtual environment's Python:  python scripts/make_fixtures.py
 """
 
 import json
