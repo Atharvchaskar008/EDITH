@@ -1,0 +1,74 @@
+{
+  "run_id": "20261009T0600Z",
+  "run_time": "2026-10-09T06:00:00Z",
+  "counts": {
+    "RED": 0,
+    "AMBER": 2,
+    "GREEN": 6,
+    "total": 8
+  },
+  "count_changes_since_previous_run": {
+    "RED": "+0",
+    "AMBER": "+2",
+    "GREEN": "+6"
+  },
+  "alerts_by_kind": {
+    "NEW": [
+      "IRIDIUM 106 and COSMOS 2251 DEB: new AMBER risk close approach detected. Closest approach in 46 h at 0.82 km.",
+      "STARLINK-1100 and ISS: new AMBER risk close approach detected. Closest approach in 37 h at 1.25 km."
+    ]
+  },
+  "most_dangerous_events": [
+    {
+      "event_id": "43070-34427-20261011T0412",
+      "primary_name": "IRIDIUM 106",
+      "secondary_name": "COSMOS 2251 DEB",
+      "time_to_closest_approach": "46.2 hours",
+      "miss_distance": "0.820 km",
+      "collision_probability": "3.50e-06",
+      "max_collision_probability": "4.50e-05",
+      "risk_level": "AMBER"
+    },
+    {
+      "event_id": "40012-25544-20261010T1830",
+      "primary_name": "STARLINK-1100",
+      "secondary_name": "ISS",
+      "time_to_closest_approach": "36.5 hours",
+      "miss_distance": "1.250 km",
+      "collision_probability": "2.00e-06",
+      "max_collision_probability": "3.50e-05",
+      "risk_level": "AMBER"
+    },
+    {
+      "event_id": "47400-35000-20261012T0130",
+      "primary_name": "SPIRE-LEMU-2",
+      "secondary_name": "TITAN 3C DEB",
+      "time_to_closest_approach": "67.5 hours",
+      "miss_distance": "2.500 km",
+      "collision_probability": "3.50e-07",
+      "max_collision_probability": "5.00e-06",
+      "risk_level": "GREEN"
+    },
+    {
+      "event_id": "46300-33000-20261011T2000",
+      "primary_name": "ICEYE-X4",
+      "secondary_name": "DELTA 1 DEB",
+      "time_to_closest_approach": "62.0 hours",
+      "miss_distance": "3.200 km",
+      "collision_probability": "2.10e-07",
+      "max_collision_probability": "3.00e-06",
+      "risk_level": "GREEN"
+    },
+    {
+      "event_id": "41234-39123-20261010T1200",
+      "primary_name": "SENTINEL-1A",
+      "secondary_name": "FENGYUN 1C DEB",
+      "time_to_closest_approach": "30.0 hours",
+      "miss_distance": "3.500 km",
+      "collision_probability": "1.00e-07",
+      "max_collision_probability": "2.00e-06",
+      "risk_level": "GREEN"
+    }
+  ],
+  "recommended_manoeuvres": []
+}

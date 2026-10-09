@@ -1,0 +1,565 @@
+[
+  {
+    "event_id": "43070-34427-20261011T0412",
+    "primary_id": 43070,
+    "secondary_id": 34427,
+    "primary_name": "IRIDIUM 106",
+    "secondary_name": "COSMOS 2251 DEB",
+    "tca": "2026-10-11T04:12:37Z",
+    "miss_distance_km": 0.412,
+    "relative_speed_kms": 14.71,
+    "r_primary_km": [
+      6800.0,
+      1200.0,
+      450.0
+    ],
+    "v_primary_kms": [
+      0.2,
+      7.1,
+      2.5
+    ],
+    "r_secondary_km": [
+      6800.4,
+      1200.2,
+      450.1
+    ],
+    "v_secondary_kms": [
+      -0.1,
+      -7.0,
+      2.8
+    ],
+    "miss_rtn_km": [
+      0.05,
+      0.15,
+      0.1
+    ],
+    "primary_tle_age_days": 0.7,
+    "secondary_tle_age_days": 2.5,
+    "pc": 3.1e-05,
+    "pc_max": 0.00044,
+    "sigma_rtn_primary_km": [
+      0.05,
+      0.15,
+      0.05
+    ],
+    "sigma_rtn_secondary_km": [
+      0.08,
+      0.25,
+      0.08
+    ],
+    "sigma_source": "MEASURED",
+    "hbr_km": 0.01,
+    "risk_level": "RED",
+    "pc_predicted_final": null,
+    "first_seen": "2026-10-09T06:00:00Z",
+    "history": [
+      {
+        "run_id": "20261009T0600Z",
+        "pc_max": 4.5e-05,
+        "miss_distance_km": 0.82
+      },
+      {
+        "run_id": "20261009T1200Z",
+        "pc_max": 0.00044,
+        "miss_distance_km": 0.412
+      },
+      {
+        "run_id": "20261009T1800Z",
+        "pc_max": 0.00044,
+        "miss_distance_km": 0.412
+      }
+    ]
+  },
+  {
+    "event_id": "40012-25544-20261010T1830",
+    "primary_id": 40012,
+    "secondary_id": 25544,
+    "primary_name": "STARLINK-1100",
+    "secondary_name": "ISS",
+    "tca": "2026-10-10T18:30:20Z",
+    "miss_distance_km": 2.85,
+    "relative_speed_kms": 10.2,
+    "r_primary_km": [
+      6800.0,
+      1200.0,
+      450.0
+    ],
+    "v_primary_kms": [
+      0.2,
+      7.1,
+      2.5
+    ],
+    "r_secondary_km": [
+      6800.4,
+      1200.2,
+      450.1
+    ],
+    "v_secondary_kms": [
+      -0.1,
+      -7.0,
+      2.8
+    ],
+    "miss_rtn_km": [
+      0.1,
+      0.3,
+      0.2
+    ],
+    "primary_tle_age_days": 0.6,
+    "secondary_tle_age_days": 0.5,
+    "pc": 1.2e-07,
+    "pc_max": 4.2e-06,
+    "sigma_rtn_primary_km": [
+      0.05,
+      0.15,
+      0.05
+    ],
+    "sigma_rtn_secondary_km": [
+      0.08,
+      0.25,
+      0.08
+    ],
+    "sigma_source": "MEASURED",
+    "hbr_km": 0.02,
+    "risk_level": "GREEN",
+    "pc_predicted_final": null,
+    "first_seen": "2026-10-09T06:00:00Z",
+    "history": [
+      {
+        "run_id": "20261009T0600Z",
+        "pc_max": 3.5e-05,
+        "miss_distance_km": 1.25
+      },
+      {
+        "run_id": "20261009T1200Z",
+        "pc_max": 3.8e-05,
+        "miss_distance_km": 1.21
+      },
+      {
+        "run_id": "20261009T1800Z",
+        "pc_max": 4.2e-06,
+        "miss_distance_km": 2.85
+      }
+    ]
+  },
+  {
+    "event_id": "44100-28000-20261011T0800",
+    "primary_id": 44100,
+    "secondary_id": 28000,
+    "primary_name": "ONEWEB-0012",
+    "secondary_name": "THOR ABLESTAR DEB",
+    "tca": "2026-10-11T08:00:04Z",
+    "miss_distance_km": 2.78,
+    "relative_speed_kms": 11.5,
+    "r_primary_km": [
+      6800.0,
+      1200.0,
+      450.0
+    ],
+    "v_primary_kms": [
+      0.2,
+      7.1,
+      2.5
+    ],
+    "r_secondary_km": [
+      6800.4,
+      1200.2,
+      450.1
+    ],
+    "v_secondary_kms": [
+      -0.1,
+      -7.0,
+      2.8
+    ],
+    "miss_rtn_km": [
+      0.1,
+      0.3,
+      0.2
+    ],
+    "primary_tle_age_days": 0.8,
+    "secondary_tle_age_days": 3.4,
+    "pc": 1.3e-07,
+    "pc_max": 1.6e-06,
+    "sigma_rtn_primary_km": [
+      0.05,
+      0.15,
+      0.05
+    ],
+    "sigma_rtn_secondary_km": [
+      0.08,
+      0.25,
+      0.08
+    ],
+    "sigma_source": "MEASURED",
+    "hbr_km": 0.01,
+    "risk_level": "GREEN",
+    "pc_predicted_final": null,
+    "first_seen": "2026-10-09T06:00:00Z",
+    "history": [
+      {
+        "run_id": "20261009T0600Z",
+        "pc_max": 1.5e-06,
+        "miss_distance_km": 2.8
+      },
+      {
+        "run_id": "20261009T1200Z",
+        "pc_max": 1.6e-06,
+        "miss_distance_km": 2.78
+      },
+      {
+        "run_id": "20261009T1800Z",
+        "pc_max": 1.6e-06,
+        "miss_distance_km": 2.78
+      }
+    ]
+  },
+  {
+    "event_id": "45200-31000-20261011T1415",
+    "primary_id": 45200,
+    "secondary_id": 31000,
+    "primary_name": "STARLINK-1500",
+    "secondary_name": "SL-16 DEB",
+    "tca": "2026-10-11T14:15:02Z",
+    "miss_distance_km": 4.09,
+    "relative_speed_kms": 9.8,
+    "r_primary_km": [
+      6800.0,
+      1200.0,
+      450.0
+    ],
+    "v_primary_kms": [
+      0.2,
+      7.1,
+      2.5
+    ],
+    "r_secondary_km": [
+      6800.4,
+      1200.2,
+      450.1
+    ],
+    "v_secondary_kms": [
+      -0.1,
+      -7.0,
+      2.8
+    ],
+    "miss_rtn_km": [
+      0.1,
+      0.3,
+      0.2
+    ],
+    "primary_tle_age_days": 0.5,
+    "secondary_tle_age_days": 1.9,
+    "pc": 5.2e-08,
+    "pc_max": 8.1e-07,
+    "sigma_rtn_primary_km": [
+      0.05,
+      0.15,
+      0.05
+    ],
+    "sigma_rtn_secondary_km": [
+      0.08,
+      0.25,
+      0.08
+    ],
+    "sigma_source": "MEASURED",
+    "hbr_km": 0.01,
+    "risk_level": "GREEN",
+    "pc_predicted_final": null,
+    "first_seen": "2026-10-09T06:00:00Z",
+    "history": [
+      {
+        "run_id": "20261009T0600Z",
+        "pc_max": 8e-07,
+        "miss_distance_km": 4.1
+      },
+      {
+        "run_id": "20261009T1200Z",
+        "pc_max": 8.1e-07,
+        "miss_distance_km": 4.09
+      },
+      {
+        "run_id": "20261009T1800Z",
+        "pc_max": 8.1e-07,
+        "miss_distance_km": 4.09
+      }
+    ]
+  },
+  {
+    "event_id": "46300-33000-20261011T2000",
+    "primary_id": 46300,
+    "secondary_id": 33000,
+    "primary_name": "ICEYE-X4",
+    "secondary_name": "DELTA 1 DEB",
+    "tca": "2026-10-11T20:00:05Z",
+    "miss_distance_km": 3.19,
+    "relative_speed_kms": 13.1,
+    "r_primary_km": [
+      6800.0,
+      1200.0,
+      450.0
+    ],
+    "v_primary_kms": [
+      0.2,
+      7.1,
+      2.5
+    ],
+    "r_secondary_km": [
+      6800.4,
+      1200.2,
+      450.1
+    ],
+    "v_secondary_kms": [
+      -0.1,
+      -7.0,
+      2.8
+    ],
+    "miss_rtn_km": [
+      0.1,
+      0.3,
+      0.2
+    ],
+    "primary_tle_age_days": 0.9,
+    "secondary_tle_age_days": 3.2,
+    "pc": 2.2e-07,
+    "pc_max": 3.1e-06,
+    "sigma_rtn_primary_km": [
+      0.05,
+      0.15,
+      0.05
+    ],
+    "sigma_rtn_secondary_km": [
+      0.08,
+      0.25,
+      0.08
+    ],
+    "sigma_source": "MEASURED",
+    "hbr_km": 0.01,
+    "risk_level": "GREEN",
+    "pc_predicted_final": null,
+    "first_seen": "2026-10-09T06:00:00Z",
+    "history": [
+      {
+        "run_id": "20261009T0600Z",
+        "pc_max": 3e-06,
+        "miss_distance_km": 3.2
+      },
+      {
+        "run_id": "20261009T1200Z",
+        "pc_max": 3.1e-06,
+        "miss_distance_km": 3.19
+      },
+      {
+        "run_id": "20261009T1800Z",
+        "pc_max": 3.1e-06,
+        "miss_distance_km": 3.19
+      }
+    ]
+  },
+  {
+    "event_id": "47400-35000-20261012T0130",
+    "primary_id": 47400,
+    "secondary_id": 35000,
+    "primary_name": "SPIRE-LEMU-2",
+    "secondary_name": "TITAN 3C DEB",
+    "tca": "2026-10-12T01:30:03Z",
+    "miss_distance_km": 2.51,
+    "relative_speed_kms": 8.9,
+    "r_primary_km": [
+      6800.0,
+      1200.0,
+      450.0
+    ],
+    "v_primary_kms": [
+      0.2,
+      7.1,
+      2.5
+    ],
+    "r_secondary_km": [
+      6800.4,
+      1200.2,
+      450.1
+    ],
+    "v_secondary_kms": [
+      -0.1,
+      -7.0,
+      2.8
+    ],
+    "miss_rtn_km": [
+      0.1,
+      0.3,
+      0.2
+    ],
+    "primary_tle_age_days": 0.7,
+    "secondary_tle_age_days": 2.3,
+    "pc": 3.4e-07,
+    "pc_max": 4.9e-06,
+    "sigma_rtn_primary_km": [
+      0.05,
+      0.15,
+      0.05
+    ],
+    "sigma_rtn_secondary_km": [
+      0.08,
+      0.25,
+      0.08
+    ],
+    "sigma_source": "MEASURED",
+    "hbr_km": 0.01,
+    "risk_level": "GREEN",
+    "pc_predicted_final": null,
+    "first_seen": "2026-10-09T06:00:00Z",
+    "history": [
+      {
+        "run_id": "20261009T0600Z",
+        "pc_max": 5e-06,
+        "miss_distance_km": 2.5
+      },
+      {
+        "run_id": "20261009T1200Z",
+        "pc_max": 4.9e-06,
+        "miss_distance_km": 2.51
+      },
+      {
+        "run_id": "20261009T1800Z",
+        "pc_max": 4.9e-06,
+        "miss_distance_km": 2.51
+      }
+    ]
+  },
+  {
+    "event_id": "48500-37000-20261012T0545",
+    "primary_id": 48500,
+    "secondary_id": 37000,
+    "primary_name": "PLANET-SKYSAT",
+    "secondary_name": "CZ-4 DEB",
+    "tca": "2026-10-12T05:45:04Z",
+    "miss_distance_km": 4.79,
+    "relative_speed_kms": 14.2,
+    "r_primary_km": [
+      6800.0,
+      1200.0,
+      450.0
+    ],
+    "v_primary_kms": [
+      0.2,
+      7.1,
+      2.5
+    ],
+    "r_secondary_km": [
+      6800.4,
+      1200.2,
+      450.1
+    ],
+    "v_secondary_kms": [
+      -0.1,
+      -7.0,
+      2.8
+    ],
+    "miss_rtn_km": [
+      0.1,
+      0.3,
+      0.2
+    ],
+    "primary_tle_age_days": 0.6,
+    "secondary_tle_age_days": 2.9,
+    "pc": 4.1e-08,
+    "pc_max": 6.1e-07,
+    "sigma_rtn_primary_km": [
+      0.05,
+      0.15,
+      0.05
+    ],
+    "sigma_rtn_secondary_km": [
+      0.08,
+      0.25,
+      0.08
+    ],
+    "sigma_source": "MEASURED",
+    "hbr_km": 0.01,
+    "risk_level": "GREEN",
+    "pc_predicted_final": null,
+    "first_seen": "2026-10-09T06:00:00Z",
+    "history": [
+      {
+        "run_id": "20261009T0600Z",
+        "pc_max": 6e-07,
+        "miss_distance_km": 4.8
+      },
+      {
+        "run_id": "20261009T1200Z",
+        "pc_max": 6.1e-07,
+        "miss_distance_km": 4.79
+      },
+      {
+        "run_id": "20261009T1800Z",
+        "pc_max": 6.1e-07,
+        "miss_distance_km": 4.79
+      }
+    ]
+  },
+  {
+    "event_id": "49000-22000-20261011T2200",
+    "primary_id": 49000,
+    "secondary_id": 22000,
+    "primary_name": "STARLINK-2045",
+    "secondary_name": "COSMOS 1408 DEB",
+    "tca": "2026-10-11T22:00:12Z",
+    "miss_distance_km": 0.93,
+    "relative_speed_kms": 13.4,
+    "r_primary_km": [
+      6800.0,
+      1200.0,
+      450.0
+    ],
+    "v_primary_kms": [
+      0.2,
+      7.1,
+      2.5
+    ],
+    "r_secondary_km": [
+      6800.4,
+      1200.2,
+      450.1
+    ],
+    "v_secondary_kms": [
+      -0.1,
+      -7.0,
+      2.8
+    ],
+    "miss_rtn_km": [
+      0.1,
+      0.3,
+      0.2
+    ],
+    "primary_tle_age_days": 0.5,
+    "secondary_tle_age_days": 1.3,
+    "pc": 4.8e-06,
+    "pc_max": 5.9e-05,
+    "sigma_rtn_primary_km": [
+      0.05,
+      0.15,
+      0.05
+    ],
+    "sigma_rtn_secondary_km": [
+      0.08,
+      0.25,
+      0.08
+    ],
+    "sigma_source": "MEASURED",
+    "hbr_km": 0.01,
+    "risk_level": "AMBER",
+    "pc_predicted_final": null,
+    "first_seen": "2026-10-09T12:00:00Z",
+    "history": [
+      {
+        "run_id": "20261009T1200Z",
+        "pc_max": 6.1e-05,
+        "miss_distance_km": 0.92
+      },
+      {
+        "run_id": "20261009T1800Z",
+        "pc_max": 5.9e-05,
+        "miss_distance_km": 0.93
+      }
+    ]
+  }
+]

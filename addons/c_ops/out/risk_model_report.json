@@ -1,0 +1,55 @@
+{
+  "dataset_events_total": 8293,
+  "train_events": 6634,
+  "test_events": 1659,
+  "models_comparison": {
+    "Baseline": {
+      "MAE": 5.0795,
+      "RMSE": 9.5268,
+      "threshold_used": -6.1,
+      "Precision": 0.1077,
+      "Recall": 0.7778,
+      "F2_Score": 0.3465
+    },
+    "GradientBoosting_Full": {
+      "MAE": 2.7128,
+      "RMSE": 5.1121,
+      "threshold_used": -12.7,
+      "Precision": 0.0714,
+      "Recall": 0.2222,
+      "F2_Score": 0.1562
+    },
+    "GradientBoosting_Operational": {
+      "MAE": 2.6712,
+      "RMSE": 5.0426,
+      "threshold_used": -10.7,
+      "Precision": 0.1333,
+      "Recall": 0.2222,
+      "F2_Score": 0.1961
+    }
+  },
+  "winners_vs_baseline": {
+    "MAE": "Model",
+    "RMSE": "Model",
+    "Precision": "Model",
+    "Recall": "Baseline",
+    "F2_Score": "Baseline"
+  },
+  "operational_feature_importances": {
+    "latest_risk": 316.0,
+    "c_sigma_n": 272.0,
+    "latest_miss_distance": 259.0,
+    "c_sigma_t": 251.0,
+    "latest_relative_speed": 244.0,
+    "mean_risk": 235.0,
+    "c_sigma_r": 229.0,
+    "time_to_tca": 224.0,
+    "std_risk": 219.0,
+    "t_sigma_n": 210.0,
+    "t_sigma_t": 208.0,
+    "t_sigma_r": 188.0,
+    "num_warnings": 107.0,
+    "risk_diff": 38.0
+  },
+  "honest_summary": "The gradient boosting model strongly outperforms the baseline on continuous risk prediction (MAE 2.67 vs 5.08, cutting error by 47%), but early warnings remain noisy: binary threshold triage reaches F2=0.20 compared to baseline F2=0.35."
+}

@@ -1,0 +1,75 @@
+{
+  "run_id": "20261009T1800Z",
+  "run_time": "2026-10-09T18:00:00Z",
+  "counts": {
+    "RED": 1,
+    "AMBER": 1,
+    "GREEN": 6,
+    "total": 8
+  },
+  "count_changes_since_previous_run": {
+    "RED": "+0",
+    "AMBER": "-1",
+    "GREEN": "+1"
+  },
+  "alerts_by_kind": {
+    "DOWNGRADED": [
+      "STARLINK-1100 and ISS: risk dropped from AMBER to GREEN. Closest approach in 25 h at 2.85 km."
+    ]
+  },
+  "most_dangerous_events": [
+    {
+      "event_id": "43070-34427-20261011T0412",
+      "primary_name": "IRIDIUM 106",
+      "secondary_name": "COSMOS 2251 DEB",
+      "time_to_closest_approach": "34.2 hours",
+      "miss_distance": "0.412 km",
+      "collision_probability": "3.10e-05",
+      "max_collision_probability": "4.40e-04",
+      "risk_level": "RED"
+    },
+    {
+      "event_id": "49000-22000-20261011T2200",
+      "primary_name": "STARLINK-2045",
+      "secondary_name": "COSMOS 1408 DEB",
+      "time_to_closest_approach": "52.0 hours",
+      "miss_distance": "0.930 km",
+      "collision_probability": "4.80e-06",
+      "max_collision_probability": "5.90e-05",
+      "risk_level": "AMBER"
+    },
+    {
+      "event_id": "47400-35000-20261012T0130",
+      "primary_name": "SPIRE-LEMU-2",
+      "secondary_name": "TITAN 3C DEB",
+      "time_to_closest_approach": "55.5 hours",
+      "miss_distance": "2.510 km",
+      "collision_probability": "3.40e-07",
+      "max_collision_probability": "4.90e-06",
+      "risk_level": "GREEN"
+    },
+    {
+      "event_id": "40012-25544-20261010T1830",
+      "primary_name": "STARLINK-1100",
+      "secondary_name": "ISS",
+      "time_to_closest_approach": "24.5 hours",
+      "miss_distance": "2.850 km",
+      "collision_probability": "1.20e-07",
+      "max_collision_probability": "4.20e-06",
+      "risk_level": "GREEN"
+    },
+    {
+      "event_id": "46300-33000-20261011T2000",
+      "primary_name": "ICEYE-X4",
+      "secondary_name": "DELTA 1 DEB",
+      "time_to_closest_approach": "50.0 hours",
+      "miss_distance": "3.190 km",
+      "collision_probability": "2.20e-07",
+      "max_collision_probability": "3.10e-06",
+      "risk_level": "GREEN"
+    }
+  ],
+  "recommended_manoeuvres": [
+    "Event 43070-34427-20261011T0412 (IRIDIUM 106 vs COSMOS 2251 DEB): Burn scheduled at 2026-10-11T01:42:00Z with delta-v 34.0 mm/s (0.034 m/s). Miss distance improves from 0.41 km to 2.96 km; collision probability drops from 3.1e-05 to 2.0e-08. Secondary conjunctions created: 0."
+  ]
+}

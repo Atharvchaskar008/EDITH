@@ -1,0 +1,93 @@
+{
+  "headline": {
+    "primary_name": "IRIDIUM 106",
+    "secondary_name": "COSMOS 2251 DEB",
+    "pair_label": "IRIDIUM 106 vs COSMOS 2251 DEB",
+    "risk_level": "RED",
+    "hours_until_closest_approach": 34.2,
+    "hours_until_closest_approach_text": "34.2 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-11T04:12:37Z (34.2 hours remaining)",
+      "value": "2026-10-11T04:12:37Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.412 km (412 m)",
+      "value": 0.412
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "14.71 km/s (14710 m/s)",
+      "value": 14.71
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "3.10e-05",
+      "value": 3.1e-05
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "4.40e-04",
+      "value": 0.00044
+    },
+    {
+      "label": "Age of IRIDIUM 106 orbit data",
+      "value_text": "0.7 days",
+      "value": 0.7
+    },
+    {
+      "label": "Age of COSMOS 2251 DEB orbit data",
+      "value_text": "2.5 days",
+      "value": 2.5
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T0600Z",
+      "pc_max": 4.5e-05,
+      "miss_distance_km": 0.82
+    },
+    {
+      "run_id": "20261009T1200Z",
+      "pc_max": 0.00044,
+      "miss_distance_km": 0.412
+    },
+    {
+      "run_id": "20261009T1800Z",
+      "pc_max": 0.00044,
+      "miss_distance_km": 0.412
+    }
+  ],
+  "plan": {
+    "decision": "MANEUVER",
+    "has_maneuver": true,
+    "recommended_burn_time": "2026-10-11T01:42:00Z",
+    "direction_in_words": "along the direction of travel",
+    "size_mm_s": 34.0,
+    "size_text": "34.0 mm/s (0.0340 m/s)",
+    "miss_before_km": 0.412,
+    "miss_before_text": "0.41 km",
+    "miss_after_km": 2.96,
+    "miss_after_text": "2.96 km",
+    "pc_before": 3.1e-05,
+    "pc_before_text": "3.1e-05",
+    "pc_after": 2e-08,
+    "pc_after_text": "2.0e-08",
+    "secondary_conjunctions_created": 0,
+    "return_burn": "Scheduled at 2026-10-11T05:53:00Z with size 34.0 mm/s"
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T07:45:00Z",
+    "run_id": "20261009T1800Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}
