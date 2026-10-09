@@ -13,8 +13,10 @@ import argparse
 import json
 import logging
 import os
+import pickle
 import re
 import time
+from concurrent.futures import ProcessPoolExecutor
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable, Optional
@@ -23,14 +25,14 @@ from fusion import config
 from fusion.contracts import ConjunctionEvent, ManeuverPlan, SpaceObject
 from fusion.core.ingest import load_catalog_with_stats
 from fusion.core.sat import to_utc
-from fusion.core.screen import screen
-from fusion.maneuver.planner import plan
+from fusion.core.screen import screen, worker_count
+from fusion.maneuver.planner import plan, quick_decision
 from fusion.risk.pc import assess
 from fusion.synthetic import make_conjunction
 
 log = logging.getLogger(__name__)
 
-RUNS_ROOT = Path("data/runs")
+RUNS_ROOT = config.DATA_DIR / "runs"
 RUN_ID_PATTERN = re.compile(r"^\d{8}T\d{4}Z$")
 STAGES = ["INGEST", "PROPAGATE", "SCREEN", "ASSESS", "PLAN", "VERIFY", "DONE"]
 
@@ -62,6 +64,33 @@ def _add_test_object(catalog: list[SpaceObject], t0: datetime, hours: float) -> 
     target = next((o for o in candidates if o.is_primary), candidates[0])
     lead_hours = min(config.SYNTHETIC_LEAD_HOURS, 0.6 * hours)
     return make_conjunction(target, t0 + timedelta(hours=lead_hours), config.SYNTHETIC_MISS_KM)
+
+
+_plan_context: dict[str, Any] = {}
+
+
+def _start_plan_worker(packed: bytes) -> None:
+    catalog, now, baseline = pickle.loads(packed)
+    _plan_context.update(catalog=catalog, now=now, baseline=baseline)
+
+
+def _plan_one(event: ConjunctionEvent) -> ManeuverPlan:
+    return plan(event, _plan_context["catalog"], now=_plan_context["now"], baseline=_plan_context["baseline"])
+
+
+def _plan_all(
+    searches: list[ConjunctionEvent], catalog: list[SpaceObject], now: datetime, baseline: list[ConjunctionEvent]
+) -> list[ManeuverPlan]:
+    """Burn plans for the given events, in the same order. Each plan re-screens
+    thousands of objects, so with a large catalogue they run in separate processes."""
+    workers = min(len(searches), worker_count())
+    if workers < 2 or len(catalog) < config.PARALLEL_MIN_CATALOG:
+        return [plan(event, catalog, now=now, baseline=baseline) for event in searches]
+    with ProcessPoolExecutor(
+        max_workers=workers, initializer=_start_plan_worker,
+        initargs=(pickle.dumps((catalog, now, baseline)),),  # serialised once, not per worker
+    ) as pool:
+        return list(pool.map(_plan_one, searches))
 
 
 def run_pipeline(
@@ -148,26 +177,33 @@ def run_pipeline(
         report(stage, 100, f"Risk levels: {levels['RED']} red, {levels['AMBER']} amber, {levels['GREEN']} green")
 
         stage = "PLAN"
-        plans: list[ManeuverPlan] = []
         reds = [e for e in events if e.risk_level == "RED"]
         reds.sort(key=lambda e: (not e.synthetic, -(e.pc_max or 0.0)))  # the test object first
-        burns = 0
-        for index, event in enumerate(reds):
-            if burns >= max_plans:
-                plans.append(ManeuverPlan(
+        # decide cheaply which red events need a burn search, then search those in parallel
+        searches: list[ConjunctionEvent] = []
+        decided: dict[str, ManeuverPlan] = {}
+        for event in reds:
+            early = quick_decision(event, by_id, t0)
+            if early is not None:
+                decided[event.event_id] = early
+            elif len(searches) < max_plans:
+                searches.append(event)
+            else:
+                decided[event.event_id] = ManeuverPlan(
                     event_id=event.event_id, decision="MONITOR",
                     rationale=f"Not planned in this run: the limit of {max_plans} burn plans per run was reached.",
                     miss_before_km=event.miss_distance_km, pc_before=event.pc, pc_max_before=event.pc_max,
-                ))
-                continue
-            result = plan(event, catalog, now=t0, baseline=events)
-            plans.append(result)
-            if result.decision == "MANEUVER":
-                burns += 1
-            report(stage, 100 * (index + 1) / len(reds), f"{event.primary_name} and {event.secondary_name}: {result.decision}")
+                )
+        if searches:
+            report(stage, 10, f"Searching for the smallest safe burn for {len(searches)} red event(s)")
+        for index, result in enumerate(_plan_all(searches, catalog, t0, events)):
+            decided[result.event_id] = result
+            event = searches[index]
+            report(stage, 100 * (index + 1) / len(searches), f"{event.primary_name} and {event.secondary_name}: {result.decision}")
+        plans = [decided[event.event_id] for event in reds]
         for event in events:
             if event.risk_level == "AMBER":
-                plans.append(plan(event, catalog, now=t0))
+                plans.append(quick_decision(event, by_id, t0))
         if not reds:
             report(stage, 100, "No red events: no burn is needed")
 

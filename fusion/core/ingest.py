@@ -81,10 +81,10 @@ def _with_tle_lines(obj: SpaceObject) -> SpaceObject:
 def load_catalog_with_stats(
     use_cache: bool = True,
     inject: Optional[list[SpaceObject]] = None,
-    cache_dir: Path | str = "data/cache",
+    cache_dir: Path | str = config.CACHE_DIR,
     now: Optional[datetime] = None,
     session: Any = None,
-    env_file: Path | str = ".env",
+    env_file: Path | str = config.ENV_FILE,
 ) -> tuple[list[SpaceObject], dict[str, Any]]:
     cache_dir = Path(cache_dir)
     now = to_utc(now or datetime.now(timezone.utc))
