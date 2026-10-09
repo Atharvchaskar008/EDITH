@@ -37,13 +37,23 @@ def satrec_from_omm(fields: dict[str, Any]) -> Satrec:
 
 
 def get_satrec(obj: SpaceObject) -> Satrec:
-    """Satrec for an object, built once and reused."""
-    if obj.omm is None:
-        raise ValueError(f"object {obj.norad_id} has no OMM record")
-    key = (obj.norad_id,) + tuple(str(obj.omm[name]) for name in _ELEMENT_FIELDS)
+    """Satrec for an object, built once and reused.
+
+    Built from the OMM record when there is one; objects that only carry
+    TLE lines (for example historical data from an add-on pack) use those.
+    """
+    if obj.omm is not None:
+        key = (obj.norad_id,) + tuple(str(obj.omm[name]) for name in _ELEMENT_FIELDS)
+    elif obj.tle_line1 and obj.tle_line2:
+        key = (obj.norad_id, obj.tle_line1, obj.tle_line2)
+    else:
+        raise ValueError(f"object {obj.norad_id} has neither an OMM record nor TLE lines")
     sat = _satrec_cache.get(key)
     if sat is None:
-        sat = satrec_from_omm(obj.omm)
+        if obj.omm is not None:
+            sat = satrec_from_omm(obj.omm)
+        else:
+            sat = Satrec.twoline2rv(obj.tle_line1, obj.tle_line2)
         _satrec_cache[key] = sat
     return sat
 

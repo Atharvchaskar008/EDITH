@@ -29,6 +29,20 @@ def test_object_survives_json_round_trip(primary, epoch):
     assert np.allclose(r1, r2, atol=1e-9)
 
 
+def test_object_with_only_tle_lines_can_be_propagated(primary, epoch):
+    from sgp4.exporter import export_tle
+
+    line1, line2 = export_tle(get_satrec(primary))
+    tle_only = primary.model_copy(update={"omm": None, "tle_line1": line1, "tle_line2": line2})
+    r_omm, _ = state_at(get_satrec(primary), epoch + timedelta(hours=2))
+    r_tle, _ = state_at(get_satrec(tle_only), epoch + timedelta(hours=2))
+    assert np.linalg.norm(r_omm - r_tle) < 0.05  # TLE text rounds the elements
+
+    neither = primary.model_copy(update={"omm": None})
+    with pytest.raises(ValueError):
+        get_satrec(neither)
+
+
 def test_fit_passes_through_target_state(primary, epoch, t_tca):
     r, v = state_at(get_satrec(primary), t_tca)
     target_r = r + np.array([0.5, -0.3, 0.2])
