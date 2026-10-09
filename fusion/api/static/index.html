@@ -18,7 +18,7 @@
   .tiles div { padding: 26px 0; }
   .tiles b { display: block; font-size: clamp(34px, 5.4vw, 76px); line-height: 1; letter-spacing: -.03em; }
   .tiles span, .facts span { color: #9a9a9a; font-size: 14px; }
-  .tiles .sub, .when { display: block; color: #6f6f6f; font-size: 12px; }
+  .tiles .sub { display: block; color: #6f6f6f; font-size: 12px; }
   .run { display: flex; align-items: center; gap: 18px; padding: 22px 0 0; }
   button { background: #fff; color: #000; border: 0; padding: 13px 24px; font-family: inherit; font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; cursor: pointer; }
   button:disabled { opacity: .45; cursor: default; }
@@ -81,9 +81,8 @@
   <div><b id="t-burns">-</b><span>burns ready</span></div>
 </div>
 
-<div class="run"><button id="run">Run now</button><span id="status">Ready.</span></div>
+<div class="run"><button id="run">Run now</button><span id="status"></span></div>
 <p class="check"><span id="validation"></span> <a id="report" href="#proof-title" hidden>Proof</a></p>
-<p class="check" id="runinfo"></p>
 
 <div class="split">
   <div id="planbox"><h2>Plan</h2><div id="plan"><p class="why">Pick a pass.</p></div></div>
@@ -107,6 +106,7 @@
 <script>
 const $ = id => document.getElementById(id);
 let picked = null, runId = null, source = "latest", onlyBurns = false;
+let idle = "", failed = false;  // what the line beside the Run button says between runs; a failure stays until the next run
 let checked = null, typed = 0;  // the result of checking one satellite, shown when source is "object"
 let fleet = null;  // the fleet whose passes the list shows, when one was picked under Fleets
 let priority = true, reds = null, shown = null;  // Priority: the dangerous passes that are not inside one fleet
@@ -132,19 +132,18 @@ async function loadTop() {
   $("t-burns").textContent = n(r.plans.maneuver);
   $("t-rest").textContent = n(r.levels.AMBER) + " to watch, " + n(r.levels.GREEN) + " safe";
   $("error").textContent = "";
-  const took = r.duration_s >= 90 ? Math.floor(r.duration_s / 60) + " min " + Math.round(r.duration_s % 60) + " s" : Math.round(r.duration_s) + " s";
-  let info = "Last run at " + clock(r.t0) + ", took " + took + ", looking " + r.window_hours + " hours ahead.";
-  try { const m = await get("/monitor"); if (m.scheduler_on && m.next_run) info += " Next run by itself at " + clock(m.next_run) + "."; } catch (e) { /* the line is shorter without it */ }
-  $("runinfo").textContent = info;
+  idle = "Last run " + clock(r.t0) + ".";
+  try { const m = await get("/monitor"); if (m.scheduler_on && m.next_run) idle += " Next " + clock(m.next_run) + "."; } catch (e) { /* the line is shorter without it */ }
+  if (!runId && !failed) $("status").textContent = idle;
   try {
     const v = await get("/validation");
-    $("validation").textContent = "Checked against CelesTrak: distances match to " + v.same_input.all_matches.miss_difference_m.median.toFixed(2) + " m.";
+    $("validation").textContent = "Matches CelesTrak to " + v.same_input.all_matches.miss_difference_m.median.toFixed(2) + " m.";
   } catch (e) { $("validation").textContent = ""; }
 }
 
 function aboutPriority() {
   if (source !== "latest" || !priority || reds == null || shown == null) return;
-  $("about").textContent = shown + " of the " + reds + " dangerous passes. The other " + (reds - shown) + " are between two satellites of one fleet and are left to its operator.";
+  $("about").textContent = shown + " of " + reds + " dangerous. The other " + (reds - shown) + " are inside one fleet.";
 }
 
 // one row per fleet: passes to act on, passes inside the fleet (left to its operator), burns planned for it
@@ -157,7 +156,7 @@ async function loadFleets() {
       <td>${f.burns ? f.burns + " (" + (f.dv_total_ms * 1000).toFixed(0) + " mm/s)" : ""}</td></tr>`).join("") || '<tr><td colspan="6">Nothing to show.</td></tr>';
   document.querySelectorAll("tr.row").forEach(row => row.onclick = () => {
     fleet = row.dataset.fleet; picked = null;
-    $("about").textContent = fleet + ": every pass that involves one of its satellites.";
+    $("about").textContent = fleet + " passes.";
     loadEvents().catch(fail);
   });
 }
@@ -171,13 +170,13 @@ async function loadEvents() {
   shown = events.length; aboutPriority();
   if (source === "replay") {
     const hit = events.find(e => [e.primary_id, e.secondary_id].sort().join() === "22675,24946");
-    $("about").textContent = hit ? "Iridium 33 and Cosmos 2251 collided on 10 February 2009. The data public a day earlier predicted a miss of " + dist(hit.miss_distance_km) + ", so the honest rating is amber, not red." : "";
+    $("about").textContent = hit ? "They collided on 10 February 2009. Public data a day earlier predicted a " + dist(hit.miss_distance_km) + " miss." : "";
   }
   $("events").innerHTML = events.map(e => {
     const plan = e.plan_decision === "MANEUVER" ? "<b>Burn ready</b>" : e.plan_decision === "MONITOR" ? "Watch" : "";
     return `<tr class="row ${e.event_id === picked ? "picked" : ""}" data-id="${esc(e.event_id)}">
       <td class="${e.risk_level}">${word(e.risk_level)}</td>
-      <td>${esc(e.primary_name)} / ${esc(e.secondary_name)}${e.synthetic ? ' <span class="tag">TEST</span>' : ""}<span class="when">${when(e.tca)}</span></td>
+      <td>${esc(e.primary_name)} / ${esc(e.secondary_name)}${e.synthetic ? ' <span class="tag">TEST</span>' : ""}</td>
       <td>${dist(e.miss_distance_km)}</td><td>${odds(e.pc_max)}</td><td>${plan}</td></tr>`;
   }).join("") || '<tr><td colspan="6">Nothing to show.</td></tr>';
   document.querySelectorAll("tr.row").forEach(row => row.onclick = () => {
@@ -417,7 +416,7 @@ async function loadProof() {
 function refresh() { loadTop().catch(fail); loadEvents().catch(fail); loadAlerts().catch(() => {}); }
 
 $("run").onclick = async () => {
-  $("run").disabled = true;
+  $("run").disabled = true; failed = false;
   $("status").textContent = "Starting...";
   try {
     const r = await fetch("/run", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ synthetic: false, quick: true, mode: null }) });
@@ -429,8 +428,8 @@ async function poll() {
   if (!runId) return;
   const s = await get("/run/" + runId + "/status");
   const last = s.log.length ? s.log[s.log.length - 1].message : s.stage;
-  $("status").textContent = s.status === "RUNNING" ? last : s.status === "DONE" ? "Done. " + last : "Failed. " + (s.error || "");
-  if (s.status !== "RUNNING") { runId = null; $("run").disabled = false; refresh(); }
+  $("status").textContent = s.status === "RUNNING" ? last : s.status === "DONE" ? "Done." : "Failed. " + (s.error || "");
+  if (s.status !== "RUNNING") { runId = null; failed = s.status !== "DONE"; $("run").disabled = false; refresh(); }
 }
 
 function show(which, burns, tab) {
@@ -438,7 +437,7 @@ function show(which, burns, tab) {
   $("plan").innerHTML = '<p class="why">Pick a pass.</p>';
   ["showPriority", "showLatest", "showBurns", "showFleets", "showReplay"].forEach(id => $(id).classList.toggle("on", id === tab));
   if (which !== "object") { $("q").value = ""; $("found").innerHTML = ""; }
-  $("about").textContent = which === "fleets" ? "Pick a fleet to see its passes. Own fleet: passes between two of its own satellites, left to its operator." : "";
+  $("about").textContent = which === "fleets" ? "Own fleet: passes between two of its own satellites." : "";
   loadEvents().catch(fail);
 }
 
@@ -463,14 +462,14 @@ async function check(id, name) {
   typed++; checked = null;
   show("object", false, "");
   $("q").value = name; $("found").innerHTML = "";
-  $("about").textContent = "Checking " + name + " against everything at its altitude...";
+  $("about").textContent = "Checking...";
   try {
     const r = await fetch("/objects/" + id + "/passes"), d = await r.json();
     if (source !== "object") return;
     if (!r.ok) { $("about").textContent = d.detail || "Could not check it."; return; }
     checked = d;
     const risky = d.passes.filter(e => e.risk_level !== "GREEN").length;
-    $("about").textContent = `${d.passes.length} ${d.passes.length === 1 ? "pass" : "passes"} within ${d.threshold_km} km in the next ${d.hours} hours, ${risky ? risky + " dangerous" : "none dangerous"}. Checked against ${n(d.objects_screened)} objects in ${d.seconds} s.`;
+    $("about").textContent = `${d.passes.length} ${d.passes.length === 1 ? "pass" : "passes"} within ${d.threshold_km} km in ${d.hours} hours, ${risky ? risky + " dangerous" : "none dangerous"}. ${n(d.objects_screened)} objects checked in ${d.seconds} s.`;
     loadEvents();
   } catch (e) { $("about").textContent = "Cannot reach the system."; }
 }
