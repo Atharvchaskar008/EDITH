@@ -1,0 +1,28 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      FUSION_SCHEDULER: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: pip
+      - name: Install the main system
+        run: pip install -r requirements.txt
+      - name: Test the main system
+        run: python -m pytest -q
+      - name: Install what the add-on packs need
+        run: pip install -r requirements-addons.txt
+      - name: Test the validation pack
+        working-directory: addons/b_trust
+        run: python -m pytest -q
