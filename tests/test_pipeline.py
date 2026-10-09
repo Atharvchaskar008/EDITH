@@ -38,6 +38,16 @@ def test_run_writes_every_file_and_plans_the_test_object(small_catalog, tmp_path
     assert log[-1]["stage"] == "DONE" and any("test object" in entry["message"] for entry in log)
 
 
+def test_a_pass_past_the_ceiling_of_burn_searches_says_so(small_catalog, tmp_path):
+    run_id = pipeline.run_pipeline(
+        t0=EPOCH + timedelta(hours=12), catalog=small_catalog, inject_synthetic=True,
+        hours=24, mode="ALL_LEO", runs_root=tmp_path, max_plans=0,
+    )
+    _, events, plans = pipeline.load_run(tmp_path / run_id)
+    assert events[0].risk_level == "RED"
+    assert plans[0].decision == "MONITOR" and plans[0].reason == "LIMIT" and "limit of 0" in plans[0].rationale
+
+
 def test_quiet_sky_gives_no_events_and_no_plans(small_catalog, tmp_path):
     run_id = pipeline.run_pipeline(
         t0=EPOCH + timedelta(hours=12), catalog=small_catalog, hours=3, mode="ALL_LEO", runs_root=tmp_path

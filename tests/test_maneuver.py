@@ -92,7 +92,7 @@ def test_plan_makes_a_red_event_safe_with_a_small_burn(red_case):
     event, catalog, now = red_case
     assert event.risk_level == "RED"
     result = plan(event, catalog, now=now, baseline=[event])
-    assert result.decision == "MANEUVER"
+    assert result.decision == "MANEUVER" and result.reason is None
     assert result.maneuvering_id == event.primary_id  # the debris cannot move
     assert result.dv_magnitude_ms < 0.1
     assert result.dv_rtn_ms[0] == 0.0 and result.dv_rtn_ms[2] == 0.0
@@ -196,8 +196,10 @@ def test_low_risk_events_get_no_burn(red_case):
     event, catalog, now = red_case
     amber = event.model_copy(update={"risk_level": "AMBER"})
     green = event.model_copy(update={"risk_level": "GREEN"})
-    assert plan(amber, catalog, now=now).decision == "MONITOR"
-    assert plan(green, catalog, now=now).decision == "NO_ACTION"
+    watched = plan(amber, catalog, now=now)
+    assert watched.decision == "MONITOR" and watched.reason == "BELOW_THRESHOLD"
+    nothing = plan(green, catalog, now=now)
+    assert nothing.decision == "NO_ACTION" and nothing.reason is None
 
 
 def test_two_dead_objects_get_a_warning_only(red_case):
@@ -205,12 +207,13 @@ def test_two_dead_objects_get_a_warning_only(red_case):
     dead = [catalog[0].model_copy(update={"operational": False}), catalog[1]]
     result = plan(event, dead, now=now)
     assert result.decision == "MONITOR" and "Neither object can manoeuvre" in result.rationale
+    assert result.reason == "NEITHER_CAN_MOVE"
 
 
 def test_too_late_to_burn(red_case):
     event, catalog, _ = red_case
     result = plan(event, catalog, now=event.tca - timedelta(minutes=40))
-    assert result.decision == "MONITOR" and "too soon" in result.rationale
+    assert result.decision == "MONITOR" and "too soon" in result.rationale and result.reason == "TOO_SOON"
 
 
 def test_mover_choice(red_case):
@@ -244,5 +247,5 @@ def test_two_satellites_of_one_fleet_are_left_to_their_operator(red_case):
         catalog[1].model_copy(update={"name": "STARLINK-2", "operational": True}),
     ]
     result = plan(event, fleet_pair, now=now, verify=False)
-    assert result.decision == "MONITOR" and "STARLINK fleet" in result.rationale
+    assert result.decision == "MONITOR" and "STARLINK fleet" in result.rationale and result.reason == "SAME_FLEET"
     assert plan(event, fleet_pair, now=now, force=True, verify=False).decision == "MANEUVER"

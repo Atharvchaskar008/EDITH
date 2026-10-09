@@ -85,7 +85,7 @@ DV_GRID_MAX_MS = 0.1
 DV_GRID_POINTS = 12
 MAX_LEAD_ORBITS = 8.0
 MIN_LEAD_TIME_S = 1800.0
-MAX_PLANS_PER_RUN = 5
+MAX_PLANS_PER_RUN = 40  # enough for every dangerous pass of a 24-hour run that can be planned; a ceiling, not a target
 PARALLEL_MIN_CATALOG = 2000  # catalogue size above which burn plans run in separate processes
 
 # --- Test object (only when a run asks for it) -----------------------------

@@ -211,7 +211,7 @@ def run_pipeline(
                 searches.append(event)
             else:
                 decided[event.event_id] = ManeuverPlan(
-                    event_id=event.event_id, decision="MONITOR",
+                    event_id=event.event_id, decision="MONITOR", reason="LIMIT",
                     rationale=f"Not planned in this run: the limit of {max_plans} burn plans per run was reached.",
                     miss_before_km=event.miss_distance_km, pc_before=event.pc, pc_max_before=event.pc_max,
                 )

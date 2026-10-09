@@ -109,7 +109,7 @@ def quick_decision(
     if event.risk_level != "RED" and not force:
         if event.risk_level == "AMBER":
             return ManeuverPlan(
-                event_id=event.event_id, decision="MONITOR",
+                event_id=event.event_id, decision="MONITOR", reason="BELOW_THRESHOLD",
                 rationale="Worst-case probability is below the action threshold. Keep watching as new orbit data arrives.",
                 miss_before_km=event.miss_distance_km, pc_before=event.pc, pc_max_before=event.pc_max,
             )
@@ -120,11 +120,11 @@ def quick_decision(
     )
     mover, why = choose_mover(primary, secondary)
     if mover is None:
-        return ManeuverPlan(decision="MONITOR", rationale=why, **base)
+        return ManeuverPlan(decision="MONITOR", reason="NEITHER_CAN_MOVE", rationale=why, **base)
     shared = same_fleet(primary, secondary)
     if shared and not force:
         return ManeuverPlan(
-            decision="MONITOR", rationale=(
+            decision="MONITOR", reason="SAME_FLEET", rationale=(
                 f"Both satellites belong to the {shared} fleet. Its operator steers them with precise data "
                 "that is not public, and public predictions for such pairs move by tens of kilometres "
                 "between updates, so no burn is proposed here."
@@ -132,7 +132,7 @@ def quick_decision(
         )
     if not burn_slots(event, mover, now):
         return ManeuverPlan(
-            decision="MONITOR", maneuvering_id=mover.norad_id,
+            decision="MONITOR", reason="TOO_SOON", maneuvering_id=mover.norad_id,
             rationale=why + " The closest approach is too soon to plan a burn with enough notice.", **base,
         )
     return None
@@ -212,7 +212,14 @@ def plan(
     ]
     order.sort()
     reached_target = bool(order)
-    if not order:  # nothing reaches the target: take the best available
+    if not order:  # nothing reaches the target: the burns that lower the worst case most, best first
+        apart = sorted(
+            (pc_max_grid[i, j], abs(dv_values[i]), leads[j], i, j)
+            for i in range(dv_values.size) for j in range(len(leads))
+            if miss_grid[i, j] > event.miss_distance_km and pc_max_grid[i, j] < event.pc_max
+        )
+        order = [(dv, lead, i, j) for _, dv, lead, i, j in apart[:4 * config.PLAN_EXACT_LIMIT]]
+    if not order:
         i, j = np.unravel_index(np.argmin(pc_max_grid), pc_max_grid.shape)
         order = [(abs(dv_values[i]), leads[j], int(i), int(j))]
 
@@ -257,12 +264,13 @@ def plan(
         ca = closest_approach_to_orbit(orbit, other, lead_s, 120.0)
         enc = encounter_plane(ca.r1, ca.v1, C_m, ca.r2, ca.v2, C_o)
         pc_after, pc_max_after = pc_disc(enc.miss, enc.cov, hbr), pc_max_disc(enc.miss, enc.cov, hbr)
-        if reached_target and not (_is_safe(pc_after, pc_max_after) and ca.miss_km > event.miss_distance_km):
+        good = _is_safe(pc_after, pc_max_after) if reached_target else pc_max_after < event.pc_max
+        if not (good and ca.miss_km > event.miss_distance_km):
             reasons["exact"] += 1
             continue
         verified += 1
         effects = side_effects(orbit, catalog, event, baseline=baseline, pool=pool) if verify else SideEffects()
-        if not effects.clean and reached_target:
+        if not effects.clean:  # a burn that harms another pass is never recommended
             reasons["created" if effects.created else "worsened"] += 1
             disturbing.append((bool(dv_values[i] > 0), lead))
             continue
@@ -273,14 +281,17 @@ def plan(
         pool.close()
     rejected = sum(reasons.values())
     why_rejected = ", ".join(text for count, text in (
-        (reasons["exact"], f"{reasons['exact']} did not make the pass safe when computed exactly"),
+        (reasons["exact"], f"{reasons['exact']} did not {'make the pass safe' if reached_target else 'lower the risk'} when computed exactly"),
         (reasons["created"], f"{reasons['created']} created a new dangerous pass"),
         (reasons["worsened"], f"{reasons['worsened']} made another dangerous pass of the satellite worse"),
     ) if count)
     if chosen is None:
         return ManeuverPlan(
-            decision="MONITOR", maneuvering_id=mover.norad_id, search_grid=grid,
-            rationale=f"{why} No burn is proposed. Of the {rejected} burns tried, {why_rejected}.",
+            decision="MONITOR", reason="NO_SAFE_BURN", maneuvering_id=mover.norad_id, search_grid=grid,
+            rationale=(
+                f"{why}{'' if reached_target else ' No burn on the grid reaches the safety target.'}"
+                f" No burn is proposed. Of the {rejected} burns tried, {why_rejected}."
+            ),
             **base,
         )
 
@@ -297,12 +308,7 @@ def plan(
         notes.append("No burn on the grid reaches the safety target; this is the best available.")
     if rejected:
         notes.append(f"Burns tried before this one and rejected: {why_rejected}.")
-    if not effects.clean:
-        notes.append(
-            f"Warning: this burn creates {len(effects.created)} new dangerous pass(es) and makes "
-            f"{len(effects.worsened)} existing one(s) worse."
-        )
-    elif effects.checked:
+    if effects.checked:
         one = effects.checked == 1
         notes.append(
             f"The satellite has {effects.checked} other dangerous {'pass' if one else 'passes'} in the "

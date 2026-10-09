@@ -81,9 +81,14 @@ class SearchGrid(BaseModel):
     cross_track_30mms_pc_max_after: Optional[list[float]] = None
 
 
+# why a plan says to watch and proposes no burn
+WatchReason = Literal["BELOW_THRESHOLD", "NEITHER_CAN_MOVE", "SAME_FLEET", "TOO_SOON", "NO_SAFE_BURN", "LIMIT"]
+
+
 class ManeuverPlan(BaseModel):
     event_id: str
     decision: Decision
+    reason: Optional[WatchReason] = None  # set when the decision is MONITOR
     rationale: Optional[str] = None
     maneuvering_id: Optional[int] = None  # which of the two objects burns
     burn_time: Optional[datetime] = None
