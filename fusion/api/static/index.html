@@ -23,12 +23,26 @@
   button:disabled { opacity: .45; cursor: default; }
   #status, .check { color: #9a9a9a; }
   .check { margin: 10px 0 0; font-size: 14px; }
-  #planbox { position: sticky; top: 0; background: #000; border-bottom: 1px solid #fff; padding-bottom: 18px; z-index: 2; }
-  #planbox h2 { margin-top: 22px; }
+  .split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 48px; }
+  #planbox { border-bottom: 1px solid #fff; padding-bottom: 18px; }
   .big { font-size: clamp(24px, 3.2vw, 44px); font-weight: 600; letter-spacing: -.02em; line-height: 1.1; margin: 0; }
   .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
   .facts b { display: block; font-size: 18px; }
   .why { color: #9a9a9a; margin: 14px 0 0; max-width: 90ch; }
+  .ask { display: flex; align-items: center; gap: 18px; margin-top: 16px; color: #9a9a9a; }
+  .pics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 24px; }
+  .pics h3 { margin: 0 0 8px; font-size: 11px; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; color: #9a9a9a; }
+  .pics svg { display: block; width: 100%; height: auto; }
+  .pics text { fill: #9a9a9a; font-size: 11px; }
+  .pics text.on { fill: #fff; }
+  .pics p { color: #9a9a9a; font-size: 12px; margin: 6px 0 0; }
+  .find input { width: 100%; background: none; border: 0; border-bottom: 1px solid #555; color: #fff; font: inherit; padding: 10px 0; outline: none; }
+  .find input:focus { border-bottom-color: #fff; }
+  .find input::placeholder { color: #6f6f6f; }
+  #found li { cursor: pointer; }
+  #found li:hover { background: #161616; color: #fff; }
+  #found span { color: #6f6f6f; }
+  #about:empty { display: none; }
   table { width: 100%; border-collapse: collapse; }
   th { text-align: left; color: #9a9a9a; font-weight: 400; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
   th, td { padding: 10px 10px 10px 0; border-bottom: 1px solid #1c1c1c; }
@@ -39,7 +53,15 @@
   ul { list-style: none; margin: 0; padding: 0; }
   li { padding: 9px 0; border-bottom: 1px solid #1c1c1c; color: #cfcfcf; }
   #error { font-weight: 700; margin-top: 18px; }
-  @media (max-width: 760px) { .tiles, .facts { grid-template-columns: repeat(2, 1fr); } .hide { display: none; } }
+  /* wide screens: the list on the left, the picked pass beside it and always in view */
+  @media (min-width: 1180px) {
+    .split { grid-template-columns: minmax(0, 11fr) minmax(0, 14fr); align-items: start; }
+    #planbox { order: 2; position: sticky; top: 0; max-height: 100vh; overflow-y: auto; border-bottom: 0; }
+    td { font-size: 14px; }
+    .facts b { font-size: 16px; }
+    .hide { display: none; }
+  }
+  @media (max-width: 760px) { .tiles, .facts { grid-template-columns: repeat(2, 1fr); } .pics { grid-template-columns: 1fr; } .hide { display: none; } }
 </style>
 </head>
 <body>
@@ -55,13 +77,17 @@
 <div class="run"><button id="run">Run now</button><span id="status">Ready.</span></div>
 <p class="check"><span id="validation"></span> <a id="report" href="#" target="_blank" hidden>Proof</a></p>
 
-<div id="planbox"><h2>Plan</h2><div id="plan"><p class="why">Pick a pass below.</p></div></div>
-
-<h2>Close passes <span class="tabs"><a id="showLatest" class="on">All</a><a id="showBurns">With a plan</a><a id="showReplay">2009 replay</a></span></h2>
-<table>
-  <thead><tr><th>Level</th><th>Objects</th><th class="hide">In</th><th>Distance</th><th>Risk</th><th>Plan</th></tr></thead>
-  <tbody id="events"></tbody>
-</table>
+<div class="split">
+  <div id="planbox"><h2>Plan</h2><div id="plan"><p class="why">Pick a pass.</p></div></div>
+  <div>
+    <h2>Close passes <span class="tabs"><a id="showLatest" class="on">All</a><a id="showBurns">With a plan</a><a id="showFleets">Fleets</a><a id="showReplay">2009 replay</a></span></h2>
+    <div class="find"><input id="q" placeholder="Check any satellite: name or number" autocomplete="off"><ul id="found"></ul><p id="about" class="why"></p></div>
+    <table>
+      <thead id="head"></thead>
+      <tbody id="events"></tbody>
+    </table>
+  </div>
+</div>
 
 <h2>What changed</h2>
 <ul id="alerts"><li>Nothing yet.</li></ul>
@@ -70,11 +96,16 @@
 <script>
 const $ = id => document.getElementById(id);
 let picked = null, runId = null, source = "latest", onlyBurns = false;
+let checked = null, typed = 0;  // the result of checking one satellite, shown when source is "object"
+let fleet = null;  // the fleet whose passes the list shows, when one was picked under Fleets
+const PASS_HEAD = '<tr><th>Level</th><th>Objects</th><th class="hide">In</th><th>Distance</th><th>Risk</th><th>Plan</th></tr>';
+const FLEET_HEAD = "<tr><th>Fleet</th><th>Satellites</th><th>Passes</th><th>Dangerous</th><th>Own fleet</th><th>Burns</th></tr>";
 const get = async path => { const r = await fetch(path); if (!r.ok) throw new Error(path); return r.json(); };
 const n = x => Number(x).toLocaleString("en-US");
 const esc = s => String(s == null ? "" : s).replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
 const odds = p => p == null ? "-" : p >= 0.5 ? "likely" : 1 / p > 1e9 ? "under 1 in a billion" : "1 in " + n(Math.round(1 / p));
 const dist = km => km < 1 ? Math.round(km * 1000) + " m" : km.toFixed(2) + " km";
+const short = km => km < 1 ? Math.round(km * 1000) + " m" : km.toFixed(km < 10 ? 1 : 0) + " km";  // for a picture's axis
 const word = level => level ? level[0] + level.slice(1).toLowerCase() : "";
 const fail = () => { $("error").textContent = "Cannot reach the system."; };
 
@@ -92,42 +123,180 @@ async function loadTop() {
   } catch (e) { $("validation").textContent = ""; }
 }
 
+// one row per fleet: passes to act on, passes inside the fleet (left to its operator), burns planned for it
+async function loadFleets() {
+  const fleets = (await get("/fleets")).slice(0, 40);
+  $("head").innerHTML = FLEET_HEAD;
+  $("events").innerHTML = fleets.map(f => `<tr class="row" data-fleet="${esc(f.fleet)}">
+      <td class="${f.red_to_act_on ? "RED" : "AMBER"}">${esc(f.fleet)}</td><td>${f.satellites == null ? "-" : n(f.satellites)}</td><td>${n(f.passes)}</td>
+      <td class="${f.red_to_act_on ? "RED" : "GREEN"}">${n(f.red_to_act_on)}</td><td>${n(f.red_own_fleet)}</td>
+      <td>${f.burns ? f.burns + " (" + (f.dv_total_ms * 1000).toFixed(0) + " mm/s)" : ""}</td></tr>`).join("") || '<tr><td colspan="6">Nothing to show.</td></tr>';
+  document.querySelectorAll("tr.row").forEach(row => row.onclick = () => {
+    fleet = row.dataset.fleet; picked = null;
+    $("about").textContent = fleet + ": every pass that involves one of its satellites.";
+    loadEvents().catch(fail);
+  });
+}
+
 async function loadEvents() {
-  const events = await get("/events?limit=60&source=" + source + (onlyBurns ? "&plan=MANEUVER" : ""));
+  if (source === "fleets" && !fleet) return loadFleets();
+  const events = source === "object" ? (checked ? checked.passes.slice(0, 60) : [])
+    : await get("/events?limit=60&source=" + (source === "fleets" ? "latest&fleet=" + encodeURIComponent(fleet) : source) + (onlyBurns ? "&plan=MANEUVER" : ""));
+  $("head").innerHTML = PASS_HEAD;
   $("events").innerHTML = events.map(e => {
-    const hours = source === "latest" ? Math.max(0, (new Date(e.tca) - Date.now()) / 3.6e6).toFixed(1) + " h" : "-";
+    const hours = source !== "replay" ? Math.max(0, (new Date(e.tca) - Date.now()) / 3.6e6).toFixed(1) + " h" : "-";
     const plan = e.plan_decision === "MANEUVER" ? "<b>Move</b>" : e.plan_decision === "MONITOR" ? "Watch" : "";
     return `<tr class="row ${e.event_id === picked ? "picked" : ""}" data-id="${esc(e.event_id)}">
       <td class="${e.risk_level}">${word(e.risk_level)}</td>
       <td>${esc(e.primary_name)} / ${esc(e.secondary_name)}${e.synthetic ? ' <span class="tag">TEST</span>' : ""}</td>
       <td class="hide">${hours}</td><td>${dist(e.miss_distance_km)}</td><td>${odds(e.pc_max)}</td><td>${plan}</td></tr>`;
   }).join("") || '<tr><td colspan="6">Nothing to show.</td></tr>';
-  document.querySelectorAll("tr.row").forEach(row => row.onclick = () => { picked = row.dataset.id; loadEvents().catch(fail); loadPlan(); });
+  document.querySelectorAll("tr.row").forEach(row => row.onclick = () => {
+    picked = row.dataset.id; loadEvents().catch(fail); loadPlan();
+    if (getComputedStyle($("planbox")).position !== "sticky") $("planbox").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 }
 
 function burn(p) {
   const way = p.dv_rtn_ms[1] > 0 ? "Speed up" : "Slow down";
+  // runs made before the other passes were compared have no count of them
+  const others = p.other_passes_checked == null
+    ? `<b>${p.secondary_conjunctions_created}</b><span>new dangers</span>`
+    : `<b>${p.secondary_conjunctions_created} new, ${p.other_passes_worsened} worse</b><span>its other passes${p.other_passes_checked ? ", " + p.other_passes_checked + " checked" : ""}</span>`;
   return `<p class="big">${way} by ${(p.dv_magnitude_ms * 1000).toFixed(0)} mm/s</p>
     <div class="facts">
       <div><b>${p.lead_time_orbits} orbits early</b><span>when</span></div>
       <div><b>${dist(p.miss_before_km)} to ${dist(p.miss_after_km)}</b><span>distance</span></div>
       <div><b>${odds(p.pc_max_before)} to ${odds(p.pc_max_after)}</b><span>risk</span></div>
-      <div><b>${p.secondary_conjunctions_created}</b><span>new dangers</span></div>
+      <div>${others}</div>
     </div><p class="why">${esc(p.rationale)}</p>`;
+}
+
+// --- pictures: every one is drawn in the same 250 x 165 frame ---
+const W = 250, H = 165, L = 40, R = 6, T = 8, B = 20;
+const across = u => L + u * (W - L - R), down = u => T + u * (H - T - B);  // 0..1 over the plot area
+const frame = body => `<svg viewBox="0 0 ${W} ${H}" role="img">${body}</svg>`;
+const label = (x, y, text, anchor, on) => `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${anchor || "start"}"${on ? ' class="on"' : ""}>${text}</text>`;
+
+// the gap between the two objects around the closest moment, their paths taken as straight lines
+function gapPicture(e, after, afterWord) {
+  const v = e.relative_speed_kms, before = e.miss_distance_km, wide = Math.max(before, after || 0);
+  const half = 3 * wide / v, top = Math.hypot(wide, v * half);
+  const x = s => across((s + half) / (2 * half)), y = km => down(1 - km / top);
+  const curve = miss => Array.from({ length: 81 }, (_, i) => {
+    const s = half * (i / 40 - 1);
+    return (i ? "L" : "M") + x(s).toFixed(1) + " " + y(Math.hypot(miss, v * s)).toFixed(1);
+  }).join("");
+  const seconds = half < 1 ? half.toFixed(2) : half.toFixed(1);
+  let body = `<path d="M${L} ${y(0)}H${W - R}" stroke="#333"/>` +
+    label(L, H - 6, "−" + seconds + " s") + label(x(0), H - 6, "closest", "middle") + label(W - R, H - 6, "+" + seconds + " s", "end") +
+    label(L - 5, y(top) + 8, short(top), "end") + label(L - 5, y(0), "0", "end") +
+    `<path d="${curve(before)}" fill="none" stroke="#fff" stroke-width="1.5"/>`;
+  if (after == null) return frame(body + label(x(0), y(before) + 15, dist(before), "middle", true));
+  // the two curves are named at the top, in the open mouth of the V
+  const name = (row, dash, text) => `<path d="M${x(0) - 66} ${T + 7 + row * 15}h18" stroke="#fff" stroke-width="1.5"${dash ? ' stroke-dasharray="4 3"' : ""}/>` +
+    label(x(0) - 42, T + 11 + row * 15, text, "start", true);
+  return frame(body + `<path d="${curve(after)}" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="4 3"/>` +
+    name(0, false, dist(before) + " now") + name(1, true, dist(after) + " " + afterWord));
+}
+
+// every burn on the search grid: when (across) and how hard (up and down), shaded by what it leaves
+function burnMap(p) {
+  const g = p.search_grid, rows = g.dv_ms.length, cols = g.lead_orbits.length;
+  const w = (W - L - R) / cols, h = (H - T - B) / rows;
+  const x = j => L + j * w, y = i => T + (rows - 1 - i) * h;
+  const shade = (i, j) => g.pc_max_after[i][j] >= 1e-4 ? "#fff"
+    : g.pc_max_after[i][j] < 1e-5 && g.pc_after[i][j] < 1e-6 && g.miss_after_km[i][j] > p.miss_before_km ? "#1c1c1c" : "#777";
+  let body = "";
+  for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++)
+    body += `<rect x="${x(j).toFixed(1)}" y="${y(i).toFixed(1)}" width="${(w + .4).toFixed(1)}" height="${(h + .4).toFixed(1)}" fill="${shade(i, j)}"/>`;
+  g.lead_orbits.forEach((lead, j) => { if (Number.isInteger(lead)) body += label(x(j) + w / 2, H - 6, lead, "middle"); });
+  body += label(L - 5, T + 9, "faster", "end") + label(L - 5, H - B - 2, "slower", "end");
+  if (p.decision === "MANEUVER") {
+    const j = g.lead_orbits.indexOf(p.lead_time_orbits);
+    const i = g.dv_ms.reduce((best, dv, k) => Math.abs(dv - p.dv_rtn_ms[1]) < Math.abs(g.dv_ms[best] - p.dv_rtn_ms[1]) ? k : best, 0);
+    if (j >= 0) body += `<circle cx="${x(j) + w / 2}" cy="${y(i) + h / 2}" r="6" fill="none" stroke="#000" stroke-width="4"/><circle cx="${x(j) + w / 2}" cy="${y(i) + h / 2}" r="6" fill="none" stroke="#fff" stroke-width="1.5"/>`;
+  }
+  return frame(body);
+}
+
+// the worst-case risk of this pass at each run that saw it, and where the model expects it to end
+function riskPicture(e) {
+  const runs = (e.history || []).filter(r => r.pc_max > 0);
+  const logs = runs.map(r => Math.log10(r.pc_max));
+  const forecast = e.pc_predicted_final > 0 ? Math.max(-9, Math.log10(e.pc_predicted_final)) : null;
+  const all = logs.concat(forecast == null ? [] : [forecast]);
+  const hi = Math.max(-3.5, ...all) + .4, lo = Math.min(-5.5, ...all) - .4, steps = all.length - 1;
+  const x = i => across(i / (steps || 1)), y = v => down((hi - v) / (hi - lo));
+  const time = id => id.slice(9, 11) + ":" + id.slice(11, 13);
+  let body = [[-4, "danger"], [-5, "watch"]].map(([v, text]) =>
+    `<path d="M${L} ${y(v).toFixed(1)}H${W - R}" stroke="#555" stroke-dasharray="2 4"/>` + label(L - 5, y(v) + 3, text, "end")).join("");
+  body += `<path d="${logs.map((v, i) => (i ? "L" : "M") + x(i).toFixed(1) + " " + y(v).toFixed(1)).join("")}" fill="none" stroke="#fff" stroke-width="1.5"/>`;
+  body += logs.map((v, i) => `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="2.5" fill="#fff"/>`).join("");
+  body += label(L, H - 6, time(runs[0].run_id)) + label(x(logs.length - 1), H - 6, time(runs[runs.length - 1].run_id), forecast == null ? "end" : "middle");
+  if (forecast != null) {
+    const last = logs.length - 1;
+    body += `<path d="M${x(last).toFixed(1)} ${y(logs[last]).toFixed(1)}L${x(steps).toFixed(1)} ${y(forecast).toFixed(1)}" stroke="#fff" stroke-dasharray="2 3"/>` +
+      `<circle cx="${(x(steps) - 4).toFixed(1)}" cy="${y(forecast).toFixed(1)}" r="4" fill="#000" stroke="#fff" stroke-width="1.5"/>` + label(x(steps) - 12, y(forecast) + 4, "forecast", "end", true);
+  }
+  return frame(body);
+}
+
+function pictures(d, moved, movedWord) {
+  const e = d.event, grid = [moved, d.plan].find(p => p && p.search_grid);
+  let html = `<div><h3>Gap at the pass</h3>${gapPicture(e, moved ? moved.miss_after_km : null, movedWord)}<p>Closing at ${e.relative_speed_kms.toFixed(1)} km/s.</p></div>`;
+  if (grid) html += `<div><h3>Every burn tried</h3>${burnMap(grid)}<p>Across: orbits before the pass. Dark is safe${grid.decision === "MANEUVER" ? ", the ring is the one chosen" : ""}.</p></div>`;
+  if ((e.history || []).length > 1) html += `<div><h3>Risk, run by run</h3>${riskPicture(e)}<p>Worst case at each run${e.pc_predicted_final > 0 ? ". Ring: where the model expects it to end" : ""}.</p></div>`;
+  return `<div class="pics">${html}</div>`;
+}
+
+// a pass found by checking one satellite: it is not in the run, so it has no plan
+function showPass(e) {
+  const hours = Math.max(0, (new Date(e.tca) - Date.now()) / 3.6e6).toFixed(1);
+  $("plan").innerHTML = `<p class="big">${e.risk_level === "RED" ? "Dangerous" : e.risk_level === "AMBER" ? "Watch" : "Safe"}</p>
+    <div class="facts">
+      <div><b>in ${hours} h</b><span>when</span></div>
+      <div><b>${dist(e.miss_distance_km)}</b><span>distance</span></div>
+      <div><b>${odds(e.pc_max)}</b><span>risk, worst case</span></div>
+      <div><b>${e.relative_speed_kms.toFixed(1)} km/s</b><span>closing speed</span></div>
+    </div>` + pictures({ event: e });
 }
 
 async function loadPlan() {
   if (!picked) return;
+  const id = picked;
+  if (source === "object") { showPass(checked.passes.find(e => e.event_id === id)); return; }
   try {
-    const p = await get("/events/" + encodeURIComponent(picked) + "/plan?source=" + source);
-    if (p.decision === "MANEUVER") { $("plan").innerHTML = burn(p); return; }
-    let html = `<p class="big">${p.decision === "MONITOR" ? "Watch" : "No action"}</p><p class="why">${esc(p.rationale)}</p>`;
-    if (source === "replay") {
-      const whatIf = (await get("/replay/2009")).what_if_plans.find(w => w.event_id === picked);
-      if (whatIf) html += "<h2>What if it had moved</h2>" + burn(whatIf);
+    const d = await get("/events/" + encodeURIComponent(id) + "?source=" + (source === "replay" ? "replay" : "latest"));
+    if (id !== picked) return;
+    const p = d.plan, whatIf = d.what_if_plan;
+    let html;
+    if (!p) html = '<p class="big">Safe</p><p class="why">Low risk. No plan needed.</p>' + pictures(d);
+    else if (p.decision === "MANEUVER") html = burn(p) + pictures(d, p, "after the burn");
+    else {
+      html = `<p class="big">${p.decision === "MONITOR" ? "Watch" : "No action"}</p><p class="why">${esc(p.rationale)}</p>`;
+      if (whatIf) html += "<h2>What if it moved</h2>" + burn(whatIf);
+      else if (source !== "replay" && !p.requested_at) html += '<div class="ask"><button id="ask">Plan now</button><span id="asked"></span></div>';
+      html += pictures(d, whatIf, "if it moved");
     }
     $("plan").innerHTML = html;
-  } catch (e) { $("plan").innerHTML = '<p class="big">Safe</p><p class="why">Low risk. No plan needed.</p>'; }
+    if ($("ask")) $("ask").onclick = () => askPlan(id);
+  } catch (e) { $("plan").innerHTML = '<p class="why">Cannot load this pass.</p>'; }
+}
+
+// a run plans only its first few dangerous passes; this searches for a burn for any other one
+async function askPlan(id) {
+  $("ask").disabled = true;
+  $("asked").textContent = "Searching for the smallest safe burn. One to two minutes.";
+  try {
+    const r = await fetch("/events/" + encodeURIComponent(id) + "/plan", { method: "POST" });
+    const p = await r.json();
+    if (id !== picked) return;
+    if (!r.ok) { $("asked").textContent = p.detail || "Could not plan this pass."; $("ask").disabled = false; return; }
+    // a what-if search that finds no burn is not kept: the decision shown already says why
+    if (p.what_if && p.decision !== "MANEUVER") { $("asked").textContent = "No burn to show. " + (p.rationale || ""); return; }
+    loadEvents().catch(fail); loadPlan();
+  } catch (e) { $("asked").textContent = "Cannot reach the system."; $("ask").disabled = false; }
 }
 
 async function loadAlerts() {
@@ -155,13 +324,49 @@ async function poll() {
 }
 
 function show(which, burns, tab) {
-  source = which; onlyBurns = burns; picked = null;
-  $("plan").innerHTML = '<p class="why">Pick a pass below.</p>';
-  ["showLatest", "showBurns", "showReplay"].forEach(id => $(id).classList.toggle("on", id === tab));
+  source = which; onlyBurns = burns; picked = null; fleet = null;
+  $("plan").innerHTML = '<p class="why">Pick a pass.</p>';
+  ["showLatest", "showBurns", "showFleets", "showReplay"].forEach(id => $(id).classList.toggle("on", id === tab));
+  if (which !== "object") { $("q").value = ""; $("found").innerHTML = ""; }
+  $("about").textContent = which === "fleets" ? "Pick a fleet to see its passes. Own fleet: passes between two of its own satellites, left to its operator." : "";
   loadEvents().catch(fail);
+}
+
+// --- check any satellite: find it by name or number, then list its close passes from now ---
+const kind = o => o.operational ? "working satellite" : o.object_type === "PAYLOAD" ? "dead satellite" : o.object_type.toLowerCase().replace("_", " ");
+
+$("q").oninput = () => {
+  const text = $("q").value.trim(), turn = ++typed;
+  if (text.length < 2) { $("found").innerHTML = ""; return; }
+  setTimeout(async () => {
+    if (turn !== typed) return;
+    try {
+      const found = await get("/objects/search?q=" + encodeURIComponent(text));
+      if (turn !== typed) return;
+      $("found").innerHTML = found.map(o => `<li data-id="${o.norad_id}" data-name="${esc(o.name)}">${esc(o.name)} <span>${o.norad_id}, ${kind(o)}</span></li>`).join("") || "<li>No object with that name or number.</li>";
+      document.querySelectorAll("#found li[data-id]").forEach(li => li.onclick = () => check(li.dataset.id, li.dataset.name));
+    } catch (e) { $("found").innerHTML = "<li>Start a run first.</li>"; }
+  }, 250);
+};
+
+async function check(id, name) {
+  typed++; checked = null;
+  show("object", false, "");
+  $("q").value = name; $("found").innerHTML = "";
+  $("about").textContent = "Checking " + name + " against everything at its altitude...";
+  try {
+    const r = await fetch("/objects/" + id + "/passes"), d = await r.json();
+    if (source !== "object") return;
+    if (!r.ok) { $("about").textContent = d.detail || "Could not check it."; return; }
+    checked = d;
+    const risky = d.passes.filter(e => e.risk_level !== "GREEN").length;
+    $("about").textContent = `${d.passes.length} ${d.passes.length === 1 ? "pass" : "passes"} within ${d.threshold_km} km in the next ${d.hours} hours, ${risky ? risky + " dangerous" : "none dangerous"}. Checked against ${n(d.objects_screened)} objects in ${d.seconds} s.`;
+    loadEvents();
+  } catch (e) { $("about").textContent = "Cannot reach the system."; }
 }
 $("showLatest").onclick = () => show("latest", false, "showLatest");
 $("showBurns").onclick = () => show("latest", true, "showBurns");
+$("showFleets").onclick = () => show("fleets", false, "showFleets");
 $("showReplay").onclick = () => show("replay", false, "showReplay");
 
 setInterval(() => poll().catch(fail), 2000);
