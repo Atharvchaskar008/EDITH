@@ -26,32 +26,32 @@
         {
           "number": "78",
           "title": "Donald Kessler formulates the <b>Kessler Syndrome</b>: cascading collisions rendering orbital bands unusable.",
-          "image": "img/notable-first-59.jpg"
+          "image": "img/notable-first-78.jpg"
         },
         {
           "number": "07",
           "title": "<b>Fengyun-1C</b> anti-satellite intercept shatters a weather satellite, leaving 1,954 tracked debris fragments still active in LEO today.",
-          "image": "img/notable-first-61.jpg"
+          "image": "img/notable-first-07.jpg"
         },
         {
           "number": "09",
           "title": "<b>Iridium 33 & Cosmos 2251</b> collide at 11.65 km/s over Taymyr. The world's first catastrophic satellite collision—nobody burned to avoid it.",
-          "image": "img/notable-first-63.jpg"
+          "image": "img/notable-first-09.jpg"
         },
         {
           "number": "19",
           "title": "<b>Megaconstellation Era</b> arrives with the first Starlink launches. Over 11,000 commercial satellites join orbit.",
-          "image": "img/notable-first-67.jpg"
+          "image": "img/notable-first-19.jpg"
         },
         {
           "number": "21",
           "title": "<b>Cosmos 1408</b> destroyed in orbit, generating thousands of fragments threatening active human spacecraft.",
-          "image": "img/notable-first-69.jpg"
+          "image": "img/notable-first-21.jpg"
         },
         {
           "number": "26",
           "title": "<b>EDITH Autonomous System</b> deployed by Team Fusion: autonomous SGP4 propagation, 2D Pc integration, and verified burn recommendations every 6 hours.",
-          "image": "img/notable-first-75.jpg"
+          "image": "img/notable-first-26.jpg"
         }
       ]
     }
@@ -68,17 +68,17 @@
         {
           "number": "01",
           "title": "Active vs Debris: Operational satellites must move. Dead debris cannot steer.",
-          "image": "img/treaties-67.jpg"
+          "image": "img/rules-01.png"
         },
         {
           "number": "02",
           "title": "Fleet vs Fleet: Share ephemeris, propose minimum delta-v, and deconflict maneuver schedules.",
-          "image": "img/treaties-68.jpg"
+          "image": "img/rules-02.jpg"
         },
         {
           "number": "03",
           "title": "Dead on Dead: Broadcast proximity alerts to surrounding operational constellations.",
-          "image": "img/treaties-72.jpg"
+          "image": "img/rules-03.jpg"
         },
         {
           "number": "04",
@@ -101,14 +101,30 @@
     "slides": {
       "title": "Satellites power navigation, global banking timestamps, disaster warning radar, high-speed telecommunications, and defense reconnaissance.",
       "items": [
-        { "video": "video/daily-life-1.mp4" },
-        { "image": "img/daily-life-2.jpg" },
-        { "image": "img/daily-life-3.jpg" },
-        { "image": "img/daily-life-4.jpg" },
-        { "image": "img/daily-life-5.jpg" },
-        { "image": "img/daily-life-6.jpg" },
-        { "image": "img/daily-life-7.jpg" },
-        { "image": "img/daily-life-8.jpg" }
+        {
+          "video": "video/daily-life-1.mp4"
+        },
+        {
+          "image": "img/daily-life-2.jpg"
+        },
+        {
+          "image": "img/daily-life-3.jpg"
+        },
+        {
+          "image": "img/daily-life-4.jpg"
+        },
+        {
+          "image": "img/daily-life-5.jpg"
+        },
+        {
+          "image": "img/daily-life-6.jpg"
+        },
+        {
+          "image": "img/daily-life-7.jpg"
+        },
+        {
+          "image": "img/daily-life-8.jpg"
+        }
       ]
     }
   },
@@ -131,13 +147,13 @@
         "sdg": 2
       },
       {
-        "image": "img/sdg-21.jpg",
+        "image": "img/benefits-weather.jpg",
         "title": "Weather & Climate Tracking",
         "content": "Atmospheric sounding and hurricane path prediction preventing thousands of casualties yearly.",
         "sdg": 3
       },
       {
-        "image": "img/sdg-22.jpg",
+        "image": "img/benefits-crewed.jpg",
         "title": "Crewed Spaceflight Safety",
         "content": "Shielding space stations and commercial astronaut missions from orbital debris cloud intercepts.",
         "sdg": 4
@@ -304,11 +320,21 @@
       "subtitle": "Every six hours, EDITH ingests fresh TLE element sets, propagates the entire sky with vectorized SGP4, performs spatial KD-tree screening, calculates collision probability, and outputs verified burn plans.",
       "button": "Explore the <i>Architecture</i>",
       "items": [
-        { "image": "img/path-forward-1.jpg" },
-        { "image": "img/path-forward-2.jpg" },
-        { "image": "img/path-forward-3.jpg" },
-        { "image": "img/path-forward-4.jpg" },
-        { "image": "img/path-forward-5.jpg" }
+        {
+          "image": "img/path-forward-1.jpg"
+        },
+        {
+          "image": "img/path-forward-2.jpg"
+        },
+        {
+          "image": "img/path-forward-3.jpg"
+        },
+        {
+          "image": "img/path-forward-4.jpg"
+        },
+        {
+          "image": "img/path-forward-5.jpg"
+        }
       ]
     }
   },
@@ -381,17 +407,17 @@
         "content": "EDITH delivers verifiable decision support for satellite operators:",
         "cards": [
           {
-            "image": "img/sos-1.jpg",
+            "image": "img/sos-fuel.jpg",
             "title": "Minimum Fuel Expenditure",
             "content": "Logarithmic along-track burn grids ensure the satellite expends minimal millimetres per second."
           },
           {
-            "image": "img/sos-2.jpg",
+            "image": "img/sos-conjunction.jpg",
             "title": "Secondary Conjunction Check",
             "content": "Guarantees a maneuver never steers into a secondary debris cloud over a 24-hour verification horizon."
           },
           {
-            "image": "img/sos-3.jpg",
+            "image": "img/sos-return.jpg",
             "title": "Automated Return Burns",
             "content": "Equal-and-opposite return delta-v computed to restore nominal orbital period and ground track."
           }
