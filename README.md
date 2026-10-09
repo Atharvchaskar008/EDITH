@@ -10,7 +10,7 @@
 ![SGP4](https://img.shields.io/badge/SGP4-orbit_model-555555)
 ![Pydantic](https://img.shields.io/badge/Pydantic-data_models-E92063?logo=pydantic&logoColor=white)
 ![LightGBM](https://img.shields.io/badge/LightGBM-risk_trend_model-9ACD32)
-![pytest](https://img.shields.io/badge/pytest-118_tests-0A9EDC?logo=pytest&logoColor=white)
+![pytest](https://img.shields.io/badge/pytest-120_tests-0A9EDC?logo=pytest&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-dashboard-F7DF1E?logo=javascript&logoColor=black)
 
 EDITH screens every publicly tracked object in low Earth orbit against every other, ranks the close passes by collision probability, and recommends the smallest avoidance burn that makes a dangerous pass safe. It re-runs every six hours without supervision and serves its results through a web API and an operator dashboard.
@@ -23,7 +23,7 @@ The Python package is named `fusion`.
 
 - [What it does](#what-it-does)
 - [Results](#results)
-- [How it works](#how-it-works)
+- [How it works](#how-it-works) (and [why these tools](#why-these-tools))
 - [Validation](#validation)
 - [Quick start](#quick-start)
 - [Usage](#usage)
@@ -89,6 +89,19 @@ flowchart LR
 | Verify | The burned orbit is screened against the whole catalogue for 24 hours, and every dangerous pass found is compared with the same pass without the burn; a return burn restores the orbit | `fusion/maneuver/verify.py` |
 
 The design and its reasons are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+### Why these tools
+
+Python gives the orders; the heavy work runs in compiled C and C++ libraries. Measured on the same laptop with `scripts/why_python.py`:
+
+| Choice | Measured | Against |
+|---|---|---|
+| `sgp4` (compiled C++) through NumPy arrays | 1.5 million positions a second on one core | 18 times the same maths in plain Python |
+| SciPy KD-tree for the neighbour search | 40 ms to find the nearby pairs among 30,000 objects | 60 s to check every pair with NumPy, for the identical answer |
+| The two together, one day of the whole sky on one core | 6 minutes | 145 hours checking every pair |
+| Processes, one per 30-minute time block | 7 minutes on eleven cores for a 72-hour search | 32 minutes on one core |
+
+The choice of method matters far more than the choice of language: the slow parts are already compiled, and a rewrite of the thin layer above them would gain little. SGP4 is used because public element sets are fitted with it and only give correct positions when read back with it. No machine-learning model is used for the physics, which has exact formulas; one optional model forecasts how a pass's risk will change.
 
 ## Validation
 
@@ -182,6 +195,7 @@ The dashboard opens on **Priority**: the dangerous passes that are not between t
 | `GET /fleets` | One row per fleet: passes, dangerous passes to act on, burns planned |
 | `GET /alerts` | Changes since the previous run |
 | `GET /validation` | The comparison with CelesTrak |
+| `GET /proof` | The validation results gathered for the dashboard's proof section |
 | `GET /replay/2009` | The 2009 replay |
 
 The full reference is in [docs/API.md](docs/API.md).
@@ -257,7 +271,7 @@ The main system is complete without them; each pack adds a capability through a 
 
 | Area | State |
 |---|---|
-| Engine, pipeline, scheduler, API | Complete; 118 tests, run on GitHub on every push |
+| Engine, pipeline, scheduler, API | Complete; 120 tests, run on GitHub on every push |
 | Validation pack | Complete; 54 tests |
 | Dashboard | Working: numbers, ranked list, plans with three pictures, plan on request, satellite check, fleets, alerts, replay. A 3D view is not built |
 
