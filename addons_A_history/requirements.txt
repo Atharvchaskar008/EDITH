@@ -1,0 +1,10 @@
+sgp4
+numpy
+scipy
+pydantic>=2
+fastapi
+uvicorn
+requests
+apscheduler
+pytest
+httpx
