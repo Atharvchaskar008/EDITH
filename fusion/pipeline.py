@@ -3,13 +3,15 @@
     python -m fusion.pipeline [--synthetic] [--quick] [--mode PRIMARIES|ALL_LEO] [--hours H]
 
 A run folder holds catalog.json (only the objects that appear in events, plus
-the primaries), events.json, plans.json, log.json, run.json, and an empty file
-named DONE written last. A failed run has no DONE file.
+the primaries), catalog_full.json.gz (every object, so a burn can be planned
+later for any event), events.json, plans.json, log.json, run.json, and an empty
+file named DONE written last. A failed run has no DONE file.
 """
 
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
 import logging
 import os
@@ -35,6 +37,8 @@ log = logging.getLogger(__name__)
 RUNS_ROOT = config.DATA_DIR / "runs"
 RUN_ID_PATTERN = re.compile(r"^\d{8}T\d{4}Z$")
 STAGES = ["INGEST", "PROPAGATE", "SCREEN", "ASSESS", "PLAN", "VERIFY", "DONE"]
+FULL_CATALOG_FILE = "catalog_full.json.gz"
+REQUESTED_PLANS_FILE = "requested_plans.json"
 
 Progress = Optional[Callable[[str, float, str], None]]
 
@@ -226,16 +230,17 @@ def run_pipeline(
 
         stage = "VERIFY"
         maneuvers = [p for p in plans if p.decision == "MANEUVER"]
-        clean = sum(p.secondary_conjunctions_created == 0 for p in maneuvers)
+        clean = sum(p.secondary_conjunctions_created == 0 and not p.other_passes_worsened for p in maneuvers)
         summary["plans"] = {"maneuver": len(maneuvers), "monitor": sum(p.decision == "MONITOR" for p in plans)}
         report(stage, 100, (
-            f"{len(maneuvers)} burn(s) recommended; {clean} checked clear of new close passes"
+            f"{len(maneuvers)} burn(s) recommended; {clean} checked clear of new or worsened close passes"
             if maneuvers else "No burns to verify"
         ))
 
         involved = {e.primary_id for e in events} | {e.secondary_id for e in events}
         saved = [o for o in catalog if o.norad_id in involved or o.is_primary or o.synthetic]
         write_json(folder / "catalog.json", [o.model_dump(mode="json") for o in saved])
+        write_full_catalog(folder, catalog)
         write_json(folder / "events.json", [e.model_dump(mode="json") for e in events])
         write_json(folder / "plans.json", [p.model_dump(mode="json") for p in plans])
         write_json(folder / "run.json", summary)  # the alert add-on reads the mode and window from it
@@ -269,6 +274,64 @@ def run_pipeline(
         write_json(folder / "log.json", entries)
         write_json(folder / "run.json", summary)
         raise
+
+
+def write_full_catalog(folder: Path, catalog: list[SpaceObject]) -> None:
+    """Every object of the run, compressed: about 5 MB for the whole of low Earth orbit."""
+    path = folder / FULL_CATALOG_FILE
+    temporary = path.with_name(path.name + ".tmp")
+    with gzip.open(temporary, "wt", encoding="utf-8") as file:
+        json.dump([o.model_dump(mode="json") for o in catalog], file)
+    os.replace(temporary, path)
+
+
+def load_full_catalog(folder: Path | str) -> Optional[list[SpaceObject]]:
+    """Every object of a run, or None for a run made before the full catalogue was kept."""
+    path = Path(folder) / FULL_CATALOG_FILE
+    if not path.exists():
+        return None
+    with gzip.open(path, "rt", encoding="utf-8") as file:
+        return [SpaceObject.model_validate(o) for o in json.load(file)]
+
+
+def plan_on_request(
+    folder: Path | str,
+    event_id: str,
+    now: Optional[datetime] = None,
+    catalog: Optional[list[SpaceObject]] = None,
+) -> dict:
+    """Search now for a burn for one event of a finished run, and keep the result
+    beside the run's own files in requested_plans.json.
+
+    A run searches for only a few burns; this plans any other event when asked.
+    The run's rules are applied first. If they call for a burn, the result
+    stands in for the run's decision. If they say to watch (the event is not
+    red, or both satellites belong to one fleet), a burn is searched for anyway
+    and the result is marked `what_if`: it shows what a burn would take, and the
+    decision stays to watch. `catalog` saves loading the run's full catalogue.
+    """
+    folder = Path(folder)
+    now = to_utc(now or datetime.now(timezone.utc))
+    read = lambda name: json.loads((folder / name).read_text(encoding="utf-8"))  # noqa: E731
+    events = [ConjunctionEvent.model_validate(e) for e in read("events.json")]
+    event = next((e for e in events if e.event_id == event_id), None)
+    if event is None:
+        raise KeyError(f"No event {event_id} in run {folder.name}")
+    catalog = catalog if catalog is not None else load_full_catalog(folder)
+    if catalog is None:
+        raise FileNotFoundError(f"Run {folder.name} was made before the full catalogue was kept")
+    by_id = {o.norad_id: o for o in catalog}
+
+    what_if = quick_decision(event, by_id, now) is not None
+    result = plan(event, catalog, now=now, baseline=events, force=what_if)
+    record = result.model_dump(mode="json")
+    record.update(what_if=what_if, requested_at=now.isoformat(timespec="seconds").replace("+00:00", "Z"))
+    if what_if and result.decision != "MANEUVER":
+        return record  # no burn to show: the run's own decision already says why
+    path = folder / REQUESTED_PLANS_FILE
+    earlier = json.loads(path.read_text(encoding="utf-8")) if path.exists() else []
+    write_json(path, [p for p in earlier if p.get("event_id") != event_id] + [record])
+    return record
 
 
 def load_run(folder: Path | str) -> tuple[list[SpaceObject], list[ConjunctionEvent], list[ManeuverPlan]]:

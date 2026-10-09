@@ -219,6 +219,32 @@ def screen(
     return events
 
 
+def screen_object(
+    norad_id: int,
+    catalog: list[SpaceObject],
+    t0: datetime,
+    hours: float = config.QUICK_WINDOW_HOURS,
+    threshold_km: float = config.OBJECT_CHECK_THRESHOLD_KM,
+    stats: Optional[dict] = None,
+) -> list[ConjunctionEvent]:
+    """Close approaches of one object with everything that shares its altitude,
+    closest first. The object is the primary of every event. One object against
+    the rest is a small search, so it uses the coarser step of the burn re-screen."""
+    target = next((o for o in catalog if o.norad_id == norad_id), None)
+    if target is None:
+        raise KeyError(f"Object {norad_id} is not in the catalogue")
+    low, high = target.perigee_km - config.ALTITUDE_PAD_KM, target.apogee_km + config.ALTITUDE_PAD_KM
+    others = [
+        o.model_copy(update={"is_primary": False}) if o.is_primary else o
+        for o in catalog
+        if o.norad_id != norad_id and o.perigee_km <= high and o.apogee_km >= low
+    ]
+    return screen(
+        [target.model_copy(update={"is_primary": True})] + others, t0, hours=hours,
+        threshold_km=threshold_km, mode="PRIMARIES", step_s=config.VERIFY_STEP_S, stats=stats,
+    )
+
+
 def _make_event(primary: SpaceObject, secondary: SpaceObject, ca) -> ConjunctionEvent:
     tca = ca.tca
     return ConjunctionEvent(

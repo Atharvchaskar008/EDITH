@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 import os
 import threading
+import time
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from pathlib import Path
@@ -27,11 +28,13 @@ from fusion import addons, config, pipeline
 from fusion.contracts import ConjunctionEvent, ManeuverPlan, SpaceObject
 from fusion.core.propagate import Propagator
 from fusion.core.sat import to_utc
+from fusion.core.screen import screen_object
 from fusion.frames import cov_rtn_to_teme
 from fusion.maneuver.orbit import ManeuveredOrbit
+from fusion.maneuver.planner import fleet as fleet_of
 from fusion.maneuver.verify import closest_approach_to_orbit
 from fusion.monitor.scheduler import Monitor
-from fusion.risk.pc import encounter_plane
+from fusion.risk.pc import assess, encounter_plane
 
 RUNS_ROOT = Path(os.environ.get("FUSION_RUNS_DIR", pipeline.RUNS_ROOT))
 STATIC_DIR = Path(__file__).parent / "static"
@@ -42,6 +45,67 @@ class RunRequest(BaseModel):
     synthetic: bool = False
     quick: bool = False
     mode: Optional[str] = None
+
+
+class OnRequest:
+    """Work asked for after a run, against the run's full catalogue: a burn search
+    for one event, or the close passes of one object. One of each at a time. The
+    catalogue is kept in memory between requests, because loading it takes a few seconds."""
+
+    def __init__(self) -> None:
+        self.plan_lock = threading.Lock()
+        self.check_lock = threading.Lock()
+        self.load_lock = threading.Lock()
+        self.loaded: tuple[Optional[Path], Optional[list[SpaceObject]]] = (None, None)
+        self.now = lambda: datetime.now(timezone.utc)
+
+    def catalog(self, folder: Path) -> list[SpaceObject]:
+        with self.load_lock:
+            if self.loaded[0] != folder:
+                self.loaded = (folder, pipeline.load_full_catalog(folder))
+            if self.loaded[1] is None:
+                raise HTTPException(409, "This run was made before its full catalogue was kept. Start a new run first.")
+            return self.loaded[1]
+
+    def plan(self, folder: Path, event_id: str) -> dict:
+        if not self.plan_lock.acquire(blocking=False):
+            raise HTTPException(409, "Another burn search is in progress. Try again when it has finished.")
+        try:
+            return pipeline.plan_on_request(folder, event_id, now=self.now(), catalog=self.catalog(folder))
+        finally:
+            self.plan_lock.release()
+
+    def passes(self, folder: Path, norad_id: int, hours: float, threshold_km: float) -> dict:
+        """Close passes of one object from now, most dangerous first."""
+        catalog = self.catalog(folder)
+        target = next((o for o in catalog if o.norad_id == norad_id), None)
+        if target is None:
+            raise HTTPException(404, f"Object {norad_id} is not in the latest run's catalogue")
+        if not self.check_lock.acquire(blocking=False):
+            raise HTTPException(409, "Another satellite is being checked. Try again when it has finished.")
+        try:
+            started, now, stats = time.time(), self.now(), {}
+            events = screen_object(norad_id, catalog, now, hours=hours, threshold_km=threshold_km, stats=stats)
+            by_id = {o.norad_id: o for o in catalog}
+            for event in events:
+                assess(event, by_id, predict=False)
+            events.sort(key=lambda e: -(e.pc_max or 0.0))
+            return {
+                "object": _brief(target), "from": now.isoformat(timespec="seconds").replace("+00:00", "Z"),
+                "hours": hours, "threshold_km": threshold_km, "run_id": folder.name,
+                "objects_screened": max(0, stats.get("objects_screened", 1) - 1),
+                "seconds": round(time.time() - started, 1),
+                "passes": [e.model_dump(mode="json") for e in events],
+            }
+        finally:
+            self.check_lock.release()
+
+
+def _brief(obj: SpaceObject) -> dict:
+    return {
+        "norad_id": obj.norad_id, "name": obj.name, "object_type": obj.object_type, "operational": obj.operational,
+        "perigee_km": round(obj.perigee_km, 1), "apogee_km": round(obj.apogee_km, 1),
+    }
 
 
 class Runner:
@@ -88,7 +152,11 @@ class Runner:
 
 
 runner = Runner()
-monitor = Monitor(lambda: runner.start(RunRequest()))
+on_request = OnRequest()
+# The scheduled run looks 24 hours ahead. Over 72 hours a full-sky run finds nine times
+# as many passes, and almost all of the extra ones are between two satellites of one
+# fleet, where public orbit data is not good enough to say anything (see docs/OPERATIONS.md).
+monitor = Monitor(lambda: runner.start(RunRequest(quick=True)))
 
 
 @asynccontextmanager
@@ -138,6 +206,24 @@ def _folder(source: str) -> Optional[Path]:
 def _events(folder: Optional[Path]) -> list[dict]:
     events = read_json(folder / "events.json", []) if folder else []
     return sorted(events, key=lambda e: -(e.get("pc_max") or 0.0))
+
+
+def _requested(folder: Optional[Path]) -> list[dict]:
+    return read_json(folder / pipeline.REQUESTED_PLANS_FILE, []) if folder else []
+
+
+def _plans(folder: Optional[Path]) -> list[dict]:
+    """The run's plans. A burn requested afterwards stands in for the run's own
+    decision on that event, unless it is a what-if."""
+    later = {p["event_id"]: p for p in _requested(folder) if not p.get("what_if")}
+    plans = read_json(folder / "plans.json", []) if folder else []
+    return [later.get(p.get("event_id"), p) for p in plans]
+
+
+def _what_ifs(folder: Optional[Path]) -> list[dict]:
+    """Illustrative burns for events the system chose not to burn for."""
+    stored = read_json(folder / "what_if_plans.json", []) if folder else []
+    return stored + [p for p in _requested(folder) if p.get("what_if")]
 
 
 def _find(items: list[dict], event_id: str, what: str) -> dict:
@@ -196,28 +282,99 @@ def latest_summary() -> dict:
 
 # --- events, plans, alerts ---------------------------------------------------
 
+def _fleet_names(folder: Optional[Path]) -> dict[int, str]:
+    """The fleet of each working satellite that appears in the run's events."""
+    objects = read_json(folder / "catalog.json", []) if folder else []
+    names = {o["norad_id"]: fleet_of(SpaceObject.model_validate(o)) for o in objects}
+    return {norad_id: name for norad_id, name in names.items() if name}
+
+
 @app.get("/events")
 def list_events(
-    limit: int = 50, level: Optional[str] = None, plan: Optional[str] = None, source: str = "latest"
+    limit: int = 50, level: Optional[str] = None, plan: Optional[str] = None,
+    fleet: Optional[str] = None, source: str = "latest",
 ) -> list[dict]:
     """Events, most dangerous first, each with its plan's decision as `plan_decision`
-    (null for green events). `plan=MANEUVER` keeps only events with a burn planned."""
+    (null for green events). `plan=MANEUVER` keeps only events with a burn planned;
+    `fleet=STARLINK` keeps only events that involve a working satellite of that fleet."""
     folder = _folder(source)
     events = _events(folder)
-    decisions = {p.get("event_id"): p.get("decision") for p in read_json(folder / "plans.json", [])} if folder else {}
+    decisions = {p.get("event_id"): p.get("decision") for p in _plans(folder)}
     for event in events:
         event["plan_decision"] = decisions.get(event.get("event_id"))
     if level:
         events = [e for e in events if e.get("risk_level") == level.upper()]
     if plan:
         events = [e for e in events if e["plan_decision"] == plan.upper()]
+    if fleet:
+        names = _fleet_names(folder)
+        events = [e for e in events if fleet.upper() in (names.get(e["primary_id"]), names.get(e["secondary_id"]))]
     return events[: max(0, limit)]
+
+
+@app.get("/fleets")
+def list_fleets(source: str = "latest") -> list[dict]:
+    """One row per fleet of working satellites with a close pass in the run: what its
+    operator would want to know. A fleet is the leading word of a satellite's name.
+    Red passes are split into those with another fleet's satellite or an object that
+    cannot move (`red_to_act_on`) and those between two satellites of the fleet itself
+    (`red_own_fleet`), which are left to the operator. Fleets with most to act on first."""
+    folder = _folder(source)
+    if folder is None:
+        raise HTTPException(404, "No completed run yet")
+    names = _fleet_names(folder)
+    plans = {p.get("event_id"): p for p in _plans(folder)}
+    try:
+        sizes: dict[str, int] = {}
+        for obj in on_request.catalog(folder) if source == "latest" else []:
+            name = fleet_of(obj)
+            sizes[name] = sizes.get(name, 0) + 1
+    except HTTPException:
+        sizes = {}  # a run made before the full catalogue was kept
+    rows: dict[str, dict] = {}
+    for event in _events(folder):
+        involved = {names.get(event["primary_id"]), names.get(event["secondary_id"])} - {None}
+        for name in involved:
+            row = rows.setdefault(name, {
+                "fleet": name, "satellites": sizes.get(name), "passes": 0, "red": 0, "amber": 0,
+                "red_own_fleet": 0, "red_to_act_on": 0, "burns": 0, "dv_total_ms": 0.0, "worst": None,
+            })
+            row["passes"] += 1
+            level = event.get("risk_level")
+            if level == "AMBER":
+                row["amber"] += 1
+            if level == "RED":
+                row["red"] += 1
+                own = names.get(event["primary_id"]) == names.get(event["secondary_id"])
+                row["red_own_fleet" if own else "red_to_act_on"] += 1
+            if row["worst"] is None:  # events come most dangerous first
+                other = event["secondary_name"] if names.get(event["primary_id"]) == name else event["primary_name"]
+                row["worst"] = {
+                    "event_id": event["event_id"], "other": other,
+                    "pc_max": event.get("pc_max"), "miss_distance_km": event["miss_distance_km"],
+                }
+            plan = plans.get(event["event_id"])
+            if plan and plan.get("decision") == "MANEUVER" and names.get(plan.get("maneuvering_id")) == name:
+                row["burns"] += 1
+                row["dv_total_ms"] += plan.get("dv_magnitude_ms") or 0.0
+    return sorted(rows.values(), key=lambda r: (-r["red_to_act_on"], -r["red"], -r["passes"], r["fleet"]))
 
 
 @app.get("/events/{event_id}/plan")
 def event_plan(event_id: str, source: str = "latest") -> dict:
-    folder = _folder(source)
-    return _find(read_json(folder / "plans.json", []) if folder else [], event_id, "plan")
+    return _find(_plans(_folder(source)), event_id, "plan")
+
+
+@app.post("/events/{event_id}/plan")
+def request_plan(event_id: str) -> dict:
+    """Search now for a burn for one event of the latest run; about half a minute
+    against the full catalogue. A run plans only its first few red events. If the
+    system's rules say to watch this event, the burn comes back marked `what_if`."""
+    folder = latest_run()
+    if folder is None:
+        raise HTTPException(404, "No completed run yet")
+    _find(_events(folder), event_id, "event")
+    return on_request.plan(folder, event_id)
 
 
 @app.get("/events/{event_id}")
@@ -229,10 +386,9 @@ def event_detail(event_id: str, source: str = "latest") -> dict:
         raise HTTPException(404, "No completed run yet")
     event_data = _find(_events(folder), event_id, "event")
     event = ConjunctionEvent.model_validate(event_data)
-    plans = read_json(folder / "plans.json", [])
-    plan_data = next((p for p in plans if p.get("event_id") == event_id), None)
-    # an illustrative burn for an event the system chose not to burn for (2009 replay)
-    what_if = next((p for p in read_json(folder / "what_if_plans.json", []) if p.get("event_id") == event_id), None)
+    plan_data = next((p for p in _plans(folder) if p.get("event_id") == event_id), None)
+    # an illustrative burn for an event the system chose not to burn for (2009 replay, or asked for later)
+    what_if = next((p for p in _what_ifs(folder) if p.get("event_id") == event_id), None)
     objects = {o["norad_id"]: SpaceObject.model_validate(o) for o in read_json(folder / "catalog.json", [])}
     primary, secondary = objects.get(event.primary_id), objects.get(event.secondary_id)
     if primary is None or secondary is None:
@@ -307,6 +463,40 @@ def run_summary() -> dict:
     return summary
 
 
+@app.get("/objects/search")
+def find_objects(q: str, limit: int = 8) -> list[dict]:
+    """Objects of the latest run whose name contains `q`, or whose catalogue number
+    is `q`. Exact and leading matches first, then satellites that can manoeuvre,
+    then the oldest catalogue number (so "ISS" gives its first module, 25544)."""
+    folder = latest_run()
+    if folder is None:
+        raise HTTPException(404, "No completed run yet")
+    text = q.strip().upper()
+    if not text:
+        return []
+    found = [
+        o for o in on_request.catalog(folder)
+        if text in o.name.upper() or (text.isdigit() and o.norad_id == int(text))
+    ]
+    found.sort(key=lambda o: (
+        not (text.isdigit() and o.norad_id == int(text)), o.name.upper() != text,
+        not o.name.upper().startswith(text), not o.operational, o.norad_id,
+    ))
+    return [_brief(o) for o in found[: max(0, limit)]]
+
+
+@app.get("/objects/{norad_id}/passes")
+def object_passes(norad_id: int, hours: float = config.QUICK_WINDOW_HOURS, threshold_km: float = config.OBJECT_CHECK_THRESHOLD_KM) -> dict:
+    """Checks one object now against everything that shares its altitude, with the
+    latest run's orbit data: every pass within `threshold_km` in the next `hours`,
+    most dangerous first. A run lists only passes within 1 km; this answers "what
+    about this satellite?" for any object, in a few seconds."""
+    folder = latest_run()
+    if folder is None:
+        raise HTTPException(404, "No completed run yet")
+    return on_request.passes(folder, norad_id, min(max(hours, 1.0), config.WINDOW_HOURS), min(max(threshold_km, 0.1), 50.0))
+
+
 @app.get("/objects/{norad_id}/track")
 def object_track(norad_id: int, hours: float = 3.0, step_s: float = 30.0, source: str = "latest") -> dict:
     folder = _folder(source)
@@ -335,8 +525,8 @@ def replay_2009() -> dict:
     return {
         "run": read_json(folder / "run.json", {}),
         "events": _events(folder),
-        "plans": read_json(folder / "plans.json", []),
-        "what_if_plans": read_json(folder / "what_if_plans.json", []),
+        "plans": _plans(folder),
+        "what_if_plans": _what_ifs(folder),
         "predictions": read_json(folder / "replay_2009_predictions.json"),
         "notes": (folder / "replay_2009_notes.md").read_text(encoding="utf-8") if (folder / "replay_2009_notes.md").exists() else None,
     }

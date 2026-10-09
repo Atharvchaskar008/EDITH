@@ -184,6 +184,99 @@ def test_events_carry_their_plan_decision_and_can_be_filtered_by_it(client):
     assert client.get("/events?plan=MONITOR").json() == []
 
 
+def test_a_burn_can_be_requested_for_an_event_the_run_did_not_plan(client, runs, monkeypatch):
+    folder = runs / "20261009T1500Z"
+    event_id = client.get("/events").json()[0]["event_id"]
+    own = json.loads((folder / "plans.json").read_text())
+    assert pipeline.load_full_catalog(folder) is not None  # every object of the run is kept for this
+    monkeypatch.setattr(main.on_request, "now", lambda: EPOCH + timedelta(hours=12))
+    monkeypatch.setattr(main.on_request, "loaded", (None, None))
+    try:
+        # as if the run had reached its limit of burn searches before this event
+        skipped = [{"event_id": event_id, "decision": "MONITOR", "rationale": "Not planned in this run."}]
+        (folder / "plans.json").write_text(json.dumps(skipped))
+        assert client.get("/events").json()[0]["plan_decision"] == "MONITOR"
+
+        asked = client.post(f"/events/{event_id}/plan").json()
+        assert asked["decision"] == "MANEUVER" and asked["what_if"] is False and asked["requested_at"].endswith("Z")
+        assert asked["dv_rtn_ms"] == own[0]["dv_rtn_ms"]  # the same burn the run itself found
+        # it now stands in for the run's own decision, and the run's file is untouched
+        assert client.get("/events").json()[0]["plan_decision"] == "MANEUVER"
+        assert client.get(f"/events/{event_id}/plan").json()["decision"] == "MANEUVER"
+        assert json.loads((folder / "plans.json").read_text()) == skipped
+        detail = client.get(f"/events/{event_id}").json()
+        assert detail["what_if_plan"] is None and detail["track"]["maneuvered_km"] is not None
+
+        # an event the rules say only to watch still gets a burn, marked as a what-if
+        events = json.loads((folder / "events.json").read_text())
+        (folder / "events.json").write_text(json.dumps([{**events[0], "risk_level": "AMBER"}]))
+        try:
+            (folder / pipeline.REQUESTED_PLANS_FILE).unlink()
+            what_if = client.post(f"/events/{event_id}/plan").json()
+            assert what_if["decision"] == "MANEUVER" and what_if["what_if"] is True
+            detail = client.get(f"/events/{event_id}").json()
+            assert detail["plan"]["decision"] == "MONITOR" and detail["what_if_plan"]["decision"] == "MANEUVER"
+            assert detail["track"]["what_if"] is True
+        finally:
+            (folder / "events.json").write_text(json.dumps(events))
+
+        assert client.post("/events/unknown/plan").status_code == 404
+        # a run made before the full catalogue was kept cannot be planned for
+        (folder / pipeline.FULL_CATALOG_FILE).rename(folder / "kept.gz")
+        monkeypatch.setattr(main.on_request, "loaded", (None, None))
+        try:
+            assert client.post(f"/events/{event_id}/plan").status_code == 409
+        finally:
+            (folder / "kept.gz").rename(folder / pipeline.FULL_CATALOG_FILE)
+    finally:
+        (folder / "plans.json").write_text(json.dumps(own))
+        (folder / pipeline.REQUESTED_PLANS_FILE).unlink(missing_ok=True)
+        main.on_request.loaded = (None, None)
+
+
+def test_any_object_can_be_found_and_checked_for_close_passes(client, monkeypatch):
+    monkeypatch.setattr(main.on_request, "now", lambda: EPOCH + timedelta(hours=12))
+    monkeypatch.setattr(main.on_request, "loaded", (None, None))
+    try:
+        found = client.get("/objects/search?q=test").json()
+        assert [o["name"] for o in found] == ["TEST SAT 1", "SYNTHETIC TEST OBJECT"]  # the leading match first
+        assert found[0]["operational"] and found[0]["norad_id"] == 90001 and found[0]["perigee_km"] > 700
+        assert client.get("/objects/search?q=90001").json()[0]["name"] == "TEST SAT 1"
+        assert client.get("/objects/search?q=nothing like this").json() == []
+
+        event = client.get("/events").json()[0]
+        check = client.get("/objects/90001/passes").json()
+        assert check["object"]["name"] == "TEST SAT 1" and check["objects_screened"] == 1 and check["threshold_km"] == 10
+        only = check["passes"]
+        assert len(only) == 1 and only[0]["primary_id"] == 90001 and only[0]["risk_level"] == "RED"
+        # the same pass the run found, from a search that starts later and takes coarser steps
+        assert only[0]["miss_distance_km"] == pytest.approx(event["miss_distance_km"], abs=1e-4)
+        assert only[0]["pc_max"] == pytest.approx(event["pc_max"], rel=1e-3)
+        # the other object sees the same pass, as its own primary
+        other = client.get(f"/objects/{event['secondary_id']}/passes").json()["passes"]
+        assert len(other) == 1 and other[0]["primary_id"] == event["secondary_id"]
+        assert client.get("/objects/1/passes").status_code == 404
+    finally:
+        main.on_request.loaded = (None, None)
+
+
+def test_fleets_are_summarised_and_their_passes_can_be_listed(client, monkeypatch):
+    monkeypatch.setattr(main.on_request, "loaded", (None, None))
+    try:
+        fleets = client.get("/fleets").json()
+        assert len(fleets) == 1  # the test satellite is the only working one; the test object cannot move
+        row = fleets[0]
+        assert row["fleet"] == "TEST" and row["satellites"] == 1 and row["passes"] == 1
+        assert row["red"] == 1 and row["red_to_act_on"] == 1 and row["red_own_fleet"] == 0 and row["amber"] == 0
+        plan = client.get(f"/events/{row['worst']['event_id']}/plan").json()
+        assert row["burns"] == 1 and row["dv_total_ms"] == pytest.approx(plan["dv_magnitude_ms"])
+        assert row["worst"]["other"] == "SYNTHETIC TEST OBJECT"
+        assert len(client.get("/events?fleet=test").json()) == 1
+        assert client.get("/events?fleet=starlink").json() == []
+    finally:
+        main.on_request.loaded = (None, None)
+
+
 def test_landing_page_is_served(client):
     response = client.get("/landing")
     assert response.status_code == 200 and "<title>EDITH</title>" in response.text
