@@ -10,6 +10,8 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
+from datetime import datetime
+from typing import Optional
 
 import numpy as np
 from scipy.integrate import quad
@@ -111,8 +113,14 @@ def event_covariances(event: ConjunctionEvent, primary: SpaceObject, secondary: 
     return s1, s2, source, C1, C2
 
 
-def assess(event: ConjunctionEvent, catalog: dict[int, SpaceObject]) -> ConjunctionEvent:
-    """Fill the risk fields of an event."""
+def assess(
+    event: ConjunctionEvent,
+    catalog: dict[int, SpaceObject],
+    now: Optional[datetime] = None,
+    predict: bool = True,
+) -> ConjunctionEvent:
+    """Fill the risk fields of an event. `now` is the time the run looks ahead from,
+    used by the optional risk-trend prediction."""
     primary, secondary = catalog[event.primary_id], catalog[event.secondary_id]
     s1, s2, source, C1, C2 = event_covariances(event, primary, secondary)
     hbr_km = (primary.radius_m + secondary.radius_m) / 1000.0
@@ -125,5 +133,5 @@ def assess(event: ConjunctionEvent, catalog: dict[int, SpaceObject]) -> Conjunct
     event.sigma_source = source
     event.hbr_km = hbr_km
     event.risk_level = risk_level_for(pc_max)
-    event.pc_predicted_final = addons.predict_final_risk(event)
+    event.pc_predicted_final = addons.predict_final_risk(event, now) if predict else None
     return event

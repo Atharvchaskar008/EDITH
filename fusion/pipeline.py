@@ -21,7 +21,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable, Optional
 
-from fusion import config
+from fusion import addons, config
 from fusion.contracts import ConjunctionEvent, ManeuverPlan, SpaceObject
 from fusion.core.ingest import load_catalog_with_stats
 from fusion.core.sat import to_utc
@@ -170,7 +170,7 @@ def run_pipeline(
 
         stage = "ASSESS"
         for event in events:
-            assess(event, by_id)
+            assess(event, by_id, now=t0)
         events.sort(key=lambda e: -(e.pc_max or 0.0))
         levels = {level: sum(e.risk_level == level for e in events) for level in ("RED", "AMBER", "GREEN")}
         summary["levels"] = levels
@@ -221,8 +221,18 @@ def run_pipeline(
         write_json(folder / "catalog.json", [o.model_dump(mode="json") for o in saved])
         write_json(folder / "events.json", [e.model_dump(mode="json") for e in events])
         write_json(folder / "plans.json", [p.model_dump(mode="json") for p in plans])
+        write_json(folder / "run.json", summary)  # the alert add-on reads the mode and window from it
 
         stage = "DONE"
+        # optional add-on outputs; a replay (run_dir given) is not compared with earlier runs
+        extras = addons.after_run(folder, None if run_dir else runs_root)
+        if extras:
+            summary["addons"] = extras
+        if "alerts" in extras:
+            kinds = ", ".join(f"{n} {kind.lower().replace('_', ' ')}" for kind, n in sorted(extras["alerts"].items()))
+            report(stage, 50, f"Changes since the previous run: {kinds or 'none'}")
+        if extras.get("briefings") or extras.get("cdm"):
+            report(stage, 80, f"Wrote {extras.get('briefings', 0)} operator briefings and {extras.get('cdm', 0)} standard warning messages")
         summary.update(status="DONE", duration_s=round(time.time() - started, 1), events=len(events))
         report(stage, 100, f"Run complete in {summary['duration_s']:.0f} s")
         write_json(folder / "log.json", entries)

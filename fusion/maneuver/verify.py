@@ -106,7 +106,7 @@ def new_conjunctions(
         seen.setdefault(index, []).append(orbit.seconds_at(ca.tca))
         if ca.miss_km >= threshold_km:
             continue
-        event = assess(_make_event(mover, other, ca), by_id)
+        event = assess(_make_event(mover, other, ca), by_id, predict=False)
         if event.risk_level == "GREEN":
             continue
         pair = {mover.norad_id, other.norad_id}

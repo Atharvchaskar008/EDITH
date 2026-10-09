@@ -33,7 +33,8 @@
 </div>
 
 <h2>Close passes <span id="count" class="note"></span></h2>
-<table><thead><tr><th>Risk</th><th>Objects</th><th>Closest approach (UTC)</th><th>In</th><th>Miss</th><th>Probability</th><th>Worst case</th><th>Uncertainty</th></tr></thead><tbody id="events"></tbody></table>
+<div><a href="#" id="showLatest">Today's sky</a> | <a href="#" id="showReplay">2009 collision replay</a> <span id="sourceNote" class="note"></span></div>
+<table><thead><tr><th>Risk</th><th>Objects</th><th>Closest approach (UTC)</th><th>In</th><th>Miss</th><th>Probability</th><th>Worst case</th><th>Predicted final</th><th>Uncertainty</th></tr></thead><tbody id="events"></tbody></table>
 
 <h2>Alerts</h2>
 <pre id="alerts">No alerts yet.</pre>
@@ -41,32 +42,42 @@
 
 <script>
 const $ = id => document.getElementById(id);
-let picked = null, runId = null;
+let picked = null, runId = null, source = "latest";
 const get = async path => { const r = await fetch(path); if (!r.ok) throw new Error(path + ": " + (await r.text())); return r.json(); };
 const sci = x => x == null ? "-" : x.toExponential(1);
 const fail = e => { $("error").textContent = e.message; };
 
 async function loadEvents() {
-  const events = await get("/events?limit=100");
+  const events = await get("/events?limit=100&source=" + source);
   $("count").textContent = "(" + events.length + " shown, most dangerous first)";
   $("events").innerHTML = events.map(e => {
-    const hours = (new Date(e.tca) - Date.now()) / 3.6e6;
+    const hours = source === "latest" ? ((new Date(e.tca) - Date.now()) / 3.6e6).toFixed(1) + " h" : "-";
     return `<tr class="row ${e.event_id === picked ? "picked" : ""}" data-id="${e.event_id}">
       <td class="${e.risk_level}">${e.risk_level}</td>
       <td>${e.primary_name} / ${e.secondary_name}${e.synthetic ? " <b>[TEST]</b>" : ""}</td>
-      <td>${e.tca.slice(0, 19).replace("T", " ")}</td><td>${hours.toFixed(1)} h</td>
-      <td>${e.miss_distance_km.toFixed(3)} km</td><td>${sci(e.pc)}</td><td>${sci(e.pc_max)}</td><td>${e.sigma_source || "-"}</td></tr>`;
-  }).join("") || "<tr><td colspan=8>No completed run yet.</td></tr>";
+      <td>${e.tca.slice(0, 19).replace("T", " ")}</td><td>${hours}</td>
+      <td>${e.miss_distance_km.toFixed(3)} km</td><td>${sci(e.pc)}</td><td>${sci(e.pc_max)}</td><td>${sci(e.pc_predicted_final)}</td><td>${e.sigma_source || "-"}</td></tr>`;
+  }).join("") || "<tr><td colspan=9>No completed run yet.</td></tr>";
   document.querySelectorAll("tr.row").forEach(row => row.onclick = () => { picked = row.dataset.id; loadEvents(); loadPlan(); });
 }
 
 async function loadPlan() {
   if (!picked) return;
   try {
-    const p = await get("/events/" + encodeURIComponent(picked) + "/plan");
-    if (p.decision !== "MANEUVER") { $("plan").textContent = p.decision + "\n" + (p.rationale || ""); return; }
+    const p = await get("/events/" + encodeURIComponent(picked) + "/plan?source=" + source);
+    if (p.decision !== "MANEUVER") {
+      let text = p.decision + "\n" + (p.rationale || "");
+      const whatIf = source === "replay" ? (await get("/replay/2009")).what_if_plans.find(w => w.event_id === picked) : null;
+      if (whatIf) text += "\n\nWHAT-IF (not the system's decision): the burn that would have made this pass safe\n" + burnText(whatIf);
+      $("plan").textContent = text; return;
+    }
+    $("plan").textContent = burnText(p);
+  } catch (e) { $("plan").textContent = "No plan for this pass (plans are made for red and amber passes)."; }
+}
+
+function burnText(p) {
     const along = p.dv_rtn_ms[1] > 0 ? "along the direction of travel" : "against the direction of travel";
-    $("plan").textContent = [
+    return [
       "Decision: MANEUVER (object " + p.maneuvering_id + " burns)",
       "Burn: " + p.burn_time.slice(0, 19).replace("T", " ") + " UTC, " + p.lead_time_orbits + " orbits before the pass",
       "Size: " + (p.dv_magnitude_ms * 1000).toFixed(0) + " mm/s " + along,
@@ -76,7 +87,6 @@ async function loadPlan() {
       "Return burn: " + p.return_burn_time.slice(0, 19).replace("T", " ") + " UTC, leftover offset " + p.residual_along_track_km.toFixed(1) + " km",
       "", p.rationale,
     ].join("\n");
-  } catch (e) { $("plan").textContent = "No plan for this pass (plans are made for red and amber passes)."; }
 }
 
 async function loadSide() {
@@ -109,6 +119,12 @@ $("run").onclick = async () => {
   const r = await fetch("/run", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
   runId = (await r.json()).run_id;
 };
+function show(which, note) {
+  source = which; picked = null; $("plan").textContent = "Click a row in the table below."; $("sourceNote").textContent = note;
+  loadEvents().catch(fail); return false;
+}
+$("showLatest").onclick = () => show("latest", "");
+$("showReplay").onclick = () => show("replay", "Replay: public data from 9 February 2009, 24 hours before the collision.");
 setInterval(() => poll().catch(fail), 2000);
 setInterval(() => { loadSide().catch(fail); loadSummary(); if (!runId) loadEvents().catch(fail); }, 15000);
 loadEvents().catch(fail); loadSide().catch(fail); loadSummary();
