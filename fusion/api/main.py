@@ -22,6 +22,7 @@ import numpy as np
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from fusion import addons, config, pipeline
@@ -671,9 +672,23 @@ def run_file(relative: str, source: str = "latest") -> FileResponse:
     return _serve(folder, relative)
 
 
+class _FreshStatic(StaticFiles):
+    """The dashboard's stylesheet and script. Browsers must check each with the
+    server before reusing a stored copy, so an edit shows on the next reload."""
+
+    async def get_response(self, path, scope):
+        response = await super().get_response(path, scope)
+        response.headers["Cache-Control"] = "no-cache"
+        return response
+
+
+app.mount("/static", _FreshStatic(directory=STATIC_DIR), name="static")
+
+
 @app.get("/")
-def test_page() -> FileResponse:
-    return FileResponse(STATIC_DIR / "index.html")
+def dashboard_page() -> FileResponse:
+    """The operator dashboard; its stylesheet and script are under /static/."""
+    return FileResponse(STATIC_DIR / "index.html", headers={"Cache-Control": "no-cache"})
 
 
 @app.get("/landing")

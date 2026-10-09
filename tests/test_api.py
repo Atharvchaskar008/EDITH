@@ -131,6 +131,12 @@ def test_failed_run_reports_its_error(client, monkeypatch):
 def test_test_page_is_served(client):
     page = client.get("/")
     assert page.status_code == 200 and "<title>EDITH</title>" in page.text
+    # the page is three files; the other two are served beside it and never from a stale copy
+    for name, mark in (("dashboard.css", "body {"), ("dashboard.js", "function refresh()")):
+        assert f"/static/{name}" in page.text
+        part = client.get(f"/static/{name}")
+        assert part.status_code == 200 and mark in part.text and part.headers["cache-control"] == "no-cache"
+    assert client.get("/static/nothing.js").status_code == 404
 
 
 def test_scheduler_reports_its_next_run():
