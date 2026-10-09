@@ -47,7 +47,7 @@ addons/a_history/       teammate A's pack (replay depth, sizes, history, test ki
 addons/b_trust/         teammate B's pack (measured uncertainty, validations)
 addons/c_ops/           teammate C's pack (alert feed, summaries, briefings, prediction, pitch)
 data/cache/             raw downloads, git-ignored
-data/runs/<run_id>/     one folder per run: catalog.json, events.json, plans.json, log.json, DONE (C's watcher adds alerts.json, summary.html)
+data/runs/<run_id>/     one folder per run: catalog.json, events.json, plans.json, log.json, DONE (C's watcher adds alerts.json, summary.json)
 data/fixtures/          sample JSON matching the contracts
 tests/                  one file per module
 ```

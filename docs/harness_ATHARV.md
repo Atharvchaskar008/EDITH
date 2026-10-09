@@ -218,7 +218,7 @@ run_pipeline(t0=None, on_progress=None, catalog=None, run_dir=None, inject_synth
 - catalog overrides the download (used by the replay). t0 defaults to now.
 - inject_synthetic adds the synthetic object; every event involving it carries "synthetic": true (add the optional field) so the dashboard can label it.
 - Plan every RED event, up to 5 per run, most dangerous first. MONITOR decisions for AMBER.
-- Do not compare with earlier runs and do not write alerts.json: a separate add-on (addons/c_ops/watch.py) watches the runs folder, and after DONE appears it writes alerts.json, summary.html and an updated events.json (with history and first_seen) into the run folder.
+- Do not compare with earlier runs and do not write alerts.json: a separate add-on (addons/c_ops/watch.py) watches the runs folder, and after DONE appears it writes alerts.json, summary.json and an updated events.json (with history and first_seen) into the run folder.
 - Write data/runs/<run_id>/catalog.json, events.json (sorted by pc_max descending), plans.json, log.json (the progress messages with timestamps), then an empty file named DONE as the last step. Write each JSON file to a temporary name and rename it, so a watcher never reads a half-written file.
 - Any stage failure writes the error to log.json and re-raises; a failed run has no DONE file.
 
@@ -236,7 +236,7 @@ Run it for real with --synthetic.
 Part 1: fusion/monitor/scheduler.py: APScheduler job that calls run_pipeline every 6 hours (from config), never overlapping, exposing last_run, next_run, run_count.
 
 Part 2: fusion/api/main.py (FastAPI) with every route in CONTRACTS.md.
-- Alerts are produced by an add-on, not by us. GET /alerts returns the contents of alerts.json from the latest run folder if the file exists, otherwise an empty list. GET /summary returns that run's summary.html path if present. Always re-read events.json from disk on each request, because the add-on rewrites it with history.
+- Alerts are produced by an add-on, not by us. GET /alerts returns the contents of alerts.json from the latest run folder if the file exists, otherwise an empty list. GET /summary returns that run's summary.json path if present. Always re-read events.json from disk on each request, because the add-on rewrites it with history.
 - POST /run starts run_pipeline in a background thread and returns the run id; a second POST while one is running returns the running id. Body option {"synthetic": true}.
 - GET /run/{id}/status returns stage, percent and log lines; works for finished runs from log.json.
 - GET /events, /events/{id}, /events/{id}/plan, /alerts serve from the latest run folder that has a DONE file. /events/{id} adds positions of both objects every 5 s for +-10 minutes around TCA, and, if a plan exists, the manoeuvred primary track too.
@@ -319,7 +319,7 @@ B's pack:
 3. Validation: use the pack's own loader and compare function (socrates.py and validate.py; read their signatures) to compare the events of our latest real run with CelesTrak SOCRATES, excluding the test object, and save the result as data/runs/validation.json. We do not write our own comparison. Print the summary.
 
 C's pack:
-4. Alerts: start addons/c_ops/watch.py pointed at data/runs. Make two runs and confirm that alerts.json, summary.html and the updated events.json (with history) appear in the second run folder and that /alerts serves them. Add the watcher's start command to the startup notes; do not import its code into ours.
+4. Alerts: start addons/c_ops/watch.py pointed at data/runs. Make two runs and confirm that alerts.json, summary.json and the updated events.json (with history) appear in the second run folder and that /alerts serves them. Add the watcher's start command to the startup notes; do not import its code into ours.
 5. Prediction: confirm fusion.addons.predict_final_risk fills pc_predicted_final.
 6. Operator outputs: run the pack's cdm_export.py and briefing.py on the latest run folder after each run (call them as commands from the scheduler job) and confirm the files appear and are served under /addons/files/.
 
@@ -406,7 +406,7 @@ Check the layout at 1920x1080 and at 1366x768.
 ```text
 1. A "2009 replay" toggle in the top bar that switches every panel to /replay/2009, with a banner "Replay: public data from 9 February 2009, 24 hours before the collision". If the day-by-day predictions file is present, show it as a small chart in the banner area. Hide the toggle when the replay run does not exist.
 2. A "Validation" tab: the summary from /validation in one sentence, a scatter of our miss distance against SOCRATES' with the 1:1 line, then the validation report from teammate B's pack rendered with its charts (through /addons/files/). Hide the tab when neither exists.
-3. Two buttons on the plan card when the files exist: "Open briefing" and "Download CDM".
+3. On the plan card, when the files exist: an "Open briefing" button that renders teammate C's briefing JSON as a one-page printable view (C's pack supplies data only, no HTML), and a "Download CDM" button. Also render the run summary JSON behind the "Run summary" link.
 ```
 
 **Check:** the replay toggle and validation tab show real content, or are hidden when their data is missing.
