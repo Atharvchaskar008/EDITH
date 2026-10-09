@@ -60,19 +60,24 @@ Atharv wants about 50 commits over the whole project, in plain natural language 
 | 6–12 | Not started |
 | D1–D6 | Not started |
 
-## Measured on real data (9 October 2026, CelesTrak only, no Space-Track login yet)
+## Measured on real data (9 October 2026, CelesTrak plus Space-Track)
+
+Space-Track is working: the login is in `.env` and the bulk query returns the full LEO catalogue in about 14 s. Object type and size class (`RCS_SIZE`) come from Space-Track; sizes map to a radius through `RCS_RADIUS_M` in config.
 
 | What | Result |
 |---|---|
-| Catalogue | 19,360 objects downloaded, 18,539 usable in LEO, 80 Iridium NEXT primaries, 15,891 operational |
-| `PRIMARIES` search, 72 h | about 75 s; 107 events within 5 km per 24 h |
-| `ALL_LEO` search, 72 h | about 14 minutes (single process); about 28 events within 1 km per hour |
-| `ALL_LEO` at a 5 km threshold | about 2,300 events per hour, far too many to rank, which is why `ALL_LEO` uses 1 km |
+| Catalogue | 29,686 usable LEO objects: 17,597 payloads, 9,892 debris, 1,571 rocket bodies, 626 unknown; 15,891 operational; 692 with no size class (5 m default) |
+| `PRIMARIES` search (80 Iridium NEXT), 72 h | about 4 minutes; 258 events within 5 km per 24 h |
+| `ALL_LEO` search, 72 h | about 32 minutes (single process); about 57 events within 1 km per hour |
 | Risk assessment | under 1 ms per event |
-| Risk levels, `PRIMARIES`, 24 h | 1 RED, 10 AMBER, 96 GREEN |
-| Risk levels, `ALL_LEO`, 3 h | 30 RED, 43 AMBER, 10 GREEN |
+| Risk levels, `PRIMARIES`, 24 h | 0 RED, 0 AMBER, 258 GREEN (top worst-case probability 9e-6) |
+| Risk levels, `ALL_LEO`, 2 h | 3 RED, 22 AMBER, 89 GREEN |
 
-Open question for Atharv, not yet decided: in `ALL_LEO` mode about a third of events come out RED, because any pass under roughly 600 m reaches the RED threshold on worst-case probability when every object is assumed to be 5 m in radius. Real sizes from teammate A's pack and measured uncertainty from B's pack will change this. Do not retune the thresholds to make the counts look better without asking.
+What this means:
+
+- With real object sizes, Iridium alone usually has no RED event on a given day. A demo of the burn planner needs either `ALL_LEO` mode (about 100 RED events per 72 h) or the synthetic test object.
+- A full 72-hour `ALL_LEO` run takes about half an hour. For a live demo use the 24-hour quick window (about 11 minutes) or `PRIMARIES` mode, or add multiprocessing over time chunks in prompt 9.
+- Before Space-Track, with CelesTrak only (18,539 objects, every object assumed 5 m): `ALL_LEO` took 14 minutes and a third of events were RED. Those numbers are superseded.
 
 ## What exists in the code (53 tests passing)
 
@@ -83,7 +88,7 @@ Open question for Atharv, not yet decided: in `ALL_LEO` mode about a third of ev
 | `fusion/frames.py` | RTN basis, vector and covariance rotation |
 | `fusion/core/sat.py` | `satrec_from_omm`, `get_satrec(obj)` (cached), `state_at`, `state_at_offset`, `period_s`, `perigee_apogee_km`, `object_from_omm`, `state_to_omm`, `fit_omm_to_state` |
 | `fusion/core/refine.py` | `closest_approach(sat1, sat2, t_lo, t_hi)`: exact time and distance of closest approach |
-| `fusion/core/spacetrack.py` | `load_leo_objects()`: every tracked LEO object from Space-Track, cached; returns nothing when `.env` has no login. Tested with a fake session only; the query has not yet run against the live service, so check the first real response. `load_catalog` in prompt 2 must merge these with the CelesTrak groups, de-duplicated by `norad_id` |
+| `fusion/core/spacetrack.py` | `load_leo_objects()`: every tracked LEO object from Space-Track, cached; returns nothing when `.env` has no login. Verified against the live service on 9 October 2026. Also sets `radius_m` from the size class and keeps the TLE lines. `load_catalog` in prompt 2 must merge these with the CelesTrak groups, de-duplicated by `norad_id` |
 | `fusion/core/ingest.py` | `load_catalog()` and `load_catalog_with_stats()`: CelesTrak groups (cached 2 h, retried) merged with Space-Track, filtered to fresh LEO objects, then the size add-on hook |
 | `fusion/core/propagate.py` | `Propagator(objs).states(t0, times_s)`: vectorised SGP4, NaN for failed objects |
 | `fusion/core/screen.py` | `screen(catalog, t0, hours, threshold_km, mode, step_s, on_progress, stats)`: both modes; `order_pair()` gives the stable primary/secondary order |
