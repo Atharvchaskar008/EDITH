@@ -131,75 +131,163 @@ Public orbit data carries no uncertainty, so it was measured from 325,558 pairs 
 
 The full report, with its limits, is in [addons/b_trust/out/VALIDATION_REPORT.md](addons/b_trust/out/VALIDATION_REPORT.md).
 
+## Tech stack
+
+| Layer | Technologies | Role |
+|---|---|---|
+| **Astrodynamics & Math** | Python 3.11–3.14, `sgp4` (C++ extension), NumPy, SciPy | Orbit propagation, vectorised math, KD-tree spatial screening |
+| **Backend API & Scheduling** | FastAPI, Uvicorn, Pydantic v2, APScheduler, Requests, HTTPX | REST API, background scheduler (6-hour intervals), automated runs |
+| **Risk Modeling & ML** | LightGBM, scikit-learn, Pandas, Joblib, Matplotlib | Conjunction risk-trend prediction model and validation analysis |
+| **Operator Dashboard** | Vanilla JavaScript, HTML5, CSS (Glassmorphism), SVG charts | Conjunction screening, burn recommendations, fleet views, satellite checks |
+| **Interactive 3D Landing Page** | Node.js, Nuxt, Three.js, WebGL | 3D interactive Earth globe, orbital paths, visitor showcase |
+
+---
+
 ## Quick start
 
-Tested on Python 3.14 and Windows 11. Other versions and platforms are untested.
+EDITH is supported on **macOS**, **Linux**, and **Windows** (Python 3.11 through 3.14).
 
-```
+### Prerequisites
+
+- **Python 3.11+** (Python 3.13 or 3.14 recommended)
+- **Node.js 18+** (required to run the standalone 3D interactive landing page)
+- **macOS only**: Install OpenMP runtime for `lightgbm`:
+  ```bash
+  brew install libomp
+  ```
+
+### Installation
+
+#### macOS / Linux
+```bash
 git clone https://github.com/Atharvchaskar008/EDITH.git
 cd EDITH
+
+# Create and activate virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Install dependencies
+pip install --upgrade pip
+pip install -r requirements.txt
+pip install -r requirements-addons.txt
+
+# Configure environment
+cp .env.example .env
+```
+
+#### Windows
+```cmd
+git clone https://github.com/Atharvchaskar008/EDITH.git
+cd EDITH
+
+# Create virtual environment
 python -m venv .venv
+.venv\Scripts\python -m pip install --upgrade pip
 .venv\Scripts\python -m pip install -r requirements.txt
 .venv\Scripts\python -m pip install -r requirements-addons.txt
+
+# Configure environment
 copy .env.example .env
 ```
 
-Put a free [Space-Track](https://www.space-track.org) login in `.env` to get the full catalogue, including all debris. Without it the system runs on CelesTrak data only, with partial debris coverage.
+> [!NOTE]
+> Put a free [Space-Track](https://www.space-track.org) login in `.env` (`SPACETRACK_USER` and `SPACETRACK_PASSWORD`) to fetch the complete catalogue, including all debris. Without it, EDITH runs on public CelesTrak data with partial debris coverage.
+>
+> **CelesTrak rate-limiting:** CelesTrak updates element sets every 2 hours and temporarily rate-limits duplicate downloads of the same group. Cached files in `data/cache/` prevent repeated downloads.
 
-```
+### Verification & Launch
+
+Run the test suite to verify installation:
+```bash
+# macOS / Linux
+.venv/bin/pytest -q
+
+# Windows
 .venv\Scripts\python -m pytest -q
+```
+
+Build the historical 2009 collision replay dataset (prepopulates conjunctions and maneuver plans without querying live APIs):
+```bash
+# macOS / Linux
+.venv/bin/python -m fusion.replay.replay_2009
+
+# Windows
+.venv\Scripts\python -m fusion.replay.replay_2009
+```
+
+Start the FastAPI backend and Operator Dashboard:
+```bash
+# macOS / Linux
+.venv/bin/python -m uvicorn fusion.api.main:app --port 8000
+
+# Windows
 .venv\Scripts\python -m uvicorn fusion.api.main:app --port 8000
 ```
 
-Then open http://localhost:8000 and press **Run now**.
+Open **http://localhost:8000** in your browser.
+
+To launch the dedicated **3D Interactive Landing Page** (optional):
+```bash
+node landing/server.js
+```
+Open **http://localhost:3000** in your browser.
+
+---
 
 ## Usage
 
 ### Commands
 
-| Purpose | Command |
+| Purpose | macOS / Linux | Windows |
+|---|---|---|
+| **Start server, dashboard & scheduler** | `.venv/bin/python -m uvicorn fusion.api.main:app --port 8000` | `.venv\Scripts\python -m uvicorn fusion.api.main:app --port 8000` |
+| **Start 3D landing page server** | `node landing/server.js` | `node landing\server.js` |
+| **Single run (24h window, full sky)** | `.venv/bin/python -m fusion.pipeline --quick` | `.venv\Scripts\python -m fusion.pipeline --quick` |
+| **Single run (fast, protected primaries only)** | `.venv/bin/python -m fusion.pipeline --quick --mode PRIMARIES` | `.venv\Scripts\python -m fusion.pipeline --quick --mode PRIMARIES` |
+| **Build the 2009 replay** | `.venv/bin/python -m fusion.replay.replay_2009` | `.venv\Scripts\python -m fusion.replay.replay_2009` |
+| **Compare latest run with CelesTrak** | `.venv/bin/python -m fusion.validation` | `.venv\Scripts\python -m fusion.validation` |
+| **Run the tests** | `.venv/bin/pytest -q` | `.venv\Scripts\python -m pytest -q` |
+| **Benchmark compiled libs vs plain Python** | `.venv/bin/python scripts/why_python.py` | `.venv\Scripts\python scripts\why_python.py` |
+
+`fusion.pipeline` options:
+- `--quick`: 24-hour look-ahead window (instead of 72 hours).
+- `--mode {ALL_LEO,PRIMARIES}`: `ALL_LEO` checks all tracked objects; `PRIMARIES` screens protected satellites against the catalogue.
+- `--hours H`: Custom prediction horizon in hours.
+- `--synthetic`: Injects a clearly marked test conjunction.
+
+### Web interfaces
+
+| Address | Description |
 |---|---|
-| Start the server, dashboard and scheduler | `.venv\Scripts\python -m uvicorn fusion.api.main:app --port 8000` |
-| One run from the terminal | `.venv\Scripts\python -m fusion.pipeline --quick` |
-| Build the 2009 replay | `.venv\Scripts\python -m fusion.replay.replay_2009` |
-| Compare the latest run with CelesTrak | `.venv\Scripts\python -m fusion.validation` |
-| Run the tests | `.venv\Scripts\python -m pytest -q` |
-| Measure the compiled libraries against plain Python | `.venv\Scripts\python scripts\why_python.py` |
+| **http://localhost:8000** | **Operator Dashboard**: Conjunction metrics, priority passes, burn recommendations, what-if planning, single satellite search/pass checker, fleet views, alerts, and 2009 replay |
+| **http://localhost:3000** | **3D Interactive Landing Page**: WebGL Three.js interactive Earth globe with orbital paths, visual impact analysis, and mission brief |
+| **http://localhost:8000/landing** | Visitor story page served directly through the FastAPI backend |
+| **http://localhost:8000/docs** | Interactive OpenAPI / Swagger documentation |
 
-`fusion.pipeline` accepts `--quick` (24-hour window), `--hours H`, `--mode ALL_LEO` or `--mode PRIMARIES`, and `--synthetic` (adds one clearly labelled test object).
-
-### Web interface
-
-| Address | Content |
-|---|---|
-| http://localhost:8000 | Operator dashboard: headline numbers, ranked passes, burn plans with pictures, a what-if burn on request, a check of any satellite, fleets, alerts, 2009 replay |
-| http://localhost:8000/landing | Story page for visitors |
-| http://localhost:8000/docs | Interactive API documentation |
-
-The dashboard opens on **Priority**: the dangerous passes that are not between two satellites of one fleet. Every row says **Burn ready** or gives the reason there is none. On a pass the system only watches, **Plan now** shows what a burn would take, in about 20 seconds.
+The dashboard opens on **Priority**: dangerous passes outside a single operator's fleet. Every row displays **Burn ready** or explains why no burn is proposed. For watched passes, clicking **Plan now** computes a what-if avoidance burn in ~20 seconds.
 
 | Fleets | Check any satellite |
 |---|---|
 | ![One row per fleet](docs/images/fleets.png) | ![The close passes of the ISS](docs/images/check.png) |
 
-### API
+### API Routes
 
-| Route | Returns |
-|---|---|
-| `POST /run` | Starts a run |
-| `GET /run/{id}/status` | Stage, progress and log of a run |
-| `GET /latest` | Summary of the latest finished run |
-| `GET /events` | Close passes, most dangerous first; filter by `level`, `plan`, `fleet` or `own_fleet` |
-| `GET /events/{id}` | One pass with its plan, both tracks and the encounter-plane picture |
-| `GET /events/{id}/plan` | The decision for one pass |
-| `POST /events/{id}/plan` | Search now for a burn for a pass the run only watches |
-| `GET /objects/search?q=` | Find any tracked object by name or catalogue number |
-| `GET /objects/{id}/passes` | Check one object now: its close passes in the next 24 hours |
-| `GET /fleets` | One row per fleet: passes, dangerous passes to act on, burns planned |
-| `GET /alerts` | Changes since the previous run |
-| `GET /validation` | The comparison with CelesTrak |
-| `GET /proof` | The validation results gathered for the dashboard's proof section |
-| `GET /replay/2009` | The 2009 replay |
+| Route | Method | Description |
+|---|---|---|
+| `/run` | `POST` | Trigger a new conjunction screening run |
+| `/run/{id}/status` | `GET` | Stage, progress percentage, and log messages of a run |
+| `/latest` | `GET` | Summary of the most recent completed run |
+| `/events` | `GET` | Ranked close passes; filter by `level`, `plan`, `fleet`, or `own_fleet` |
+| `/events/{id}` | `GET` | Pass details: burn plan, trajectory coordinates, encounter-plane geometry |
+| `/events/{id}/plan` | `GET` / `POST` | Read or compute an on-demand avoidance burn plan |
+| `/objects/search?q=` | `GET` | Find any tracked object by name or NORAD catalog number |
+| `/objects/{id}/passes` | `GET` | Screen one object on-demand against all nearby catalog objects |
+| `/fleets` | `GET` | Overview aggregated by satellite constellation / fleet |
+| `/alerts` | `GET` | Critical and warning changes since the previous run |
+| `/validation` | `GET` | Validation comparison against CelesTrak SOCRATES |
+| `/proof` | `GET` | Validation data assembled for the dashboard's proof view |
+| `/replay/2009` | `GET` | Historical 2009 Iridium 33 / Cosmos 2251 collision scenario |
 
 The full reference is in [docs/API.md](docs/API.md).
 
@@ -238,7 +326,7 @@ addons/
   a_history/            Object sizes, 2009 replay data, reference test cases
   b_trust/              Measured uncertainty and independent validation
   c_ops/                Alerts, briefings, CDM export, risk-trend model
-landing/                Story page served at /landing
+landing/                Story page and standalone 3D interactive WebGL visualization server
 tests/                  Test suite for the main system
 scripts/                Benchmarks and fixture builder
 data/fixtures/          Small sample files used by tests
@@ -276,7 +364,8 @@ The main system is complete without them; each pack adds a capability through a 
 |---|---|
 | Engine, pipeline, scheduler, API | Complete; 121 tests, run on GitHub on every push |
 | Validation pack | Complete; 54 tests |
-| Dashboard | Working: numbers, ranked list, plans with three pictures, what-if burns on request, satellite check, fleets, alerts, replay. A 3D view is not built |
+| Operator Dashboard | Working: conjunction metrics, ranked passes, burn plans with SVG geometry, what-if burns on request, satellite pass lookup, fleet aggregations, alerts, and 2009 replay |
+| 3D Interactive Landing Page | Working: WebGL Three.js interactive Earth globe with orbital tracks, visitor mission walkthrough, and audio effects at http://localhost:3000 |
 
 ## Data sources and acknowledgements
 
