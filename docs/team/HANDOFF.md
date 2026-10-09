@@ -107,7 +107,7 @@ What this means:
 | `fusion/replay/replay_2009.py` | The 2009 replay: builds the catalogue known a day before the collision, runs the pipeline, stores a what-if burn |
 | `scripts/why_python.py` | Measures compiled SGP4 and the KD-tree against plain Python and against checking every pair |
 | `fusion/maneuver/orbit.py` | `ManeuveredOrbit(obj, burn_time, dv_rtn_ms, duration_s, return_after_s)`: SGP4 orbit plus the integrated effect of a burn and its return burn; `.states(seconds)`, `.delta(seconds)` |
-| `fusion/maneuver/verify.py` | `closest_approach_to_orbit(orbit, other, centre_s, half_window_s)` and `new_conjunctions(orbit, catalog, exclude_ids, baseline=...)` |
+| `fusion/maneuver/verify.py` | `closest_approach_to_orbit(orbit, other, centre_s, half_window_s)` and `side_effects(orbit, catalog, avoided, baseline=...)` |
 | `fusion/maneuver/planner.py` | `plan(event, catalog, now, baseline, force, verify)` returns a `ManeuverPlan`; `choose_mover()` decides which object burns |
 | `fusion/pipeline.py` | `run_pipeline(...)` runs every stage and writes the run folder; `new_run_id`, `load_run`, `write_json`; command line `python -m fusion.pipeline [--synthetic] [--quick] [--mode ...] [--hours H]` |
 | `fusion/monitor/scheduler.py` | `Monitor`: re-runs the pipeline every 6 hours; the first run is one interval after start-up |

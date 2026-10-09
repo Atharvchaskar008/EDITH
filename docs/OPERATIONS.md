@@ -45,7 +45,7 @@ Environment variables for the server:
 
 | Variable | Effect |
 |---|---|
-| `FUSION_SCHEDULER=0` | Switches off the automatic run every 6 hours |
+| `FUSION_SCHEDULER=0` | Switches off the automatic run every 6 hours (a full-sky run with the 24-hour window) |
 | `FUSION_RUNS_DIR=path` | Moves the runs folder |
 
 ## How long things take
@@ -115,6 +115,7 @@ Every tunable number is in `fusion/config.py`. The ones most likely to be change
 | `TARGET_PC_AFTER`, `TARGET_PC_MAX_AFTER` | 1e-6, 1e-5 | What a burn must achieve |
 | `MAX_PLANS_PER_RUN` | 5 | Burn searches per run |
 | `VERIFY_HOURS` | 24 | How long a burn is re-screened for new close passes |
+| `VERIFY_WORSE_TOLERANCE` | 0.10 | Rise in worst-case probability that counts as making another pass of the satellite worse |
 | `SCHEDULER_INTERVAL_HOURS` | 6 | Time between automatic runs |
 | `RCS_RADIUS_M`, `DEFAULT_RADIUS_M` | 0.15 / 0.4 / 2.0, 5 | Object radius by Space-Track size class, and when unknown |
 
@@ -132,4 +133,5 @@ Every tunable number is in `fusion/config.py`. The ones most likely to be change
 - **In the 2009 replay only 2,897 of teammate A's 5,152 background objects are used.** The others have orbit data dated after the replay time, so they were not public yet.
 - **The radius for objects with no measured radar size is still a guess** by size class (2 m for "large").
 - A burn's safety re-screen covers 24 hours, not the full 72-hour window.
+- The scheduled run and the dashboard's button use the 24-hour window. A full-sky run over 72 hours (9 October 2026: 18,497 passes, 15 minutes) finds about 1,100 passes a day between objects of different owners on each of the three days, but passes between two satellites of one fleet grow from 913 on the first day to 9,258 on the third. Fleets are phased so that their satellites miss each other; the error in public orbit data (77 km along-track for Starlink after three days) scrambles that phasing, so those later passes are not real predictions.
 - When two operational satellites of different operators meet, the system picks one to move; it has no knowledge of what the other operator plans.

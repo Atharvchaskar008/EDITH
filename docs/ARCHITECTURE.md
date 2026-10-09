@@ -27,7 +27,7 @@ EDITH is a batch pipeline with a thin web layer on top. Every run reads public o
 3. **Screen.** At each time step a KD-tree lists pairs within `threshold + 15.5 km/s × step / 2`. A straight-line estimate keeps only pairs whose closest approach falls inside that step. Survivors are refined with a bounded minimiser. Time blocks of 30 minutes are spread across worker processes; results are sorted, so the output does not depend on the worker count.
 4. **Assess.** Each object gets a position uncertainty (measured, per kind of object and data age, when the trust pack is present; an assumed table otherwise). The combined covariance is projected onto the plane perpendicular to the relative velocity and integrated over the hard-body disc. The worst case over every scaling of the covariance sets the risk level.
 5. **Plan.** For red events, a grid of burn times and along-track sizes is evaluated with a linear response model; the smallest burn meeting the safety targets is recomputed exactly.
-6. **Verify.** The burned orbit is screened against the whole catalogue for 24 hours. A burn that creates a new amber or red event is rejected and the next candidate tried. A return burn a whole number of orbits later restores the original orbit.
+6. **Verify.** The burned orbit is screened against the whole catalogue for 24 hours. Every amber or red pass found is computed again without the burn. A burn that creates a dangerous pass, or raises the worst-case probability of one the satellite already had by more than 10%, is rejected and the next candidate tried. A return burn a whole number of orbits later restores the original orbit.
 7. **Publish.** Result files are written through temporary names, add-on outputs are attached, and an empty `DONE` file is written last.
 
 ## Run folder
@@ -40,6 +40,8 @@ EDITH is a batch pipeline with a thin web layer on top. Every run reads public o
 | `events.json` | Every close pass, with geometry, probability, risk level and history |
 | `plans.json` | One decision per red and amber event, including the full burn search grid |
 | `catalog.json` | The objects that appear in events |
+| `catalog_full.json.gz` | Every object of the run, kept so a burn can be planned later for any event |
+| `requested_plans.json` | Burn plans asked for after the run; the run's own files are not changed |
 | `log.json` | Timestamped, human-readable progress messages |
 | `alerts.json`, `summary.json`, `briefings/`, `cdm/` | Add-on outputs, when the operations pack is present |
 | `DONE` | Marks the folder complete; the server ignores folders without it |

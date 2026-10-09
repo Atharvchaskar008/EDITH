@@ -102,7 +102,7 @@ Think of it as an assembly line. Each run of the line takes about 3.5 minutes.
 ### Step 6: Check the fix does not cause a new problem
 
 - **Simple words:** stepping out of the way of one car is no good if you step in front of another.
-- **Detail:** the new path is checked against every other object for 24 hours. A burn that creates a new amber or red pass is rejected and the next best is tried. Then a **return burn** (equal and opposite, a whole number of laps later) puts the satellite back.
+- **Detail:** the new path is checked against every other object for 24 hours. A burn that creates a new amber or red pass, or makes another dangerous pass of the same satellite worse, is rejected and the next best is tried. Then a **return burn** (equal and opposite, a whole number of laps later) puts the satellite back.
 - **Code:** `fusion/maneuver/verify.py`
 
 ### Step 7: Report what changed, and write it up

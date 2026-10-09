@@ -9,12 +9,14 @@
 ![SGP4](https://img.shields.io/badge/SGP4-orbit_model-555555)
 ![Pydantic](https://img.shields.io/badge/Pydantic-data_models-E92063?logo=pydantic&logoColor=white)
 ![LightGBM](https://img.shields.io/badge/LightGBM-risk_trend_model-9ACD32)
-![pytest](https://img.shields.io/badge/pytest-111_tests-0A9EDC?logo=pytest&logoColor=white)
+![pytest](https://img.shields.io/badge/pytest-117_tests-0A9EDC?logo=pytest&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-dashboard-F7DF1E?logo=javascript&logoColor=black)
 
 EDITH screens every publicly tracked object in low Earth orbit against every other, ranks the close passes by collision probability, and recommends the smallest avoidance burn that makes a dangerous pass safe. It re-runs every six hours without supervision and serves its results through a web API and an operator dashboard.
 
 The Python package is named `fusion`.
+
+![The operator dashboard with a planned burn open](docs/images/dashboard.png)
 
 ## Contents
 
@@ -36,7 +38,8 @@ The Python package is named `fusion`.
 - **Predicts** every close pass between tracked objects for the next 24 to 72 hours.
 - **Ranks** each pass by collision probability and by the worst case over the unknown uncertainty, and labels it red, amber or green.
 - **Recommends** an avoidance burn for dangerous passes: which object moves, when, in which direction and by how much.
-- **Verifies** that the burn creates no new dangerous pass, and plans a return burn to restore the original orbit.
+- **Verifies** that the burn creates no new dangerous pass and worsens none the satellite already had, and plans a return burn to restore the original orbit.
+- **Answers on request**: a burn plan for any pass the run did not plan, the close passes of any satellite found by name or number, and a summary per fleet.
 - **Reports** what changed since the previous run, with a one-page briefing and a standard-format warning message (CDM) for each dangerous pass.
 - **Checks itself** against CelesTrak's published conjunction list after every run.
 
@@ -82,7 +85,7 @@ flowchart LR
 | Screen | KD-tree neighbour search at each step, a straight-line filter, then exact closest approach; time blocks run in parallel processes | `fusion/core/screen.py` |
 | Assess | Two-dimensional probability in the encounter plane, plus the maximum over every scaling of the covariance | `fusion/risk/pc.py` |
 | Plan | Grid over burn time (0.5 to 8 orbits early) and along-track size (1 to 100 mm/s); the smallest burn meeting the safety targets | `fusion/maneuver/planner.py` |
-| Verify | The burned orbit is screened against the whole catalogue for 24 hours; a return burn restores the orbit | `fusion/maneuver/verify.py` |
+| Verify | The burned orbit is screened against the whole catalogue for 24 hours, and every dangerous pass found is compared with the same pass without the burn; a return burn restores the orbit | `fusion/maneuver/verify.py` |
 
 The design and its reasons are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
@@ -152,7 +155,7 @@ Then open http://localhost:8000 and press **Run now**.
 
 | Address | Content |
 |---|---|
-| http://localhost:8000 | Operator dashboard: headline numbers, ranked passes, burn plans, alerts, 2009 replay |
+| http://localhost:8000 | Operator dashboard: headline numbers, ranked passes, burn plans with pictures, a plan on request, a check of any satellite, fleets, alerts, 2009 replay |
 | http://localhost:8000/landing | Story page for visitors |
 | http://localhost:8000/docs | Interactive API documentation |
 
@@ -163,9 +166,13 @@ Then open http://localhost:8000 and press **Run now**.
 | `POST /run` | Starts a run |
 | `GET /run/{id}/status` | Stage, progress and log of a run |
 | `GET /latest` | Summary of the latest finished run |
-| `GET /events` | Close passes, most dangerous first; filter by `level` or `plan` |
+| `GET /events` | Close passes, most dangerous first; filter by `level`, `plan` or `fleet` |
 | `GET /events/{id}` | One pass with its plan, both tracks and the encounter-plane picture |
 | `GET /events/{id}/plan` | The decision for one pass |
+| `POST /events/{id}/plan` | Search now for a burn for a pass the run did not plan |
+| `GET /objects/search?q=` | Find any tracked object by name or catalogue number |
+| `GET /objects/{id}/passes` | Check one object now: its close passes in the next 24 hours |
+| `GET /fleets` | One row per fleet: passes, dangerous passes to act on, burns planned |
 | `GET /alerts` | Changes since the previous run |
 | `GET /validation` | The comparison with CelesTrak |
 | `GET /replay/2009` | The 2009 replay |
@@ -184,7 +191,7 @@ Every setting is in `fusion/config.py`. The ones most often changed:
 | `RED_PC_MAX`, `AMBER_PC_MAX` | 1e-4, 1e-5 | Risk levels, on worst-case probability |
 | `TARGET_PC_AFTER`, `TARGET_PC_MAX_AFTER` | 1e-6, 1e-5 | What a burn must achieve |
 | `MAX_PLANS_PER_RUN` | 5 | Burn searches per run |
-| `SCHEDULER_INTERVAL_HOURS` | 6 | Time between automatic runs |
+| `SCHEDULER_INTERVAL_HOURS` | 6 | Time between automatic runs (each looks 24 hours ahead) |
 
 Environment variables: `FUSION_SCHEDULER=0` disables the automatic runs; `FUSION_RUNS_DIR` moves the runs folder. Operating details are in [docs/OPERATIONS.md](docs/OPERATIONS.md).
 
@@ -232,8 +239,10 @@ The main system is complete without them; each pack adds a capability through a 
 - **The measured uncertainty understates the true error.** It compares public element sets with each other, not with true positions. This is why ranking uses the worst case.
 - **Objects smaller than about 10 cm are not in any public catalogue.**
 - **Object size is approximate**: a radar size where one is published, a size class otherwise.
+- **Beyond one day, passes inside a fleet are not predictions.** A full-sky run over 72 hours found about 1,100 passes a day between objects of different owners on each of the three days, while passes between two satellites of one fleet grew from 913 on the first day to 9,258 on the third: the error in public data scrambles the spacing that fleets keep. The scheduled run therefore looks 24 hours ahead.
+- **Some passes get no burn.** Two objects in similar orbits can meet once every lap; an along-track burn that clears one meeting moves the danger to the next. EDITH detects this and says so instead of proposing the burn.
 - **Burns are treated as instantaneous**, and the safety re-screen covers 24 hours.
-- **At most five burn searches per run**, to keep a run to minutes. It is a setting.
+- **At most five burn searches per run**, to keep a run to minutes. It is a setting, and a burn for any other pass can be requested afterwards.
 - **Pairs drifting together at under 0.1 km/s are not assessed**; the short-encounter probability method does not apply to them.
 - **This is decision support, not an operational system.** It does not command spacecraft.
 
@@ -241,9 +250,9 @@ The main system is complete without them; each pack adds a capability through a 
 
 | Area | State |
 |---|---|
-| Engine, pipeline, scheduler, API | Complete; 111 tests |
+| Engine, pipeline, scheduler, API | Complete; 117 tests |
 | Validation pack | Complete; 54 tests |
-| Dashboard | Working: numbers, ranked list, plans, alerts, replay. Charts and a 3D view are not built |
+| Dashboard | Working: numbers, ranked list, plans with three pictures, plan on request, satellite check, fleets, alerts, replay. A 3D view is not built |
 
 ## Data sources and acknowledgements
 

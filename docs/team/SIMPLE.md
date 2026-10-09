@@ -9,19 +9,28 @@ About 30,000 tracked objects fly around the Earth below 2,000 km: satellites, de
 ## What EDITH does
 
 1. **Downloads** the orbit of every tracked object in low Earth orbit (about 29,700) from two public catalogues.
-2. **Predicts** where each one will be for the next 1 to 3 days.
+2. **Predicts** where each one will be for the next 24 hours (it can look 3 days ahead, but see "Smart choices").
 3. **Finds** every pair that will pass within 1 km. That is 440 million pairs, searched in about 3.5 minutes on a laptop.
 4. **Ranks** each pass by collision probability and marks it red, amber or green.
 5. **Recommends a burn** for the dangerous ones: which satellite moves, when, which way and how hard. It picks the smallest burn that makes the pass safe.
-6. **Checks** that the burn does not create a new danger, and plans a second burn to put the satellite back.
+6. **Checks** that the burn does not create a new danger or worsen another one the satellite already has, and plans a second burn to put the satellite back.
 7. **Reports** what changed since the last run and writes a one-page briefing for each dangerous pass.
 8. **Repeats** every 6 hours by itself.
 
-## Real results (9 October 2026)
+## What you can ask it
 
-- 1,756 close passes in the next 24 hours: 35 red, 183 amber, 1,538 green.
+- **"Plan now"**: a run plans burns for its first 5 dangerous passes. For any other pass, one button searches for a burn and checks it, in one to two minutes.
+- **"Check any satellite"**: type a name or number (for example ISS). It lists that satellite's close passes within 10 km for the next 24 hours, in seconds.
+- **"Fleets"**: one row per fleet (Starlink, Kuiper and so on): how many passes, how many are dangerous, how many burns are planned.
+
+## Real results (9 October 2026, run of 17:51 UTC)
+
+The numbers change with every run. Read the current ones off the dashboard.
+
+- 29,684 objects watched; 2,054 close passes in the next 24 hours: 55 red, 198 amber, 1,801 green.
 - 5 burns planned, all checked safe.
-- Example: the satellite KUIPER-00053 and a dead rocket stage would pass 251 m apart. EDITH says: slow down by 43 mm/s, 10.5 hours early. The pass becomes 2.66 km. Risk falls from 1 in 900 to 1 in 500,000.
+- Example: the satellite KUIPER-00053 and a dead rocket stage would pass 251 m apart. EDITH says: slow down by 66 mm/s, half an orbit early. The pass becomes 585 m. Risk falls from 1 in 900 to 1 in 880,000. (Earlier in the day, with more time left, the same pass needed only 43 mm/s.)
+- Checking the ISS: 4 passes within 10 km in the next 24 hours, none dangerous, found in 5 seconds.
 
 ## How we know it is right
 
@@ -35,6 +44,9 @@ About 30,000 tracked objects fly around the Earth below 2,000 km: satellites, de
 - It ranks by the **worst-case** probability, so a wrong guess about uncertainty cannot hide a danger.
 - It plans burns first for a **satellite against something that cannot move** (debris, rocket stage).
 - It does **not** plan burns between two satellites of the same fleet (for example Starlink and Starlink), because public data cannot predict them.
+- A burn is rejected if it makes **another** dangerous pass of the same satellite worse. Each pass is computed with and without the burn.
+- Some pairs meet once every lap. A burn that clears one meeting moves the danger to the next. EDITH sees this and proposes **no burn** instead of a bad one (example: 2024-173D and STARLINK-38027).
+- It looks **24 hours** ahead, not 3 days. We ran 3 days once: passes between different owners stayed at about 1,100 a day, but passes inside one fleet grew from 913 to 9,258 a day. Those are not real; they come from the error in public data.
 
 ## Why these tools
 
@@ -49,13 +61,13 @@ Python only gives the orders. The heavy maths runs in compiled C and C++ librari
 ## How to show it
 
 - Start: `.venv\Scripts\python -m uvicorn fusion.api.main:app --port 8000`
-- Console: http://localhost:8000 (press "Run now", click "passes with a burn plan", click a row)
+- Dashboard: http://localhost:8000. Press "Run now". Click "With a plan" and a row: the burn, and three pictures (the gap with and without the burn, every burn tried, the risk run by run). Click a red "Watch" row under "All" and press "Plan now". Type ISS in the box. Click "Fleets".
 - Story page: http://localhost:8000/landing
 
 ## What to say in 3 minutes
 
 1. The problem: 30,000 objects, 440 million pairs, nobody can watch them all (20 s).
 2. Press Run. While it runs, show the ranked list and the red count (40 s).
-3. Click a burn plan: the pass, the burn, before and after, the safety check (60 s).
+3. Click a burn plan: the burn, the gap with and without it, the safety check "0 new, 0 worse". Then type a satellite the judge names (60 s).
 4. Show the 2009 replay and the validation line: 0.35 m against CelesTrak, no offset against ESA (40 s).
 5. Say the limits yourself before they ask (20 s).
