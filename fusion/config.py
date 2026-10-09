@@ -69,6 +69,10 @@ MAX_LEAD_ORBITS = 8.0
 MIN_LEAD_TIME_S = 1800.0
 MAX_PLANS_PER_RUN = 5
 
+# --- Test object (only when a run asks for it) -----------------------------
+SYNTHETIC_MISS_KM = 0.05
+SYNTHETIC_LEAD_HOURS = 30.0
+
 # --- Monitoring ------------------------------------------------------------
 SCHEDULER_INTERVAL_HOURS = 6.0
 
