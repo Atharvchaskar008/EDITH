@@ -55,6 +55,7 @@ PROPAGATE_CHUNK_S = 600.0  # time span propagated at once; bounds memory per pro
 SCREEN_WORKERS = 0  # processes for the search; 0 means one fewer than the CPU cores
 SCREEN_TASK_S = 1800.0  # time span handed to a worker as one task
 PARALLEL_MIN_WORK = 5e7  # objects x time steps below which the search stays in one process
+OBJECT_CHECK_PARALLEL_MIN_WORK = 1e7  # the same limit when one object is checked on request: someone is waiting
 
 # --- Risk ------------------------------------------------------------------
 RED_PC_MAX = 1e-4

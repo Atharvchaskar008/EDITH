@@ -142,6 +142,7 @@ def screen(
     on_progress: Progress = None,
     stats: Optional[dict] = None,
     workers: Optional[int] = None,
+    parallel_min_work: Optional[float] = None,
 ) -> list[ConjunctionEvent]:
     """Close approaches under `threshold_km`, with the geometry fields filled."""
     mode = mode or config.SCREEN_MODE
@@ -164,7 +165,7 @@ def screen(
 
     n_steps = int(round(hours * 3600.0 / dt)) + 1
     workers = worker_count() if workers is None else workers
-    if len(objs) * n_steps < config.PARALLEL_MIN_WORK:
+    if len(objs) * n_steps < (config.PARALLEL_MIN_WORK if parallel_min_work is None else parallel_min_work):
         workers = 1  # too small to be worth starting other processes
     stats["workers"] = workers
 
@@ -242,6 +243,7 @@ def screen_object(
     return screen(
         [target.model_copy(update={"is_primary": True})] + others, t0, hours=hours,
         threshold_km=threshold_km, mode="PRIMARIES", step_s=config.VERIFY_STEP_S, stats=stats,
+        parallel_min_work=config.OBJECT_CHECK_PARALLEL_MIN_WORK,
     )
 
 

@@ -140,7 +140,7 @@ Think of it as an assembly line. Each run of the line takes about 4 minutes.
 | 2009 collision replay (teammate A's data) | Working | Section 6 |
 | Comparison with CelesTrak's list after each run | Working | 278 passes in common in the latest run |
 | Web server with all data routes | Working | Tested, and checked in a real Chrome browser |
-| Automatic re-run every 6 hours | Working | A test shows the scheduler firing repeatedly without overlap. A full 6-hour wait has not been watched |
+| Automatic re-run every 6 hours | Working | Watched on a second copy of the server with the timer set to 2 minutes: it started a run by itself, the run finished in 242 seconds (2,184 passes, 5 burns), and the timer firing twice more during the run started nothing. The 6-hour wait itself has not been sat through |
 | Dashboard | Working | A priority list, burn plans with three pictures, Plan now, the satellite check, fleets, alerts, the validation line, and the 2009 replay |
 | Automated tests | 118 in the main system, 54 in the validation pack, all passing | GitHub runs them on every push |
 
@@ -322,7 +322,7 @@ You can rerun the speed measurements in front of a judge: `.venv\Scripts\python 
 | Why only 24 hours ahead? | We ran 72 hours once. Passes outside fleets stayed at about 1,150 a day. Passes inside one fleet grew from 862 on day one to 9,209 on day three, which is the error of public data, not real danger |
 | Why does a dangerous pass have no burn? | Four honest reasons, and the plan states which: both satellites are of one fleet; neither object can move; the run's limit of five was reached (then press Plan now); or every burn tried would create or worsen another dangerous pass |
 | Can it plan a burn for a pass the run skipped? | Yes. Plan now searches and checks a burn for any pass in about 20 seconds, up to a minute for a crowded satellite |
-| Can I check one satellite? | Yes. Type its name or number. It is checked against everything at its height for the next 24 hours: the ISS takes 6 seconds, a Starlink about 30 |
+| Can I check one satellite? | Yes. Type its name or number. It is checked against everything at its height for the next 24 hours: the ISS takes 6 seconds, a Starlink about 17 |
 | How fast is it? | The whole sky, 24 hours ahead, with measured uncertainty, burn plans, alerts, briefings and the CelesTrak comparison: 205 to 250 seconds on a 12-core laptop with the data already downloaded |
 | Does a burn waste the satellite's position in its fleet? | No: a return burn of the same size is planned after the pass |
 | How do you avoid drowning the operator in alerts? | Passes are tracked across runs, and only changes raise an alert: the latest run raised 5 for 2,099 passes. The dashboard opens on 26 priority passes, not on 2,099 |
@@ -339,7 +339,7 @@ You can rerun the speed measurements in front of a judge: `.venv\Scripts\python 
 | A 3D view of the orbits | Not built. The dashboard shows three flat pictures for each pass |
 | A burn for pairs that meet every lap | Not built. The system detects the case and proposes no burn |
 | The 2009 replay across the whole sky | Not run. The replay checks Iridium 33 only |
-| A full 6-hour automatic cycle watched live | Not yet |
+| The 6-hour wait itself | Not sat through. An automatic run was watched with the timer shortened to 2 minutes (section 4) |
 
 ---
 
