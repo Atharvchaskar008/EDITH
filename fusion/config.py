@@ -3,8 +3,11 @@
 # --- Catalogue -------------------------------------------------------------
 CELESTRAK_GP_URL = "https://celestrak.org/NORAD/elements/gp.php"
 
-# Satellites we protect and can manoeuvre. Any list of CelesTrak group names:
-# one constellation, several, or "active" for every active satellite.
+# "ALL_LEO": every tracked LEO object against every other (full coverage).
+# "PRIMARIES": only PRIMARY_GROUPS against the rest (fast, for development).
+SCREEN_MODE = "ALL_LEO"
+
+# Used in "PRIMARIES" mode. Any list of CelesTrak group names.
 PRIMARY_GROUPS = ["iridium-NEXT"]
 
 # Everything the primaries are screened against.

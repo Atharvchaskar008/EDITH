@@ -14,7 +14,8 @@ This file is for whichever AI assistant continues the build (Claude or Gemini). 
 
 | Topic | Decision |
 |---|---|
-| Protected satellites | Configurable list `PRIMARY_GROUPS` in `fusion/config.py`. Starts as `iridium-NEXT` for speed; widen to more constellations or all active LEO once run time is measured (prompt 9). No code may assume Iridium |
+| Coverage | The goal is all of low Earth orbit: every tracked object against every other (`SCREEN_MODE = "ALL_LEO"` in `fusion/config.py`), so every close pass is found, including debris against debris. Burns are only planned for operational satellites; pairs where neither can move get a warning only. `SCREEN_MODE = "PRIMARIES"` screens just the `PRIMARY_GROUPS` list against the rest and is the fast mode for development and tests. Build the screen so both modes share one code path (in `ALL_LEO` use `cKDTree.query_pairs` on one tree). Measure the full run time in prompt 3; if it is too long for a demo, use the 24-hour quick window or multiprocessing over time chunks, do not shrink the coverage silently. No code may assume Iridium |
+| Full debris catalogue | CelesTrak's `active` group covers active satellites; its debris groups cover only a few named clouds. Every tracked debris object and rocket body needs the full catalogue from Space-Track (`gp` class, free account, one bulk request per run at most once an hour; check their API docs and limits before coding). Until Atharv provides a login in `.env`, run with the CelesTrak groups and say plainly that debris coverage is partial |
 | Data source | CelesTrak GP data in JSON (OMM) form, built into `Satrec` with `sgp4.omm`. Same elements as TLEs; needed because catalogue numbers above 99999 do not fit TLE text |
 | Frame and units | TEME, km, km/s, UTC everywhere. No frame conversions. Delta-v in m/s only in outputs |
 | RTN frame | R = unit position, N = unit(r × v), T = N × R. Helpers in `fusion/frames.py` |
@@ -40,7 +41,7 @@ This file is for whichever AI assistant continues the build (Claude or Gemini). 
 
 ## Commits
 
-Atharv wants about 50 commits over the whole project, in plain natural language (for example "Add the close-approach search with a KD-tree coarse pass"). So: commit small and often, one logical step per commit, roughly 3 to 5 per prompt, each with tests passing. Push to `origin main` after each prompt.
+Atharv wants about 50 commits over the whole project, in plain natural language (for example "Add the close-approach search with a KD-tree coarse pass"). So: commit small and often, one logical step per commit, roughly 3 to 5 per prompt, each with tests passing. Push to `origin main` after each prompt. Commit messages contain the message only: no "Co-Authored-By" line and no other AI attribution.
 
 ## Environment
 
