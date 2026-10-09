@@ -180,7 +180,7 @@ def test_scheduler_fires_again_and_again():
 
 def test_events_carry_their_plan_decision_and_can_be_filtered_by_it(client):
     events = client.get("/events").json()
-    assert events[0]["plan_decision"] == "MANEUVER"
+    assert events[0]["plan_decision"] == "MANEUVER" and events[0]["plan_reason"] is None
     assert len(client.get("/events?plan=maneuver").json()) == 1
     assert client.get("/events?plan=MONITOR").json() == []
     # the pass is with an object that cannot move, so it is not one inside a fleet

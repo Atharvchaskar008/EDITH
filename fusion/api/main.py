@@ -326,16 +326,18 @@ def list_events(
     fleet: Optional[str] = None, own_fleet: Optional[bool] = None, source: str = "latest",
 ) -> list[dict]:
     """Events, most dangerous first, each with its plan's decision as `plan_decision`
-    (null for green events) and `own_fleet` (the pass is between two satellites of
-    one fleet). `plan=MANEUVER` keeps only events with a burn planned;
+    (null for green events), `plan_reason` (why a plan says to watch) and
+    `own_fleet` (the pass is between two satellites of one fleet). `plan=MANEUVER` keeps only events with a burn planned;
     `fleet=STARLINK` keeps only events that involve a working satellite of that
     fleet; `own_fleet=false` leaves out the passes inside one fleet."""
     folder = _folder(source)
     events = _events(folder)
-    decisions = {p.get("event_id"): p.get("decision") for p in _plans(folder)}
+    plans = {p.get("event_id"): p for p in _plans(folder)}
     names = _fleet_names(folder)
     for event in events:
-        event["plan_decision"] = decisions.get(event.get("event_id"))
+        plan_of = plans.get(event.get("event_id"), {})
+        event["plan_decision"] = plan_of.get("decision")
+        event["plan_reason"] = plan_of.get("reason")
         event["own_fleet"] = _own_fleet(event, names)
     if own_fleet is not None:
         events = [e for e in events if e["own_fleet"] == own_fleet]

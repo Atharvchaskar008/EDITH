@@ -111,6 +111,9 @@ let checked = null, typed = 0;  // the result of checking one satellite, shown w
 let fleet = null;  // the fleet whose passes the list shows, when one was picked under Fleets
 let priority = true, reds = null, shown = null;  // Priority: the dangerous passes that are not inside one fleet
 const PASS_HEAD = "<tr><th>Level</th><th>Objects</th><th>Distance</th><th>Risk</th><th>Plan</th></tr>";
+// why a dangerous pass has no burn, as the list says it; a pass below the action line is simply watched
+const SETTLED = ["NEITHER_CAN_MOVE", "TOO_SOON", "NO_SAFE_BURN"];  // a new search would give the same answer, so no button
+const WHY = { NEITHER_CAN_MOVE: "Cannot move", SAME_FLEET: "Own fleet", TOO_SOON: "Too soon", NO_SAFE_BURN: "No safe burn", LIMIT: "Not planned" };
 const FLEET_HEAD = "<tr><th>Fleet</th><th>Satellites</th><th>Passes</th><th>Dangerous</th><th>Own fleet</th><th>Burns</th></tr>";
 const get = async path => { const r = await fetch(path); if (!r.ok) throw new Error(path); return r.json(); };
 const n = x => Number(x).toLocaleString("en-US");
@@ -173,7 +176,7 @@ async function loadEvents() {
     $("about").textContent = hit ? "They collided on 10 February 2009. Public data a day earlier predicted a " + dist(hit.miss_distance_km) + " miss." : "";
   }
   $("events").innerHTML = events.map(e => {
-    const plan = e.plan_decision === "MANEUVER" ? "<b>Burn ready</b>" : e.plan_decision === "MONITOR" ? "Watch" : "";
+    const plan = e.plan_decision === "MANEUVER" ? "<b>Burn ready</b>" : e.plan_decision === "MONITOR" ? (WHY[e.plan_reason] || "Watch") : "";
     return `<tr class="row ${e.event_id === picked ? "picked" : ""}" data-id="${esc(e.event_id)}">
       <td class="${e.risk_level}">${word(e.risk_level)}</td>
       <td>${esc(e.primary_name)} / ${esc(e.secondary_name)}${e.synthetic ? ' <span class="tag">TEST</span>' : ""}</td>
@@ -327,7 +330,7 @@ async function loadPlan() {
     else {
       html = `<p class="big">${p.decision === "MONITOR" ? "Watch" : "No action"}</p>${facts(d.event)}<p class="why">${esc(p.rationale)}</p>`;
       if (whatIf) html += "<h2>What if it moved</h2>" + burn(whatIf, d.event);
-      else if (source !== "replay" && !p.requested_at) html += '<div class="ask"><button id="ask">Plan now</button><span id="asked"></span></div>';
+      else if (source !== "replay" && !p.requested_at && !SETTLED.includes(p.reason)) html += '<div class="ask"><button id="ask">Plan now</button><span id="asked"></span></div>';
       html += papers(id) + pictures(d, whatIf, "if it moved");
     }
     $("plan").innerHTML = html;
