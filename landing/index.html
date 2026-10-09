@@ -21,6 +21,29 @@
             width: 0 !important;
             overflow: hidden !important;
         }
+
+        /* Eliminate white patches - dark glassmorphic styling */
+        ._didYouKnowTitle_2jvrn_336,
+        ._title_bzaqk_110,
+        ._didYouKnowContent_2jvrn_349 strong,
+        ._earthHistory_2jvrn_1 ._bottom_2jvrn_10 ._button_2jvrn_75,
+        ._earthHistory_2jvrn_1 ._bottom_2jvrn_10 ._bar_2jvrn_94,
+        ._earthHistory_2jvrn_1 ._bottom_2jvrn_10 ._tooltip_2jvrn_20 ._tooltipTop_2jvrn_36,
+        ._expansion_5ueyb_1 ._title_5ueyb_12 b:before,
+        ._closing_1kdws_1 ._footer_1kdws_77 ._top_1kdws_128 ._item_1kdws_104 {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border: 1px solid rgba(255, 255, 255, 0.22) !important;
+            color: #ffffff !important;
+            backdrop-filter: blur(8px) !important;
+        }
+
+        ._earthHistory_2jvrn_1 ._bottom_2jvrn_10 ._tooltip_2jvrn_20 ._tooltipTop_2jvrn_36 span {
+            color: #ffffff !important;
+        }
+
+        ._earthHistory_2jvrn_1 ._bottom_2jvrn_10 ._button_2jvrn_75 svg {
+            fill: #ffffff !important;
+        }
     </style>
     
     <!-- Fonts -->
@@ -94,7 +117,7 @@
             };
         })();
     </script>
-<a id="open-dashboard" href="http://localhost:8000/" style="position:fixed;top:18px;right:18px;z-index:2147483647;background:#fff;color:#000;padding:13px 22px;font:600 12px/1 Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;text-decoration:none">Open dashboard</a>
+<a id="open-dashboard" href="http://localhost:8000/" style="position:fixed;top:18px;right:18px;z-index:2147483647;background:rgba(15,15,15,0.85);color:#fff;border:1px solid rgba(255,255,255,0.3);padding:12px 20px;font:700 11px/1 'Roboto Mono',monospace;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;border-radius:6px;backdrop-filter:blur(8px)">Open dashboard</a>
 </body>
 
 </html>

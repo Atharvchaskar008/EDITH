@@ -329,7 +329,7 @@
 }
 
 ._timeline_128l4_1 ._nineteen_128l4_19 hr {
-    background: linear-gradient(180deg, #00000000, #ffffff 47.5%, #00000000);
+    background: linear-gradient(180deg, #00000000, rgba(255, 255, 255, 0.25) 47.5%, #00000000);
     border: none;
     height: 290rem;
     margin: 0;
@@ -638,14 +638,15 @@
 }
 
 ._earthHistory_2jvrn_1 ._bottom_2jvrn_10 ._tooltip_2jvrn_20 ._tooltipTop_2jvrn_36 {
-    background: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8rem;
     padding: 2rem 6rem;
     position: relative
 }
 
 ._earthHistory_2jvrn_1 ._bottom_2jvrn_10 ._tooltip_2jvrn_20 ._tooltipTop_2jvrn_36 span {
-    color: #050505;
+    color: #ffffff;
     position: relative;
     z-index: 1
 }
@@ -687,7 +688,8 @@
 ._earthHistory_2jvrn_1 ._bottom_2jvrn_10 ._button_2jvrn_75 {
     align-items: center;
     aspect-ratio: 1;
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 9rem;
     cursor: pointer;
     display: flex;
@@ -707,7 +709,8 @@
 }
 
 ._earthHistory_2jvrn_1 ._bottom_2jvrn_10 ._bar_2jvrn_94 {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 9rem;
     display: flex;
     height: 100%;
@@ -986,7 +989,9 @@
 }
 
 ._earthHistory_2jvrn_1 ._slides_2jvrn_173 ._didYouKnow_2jvrn_332 ._didYouKnowTitle_2jvrn_336 {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
     border-radius: 9rem;
     font-family: Roboto Mono, monospace;
     font-size: 20rem;
@@ -1020,7 +1025,9 @@
 }
 
 ._earthHistory_2jvrn_1 ._slides_2jvrn_173 ._didYouKnow_2jvrn_332 ._didYouKnowContent_2jvrn_349 strong {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
     border-radius: 9rem;
     display: inline-block;
     font-weight: 400;
@@ -2330,7 +2337,9 @@
 }
 
 ._debrisDidYouKnow_bzaqk_1 ._title_bzaqk_110 {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
     border-radius: 9rem;
     font-family: Roboto Mono, monospace;
     font-size: 20rem;
@@ -3531,7 +3540,8 @@
 }
 
 ._expansion_5ueyb_1 ._title_5ueyb_12 b:before {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 9rem;
     content: "";
     height: 100%;
@@ -3831,7 +3841,7 @@
 }
 
 ._closing_1kdws_1 ._footer_1kdws_77:before {
-    background: linear-gradient(180deg, #090d0f00, #090d0f);
+    background: linear-gradient(180deg, #00000000, #000000);
     bottom: 0;
     content: "";
     height: 230rem;
@@ -3878,7 +3888,9 @@
 }
 
 ._closing_1kdws_1 ._footer_1kdws_77 ._top_1kdws_128 ._item_1kdws_104 {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
     border-radius: 6px;
     font-family: Roboto Mono, monospace;
     font-weight: 700;
