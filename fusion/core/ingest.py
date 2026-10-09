@@ -121,8 +121,11 @@ def load_catalog_with_stats(
         existing = by_id.get(obj.norad_id)
         if existing is None:
             by_id[obj.norad_id] = obj
-        elif obj.object_type != "UNKNOWN":
-            existing.object_type = obj.object_type  # Space-Track's type is authoritative
+        else:
+            # Space-Track's type and size class are authoritative
+            if obj.object_type != "UNKNOWN":
+                existing.object_type = obj.object_type
+            existing.radius_m = obj.radius_m
 
     objects = list(by_id.values())
     stats["downloaded"] = len(objects)

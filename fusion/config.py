@@ -28,6 +28,9 @@ REQUEST_TIMEOUT_S = 30.0
 MAX_TLE_AGE_DAYS = 14.0
 LEO_MAX_PERIGEE_KM = 2000.0  # objects that never come below this are ignored
 DEFAULT_RADIUS_M = 5.0
+# Space-Track radar cross-section classes: SMALL < 0.1 m2, MEDIUM 0.1-1 m2, LARGE > 1 m2.
+# Approximate radius of a disc with that area; LARGE has no upper bound, so 2 m is a guess.
+RCS_RADIUS_M = {"SMALL": 0.15, "MEDIUM": 0.4, "LARGE": 2.0}
 
 # --- Screening -------------------------------------------------------------
 WINDOW_HOURS = 72.0

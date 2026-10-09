@@ -106,3 +106,13 @@ def test_rejected_login_gives_a_clear_error_and_no_query(tmp_path):
     with pytest.raises(RuntimeError, match="rejected the login"):
         spacetrack.fetch_leo_records(tmp_path, env, session)
     assert session.gets == []
+
+
+def test_size_class_sets_the_radius_and_tle_lines_are_kept():
+    objects = spacetrack.to_objects([
+        record(1, RCS_SIZE="SMALL", TLE_LINE1="1 line", TLE_LINE2="2 line"),
+        record(2, RCS_SIZE="LARGE"),
+        record(3, RCS_SIZE=None),
+    ])
+    assert [o.radius_m for o in objects] == [0.15, 2.0, 5.0]
+    assert objects[0].tle_line1 == "1 line" and objects[1].tle_line1 is None

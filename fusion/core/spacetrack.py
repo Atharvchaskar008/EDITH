@@ -10,8 +10,7 @@ rocket bodies. Put the login in a `.env` file at the project root:
 Without a login every function here returns nothing and the project runs on
 CelesTrak data alone.
 
-The query follows Space-Track's documented pattern for a bulk catalogue pull.
-It has not been run against the live service yet; check the first real response.
+The query is one bulk catalogue pull, verified against the live service.
 """
 
 from __future__ import annotations
@@ -124,12 +123,14 @@ def to_objects(records: list[dict[str, Any]]) -> list[SpaceObject]:
         for key in ("BSTAR", "MEAN_MOTION_DOT", "MEAN_MOTION_DDOT"):
             fields[key] = fields.get(key) or 0.0
         try:
-            objects.append(
-                object_from_omm(
-                    fields,
-                    object_type=_TYPE_MAP.get(str(record.get("OBJECT_TYPE", "")).upper(), "UNKNOWN"),
-                )
+            obj = object_from_omm(
+                fields,
+                object_type=_TYPE_MAP.get(str(record.get("OBJECT_TYPE", "")).upper(), "UNKNOWN"),
+                radius_m=config.RCS_RADIUS_M.get(str(record.get("RCS_SIZE", "")).upper(), config.DEFAULT_RADIUS_M),
             )
+            obj.tle_line1 = record.get("TLE_LINE1") or None
+            obj.tle_line2 = record.get("TLE_LINE2") or None
+            objects.append(obj)
         except (KeyError, TypeError, ValueError):
             skipped += 1
     if skipped:
