@@ -24,6 +24,7 @@ All times are UTC ISO 8601. Distances are km, speeds km/s, delta-v m/s. Results 
 | `GET /addons/files/{path}` | A file from `addons/` (json, md, png, txt, csv only) |
 | `GET /runs/latest/files/{path}` | A file from the latest run folder: `briefings/<event_id>.briefing.json`, `cdm/<event_id>.cdm.txt`, `summary.json`. Add `?source=replay` for the replay folder |
 | `GET /` | The plain test page |
+| `GET /landing` | The story page for visitors (`landing/index.html`), which reads its live numbers from `/latest` |
 
 The event routes accept `?source=replay` to read the 2009 replay folder instead of the latest run.
 

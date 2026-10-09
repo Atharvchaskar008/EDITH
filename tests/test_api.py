@@ -182,3 +182,8 @@ def test_events_carry_their_plan_decision_and_can_be_filtered_by_it(client):
     assert events[0]["plan_decision"] == "MANEUVER"
     assert len(client.get("/events?plan=maneuver").json()) == 1
     assert client.get("/events?plan=MONITOR").json() == []
+
+
+def test_landing_page_is_served(client):
+    response = client.get("/landing")
+    assert response.status_code == 200 and "<title>EDITH</title>" in response.text

@@ -23,6 +23,7 @@ Fill in `.env` with a free Space-Track login to get the full catalogue, includin
 | One run from the terminal | `.venv\Scripts\python -m fusion.pipeline` |
 | Start the server | `.venv\Scripts\python -m uvicorn fusion.api.main:app --port 8000` |
 | Open the test page | http://localhost:8000 |
+| Open the landing page (EDITH) | http://localhost:8000/landing |
 | Build the 2009 collision replay | `.venv\Scripts\python -m fusion.replay.replay_2009` (about 1 minute; needs teammate A's pack) |
 | Compare with CelesTrak's own list | `.venv\Scripts\python -m fusion.validation` (downloads 6 MB when its copy is over 12 hours old) |
 | Run the trust pack's own tests | `cd addons\b_trust` then `..\..\.venv\Scripts\python -m pytest -q` |

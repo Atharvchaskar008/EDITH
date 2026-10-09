@@ -389,3 +389,12 @@ def run_file(relative: str, source: str = "latest") -> FileResponse:
 @app.get("/")
 def test_page() -> FileResponse:
     return FileResponse(STATIC_DIR / "index.html")
+
+
+@app.get("/landing")
+def landing_page() -> FileResponse:
+    """The public-facing story page (landing/index.html); it reads its live numbers from /latest."""
+    page = config.PROJECT_ROOT / "landing" / "index.html"
+    if not page.exists():
+        raise HTTPException(404, "The landing page is not in this checkout")
+    return FileResponse(page)
