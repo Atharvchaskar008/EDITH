@@ -1,0 +1,74 @@
+{
+  "dataset_name": "ESA Collision Avoidance Challenge (Zenodo record 4463683)",
+  "number_of_warnings": 162634,
+  "number_of_events": 13154,
+  "warnings_per_event": {
+    "median": 13.0,
+    "max": 23,
+    "min": 1
+  },
+  "floor_risk_value": -30.0,
+  "final_risk_distribution": {
+    "above_minus_6": 365,
+    "between_minus_6_and_minus_10": 2023,
+    "below_minus_10_total": 10766,
+    "at_floor_value": 8349,
+    "between_minus_10_and_floor": 2417
+  },
+  "early_vs_final_risk_shift": {
+    "events_with_different_sides_of_minus_6": 1188,
+    "percentage_different_sides": 9.03
+  },
+  "column_mapping_and_units": {
+    "event_identifier": {
+      "column": "event_id",
+      "unit": "integer ID",
+      "source": "raw_data_2015-2019.txt line 37"
+    },
+    "time_to_closest_approach": {
+      "column": "time_to_tca",
+      "unit": "days",
+      "source": "raw_data_2015-2019.txt line 38"
+    },
+    "risk_value": {
+      "column": "risk",
+      "scale": "base-10 logarithm [log10 Pc]",
+      "unit": "dimensionless log-probability",
+      "source": "raw_data_2015-2019.txt line 36"
+    },
+    "miss_distance": {
+      "column": "miss_distance",
+      "unit": "meters [m]",
+      "source": "raw_data_2015-2019.txt line 42"
+    },
+    "relative_speed": {
+      "column": "relative_speed",
+      "unit": "meters per second [m/s]",
+      "source": "raw_data_2015-2019.txt line 43"
+    },
+    "position_standard_deviations_target": {
+      "columns": [
+        "t_sigma_r",
+        "t_sigma_t",
+        "t_sigma_n"
+      ],
+      "unit": "meters [m]",
+      "source": "raw_data_2015-2019.txt lines 70, 72, 61"
+    },
+    "position_standard_deviations_chaser": {
+      "columns": [
+        "c_sigma_r",
+        "c_sigma_t",
+        "c_sigma_n"
+      ],
+      "unit": "meters [m]",
+      "source": "raw_data_2015-2019.txt lines 70, 72, 61"
+    },
+    "chaser_object_type": {
+      "column": "c_object_type",
+      "type": "categorical string",
+      "unit": "dimensionless category",
+      "source": "raw_data_2015-2019.txt line 50"
+    }
+  }
+}
