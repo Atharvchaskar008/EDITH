@@ -29,7 +29,7 @@ Fill in `.env` with a free Space-Track login to get the full catalogue, includin
 | Run the trust pack's own tests | `cd addons\b_trust` then `..\..\.venv\Scripts\python -m pytest -q` |
 | Time the search on real data | `.venv\Scripts\python scripts\measure.py ALL_LEO 12` |
 | Measure compiled libraries against plain Python | `.venv\Scripts\python scripts\why_python.py` |
-| Rebuild the sample files | `.venv\Scripts\python scripts\make_fixtures.py` |
+| Check a running server end to end | `.venv\Scripts\python scripts\check_server.py` (add `--run` to start a fresh run first) |
 
 Options for `fusion.pipeline`:
 

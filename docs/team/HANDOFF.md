@@ -54,7 +54,7 @@ Atharv wants about 50 commits over the whole project, in plain natural language 
 
 | Prompt | Status |
 |---|---|
-| 1 Scaffold, contracts, fixtures | Done. `plan_sample.json` and `alerts_sample.json` are still to be added to `data/fixtures/` once the planner exists |
+| 1 Scaffold, contracts | Done |
 | 2 Ingest and propagate | Done, run on real data |
 | 3 Screen and refine | Done, run on real data in both modes |
 | 4 Uncertainty and probability | Done, run on real data |
@@ -112,7 +112,6 @@ What this means:
 | `fusion/pipeline.py` | `run_pipeline(...)` runs every stage and writes the run folder; `new_run_id`, `load_run`, `write_json`; command line `python -m fusion.pipeline [--synthetic] [--quick] [--mode ...] [--hours H]` |
 | `fusion/monitor/scheduler.py` | `Monitor`: re-runs the pipeline every 6 hours; the first run is one interval after start-up |
 | `fusion/api/main.py` | FastAPI server. Start with `.venv\Scripts\python -m uvicorn fusion.api.main:app --port 8000`. Set `FUSION_SCHEDULER=0` to switch the scheduler off and `FUSION_RUNS_DIR` to move the runs folder |
-| `scripts/make_fixtures.py` | Rebuilds `data/fixtures/` from a real download |
 | `fusion/synthetic.py` | `make_conjunction(primary, t_tca, miss_km)`: labelled test object passing a chosen distance from a real satellite |
 | `tests/conftest.py` | Made-up Iridium-like test satellite (`primary` fixture) |
 
