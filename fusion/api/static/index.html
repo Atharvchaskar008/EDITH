@@ -10,11 +10,14 @@
   tr.row { cursor: pointer; } tr.row:hover, tr.picked { background: #eef; }
   .RED { color: #b00020; font-weight: 600; } .AMBER { color: #a15c00; font-weight: 600; } .GREEN { color: #1b6e1b; }
   pre { background: #f5f5f5; padding: 8px; white-space: pre-wrap; margin: 0; } .note { color: #666; } .error { color: #b00020; }
+  #summary { margin-top: 6px; font-weight: 600; }
+  #planbox { position: sticky; top: 0; background: #fff; padding-bottom: 8px; border-bottom: 2px solid #ccc; }
 </style>
 </head>
 <body>
 <h1>Fusion test page</h1>
 <div class="note">A plain page for checking the engine. The real dashboard comes later.</div>
+<div id="summary"></div>
 
 <h2>Run</h2>
 <button id="run">Run now</button>
@@ -24,11 +27,13 @@
 <pre id="status">No run started from this page.</pre>
 <div id="monitor" class="note"></div>
 
+<div id="planbox">
+<h2>Plan for the selected pass</h2>
+<pre id="plan">Click a row in the table below.</pre>
+</div>
+
 <h2>Close passes <span id="count" class="note"></span></h2>
 <table><thead><tr><th>Risk</th><th>Objects</th><th>Closest approach (UTC)</th><th>In</th><th>Miss</th><th>Probability</th><th>Worst case</th><th>Uncertainty</th></tr></thead><tbody id="events"></tbody></table>
-
-<h2>Plan for the selected pass</h2>
-<pre id="plan">Click a row.</pre>
 
 <h2>Alerts</h2>
 <pre id="alerts">No alerts yet.</pre>
@@ -83,11 +88,20 @@ async function loadSide() {
   $("alerts").textContent = alerts.length ? alerts.map(a => a.message).join("\n") : "No alerts yet.";
 }
 
+async function loadSummary() {
+  try {
+    const r = await get("/latest"), n = x => x.toLocaleString("en-US");
+    $("summary").textContent = "Latest run " + r.run_id + ": " + n(r.screen.objects_screened) + " objects screened, " +
+      n(r.events) + " close passes in the next " + r.window_hours + " h (" + n(r.levels.RED) + " red, " + n(r.levels.AMBER) +
+      " amber, " + n(r.levels.GREEN) + " green), " + r.plans.maneuver + " burns planned, run time " + Math.round(r.duration_s) + " s.";
+  } catch (e) { $("summary").textContent = ""; }
+}
+
 async function poll() {
   if (!runId) return;
   const s = await get("/run/" + runId + "/status");
   $("status").textContent = "Run " + runId + ": " + s.status + " (" + s.stage + ")\n" + s.log.slice(-8).map(l => l.message).join("\n") + (s.error ? "\n" + s.error : "");
-  if (s.status !== "RUNNING") { runId = null; loadEvents().catch(fail); }
+  if (s.status !== "RUNNING") { runId = null; loadEvents().catch(fail); loadSummary(); }
 }
 
 $("run").onclick = async () => {
@@ -96,8 +110,8 @@ $("run").onclick = async () => {
   runId = (await r.json()).run_id;
 };
 setInterval(() => poll().catch(fail), 2000);
-setInterval(() => { loadSide().catch(fail); if (!runId) loadEvents().catch(fail); }, 15000);
-loadEvents().catch(fail); loadSide().catch(fail);
+setInterval(() => { loadSide().catch(fail); loadSummary(); if (!runId) loadEvents().catch(fail); }, 15000);
+loadEvents().catch(fail); loadSide().catch(fail); loadSummary();
 </script>
 </body>
 </html>
