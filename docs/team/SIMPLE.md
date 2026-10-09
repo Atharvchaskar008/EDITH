@@ -76,6 +76,8 @@ Have the dashboard open before you start. Do not press "Run now" during the talk
 | 1:35 | Click a "Watch" row, press "Plan now" | "A run plans five burns. For any other pass, one button, about 20 seconds." While it runs: "Passes between two satellites of one fleet are left out of this list. Public data is too rough for those." |
 | 2:00 | Type ISS, or the satellite the judge names | "Any satellite, by name. Its close passes for the next 24 hours, checked in seconds." |
 | 2:20 | Click "2009 replay" | "The real 2009 collision, from the data public the day before. EDITH finds it at the right second, as the most dangerous pass of Iridium 33. It rates it amber, because public data predicted a 584 m miss. That error is why we rank by worst case, and why we measured the error of public data ourselves." |
-| 2:45 | Nothing | "It advises people; it does not fly satellites. 118 tests run on GitHub on every push." |
+| 2:45 | Nothing | "It advises people; it does not fly satellites. 120 tests run on GitHub on every push." |
+
+If a judge asks how you know it is right, click "Proof" under the button: four pictures, each with its number. If a judge asks what an operator would receive, click "Warning message (CDM)" on any plan.
 
 If a judge asks why some dangerous pass has no burn, show 2024-173D and STARLINK-38027: they meet every lap, so a burn that clears one meeting moves the danger to the next, and EDITH says so.

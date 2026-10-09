@@ -142,7 +142,7 @@ Think of it as an assembly line. Each run of the line takes about 4 minutes.
 | Web server with all data routes | Working | Tested, and checked in a real Chrome browser |
 | Automatic re-run every 6 hours | Working | Watched on a second copy of the server with the timer set to 2 minutes: it started a run by itself, the run finished in 242 seconds (2,184 passes, 5 burns), and the timer firing twice more during the run started nothing. The 6-hour wait itself has not been sat through |
 | Dashboard | Working | A priority list, burn plans with three pictures, Plan now, the satellite check, fleets, alerts, the validation line, and the 2009 replay |
-| Automated tests | 118 in the main system, 54 in the validation pack, all passing | GitHub runs them on every push |
+| Automated tests | 120 in the main system, 54 in the validation pack, all passing | GitHub runs them on every push |
 
 ### What the data covers
 
@@ -352,7 +352,9 @@ You can rerun the speed measurements in front of a judge: `.venv\Scripts\python 
 | Fleets | One row per fleet: passes, dangerous passes to act on, passes inside the fleet, burns planned | Starlink, Yaogan, Flock, Kuiper and 220 more |
 | Priority list | The dashboard opens on the dangerous passes that are not inside one fleet | 26 of 56 |
 | 24-hour scheduled run | The automatic run looks 24 hours ahead, not 72 | Section 7 has the reason |
-| Tests on GitHub | The 118 and 54 tests run on every push, with a badge on the README | Green |
+| Proof section | The dashboard draws the four validation results: distances against CelesTrak, probability against ESA, the error of public data by its age, and how far the ranking depends on our assumptions | In a real Chrome browser |
+| Documents on each plan | Links to the standard warning message (CDM) and the briefing written for that pass | Both open |
+| Tests on GitHub | The 120 and 54 tests run on every push, with a badge on the README | Green |
 
 ---
 
