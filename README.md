@@ -249,6 +249,7 @@ Open **http://localhost:3000** in your browser.
 | **Compare latest run with CelesTrak** | `.venv/bin/python -m fusion.validation` | `.venv\Scripts\python -m fusion.validation` |
 | **Run the tests** | `.venv/bin/pytest -q` | `.venv\Scripts\python -m pytest -q` |
 | **Benchmark compiled libs vs plain Python** | `.venv/bin/python scripts/why_python.py` | `.venv\Scripts\python scripts\why_python.py` |
+| **Check a running server end to end** | `.venv/bin/python scripts/check_server.py` | `.venv\Scripts\python scripts\check_server.py` |
 
 `fusion.pipeline` options:
 - `--quick`: 24-hour look-ahead window (instead of 72 hours).
@@ -310,30 +311,41 @@ Environment variables: `FUSION_SCHEDULER=0` disables the automatic runs; `FUSION
 ## Repository layout
 
 ```
-fusion/                 The engine and the server
-  core/                 Ingest, propagation, screening, exact closest approach
-  risk/                 Uncertainty and collision probability
-  maneuver/             Burn planner, burned-orbit model, safety re-screen
-  monitor/              Six-hour scheduler
-  replay/               2009 collision replay
-  api/                  FastAPI application and the dashboard page
-  pipeline.py           Runs every stage and writes the run folder
-  validation.py         Comparison with CelesTrak SOCRATES
-  addons.py             Hooks into the optional packs
-  config.py             All settings
-  contracts.py          Data models
-addons/
-  a_history/            Object sizes, 2009 replay data, reference test cases
-  b_trust/              Measured uncertainty and independent validation
-  c_ops/                Alerts, briefings, CDM export, risk-trend model
-landing/                Story page and standalone 3D interactive WebGL visualization server
-tests/                  Test suite for the main system
-scripts/                Benchmarks and fixture builder
-data/fixtures/          Small sample files used by tests
-docs/                   Architecture, API reference, operations guide
+fusion/                     The engine and the server (the Python package)
+  config.py                 Every setting and path
+  contracts.py              Data models for objects, events, plans and alerts
+  core/                     Ingest, propagation, screening, exact closest approach
+  risk/                     Uncertainty and collision probability
+  maneuver/                 Burn planner, burned-orbit model, safety re-screen
+  pipeline.py               Runs every stage and writes the run folder
+  monitor/                  Six-hour scheduler
+  replay/                   2009 collision replay
+  validation.py             Comparison with CelesTrak SOCRATES
+  addons.py                 Hooks into the optional packs, each with a fallback
+  api/
+    main.py                 FastAPI application: every route
+    static/                 The dashboard: index.html, dashboard.css, dashboard.js
+addons/                     Optional packs, each standalone with its own tests
+  a_history/                Object sizes, 2009 replay data, reference test cases
+  b_trust/                  Measured uncertainty and independent validation
+  c_ops/                    Alerts, briefings, CDM export, risk-trend model
+landing/                    Story page and standalone 3D interactive WebGL visualization server
+tests/                      Test suite for the main system
+scripts/                    Benchmarks, and an end-to-end check of a running server
+docs/
+  ARCHITECTURE.md           Components, data flow and design decisions
+  API.md                    Every route and data shape
+  OPERATIONS.md             Commands, timings, settings and limits
+  images/                   Pictures used in this file
+  team/                     Explainers and the demo script
+.github/workflows/          Tests on GitHub, on Python 3.11 to 3.14
+pyproject.toml              Package metadata and test settings
+requirements.txt            Libraries of the main system
+requirements-addons.txt     Libraries the packs need
+CONTRIBUTING.md             Set-up, conventions and where each kind of change goes
 ```
 
-`data/runs/` and `data/cache/` are created at run time and are not in version control.
+`data/` is created at run time (`data/runs/` and `data/cache/`) and is not in version control.
 
 ## Add-on packs
 
