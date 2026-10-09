@@ -18,6 +18,10 @@ SECONDARY_GROUPS = [
     "fengyun-1c-debris",
 ]
 
+# Space-Track: full catalogue incl. all debris; used only when .env has a login.
+SPACETRACK_CACHE_HOURS = 2.0  # they allow one bulk catalogue request per hour
+SPACETRACK_TIMEOUT_S = 180.0
+
 CACHE_MAX_AGE_HOURS = 2.0
 REQUEST_PAUSE_S = 2.0
 REQUEST_TIMEOUT_S = 30.0
