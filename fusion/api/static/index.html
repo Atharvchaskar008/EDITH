@@ -31,11 +31,17 @@
   .why { color: #9a9a9a; margin: 14px 0 0; max-width: 90ch; }
   .ask { display: flex; align-items: center; gap: 18px; margin-top: 16px; color: #9a9a9a; }
   .pics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 24px; }
-  .pics h3 { margin: 0 0 8px; font-size: 11px; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; color: #9a9a9a; }
-  .pics svg { display: block; width: 100%; height: auto; }
-  .pics text { fill: #9a9a9a; font-size: 11px; }
-  .pics text.on { fill: #fff; }
+  .pics h3, .proof h3 { margin: 0 0 8px; font-size: 11px; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; color: #9a9a9a; }
+  .pics svg, .proof svg, .proof img { display: block; width: 100%; height: auto; }
+  .pics text, .proof text { fill: #9a9a9a; font-size: 11px; }
+  .pics text.on, .proof text.on { fill: #fff; }
   .pics p { color: #9a9a9a; font-size: 12px; margin: 6px 0 0; }
+  .proof { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; align-items: start; }
+  .proof img { filter: invert(1) grayscale(1); }  /* the pack's chart is dark on white */
+  .proof p { color: #9a9a9a; font-size: 13px; margin: 8px 0 0; }
+  .papers { margin: 12px 0 0; display: flex; gap: 22px; }
+  .papers a { color: #fff; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid #fff; }
+  @media (max-width: 1180px) { .proof { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .find input { width: 100%; background: none; border: 0; border-bottom: 1px solid #555; color: #fff; font: inherit; padding: 10px 0; outline: none; }
   .find input:focus { border-bottom-color: #fff; }
   .find input::placeholder { color: #6f6f6f; }
@@ -61,7 +67,7 @@
     .facts b { font-size: 16px; }
     .hide { display: none; }
   }
-  @media (max-width: 760px) { .tiles, .facts { grid-template-columns: repeat(2, 1fr); } .pics { grid-template-columns: 1fr; } .hide { display: none; } }
+  @media (max-width: 760px) { .tiles, .facts { grid-template-columns: repeat(2, 1fr); } .pics, .proof { grid-template-columns: 1fr; } .hide { display: none; } }
 </style>
 </head>
 <body>
@@ -75,7 +81,7 @@
 </div>
 
 <div class="run"><button id="run">Run now</button><span id="status">Ready.</span></div>
-<p class="check"><span id="validation"></span> <a id="report" href="#" target="_blank" hidden>Proof</a></p>
+<p class="check"><span id="validation"></span> <a id="report" href="#proof-title" hidden>Proof</a></p>
 
 <div class="split">
   <div id="planbox"><h2>Plan</h2><div id="plan"><p class="why">Pick a pass.</p></div></div>
@@ -91,6 +97,9 @@
 
 <h2>What changed</h2>
 <ul id="alerts"><li>Nothing yet.</li></ul>
+
+<h2 id="proof-title" hidden>Proof <span class="tabs"><a id="full-report" target="_blank" hidden>Full report</a></span></h2>
+<div id="proof" class="proof" hidden></div>
 <div id="error"></div>
 
 <script>
@@ -121,7 +130,6 @@ async function loadTop() {
   try {
     const v = await get("/validation");
     $("validation").textContent = "Checked against CelesTrak: distances match to " + v.same_input.all_matches.miss_difference_m.median.toFixed(2) + " m.";
-    if (v.report) { $("report").hidden = false; $("report").href = "/addons/files/" + v.report; }
   } catch (e) { $("validation").textContent = ""; }
 }
 
@@ -275,6 +283,14 @@ function showPass(e) {
     </div>` + pictures({ event: e });
 }
 
+// the two documents written for every dangerous pass of a run: the standard warning message and the briefing
+let written = false;
+function papers(id) {
+  if (!written && source !== "replay") return "";
+  const from = "/runs/latest/files/", tail = source === "replay" ? "?source=replay" : "", name = encodeURIComponent(id);
+  return `<p class="papers"><a href="${from}cdm/${name}.cdm.txt${tail}" target="_blank">Warning message (CDM)</a><a href="${from}briefings/${name}.briefing.json${tail}" target="_blank">Briefing</a></p>`;
+}
+
 async function loadPlan() {
   if (!picked) return;
   const id = picked;
@@ -285,12 +301,12 @@ async function loadPlan() {
     const p = d.plan, whatIf = d.what_if_plan;
     let html;
     if (!p) html = '<p class="big">Safe</p><p class="why">Low risk. No plan needed.</p>' + pictures(d);
-    else if (p.decision === "MANEUVER") html = burn(p) + pictures(d, p, "after the burn");
+    else if (p.decision === "MANEUVER") html = burn(p) + papers(id) + pictures(d, p, "after the burn");
     else {
       html = `<p class="big">${p.decision === "MONITOR" ? "Watch" : "No action"}</p><p class="why">${esc(p.rationale)}</p>`;
       if (whatIf) html += "<h2>What if it moved</h2>" + burn(whatIf);
       else if (source !== "replay" && !p.requested_at) html += '<div class="ask"><button id="ask">Plan now</button><span id="asked"></span></div>';
-      html += pictures(d, whatIf, "if it moved");
+      html += papers(id) + pictures(d, whatIf, "if it moved");
     }
     $("plan").innerHTML = html;
     if ($("ask")) $("ask").onclick = () => askPlan(id);
@@ -317,6 +333,62 @@ async function loadAlerts() {
   const rank = { CRITICAL: 0, WARNING: 1, INFO: 2 };
   const alerts = (await get("/alerts?own_fleet=false")).sort((a, b) => (rank[a.severity] ?? 3) - (rank[b.severity] ?? 3)).slice(0, 5);
   $("alerts").innerHTML = alerts.map(a => `<li>${esc(a.message)}</li>`).join("") || "<li>Nothing new since the previous run.</li>";
+}
+
+// --- proof: what the validation pack measured, drawn once in a 340 x 230 frame ---
+const PW = 340, PH = 230;
+const sheet = body => `<svg viewBox="0 0 ${PW} ${PH}" role="img">${body}</svg>`;
+
+// our closest-approach distance against CelesTrak's for the same passes; a dot on the line is an exact match
+function matchPicture(pairs) {
+  const logs = pairs.flat().map(Math.log10), lo = Math.min(...logs) - .1, hi = Math.max(...logs) + .1;
+  const left = 46, bottom = PH - 26, side = Math.min(PW - left - 8, bottom - 8);
+  const x = m => left + (Math.log10(m) - lo) / (hi - lo) * side, y = m => bottom - (Math.log10(m) - lo) / (hi - lo) * side;
+  let body = `<path d="M${x(10 ** lo).toFixed(1)} ${y(10 ** lo).toFixed(1)}L${x(10 ** hi).toFixed(1)} ${y(10 ** hi).toFixed(1)}" stroke="#555"/>`;
+  for (let p = Math.ceil(lo); p <= Math.floor(hi); p++)
+    body += label(x(10 ** p), PH - 8, dist(10 ** p / 1000), "middle") + label(left - 6, y(10 ** p) + 3, dist(10 ** p / 1000), "end");
+  body += pairs.map(([theirs, ours]) => `<circle cx="${x(theirs).toFixed(1)}" cy="${y(ours).toFixed(1)}" r="2" fill="#fff" fill-opacity=".85"/>`).join("");
+  return sheet(body + label(left + side - 4, bottom - 8, "across: CelesTrak", "end") + label(left + 6, bottom - side + 14, "up: ours"));
+}
+
+// how far a public orbit record is from a newer one of the same object, by its age, for each kind of object
+function growthPicture(kinds) {
+  const lo = -2, hi = 3, left = 46, right = PW - 104, top = 8, bottom = PH - 26;
+  const x = d => left + d / 7 * (right - left), y = km => top + (hi - Math.log10(km)) / (hi - lo) * (bottom - top);
+  let body = "";
+  for (let p = lo; p <= hi; p++)
+    body += `<path d="M${left} ${y(10 ** p).toFixed(1)}H${right}" stroke="#262626"/>` + label(left - 6, y(10 ** p) + 3, p < 0 ? Math.round(10 ** p * 1000) + " m" : 10 ** p + " km", "end");
+  [1, 3, 5, 7].forEach(d => { body += label(x(d), PH - 8, d + (d === 7 ? " days" : ""), "middle"); });
+  const names = { "Other working satellites": "Other working" };
+  kinds = kinds.filter(k => k.kind !== "Rocket bodies" && k.kind !== "Iridium NEXT");  // these two lie between debris and dead satellites
+  const ends = kinds.map(k => ({ name: names[k.kind] || k.kind, y: y(k.along_track_km[k.along_track_km.length - 1]) })).sort((a, b) => a.y - b.y);
+  ends.forEach((e, i) => { if (i && e.y - ends[i - 1].y < 12) e.y = ends[i - 1].y + 12; });  // keep the names apart
+  kinds.forEach(k => { body += `<path d="${k.age_days.map((d, i) => (i ? "L" : "M") + x(d).toFixed(1) + " " + y(k.along_track_km[i]).toFixed(1)).join("")}" fill="none" stroke="#fff" stroke-width="1.3"/>`; });
+  return sheet(body + ends.map(e => label(right + 6, e.y + 3, e.name, "start", true)).join(""));
+}
+
+// of the 10 most dangerous passes, how many stay in the top 10 when one assumption is changed
+function keptPicture(rows) {
+  const left = 168, full = PW - left - 62, step = 30;
+  return sheet(rows.map((r, i) => label(left - 8, 26 + i * step, r.change, "end") +
+    `<rect x="${left}" y="${16 + i * step}" width="${(full * r.top10_kept / 10).toFixed(1)}" height="12" fill="#fff"/>` +
+    label(left + full * r.top10_kept / 10 + 8, 26 + i * step, r.top10_kept + " of 10", "start", true)).join(""));
+}
+
+async function loadProof() {
+  const p = await get("/proof"), blocks = [], after = name => short(p.error_growth.kinds.find(k => k.kind === name).after_1_day_km);
+  if (p.celestrak && p.celestrak.pairs_m.length) blocks.push(`<h3>Distance, against CelesTrak</h3>${matchPicture(p.celestrak.pairs_m)}
+    <p>${p.celestrak.matched} of CelesTrak's ${p.celestrak.pairs_m.length} closest passes, recomputed from the same orbit data. Median difference ${p.celestrak.median_m.toFixed(2)} m.</p>`);
+  const band = p.esa.above_one_in_a_million, percent = ((10 ** band.median_difference_log10 - 1) * 100).toFixed(0);
+  blocks.push(`<h3>Probability, against ESA</h3><img src="/addons/files/${p.esa.chart}" alt="Our collision probability against the European Space Agency's on the same warnings">
+    <p>${n(p.esa.warnings)} real warnings. ${Math.abs(p.esa.median_offset_log10) < .01 ? "No offset. " : ""}For the ${n(band.warnings)} above 1 in a million, the median difference is ${percent}%.</p>`);
+  blocks.push(`<h3>Error of public data, by its age</h3>${growthPicture(p.error_growth.kinds)}
+    <p>Measured from ${n(p.error_growth.pairs)} pairs of orbit records of ${n(p.error_growth.objects)} objects. After one day: debris ${after("Debris")}, Starlink ${after("Starlink")}.</p>`);
+  blocks.push(`<h3>Does the ranking hold?</h3>${keptPicture(p.robustness)}
+    <p>Of the 10 most dangerous passes, how many stay in the top 10 when one assumption changes.</p>`);
+  $("proof").innerHTML = blocks.map(b => "<div>" + b + "</div>").join("");
+  ["proof", "proof-title", "report"].forEach(id => { $(id).hidden = false; });
+  if (p.report) { $("full-report").hidden = false; $("full-report").href = "/addons/files/" + p.report; }
 }
 
 function refresh() { loadTop().catch(fail); loadEvents().catch(fail); loadAlerts().catch(() => {}); }
@@ -388,6 +460,8 @@ $("showReplay").onclick = () => show("replay", false, "showReplay");
 setInterval(() => poll().catch(fail), 2000);
 setInterval(() => { if (!runId) refresh(); }, 20000);
 refresh();
+loadProof().catch(() => {});  // without the validation pack there is no proof section
+get("/addons").then(a => { written = a.briefings_for_latest_run > 0; }).catch(() => {});
 </script>
 </body>
 </html>

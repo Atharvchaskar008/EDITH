@@ -281,6 +281,24 @@ def test_fleets_are_summarised_and_their_passes_can_be_listed(client, monkeypatc
         main.on_request.loaded = (None, None)
 
 
+def test_proof_gathers_the_validation_results(client, real_packs):
+    proof = client.get("/proof").json()
+    growth = proof["error_growth"]
+    assert growth["pairs"] > 300_000 and growth["objects"] > 700 and len(growth["kinds"]) == 6
+    after = {k["kind"]: k["after_1_day_km"] for k in growth["kinds"]}
+    assert after["Dead satellites"] < after["Debris"] < 1.0 < after["Starlink"]  # km after one day
+    assert all(len(k["age_days"]) == len(k["along_track_km"]) for k in growth["kinds"])
+    assert proof["esa"]["warnings"] == 20_000 and abs(proof["esa"]["median_offset_log10"]) < 0.01
+    assert {r["change"] for r in proof["robustness"]} >= {"Uncertainty halved", "Uncertainty doubled"}
+    assert all(0 <= r["top10_kept"] <= 10 for r in proof["robustness"])
+    assert proof["celestrak"] is None  # no comparison with CelesTrak has been stored beside these test runs
+    assert client.get("/addons/files/" + proof["esa"]["chart"]).status_code == 200
+
+
+def test_proof_needs_the_validation_pack(client):
+    assert client.get("/proof").status_code == 404
+
+
 def test_landing_page_is_served(client):
     response = client.get("/landing")
     assert response.status_code == 200 and "EDITH" in response.text  # the page's own wording is its owner's to change

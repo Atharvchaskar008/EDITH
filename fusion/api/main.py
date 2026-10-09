@@ -583,6 +583,57 @@ def validation() -> dict:
     return data
 
 
+_KINDS = {
+    "STARLINK": "Starlink", "ACTIVE_OTHER": "Other working satellites", "IRIDIUM_NEXT": "Iridium NEXT",
+    "DEAD_PAYLOAD": "Dead satellites", "ROCKET_BODY": "Rocket bodies", "DEBRIS": "Debris",
+}
+
+
+@app.get("/proof")
+def proof() -> dict:
+    """What the validation pack measured, gathered into one small answer for the
+    dashboard: our distances against CelesTrak's, our probability against ESA's,
+    the measured error of public orbit data by its age, and how far the ranking
+    depends on our assumptions. 404 without the pack."""
+    out = addons.ADDONS_DIR / "b_trust" / "out"
+    growth, esa, robust = (read_json(out / name) for name in ("tle_error.json", "esa_pc_check.json", "robustness.json"))
+    if growth is None or esa is None or robust is None:
+        raise HTTPException(404, "No validation results. They come with teammate B's validation pack.")
+    checked = read_json(RUNS_ROOT.parent / "validation.json")
+    same = checked.get("same_input") if checked else None
+    kinds = []
+    for key, group in growth["by_group"].items():
+        ages = [b["age_days"] for b in group["bins"]]
+        along = [b["sigma_km"][1] for b in group["bins"]]
+        kinds.append({
+            "kind": _KINDS.get(key, key), "age_days": ages, "along_track_km": along,
+            "after_1_day_km": float(np.interp(1.0, ages, along)),
+        })
+    band = esa["probability_by_esa_risk_band"]["ESA risk above 1e-6"]
+    return {
+        "celestrak": None if same is None else {
+            "matched": same["all_matches"]["matched"],
+            "median_m": same["all_matches"]["miss_difference_m"]["median"],
+            "median_time_s": same["all_matches"]["tca_difference_s"]["median"],
+            "pairs_m": [[p["miss_distance_km_socrates"] * 1000.0, p["miss_distance_km"] * 1000.0] for p in same.get("pairs", [])],
+        },
+        "esa": {
+            "warnings": esa["rows_compared"],
+            "median_offset_log10": esa["probability"]["median_signed_offset_log10"],
+            "above_one_in_a_million": {"warnings": band["rows"], "median_difference_log10": band["median_abs_difference_log10"]},
+            "worst_case_median_difference_log10": esa["worst_case_against_esa_max_risk_estimate"]["median_abs_difference_log10"],
+            "chart": "b_trust/out/esa_pc_check.png",
+        },
+        "error_growth": {
+            "objects": sum(g["objects"] for g in growth["by_group"].values()),
+            "pairs": sum(g["pairs_kept"] for g in growth["by_group"].values()),
+            "kinds": kinds,
+        },
+        "robustness": [{"change": name, "top10_kept": v["top10_still_in_top10"]} for name, v in robust["variations"].items()],
+        "report": "b_trust/out/VALIDATION_REPORT.md" if (out / "VALIDATION_REPORT.md").exists() else None,
+    }
+
+
 @app.get("/addons")
 def addon_status() -> dict:
     folder = latest_run()
