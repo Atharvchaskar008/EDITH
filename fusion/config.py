@@ -47,6 +47,7 @@ SCREEN_STEP_S = 10.0
 SCREEN_THRESHOLD_KM = 5.0  # PRIMARIES mode
 # ALL_LEO finds about 2,300 passes an hour under 5 km (measured), so it uses 1 km
 SCREEN_THRESHOLD_ALL_LEO_KM = 1.0
+OBJECT_CHECK_THRESHOLD_KM = 10.0  # checking one object on request: wide enough that there is always something to show
 MAX_CLOSING_SPEED_KMS = 15.5
 ALTITUDE_PAD_KM = 30.0
 MIN_RELATIVE_SPEED_KMS = 0.1  # slower pairs are formation neighbours
@@ -74,6 +75,9 @@ TARGET_PC_AFTER = 1e-6  # probability after the burn must be below this ...
 TARGET_PC_MAX_AFTER = 1e-5  # ... and the worst case must be back to GREEN
 VERIFY_HOURS = 24.0  # how long the manoeuvred orbit is re-screened for new close approaches
 VERIFY_STEP_S = 30.0  # coarser than the main search: one satellite, every candidate refined exactly
+PLAN_VERIFY_LIMIT = 5  # burns per search that get the full safety re-screen (the slow step)
+PLAN_EXACT_LIMIT = 15  # burns per search that are computed exactly
+VERIFY_WORSE_TOLERANCE = 0.10  # another dangerous pass of the mover is worsened when its worst case rises by more than this
 DV_GRID_MIN_MS = 0.001
 DV_GRID_MAX_MS = 0.1
 DV_GRID_POINTS = 12

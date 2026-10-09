@@ -2,7 +2,8 @@
 
 The planner tries along-track burns on a grid of burn times and sizes, keeps
 those that make the pass safe, picks the smallest, checks it exactly, makes
-sure it creates no new danger, and plans the burn that undoes it afterwards.
+sure it creates no new danger and worsens none the satellite already had, and
+plans the burn that undoes it afterwards.
 """
 
 from __future__ import annotations
@@ -19,7 +20,7 @@ from fusion.contracts import ConjunctionEvent, ManeuverPlan, SearchGrid, SpaceOb
 from fusion.core.sat import add_seconds, get_satrec, period_s, state_at, to_utc
 from fusion.frames import rtn_basis
 from fusion.maneuver.orbit import ManeuveredOrbit, integrate
-from fusion.maneuver.verify import closest_approach_to_orbit, new_conjunctions
+from fusion.maneuver.verify import SideEffects, closest_approach_to_orbit, side_effects
 from fusion.risk.pc import encounter_plane, event_covariances, pc_disc, pc_max_disc
 
 _REFERENCE_DV_MS = 0.05  # size of the trial burn used to measure the response
@@ -146,8 +147,8 @@ def plan(
     verify: bool = True,
 ) -> ManeuverPlan:
     """Plan for one event. `force` plans a burn even when the event is not RED
-    (for testing). `baseline` is the run's event list, used to tell new close
-    approaches from ones the satellite already had."""
+    (for testing). `baseline` is the run's event list, used to count the other
+    dangerous passes of the satellite that the burn was checked against."""
     now = to_utc(now or datetime.now(timezone.utc))
     by_id = {o.norad_id: o for o in catalog}
     primary, secondary = by_id[event.primary_id], by_id[event.secondary_id]
@@ -212,9 +213,35 @@ def plan(
         i, j = np.unravel_index(np.argmin(pc_max_grid), pc_max_grid.shape)
         order = [(abs(dv_values[i]), leads[j], int(i), int(j))]
 
-    rejected = 0
+    # Burns are tried from the cheapest up. One that disturbs another pass of the
+    # satellite is not followed by its near twins (same direction, within an orbit
+    # of the same time), and the last full check goes to the latest burn on the
+    # list, which keeps the satellite off its path for the shortest time.
+    reasons = {"exact": 0, "created": 0, "worsened": 0}
+    disturbing: list[tuple[bool, float]] = []
+    tried: set[tuple[int, int]] = set()
+    latest = min(order, key=lambda c: (c[1], c[0]))
+    verified = 0
+
+    def next_burn() -> Optional[tuple]:
+        if verified == config.PLAN_VERIFY_LIMIT - 1 and latest[2:] not in tried:
+            return latest
+        for candidate in order:
+            twin = any(
+                (dv_values[candidate[2]] > 0) == forward and abs(candidate[1] - lead) < 1.0
+                for forward, lead in disturbing
+            )
+            if candidate[2:] not in tried and not twin:
+                return candidate
+        return None
+
     chosen = None
-    for _, lead, i, j in order[:5]:
+    while verified < config.PLAN_VERIFY_LIMIT and len(tried) < config.PLAN_EXACT_LIMIT:
+        candidate = next_burn()
+        if candidate is None:
+            break
+        _, lead, i, j = candidate
+        tried.add((i, j))
         burn_time = burns[j][1]
         dv_rtn = np.array([0.0, dv_values[i], 0.0])
         lead_s = (event.tca - burn_time).total_seconds()
@@ -227,25 +254,31 @@ def plan(
         enc = encounter_plane(ca.r1, ca.v1, C_m, ca.r2, ca.v2, C_o)
         pc_after, pc_max_after = pc_disc(enc.miss, enc.cov, hbr), pc_max_disc(enc.miss, enc.cov, hbr)
         if reached_target and not (_is_safe(pc_after, pc_max_after) and ca.miss_km > event.miss_distance_km):
-            rejected += 1
+            reasons["exact"] += 1
             continue
-        created = (
-            new_conjunctions(orbit, catalog, {other.norad_id}, baseline=baseline) if verify else []
-        )
-        if created and reached_target:
-            rejected += 1
+        verified += 1
+        effects = side_effects(orbit, catalog, event, baseline=baseline) if verify else SideEffects()
+        if not effects.clean and reached_target:
+            reasons["created" if effects.created else "worsened"] += 1
+            disturbing.append((bool(dv_values[i] > 0), lead))
             continue
-        chosen = (lead, burn_time, dv_rtn, orbit, ca, pc_after, pc_max_after, created, return_s)
+        chosen = (lead, burn_time, dv_rtn, orbit, ca, pc_after, pc_max_after, effects, return_s)
         break
 
+    rejected = sum(reasons.values())
+    why_rejected = ", ".join(text for count, text in (
+        (reasons["exact"], f"{reasons['exact']} did not make the pass safe when computed exactly"),
+        (reasons["created"], f"{reasons['created']} created a new dangerous pass"),
+        (reasons["worsened"], f"{reasons['worsened']} made another dangerous pass of the satellite worse"),
+    ) if count)
     if chosen is None:
         return ManeuverPlan(
             decision="MONITOR", maneuvering_id=mover.norad_id, search_grid=grid,
-            rationale=why + " Every burn tried either failed the exact check or created a new close approach.",
+            rationale=f"{why} No burn is proposed. Of the {rejected} burns tried, {why_rejected}.",
             **base,
         )
 
-    lead, burn_time, dv_rtn, orbit, ca, pc_after, pc_max_after, created, return_s = chosen
+    lead, burn_time, dv_rtn, orbit, ca, pc_after, pc_max_after, effects, return_s = chosen
     # how far along-track the satellite ends up from its original slot, one orbit after returning
     check_s = return_s + period
     change = orbit.delta(check_s)[:, 0]
@@ -257,13 +290,25 @@ def plan(
     if not reached_target:
         notes.append("No burn on the grid reaches the safety target; this is the best available.")
     if rejected:
-        notes.append(f"{rejected} smaller or later burn(s) were rejected by the exact check or the safety re-screen.")
+        notes.append(f"Burns tried before this one and rejected: {why_rejected}.")
+    if not effects.clean:
+        notes.append(
+            f"Warning: this burn creates {len(effects.created)} new dangerous pass(es) and makes "
+            f"{len(effects.worsened)} existing one(s) worse."
+        )
+    elif effects.checked:
+        one = effects.checked == 1
+        notes.append(
+            f"The satellite has {effects.checked} other dangerous {'pass' if one else 'passes'} in the "
+            f"{config.VERIFY_HOURS:g} hours after the burn; {'it does not get' if one else 'none of them gets'} worse."
+        )
     return ManeuverPlan(
         decision="MANEUVER", maneuvering_id=mover.norad_id, rationale=" ".join(notes),
         burn_time=burn_time, lead_time_orbits=lead,
         dv_rtn_ms=dv_rtn.tolist(), dv_magnitude_ms=float(abs(dv_rtn[1])),
         miss_after_km=ca.miss_km, pc_after=pc_after, pc_max_after=pc_max_after,
-        secondary_conjunctions_created=len(created),
+        secondary_conjunctions_created=len(effects.created),
+        other_passes_checked=effects.checked, other_passes_worsened=len(effects.worsened),
         return_burn_time=add_seconds(burn_time, return_s), return_dv_rtn_ms=(0.0 - dv_rtn).tolist(),
         residual_along_track_km=residual, search_grid=grid, **base,
     )

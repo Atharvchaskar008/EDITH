@@ -10,9 +10,9 @@ from fusion.core.screen import screen
 from fusion.frames import rtn_basis
 from fusion.maneuver.orbit import ManeuveredOrbit
 from fusion.maneuver.planner import choose_mover, plan
-from fusion.maneuver.verify import closest_approach_to_orbit
+from fusion.maneuver.verify import closest_approach_to_orbit, side_effects
 from fusion.risk.pc import assess
-from fusion.synthetic import make_conjunction
+from fusion.synthetic import crossing_object, make_conjunction
 
 
 @pytest.fixture
@@ -107,6 +107,69 @@ def test_plan_makes_a_red_event_safe_with_a_small_burn(red_case):
     grid = result.search_grid
     assert len(grid.pc_after) == len(grid.dv_ms) and len(grid.pc_after[0]) == len(grid.lead_orbits)
     assert "cannot manoeuvre" in result.rationale
+
+
+def _crossing_the_burned_path(orbit, seconds):
+    """A second test object, passing 50 m above the burned satellite `seconds` after the burn."""
+    r, v = orbit.state(seconds)
+    when = orbit.burn_time + timedelta(seconds=seconds)
+    return crossing_object(r, v, when, 0.05, orbit.obj.epoch, norad_id=99002)
+
+
+def test_side_effects_separate_new_dangers_from_worsened_ones(red_case):
+    event, catalog, _ = red_case
+    primary = catalog[0]
+    period = period_s(get_satrec(primary))
+    burn = event.tca - timedelta(seconds=2 * period)
+
+    def effects(dv_ms, orbits_later):
+        orbit = ManeuveredOrbit(primary, burn, np.array([0.0, dv_ms, 0.0]), 7 * period)
+        return side_effects(orbit, catalog + [_crossing_the_burned_path(orbit, orbits_later * period)], event)
+
+    # half a kilometre away and already dangerous without the burn, 50 m with it
+    near = effects(0.01, 3.0)
+    assert len(near.worsened) == 1 and not near.created and near.checked == 1 and not near.clean
+    # 9 km away and harmless without the burn, 50 m with it
+    far = effects(0.1, 6.0)
+    assert len(far.created) == 1 and not far.worsened and far.checked == 0 and not far.clean
+    # no burn: the pass is as it was
+    same = effects(0.0, 3.0)
+    assert same.clean and same.checked == 1
+
+
+def test_a_dangerous_pass_the_burn_removes_counts_as_checked(red_case):
+    event, catalog, _ = red_case
+    primary = catalog[0]
+    period = period_s(get_satrec(primary))
+    burn = event.tca - timedelta(seconds=2 * period)
+    later = burn + timedelta(seconds=6 * period)
+    second = make_conjunction(primary, later, 0.05, norad_id=99002)
+    known = screen([primary, second], later - timedelta(hours=1), hours=2, mode="ALL_LEO")[0]
+    assess(known, {o.norad_id: o for o in (primary, second)})
+    assert known.risk_level == "RED"
+
+    orbit = ManeuveredOrbit(primary, burn, np.array([0.0, 0.1, 0.0]), 7 * period)  # moves the satellite 10 km by then
+    with_list = side_effects(orbit, catalog + [second], event, baseline=[event, known])
+    assert with_list.clean and with_list.checked == 1
+    assert side_effects(orbit, catalog + [second], event).checked == 0
+
+
+def test_plan_rejects_a_burn_that_worsens_another_pass_of_the_satellite(red_case):
+    event, catalog, now = red_case
+    primary = catalog[0]
+    first = plan(event, catalog, now=now, baseline=[event])
+    assert first.other_passes_checked == 0 and first.other_passes_worsened == 0
+
+    # a second object placed where the first-choice burn takes the satellite, one orbit after that burn
+    period = period_s(get_satrec(primary))
+    orbit = ManeuveredOrbit(primary, first.burn_time, np.array(first.dv_rtn_ms), 2 * period)
+    second = plan(event, catalog + [_crossing_the_burned_path(orbit, period)], now=now, baseline=[event])
+    assert second.decision == "MANEUVER"
+    assert (second.burn_time, second.dv_rtn_ms) != (first.burn_time, first.dv_rtn_ms)
+    assert second.secondary_conjunctions_created == 0 and second.other_passes_worsened == 0
+    assert second.other_passes_checked == 1 and "1 other dangerous pass" in second.rationale
+    assert "rejected: 1 made another dangerous pass of the satellite worse" in second.rationale
+    assert second.pc_max_after < config.TARGET_PC_MAX_AFTER
 
 
 def test_low_risk_events_get_no_burn(red_case):

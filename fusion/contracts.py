@@ -97,6 +97,8 @@ class ManeuverPlan(BaseModel):
     pc_max_before: Optional[float] = None
     pc_max_after: Optional[float] = None
     secondary_conjunctions_created: Optional[int] = None
+    other_passes_checked: Optional[int] = None  # dangerous passes the mover already had, compared with and without the burn
+    other_passes_worsened: Optional[int] = None
     return_burn_time: Optional[datetime] = None
     return_dv_rtn_ms: Optional[list[float]] = None
     residual_along_track_km: Optional[float] = None

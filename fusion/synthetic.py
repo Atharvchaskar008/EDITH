@@ -29,16 +29,31 @@ def make_conjunction(
     epoch: datetime | None = None,
     speed_factor: float = 1.01,
 ) -> SpaceObject:
-    """Fake secondary that crosses the primary's path at t_tca, `miss_km` above it.
+    """Fake secondary that crosses the primary's path at t_tca, `miss_km` above it."""
+    t_tca = to_utc(t_tca)
+    r_p, v_p = state_at(get_satrec(primary), t_tca)
+    return crossing_object(r_p, v_p, t_tca, miss_km, epoch or primary.epoch, crossing_angle_deg, norad_id, speed_factor)
 
-    The secondary is placed radially above the primary at t_tca with the
-    primary's velocity rotated about the radial direction by the crossing angle,
+
+def crossing_object(
+    r_p: np.ndarray,
+    v_p: np.ndarray,
+    t_tca: datetime,
+    miss_km: float,
+    epoch: datetime,
+    crossing_angle_deg: float = 60.0,
+    norad_id: int = SYNTHETIC_ID_START,
+    speed_factor: float = 1.01,
+) -> SpaceObject:
+    """Fake object that crosses the path of a satellite with state (r_p, v_p) at t_tca, `miss_km` above it.
+
+    The object is placed radially above the satellite at t_tca with the
+    satellite's velocity rotated about the radial direction by the crossing angle,
     so the offset is perpendicular to the relative velocity and equals the miss
     distance. An orbit with the requested epoch is then fitted through that state.
     """
     t_tca = to_utc(t_tca)
-    epoch = to_utc(epoch or primary.epoch).replace(microsecond=0)
-    r_p, v_p = state_at(get_satrec(primary), t_tca)
+    epoch = to_utc(epoch).replace(microsecond=0)
     r_hat = r_p / np.linalg.norm(r_p)
 
     angle = math.radians(crossing_angle_deg)

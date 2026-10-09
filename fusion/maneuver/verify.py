@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from datetime import timedelta
+from dataclasses import dataclass, field
+from datetime import datetime, timedelta
 from typing import Optional
 
 import numpy as np
@@ -11,7 +12,7 @@ from scipy.optimize import minimize_scalar
 from fusion import config
 from fusion.contracts import ConjunctionEvent, SpaceObject
 from fusion.core.propagate import Propagator
-from fusion.core.refine import ClosestApproach
+from fusion.core.refine import ClosestApproach, closest_approach
 from fusion.core.sat import add_seconds, get_satrec, julian, state_at_offset
 from fusion.core.screen import _MAX_RELATIVE_ACCEL, _make_event
 from fusion.maneuver.orbit import ManeuveredOrbit
@@ -44,29 +45,66 @@ def closest_approach_to_orbit(
     )
 
 
-def new_conjunctions(
+_SAME_PASS = timedelta(minutes=10)  # two times closer than this, for one pair, are one pass
+
+
+@dataclass
+class SideEffects:
+    """What a burn does to the other close approaches of the satellite that burns."""
+
+    created: list[ConjunctionEvent] = field(default_factory=list)  # dangerous with the burn, not without it
+    worsened: list[ConjunctionEvent] = field(default_factory=list)  # dangerous without the burn, more so with it
+    checked: int = 0  # dangerous passes the satellite already had, compared with and without the burn
+
+    @property
+    def clean(self) -> bool:
+        return not self.created and not self.worsened
+
+
+def _without_burn(
+    orbit: ManeuveredOrbit, other: SpaceObject, with_burn: ClosestApproach, by_id: dict[int, SpaceObject]
+) -> ConjunctionEvent:
+    """The same pass as `with_burn` if the satellite had not burned."""
+    shift_km = float(np.linalg.norm(orbit.delta(orbit.seconds_at(with_burn.tca))[:3, 0]))
+    # the burn moves the satellite along its path, which moves the time of the pass
+    window = min(900.0, 30.0 + 1.5 * shift_km / with_burn.relative_speed_kms)
+    ca = closest_approach(
+        get_satrec(orbit.obj), get_satrec(other),
+        add_seconds(with_burn.tca, -window), add_seconds(with_burn.tca, window),
+    )
+    return assess(_make_event(orbit.obj, other, ca), by_id, predict=False)
+
+
+def _same_pass(other_a: int, tca_a: datetime, other_b: int, tca_b: datetime) -> bool:
+    return other_a == other_b and abs(tca_a - tca_b) < _SAME_PASS
+
+
+def side_effects(
     orbit: ManeuveredOrbit,
     catalog: list[SpaceObject],
-    exclude_ids: set[int],
+    avoided: ConjunctionEvent,
     hours: float = config.VERIFY_HOURS,
     threshold_km: float = config.SCREEN_THRESHOLD_KM,
     baseline: Optional[list[ConjunctionEvent]] = None,
-) -> list[ConjunctionEvent]:
-    """AMBER or RED close approaches the manoeuvred satellite would have that it
-    did not already have before the burn.
+) -> SideEffects:
+    """How the burn changes the satellite's other AMBER or RED close approaches.
 
     The manoeuvred satellite is screened against every object whose altitude
-    band it can reach, from the burn time for `hours`.
+    band it can reach, from the burn time for `hours`. Each dangerous pass found
+    is compared with the same pass without the burn: one that was not dangerous
+    before is `created`, one whose worst case rose is `worsened`. `avoided` is
+    the pass the burn is for. `baseline` is the run's event list; it adds the
+    dangerous passes the burn removed to the count of passes checked.
     """
     mover = orbit.obj
+    partner = avoided.secondary_id if avoided.primary_id == mover.norad_id else avoided.primary_id
     low, high = mover.perigee_km - config.ALTITUDE_PAD_KM, mover.apogee_km + config.ALTITUDE_PAD_KM
     others = [
         o for o in catalog
-        if o.norad_id != mover.norad_id and o.norad_id not in exclude_ids
-        and o.perigee_km <= high and o.apogee_km >= low
+        if o.norad_id != mover.norad_id and o.perigee_km <= high and o.apogee_km >= low
     ]
     if not others:
-        return []
+        return SideEffects()
     by_id = {o.norad_id: o for o in catalog}
     propagator = Propagator(others)
     dt = config.VERIFY_STEP_S
@@ -95,8 +133,9 @@ def new_conjunctions(
             if abs(t_star) <= half + 1.0 and miss2 < (threshold_km + margin) ** 2:
                 candidates.append((int(i), float(times[k] + t_star)))
 
-    known = [(e.primary_id, e.secondary_id, e.tca) for e in (baseline or []) if e.risk_level in ("RED", "AMBER")]
-    found: list[ConjunctionEvent] = []
+    effects = SideEffects()
+    found: list[tuple[int, datetime]] = []  # dangerous passes with the burn
+    compared = 0  # of those, the ones that were already dangerous without it
     seen: dict[int, list[float]] = {}
     for index, seconds in sorted(candidates, key=lambda c: c[1]):
         if any(abs(seconds - earlier) < 5.0 for earlier in seen.get(index, [])):
@@ -104,15 +143,32 @@ def new_conjunctions(
         other = others[index]
         ca = closest_approach_to_orbit(orbit, other, seconds, half + 2.0)
         seen.setdefault(index, []).append(orbit.seconds_at(ca.tca))
-        if ca.miss_km >= threshold_km:
+        if ca.miss_km >= threshold_km or _same_pass(other.norad_id, ca.tca, partner, avoided.tca):
             continue
         event = assess(_make_event(mover, other, ca), by_id, predict=False)
         if event.risk_level == "GREEN":
             continue
-        pair = {mover.norad_id, other.norad_id}
-        already = any(
-            {p, s} == pair and abs(tca - event.tca) < timedelta(minutes=10) for p, s, tca in known
-        )
-        if not already:
-            found.append(event)
-    return found
+        found.append((other.norad_id, event.tca))
+        before = _without_burn(orbit, other, ca, by_id)
+        if before.risk_level == "GREEN":
+            effects.created.append(event)
+            continue
+        compared += 1
+        if event.pc_max > before.pc_max * (1.0 + config.VERIFY_WORSE_TOLERANCE):
+            effects.worsened.append(event)
+
+    # dangerous passes in the run's list that are no longer dangerous with the burn: it removed them
+    removed = 0
+    end = add_seconds(orbit.burn_time, span)
+    for known in baseline or []:
+        if known.risk_level == "GREEN" or mover.norad_id not in (known.primary_id, known.secondary_id):
+            continue
+        if not orbit.burn_time < known.tca <= end:
+            continue
+        other_id = known.secondary_id if known.primary_id == mover.norad_id else known.primary_id
+        if _same_pass(other_id, known.tca, partner, avoided.tca):
+            continue
+        if not any(_same_pass(other_id, known.tca, o, t) for o, t in found):
+            removed += 1
+    effects.checked = compared + removed
+    return effects
