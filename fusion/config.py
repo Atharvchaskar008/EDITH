@@ -65,12 +65,14 @@ SIGMA_RATE_RTN_KM_PER_DAY = {
 TARGET_PC_AFTER = 1e-6  # probability after the burn must be below this ...
 TARGET_PC_MAX_AFTER = 1e-5  # ... and the worst case must be back to GREEN
 VERIFY_HOURS = 24.0  # how long the manoeuvred orbit is re-screened for new close approaches
+VERIFY_STEP_S = 30.0  # coarser than the main search: one satellite, every candidate refined exactly
 DV_GRID_MIN_MS = 0.001
 DV_GRID_MAX_MS = 0.1
 DV_GRID_POINTS = 12
 MAX_LEAD_ORBITS = 8.0
 MIN_LEAD_TIME_S = 1800.0
 MAX_PLANS_PER_RUN = 5
+PARALLEL_MIN_CATALOG = 2000  # catalogue size above which burn plans run in separate processes
 
 # --- Test object (only when a run asks for it) -----------------------------
 SYNTHETIC_MISS_KM = 0.05

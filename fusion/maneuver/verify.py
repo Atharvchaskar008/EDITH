@@ -69,7 +69,7 @@ def new_conjunctions(
         return []
     by_id = {o.norad_id: o for o in catalog}
     propagator = Propagator(others)
-    dt = config.SCREEN_STEP_S
+    dt = config.VERIFY_STEP_S
     half = dt / 2.0
     span = min(hours * 3600.0, orbit.duration_s)
     n_steps = int(span / dt) + 1

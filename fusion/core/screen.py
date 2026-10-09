@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import logging
 import os
+import pickle
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -95,8 +96,9 @@ class _Search:
 _worker_search: Optional[_Search] = None
 
 
-def _start_worker(objs: list[SpaceObject], t0: datetime, mode: str, dt: float, threshold_km: float) -> None:
+def _start_worker(packed: bytes, t0: datetime, mode: str, dt: float, threshold_km: float) -> None:
     global _worker_search
+    objs: list[SpaceObject] = pickle.loads(packed)
     _worker_search = _Search(
         Propagator(objs), np.array([o.is_primary for o in objs]), t0, mode, dt, threshold_km
     )
@@ -183,7 +185,8 @@ def screen(
             tell(done, len(candidates))
     else:
         with ProcessPoolExecutor(
-            max_workers=workers, initializer=_start_worker, initargs=(objs, t0, mode, dt, threshold_km)
+            max_workers=workers, initializer=_start_worker,
+            initargs=(pickle.dumps(objs), t0, mode, dt, threshold_km),  # serialised once, not per worker
         ) as pool:
             done = 0
             for future in as_completed([pool.submit(_worker_candidates, s, e) for s, e in ranges]):

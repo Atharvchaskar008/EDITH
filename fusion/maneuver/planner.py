@@ -65,6 +65,42 @@ def _response_at_tca(mover: SpaceObject, tca: datetime, burn_times: list[datetim
     return response
 
 
+def burn_slots(event: ConjunctionEvent, mover: SpaceObject, now: datetime) -> list[tuple[float, datetime]]:
+    """Burn times on the grid that still leave enough notice: (orbits before the pass, time)."""
+    period = period_s(get_satrec(mover))
+    quarter_steps = range(2, int(config.MAX_LEAD_ORBITS * 4) + 1)
+    slots = [(k / 4.0, add_seconds(event.tca, -k * period / 4.0)) for k in quarter_steps]
+    return [(lead, t) for lead, t in slots if (t - now).total_seconds() >= config.MIN_LEAD_TIME_S]
+
+
+def quick_decision(
+    event: ConjunctionEvent, by_id: dict[int, SpaceObject], now: datetime, force: bool = False
+) -> Optional[ManeuverPlan]:
+    """The plan for an event that needs no burn search, or None if a burn must be searched for."""
+    primary, secondary = by_id[event.primary_id], by_id[event.secondary_id]
+    if event.risk_level != "RED" and not force:
+        if event.risk_level == "AMBER":
+            return ManeuverPlan(
+                event_id=event.event_id, decision="MONITOR",
+                rationale="Worst-case probability is below the action threshold. Keep watching as new orbit data arrives.",
+                miss_before_km=event.miss_distance_km, pc_before=event.pc, pc_max_before=event.pc_max,
+            )
+        return ManeuverPlan(event_id=event.event_id, decision="NO_ACTION", rationale="Risk is low.")
+    base = dict(
+        event_id=event.event_id, miss_before_km=event.miss_distance_km,
+        pc_before=event.pc, pc_max_before=event.pc_max,
+    )
+    mover, why = choose_mover(primary, secondary)
+    if mover is None:
+        return ManeuverPlan(decision="MONITOR", rationale=why, **base)
+    if not burn_slots(event, mover, now):
+        return ManeuverPlan(
+            decision="MONITOR", maneuvering_id=mover.norad_id,
+            rationale=why + " The closest approach is too soon to plan a burn with enough notice.", **base,
+        )
+    return None
+
+
 def plan(
     event: ConjunctionEvent,
     catalog: list[SpaceObject],
@@ -80,22 +116,15 @@ def plan(
     by_id = {o.norad_id: o for o in catalog}
     primary, secondary = by_id[event.primary_id], by_id[event.secondary_id]
 
-    if event.risk_level != "RED" and not force:
-        if event.risk_level == "AMBER":
-            return ManeuverPlan(
-                event_id=event.event_id, decision="MONITOR",
-                rationale="Worst-case probability is below the action threshold. Keep watching as new orbit data arrives.",
-                miss_before_km=event.miss_distance_km, pc_before=event.pc, pc_max_before=event.pc_max,
-            )
-        return ManeuverPlan(event_id=event.event_id, decision="NO_ACTION", rationale="Risk is low.")
+    early = quick_decision(event, by_id, now, force)
+    if early is not None:
+        return early
 
     mover, why = choose_mover(primary, secondary)
     base = dict(
         event_id=event.event_id, miss_before_km=event.miss_distance_km,
         pc_before=event.pc, pc_max_before=event.pc_max,
     )
-    if mover is None:
-        return ManeuverPlan(decision="MONITOR", rationale=why, **base)
     other = secondary if mover is primary else primary
 
     s1, s2, _, C1, C2 = event_covariances(event, primary, secondary)
@@ -108,14 +137,7 @@ def plan(
     r_o, v_o, C_o = states[other.norad_id]
 
     period = period_s(get_satrec(mover))
-    quarter_steps = range(2, int(config.MAX_LEAD_ORBITS * 4) + 1)
-    burns = [(k / 4.0, add_seconds(event.tca, -k * period / 4.0)) for k in quarter_steps]
-    burns = [(lead, t) for lead, t in burns if (t - now).total_seconds() >= config.MIN_LEAD_TIME_S]
-    if not burns:
-        return ManeuverPlan(
-            decision="MONITOR", maneuvering_id=mover.norad_id,
-            rationale=why + " The closest approach is too soon to plan a burn with enough notice.", **base,
-        )
+    burns = burn_slots(event, mover, now)
 
     leads = [lead for lead, _ in burns]
     response = _response_at_tca(mover, event.tca, [t for _, t in burns])
