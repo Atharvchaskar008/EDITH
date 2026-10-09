@@ -11,6 +11,7 @@ from tests.conftest import test_omm as make_omm
 class FakeResponse:
     def __init__(self, payload):
         self.payload = payload
+        self.text = json.dumps(payload)
 
     def raise_for_status(self):
         pass
@@ -20,13 +21,14 @@ class FakeResponse:
 
 
 class FakeSession:
-    def __init__(self, payload):
+    def __init__(self, payload, login_reply=None):
         self.payload = payload
+        self.login_reply = login_reply if login_reply is not None else {}
         self.posts, self.gets = [], []
 
     def post(self, url, data=None, timeout=None):
         self.posts.append((url, data))
-        return FakeResponse({})
+        return FakeResponse(self.login_reply)
 
     def get(self, url, timeout=None):
         self.gets.append(url)
@@ -95,3 +97,14 @@ def test_records_become_objects_with_types():
     assert [o.norad_id for o in objects] == [1, 2, 3, 4]
     assert [o.object_type for o in objects] == ["PAYLOAD", "ROCKET_BODY", "DEBRIS", "UNKNOWN"]
     assert 760 < objects[2].perigee_km < 800
+
+
+def test_rejected_login_gives_a_clear_error_and_no_query(tmp_path):
+    env = tmp_path / ".env"
+    env.write_text("SPACETRACK_USER=a
+SPACETRACK_PASSWORD=wrong
+")
+    session = FakeSession([record(1)], login_reply={"Login": "Failed"})
+    with pytest.raises(RuntimeError, match="rejected the login"):
+        spacetrack.fetch_leo_records(tmp_path, env, session)
+    assert session.gets == []

@@ -88,6 +88,12 @@ def fetch_leo_records(
         timeout=config.REQUEST_TIMEOUT_S,
     )
     response.raise_for_status()
+    # a rejected login still answers 200, with {"Login":"Failed"} in the body
+    if "failed" in response.text.lower():
+        raise RuntimeError(
+            "Space-Track rejected the login. Check SPACETRACK_USER and SPACETRACK_PASSWORD "
+            "in .env, and that the account is confirmed and can log in on the website."
+        )
     url = QUERY_URL.format(
         max_age_days=config.MAX_TLE_AGE_DAYS, max_perigee_km=config.LEO_MAX_PERIGEE_KM
     )
