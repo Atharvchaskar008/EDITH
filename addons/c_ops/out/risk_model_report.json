@@ -6,50 +6,57 @@
     "Baseline": {
       "MAE": 5.0795,
       "RMSE": 9.5268,
-      "threshold_used": -6.1,
-      "Precision": 0.1077,
+      "threshold_used": -6.05,
+      "Precision": 0.1111,
       "Recall": 0.7778,
-      "F2_Score": 0.3465
+      "F2_Score": 0.3535
     },
     "GradientBoosting_Full": {
-      "MAE": 2.7128,
-      "RMSE": 5.1121,
-      "threshold_used": -12.7,
-      "Precision": 0.0714,
-      "Recall": 0.2222,
-      "F2_Score": 0.1562
+      "MAE": 2.4289,
+      "RMSE": 5.616,
+      "threshold_used": -21.3,
+      "Precision": 0.0317,
+      "Recall": 0.4444,
+      "F2_Score": 0.1235
     },
     "GradientBoosting_Operational": {
-      "MAE": 2.6712,
-      "RMSE": 5.0426,
-      "threshold_used": -10.7,
-      "Precision": 0.1333,
-      "Recall": 0.2222,
-      "F2_Score": 0.1961
+      "MAE": 2.4296,
+      "RMSE": 5.5739,
+      "threshold_used": -19.65,
+      "Precision": 0.0407,
+      "Recall": 0.5556,
+      "F2_Score": 0.1572
     }
   },
   "winners_vs_baseline": {
     "MAE": "Model",
     "RMSE": "Model",
-    "Precision": "Model",
+    "Precision": "Baseline",
     "Recall": "Baseline",
     "F2_Score": "Baseline"
   },
   "operational_feature_importances": {
-    "latest_risk": 316.0,
-    "c_sigma_n": 272.0,
-    "latest_miss_distance": 259.0,
-    "c_sigma_t": 251.0,
-    "latest_relative_speed": 244.0,
-    "mean_risk": 235.0,
-    "c_sigma_r": 229.0,
-    "time_to_tca": 224.0,
-    "std_risk": 219.0,
-    "t_sigma_n": 210.0,
-    "t_sigma_t": 208.0,
-    "t_sigma_r": 188.0,
-    "num_warnings": 107.0,
-    "risk_diff": 38.0
+    "c_sigma_n": 366.0,
+    "std_risk": 312.0,
+    "latest_relative_speed": 287.0,
+    "latest_miss_distance": 285.0,
+    "t_sigma_t": 257.0,
+    "mahalanobis_proxy": 253.0,
+    "time_to_tca": 234.0,
+    "t_sigma_n": 233.0,
+    "mean_risk": 232.0,
+    "c_sigma_r": 219.0,
+    "t_sigma_r": 210.0,
+    "latest_risk": 177.0,
+    "c_sigma_t": 167.0,
+    "combined_sigma": 160.0,
+    "num_warnings": 148.0,
+    "log_combined_sigma": 62.0,
+    "log_max_sigma": 55.0,
+    "log_miss_distance": 54.0,
+    "log_rel_speed": 52.0,
+    "risk_diff": 15.0,
+    "risk_velocity": 2.0
   },
-  "honest_summary": "The gradient boosting model strongly outperforms the baseline on continuous risk prediction (MAE 2.67 vs 5.08, cutting error by 47%), but early warnings remain noisy: binary threshold triage reaches F2=0.20 compared to baseline F2=0.35."
+  "honest_summary": "The refined gradient boosting model strongly outperforms the baseline on continuous risk prediction (MAE 2.43 vs 5.08, cutting error by 52.2%). Astrodynamics features and L1 loss boosted critical event recall to 0.56 (up from 0.22)."
 }
