@@ -54,7 +54,7 @@ def screen(
     catalog: list[SpaceObject],
     t0: datetime,
     hours: float = config.WINDOW_HOURS,
-    threshold_km: float = config.SCREEN_THRESHOLD_KM,
+    threshold_km: Optional[float] = None,
     mode: Optional[str] = None,
     step_s: Optional[float] = None,
     on_progress: Progress = None,
@@ -62,6 +62,10 @@ def screen(
 ) -> list[ConjunctionEvent]:
     """Close approaches under `threshold_km`, with the geometry fields filled."""
     mode = mode or config.SCREEN_MODE
+    if threshold_km is None:
+        threshold_km = (
+            config.SCREEN_THRESHOLD_ALL_LEO_KM if mode == "ALL_LEO" else config.SCREEN_THRESHOLD_KM
+        )
     dt = float(step_s or config.SCREEN_STEP_S)
     t0 = to_utc(t0)
     stats = stats if stats is not None else {}

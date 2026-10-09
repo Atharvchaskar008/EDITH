@@ -65,14 +65,15 @@ def test_formation_neighbours_are_not_reported(primary, t_tca):
 
 def test_step_size_does_not_change_the_answer(primary, t_tca):
     objs = [primary] + [
-        make_conjunction(primary, t_tca + timedelta(minutes=7 * i), 0.5 + i, 40 + 25 * i, norad_id=99001 + i)
+        make_conjunction(primary, t_tca + timedelta(minutes=7 * i), 0.2 + 0.2 * i, 40 + 25 * i, norad_id=99001 + i)
         for i in range(4)
     ]
     coarse = screen(objs, window(t_tca), hours=2, mode="ALL_LEO", step_s=10)
     fine = screen(objs, window(t_tca), hours=2, mode="ALL_LEO", step_s=5)
     assert len(coarse) == len(fine) == 4
     for a, b in zip(coarse, fine):
-        assert a.event_id == b.event_id
+        assert (a.primary_id, a.secondary_id) == (b.primary_id, b.secondary_id)
+        assert abs((a.tca - b.tca).total_seconds()) < 1e-3
         assert a.miss_distance_km == pytest.approx(b.miss_distance_km, abs=1e-4)
 
 
@@ -93,3 +94,9 @@ def test_pair_order_is_stable(primary, t_tca):
     x = debris.model_copy(update={"norad_id": 500})
     y = debris.model_copy(update={"norad_id": 400})
     assert order_pair(x, y) == (y, x)
+
+
+def test_default_threshold_depends_on_mode(primary, t_tca):
+    two_km = make_conjunction(primary, t_tca, 2.0)
+    assert len(screen([primary, two_km], window(t_tca), hours=2, mode="PRIMARIES")) == 1
+    assert screen([primary, two_km], window(t_tca), hours=2, mode="ALL_LEO") == []

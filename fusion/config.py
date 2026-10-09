@@ -33,7 +33,9 @@ DEFAULT_RADIUS_M = 5.0
 WINDOW_HOURS = 72.0
 QUICK_WINDOW_HOURS = 24.0
 SCREEN_STEP_S = 10.0
-SCREEN_THRESHOLD_KM = 5.0
+SCREEN_THRESHOLD_KM = 5.0  # PRIMARIES mode
+# ALL_LEO finds about 2,300 passes an hour under 5 km (measured), so it uses 1 km
+SCREEN_THRESHOLD_ALL_LEO_KM = 1.0
 MAX_CLOSING_SPEED_KMS = 15.5
 ALTITUDE_PAD_KM = 30.0
 MIN_RELATIVE_SPEED_KMS = 0.1  # slower pairs are formation neighbours
