@@ -83,12 +83,12 @@
         {
           "number": "04",
           "title": "Verified Clearance: Rescreen the burned trajectory against all 30,000 objects for 24 hours.",
-          "image": "img/treaties-75.jpg"
+          "image": "img/rules-04.jpg"
         },
         {
           "number": "05",
           "title": "Return Burn: Apply an equal and opposite burn after closest approach to restore slot station-keeping.",
-          "image": "img/treaties-79.jpg"
+          "image": "img/rules-05.jpg"
         }
       ]
     }
@@ -135,13 +135,13 @@
     },
     "cards": [
       {
-        "image": "img/sdg-19.jpg",
+        "image": "img/benefits-earth-obs.jpg",
         "title": "Precision Earth Observation",
         "content": "Optical and synthetic aperture radar satellites monitoring agriculture, forest cover, and natural resources.",
         "sdg": 1
       },
       {
-        "image": "img/sdg-20.jpg",
+        "image": "img/benefits-comms.jpg",
         "title": "Global Communications",
         "content": "Low-latency internet megaconstellations connecting remote hospitals, schools, and disaster response teams.",
         "sdg": 2
@@ -433,7 +433,7 @@
       "content": "Preserving the orbital frontier requires autonomous systems that act faster than human reaction times. EDITH sets a new standard for open, verifiable space traffic management."
     },
     "content": "Built with open astrodynamics standards (SGP4, TEME, RTN frames, and CCSDS-compatible formats), <b>EDITH</b> protects active constellations and preserves Low Earth Orbit for generations to come.",
-    "image": "img/pact-for-future.jpg"
+    "image": "img/pact-future.jpg"
   },
   "expansion": {
     "title": "While you spent <b><i data-count>0</i> <span>minutes</span></b> on this page, satellites covered <b><i data-count>0</i> <span>thousand</span></b> kilometres in Low Earth Orbit.",
