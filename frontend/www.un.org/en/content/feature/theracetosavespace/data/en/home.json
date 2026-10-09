@@ -1,0 +1,518 @@
+{
+  "meta": {
+    "title": "Home",
+    "description": "Home page"
+  },
+  "hero": {
+    "title": "The Race to Save Space",
+    "titleMobile": "The Race <br> to Save Space",
+    "content": "Ensuring peace and sustainability in the final frontier",
+    "image": "img/hero.jpg",
+    "scroll": "Scroll to know more"
+  },
+  "sputnik": {
+    "title": "Ready. Set. Blast off.",
+    "content": "<p>The Space Age dawned on 4 October 1957, when Sputnik 1, the world’s first satellite successfully launched and orbited Earth. </p><p>Lasting three weeks, this beeping metal sphere, the size of a beach ball, kicked off a technological race that would forever change humanity’s relationship with space.</p>"
+  },
+  "notableFirst": {
+    "milestones": {
+      "title": "Notable firsts in space",
+      "items": [
+        {
+          "number": "57",
+          "title": "<b>Sputnik 1</b> becomes first satellite to orbit Earth, revolutionizing global communications.",
+          "video": "video/notable-first-57.mp4"
+        },
+        {
+          "number": "59",
+          "title": "The <b>UN Committee on the Peaceful Uses of Outer Space</b> is established.",
+          "image": "img/notable-first-59.jpg"
+        },
+        {
+          "number": "61",
+          "title": "<b>Yuri Gagarin</b> makes history as first human in space.",
+          "image": "img/notable-first-61.jpg"
+        },
+        {
+          "number": "63",
+          "title": "<b>Valentina Tereshkova</b> makes history as first woman in space.",
+          "image": "img/notable-first-63.jpg"
+        },
+        {
+          "number": "67",
+          "title": "<b>Outer Space Treaty</b> establishes first multilateral legal framework on the peaceful exploration of space.",
+          "image": "img/notable-first-67.jpg"
+        },
+        {
+          "number": "69",
+          "title": "<b>Apollo 11</b> achieves first manned moon landing, marking humanity's first venture to another celestial body.",
+          "image": "img/notable-first-69.jpg"
+        },
+        {
+          "number": "75",
+          "title": "The <b>Apollo-Soyuz</b> joint mission achieves first international space docking, uniting Soviet and American crews at height of Cold War.",
+          "image": "img/notable-first-75.jpg"
+        },
+        {
+          "number": "01",
+          "title": "<b>Dennis Tito</b> makes headlines as first space tourist, shelling out USD 20 million for the out-of-galaxy experience; he plans to go again with his wife.",
+          "image": "img/notable-first-01.jpg"
+        },
+        {
+          "number": "22",
+          "title": "<b>Ax-1</b> launches first all-private crewed mission to International Space Station, a step forward in commercial space exploration.",
+          "image": "img/notable-first-22.jpg"
+        }
+      ]
+    }
+  },
+  "keySpaceTreaties": {
+    "intro": {
+      "title": "Balancing Innovation, Sustainability and Risk",
+      "content": "<p>The future of space depends on countries working together to balance national interests, commercial opportunities, and the common good of humanity.</p>"
+    },
+    "today": "Today, five UN space treaties remain the cornerstone of space law.",
+    "milestones": {
+      "title": "Key UN <br>space treaties",
+      "items": [
+        {
+          "number": "67",
+          "title": "Outer Space <br>Treaty",
+          "image": "img/treaties-67.jpg"
+        },
+        {
+          "number": "68",
+          "title": "Rescue Agreement",
+          "image": "img/treaties-68.jpg"
+        },
+        {
+          "number": "72",
+          "title": "Liability Convention",
+          "image": "img/treaties-72.jpg"
+        },
+        {
+          "number": "75",
+          "title": "Registration Convention",
+          "image": "img/treaties-75.jpg"
+        },
+        {
+          "number": "79",
+          "title": "Moon Agreement",
+          "image": "img/treaties-79.jpg"
+        }
+      ]
+    }
+  },
+  "dailyLife": {
+    "intro": {
+      "title": "Your Daily Life is <br>Powered by Space",
+      "content": "<p>Today, near space is an extension of Earth’s environment, a technological bridgehead inextricably tied to our daily lives.</p>"
+    },
+    "slides": {
+      "title": "Satellites power air, land and sea navigation, weather forecasting, tv broadcasts, internet access, global commerce, and much more.",
+      "items": [
+        {
+          "video": "video/daily-life-1.mp4"
+        },
+        {
+          "image": "img/daily-life-2.jpg"
+        },
+        {
+          "image": "img/daily-life-3.jpg"
+        },
+        {
+          "image": "img/daily-life-4.jpg"
+        },
+        {
+          "image": "img/daily-life-5.jpg"
+        },
+        {
+          "image": "img/daily-life-6.jpg"
+        },
+        {
+          "image": "img/daily-life-7.jpg"
+        },
+        {
+          "image": "img/daily-life-8.jpg"
+        }
+      ]
+    }
+  },
+  "benefits": {
+    "intro": {
+      "title": "Space technology also benefits communities worldwide",
+      "content": "<p>Satellites play a vital role in the Sustainable Development Goals, humanity’s shared blueprint for a better future for people and the planet. Here are just some ways how:</p>"
+    },
+    "cards": [
+      {
+        "image": "img/sdg-19.jpg",
+        "title": "Zero Hunger",
+        "content": "Global Navigation Satellite Systems and Earth Observation enable precision agriculture for optimized crop yields.",
+        "sdg": 2 
+      },
+      {
+        "image": "img/sdg-20.jpg",
+        "title": "Good Health and Well-being",
+        "content": "Space-derived data is used to monitor and map yellow fever mosquito populations.",
+        "sdg": 3
+      },
+      {
+        "image": "img/sdg-21.jpg",
+        "title": "Reduced Inequalities",
+        "content": "Space technologies connect remote and isolated communities to services, education, and work opportunities.",
+        "sdg": 10
+      },
+      {
+        "image": "img/sdg-22.jpg",
+        "title": "Climate Action",
+        "content": "Satellites monitor climate patterns, forecast weather, and aid in disaster management and response.",
+        "sdg": 13
+      }
+    ]
+  },
+  "earthHistory": {
+    "intro": {
+      "title": "One Small Step, One Giant Leap",
+      "content": "<p>In recent years, a surge in space activities has ushered in a new era of innovation.</p>"
+    },
+    "endingYear": "Year 2030",
+    "satelliteLaunches": {
+      "intro": "Driven by advancing technology, lower launch costs and smaller satellites, private companies have entered the scene, dramatically changing space utilization — and our night sky.",
+      "title": "In a Nutshell: Satellite Launches",
+      "year": "Year",
+      "satellitesLaunched": "satellites launched",
+      "satellitesLaunchedAnnually": "satellites launched annually",
+      "to": "to",
+      "years": [
+        {
+          "top": "From",
+          "from": 1957,
+          "to": 2012,
+          "year": "1957 2012",
+          "isRange": true,
+          "right": {
+            "top": "Only around",
+            "center": 150,
+            "bottom": "satellites were launched annually"
+          }
+        },
+        {
+          "top": "In",
+          "from": 2013,
+          "to": 2019,
+          "year": "2013",
+          "isRange": false,
+          "right": {
+            "center": 210,
+            "bottom": "satellites launched, marking the beginning of an exponential growth trend"
+          }
+        },
+        {
+          "top": "By",
+          "from": 2020,
+          "to": 2021,
+          "year": "2020",
+          "isRange": false,
+          "right": {
+            "top": "The number increased to",
+            "center": 1200,
+            "bottom": "satellites launched"
+          }
+        },
+        {
+          "top": "Only two years later, in",
+          "from": 2022,
+          "to": 2023,
+          "year": "2022",
+          "isRange": false,
+          "right": {
+            "top": "Launches nearly doubled to",
+            "center": 2470,
+            "bottom": "satellites"
+          }
+        },
+        {
+          "top": "Looking to the",
+          "from": 2024,
+          "to": 2027,
+          "year": "Future",
+          "isRange": false,
+          "right": {
+            "top": "In the coming years,",
+            "center": ">1 Million",
+            "bottom": "satellites could fill our skies as launch costs drop, private investment surges, and technology advances. "
+          }
+        },
+        {
+          "content": "Well over a million satellites could fill our night sky in just a matter of years as launch technology gets cheaper along with technological breakthroughs and private sector involvement Annual launches could hit millions, boosting connectivity but straining space sustainability",
+          "from": 2027,
+          "to": 2030,
+          "isRange": false
+        }
+      ],
+      "didYouKnow": {
+        "title": "Did you know?",
+        "content": "Most satellite constellations are just <i>500</i> km above our heads. That’s approximately the distance from <strong>[city1]</strong> to <strong>[city2].</strong>"
+      }
+    }
+  },
+  "weHaveAProblem": {
+    "title": "Humankind, <br>we have a problem",
+    "content": "The fast-growing number of objects — satellites, defunct spacecraft, and debris — is a growing hazard for space operations. ",
+    "disclaimer": "*This image is a rendering"
+  },
+  "debrisStats": {
+    "intro": {
+      "content": "Left unregulated, increasing space traffic and junk could turn the very technology we rely on against itself and stop humanity in its tracks."
+    },
+    "stats": {
+      "title": "Space debris objects in Earth’s lower orbit",
+      "disclaimer": "*Data as of 2024",
+      "items": [
+        {
+          "title": "<i>130</i>M",
+          "subtitle": "objects <b>smaller than 1cm</b> (estimated)",
+          "percent": 0.08,
+          "image": "img/debris-stats-1.png"
+        },
+        {
+          "title": "<i>1</i>M",
+          "subtitle": "objects between <b>1cm to 10cm</b>",
+          "percent": 0.28,
+          "image": "img/debris-stats-2.png"
+        },
+        {
+          "title": "<i>37,000</i>",
+          "subtitle": "objects <b>larger than 10cm</b>",
+          "percent": 0.48,
+          "image": "img/debris-stats-3.png"
+        }
+      ]
+    }
+  },
+  "debrisDidYouKnow": {
+    "title": "Did you know?",
+    "subtitle": "<i>10000</i> tonnes <br>of space trouble",
+    "content": "The combined weight of human-made objects in space debris is the weight of the Eiffel Tower – a staggering 10,000 tonnes orbiting our planet!",
+    "source": "Source: ESA Space Environment Report 2024"
+  },
+  "spaceMarket": {
+    "slides": [
+      {
+        "title": "The Emerging Race <br>for Space Resources",
+        "content": "From valuable metals like platinum, nickel, and cobalt within asteroids to frozen water on celestial bodies, space resources present significant economic potential."
+      },
+      {
+        "content": "Today, commercial activities are claiming an ever-growing share of the space economy."
+      }
+    ],
+    "statsSection": {
+      "title": "Global <br>space market",
+      "content": "<p><b>This shift raises <br>critical questions.</b></p> <p>Without international principles on space resources, economic incentives pose risks for potential conflict, environmental degradation, and widening inequalities. Whoever dominates this frontier may shape humanity's cosmic future.</p>",
+      "source": "Source: UNOOSA",
+      "items": {
+        "2022": {
+          "money": "$424b"
+        },
+        "2030": {
+          "money": "$737b *",
+          "subtitle": "*Projected"
+        }
+      }
+    }
+  },
+  "pathForward": {
+    "intro": {
+      "title": "Shaping a Common Path Forward",
+      "content": "The cosmos is vast, and its benefits are immense. But Earth's orbits are limited."
+    },
+    "slides": {
+      "subtitle": "As space activities intensify amid geopolitical tensions, implementing and expanding space laws is urgent. Humanity has a moral imperative to exercise stewardship together towards the sustainable, peaceful use of space. ",
+      "button": "How we move <i>forward</i>",
+      "items": [
+        {
+          "image": "img/path-forward-1.jpg"
+        },
+        {
+          "image": "img/path-forward-2.jpg"
+        },
+        {
+          "image": "img/path-forward-3.jpg"
+        },
+        {
+          "image": "img/path-forward-4.jpg"
+        },
+        {
+          "image": "img/path-forward-5.jpg"
+        }
+      ]
+    }
+  },
+  "orbitalCleanup": {
+    "title": "The Great Orbital Clean-up",
+    "content": "Space debris removal — and space traffic coordination — requires a whole new approach, combining preventive measures with active cleanup efforts.",
+    "cards": [
+      {
+        "image": "img/orbital-cleanup-1.gif",
+        "number": "01",
+        "title": "Debris mitigation",
+        "content": "Designing satellites to minimize the creation of new debris."
+      },
+      {
+        "image": "img/orbital-cleanup-2.jpg",
+        "number": "02",
+        "title": "Active debris removal",
+        "content": "Developing sustainable solutions and technologies to remove existing debris."
+      },
+      {
+        "image": "img/orbital-cleanup-3.jpg",
+        "number": "03",
+        "title": "Space traffic management",
+        "content": "Improving coordination and data sharing."
+      },
+      {
+        "image": "img/orbital-cleanup-4.jpg",
+        "number": "04",
+        "title": "International cooperation",
+        "content": "Developing shared norms and standards."
+      }
+    ]
+  },
+  "velocity": {
+    "slides": [
+      {
+        "content": "Even small debris objects can cause significant, if not catastrophic, damage"
+      },
+      {
+        "title": "Too close for comfort",
+        "content": "Debris can travel at 7.5 km/s (27,000 km/h), 20 times faster than a gun shot."
+      }, 
+      {
+        "title": "No small matter",
+        "content": "A single nut or bolt hitting a spacecraft can release a similar quantity of energy to a hand grenade, shattering a satellite or spacecraft into pieces."
+      }
+    ]
+  },
+  "cascadeEffect": {
+    "title": "Space junk is a self-perpetuating problem",
+    "content": "Collisions between objects create more debris, increasing the likelihood of future collisions. This cascade effect, known as the <b>Kessler Syndrome</b>, could make certain orbital regions unusable. ",
+    "interaction": "A single collision can generate thousands of pieces of space debris, leading to even more debris. Move your mouse into the circle to visualize the domino effect.",
+    "interactionMobile": "A single collision can generate thousands of pieces of space debris, leading to even more debris. Tap into the circle to visualize the domino effect."
+  },
+  "sos": {
+    "slides": [
+      {
+        "title": "SOS",
+        "content": "There’s more peril to this galactic picture…and saving our outer space"
+      },
+      {
+        "title": "The Growing Threat to Nations",
+        "content": "Military confrontation in space is no longer science fiction."
+      },
+      {
+        "content": "The increasing reliance on space-based services for security, defense, and daily operations combined with new space actors, poses new threats to peace."
+      },
+      {
+        "content": "A large-scale attack on satellites, for instance, could:",
+        "cards": [
+          {
+            "image": "img/sos-1.jpg",
+            "title": "Disrupt air, land, and marine navigation",
+            "content": "Modern transportation systems worldwide depend on satellites to navigate safely."
+          },
+          {
+            "image": "img/sos-2.jpg",
+            "title": "Disrupt internet access",
+            "content": "Satellites ensure global communications and internet connectivity."
+          },
+          {
+            "image": "img/sos-3.jpg",
+            "title": "Destabilize financial markets",
+            "content": "Global financial systems need satellite timing for transactions to work."
+          }
+        ]
+      },
+      {
+        "content": "Preventing warfare in space through strengthened international frameworks is one of the bold commitments within the UN’s Pact for the Future, adopted by world leaders in 2024."
+      }
+    ]
+  },
+  "pactForFuture": {
+    "intro": {
+      "content": "Ensuring the equitable, peaceful and sustainable use of space requires further international agreements to match today’s complex realities. International consensus continues to grow, with guiding frameworks already adopted on issues like space debris and the long-term sustainability of outer space through the UN Committee on the Peaceful Uses of Outer Space."
+    },
+    "content": "An important step in this direction, world leaders adopted the <b>Pact for the Future</b> in 2024, committing to the safe and sustainable exploration of outer space — a promise that must now be realized.",
+    "image": "img/pact-for-future.jpg"
+  },
+  "expansion": {
+    "title": "In the <b><i data-count>0</i> <span>minutes</span></b> that you’ve been on this page, the radius of the universe has expanded by approximately <b><i data-count>0</i> <span>million</span></b> kilometers—and its volume by much more.",
+    "content": "A reminder of the vast cosmic scale and <br> <b>how small our own crowded orbital space truly is.</b>",
+    "share": {
+      "button": "Share data",
+      "copy": "Every minute, the universe expands by over 42,000 kilometers—an immense reminder of the vastness of space. Yet, our own orbital space is becoming dangerously crowded. Act now to protect the final frontier. #OurCommonFuture"
+    }
+  },
+  "closing": {
+    "slides": [
+      {
+        "content": "The Next Giant Leap is Ours to Shape"
+      },
+      {
+        "content": "We must act now and together to secure our cosmic future for all humanity."
+      }
+    ],
+    "footer": {
+      "close": "Close",
+      "credits": {
+        "label": "Credits",
+        "popup": {
+          "title": "Credits",
+          "content": "<p>United Nations Department of Global Communications with support from the United Nations Office for Outer Space Affairs, 2025</p><p><b>Intro</b><br>DrPixel/Getty Images</p><p><b>History Rewind</b><br>Robynt/ Free 3D (Sputnik 3D Model); Encyclopaedia Britannica Films/Getty Images, Film Images Sarl/Getty Images (1957: Sputnik 1); Sovfoto/Getty Images (1961: Yuri Gagarin); Sovfoto/Getty Images (1963: Valentina Tereshkova); Historical/Getty Images (1967: Outer Space Treaty); Heritage Images/Getty Images (1969: Apollo 11); Bettmann/Getty Images (1975: Apollo-Soyuz); Alexander Nemenov/Getty Images (2001: Dennis Tito); Hum Images/Getty Images (2022: Ax-1).</p><p><b>One Small Step, One Giant Leap</b><br>Yegor Tsyba/ Free 3D (Satellite 3D model); Pavel Danilyuk/Pexels (Daily life - Video call); Fotografía de eLuVe/Getty Images (Daily life - GPS); Max Alexander/Our Fragile Space (Daily life - Map); Ina Fassbender/Getty Images (Daily life - Satellite dishes on balconies); TommL/iStock (Daily life - TV broadcast studio); Max Alexander/Our Fragile Space (Daily life - Bike delivery person); Triloks/Getty Images (Daily life - Children accessing internet); Max Alexander/Our Fragile Space (Daily life - Air navigation)</p><p><b>Your Daily Life Is Powered by Space</b><br>Max Alexander/Our Fragile Space (SDG 2 - Satellite systems in agriculture); Max Alexander/Our Fragile Space (SDG 3 - Yellow fever mosquito); Max Alexander/Our Fragile Space (SDG 10 - Remote communities connected); Jonathan Nackstrand/Getty Images (SDG 13: Climate researcher using GPS for measurements)</p><p><b>Humankind We Have a Problem</b><br>Max Alexander/Our Fragile Space (Debris opener background); The Ian/Pexels (Small debris); Bryce Wendler/Pexels (Medium debris); Colourblind Kevin/Pexels (Large debris); Max Alexander/Our Fragile Space, Steve Kelly/Our Fragile Space (Space debris montage); STR/Getty Images (Marine navigation); SpaceX/Pexels (Internet access); Spencer Platt/Getty Images (Financial markets)</p><p><b>Shaping a Common Path Forward</b><br>Max Alexander/Our Fragile Space (Girl looking through a telescope); Max Alexander/Our Fragile Space (Space junk); Marcos del Mazo/Getty Images (A large dish of the Satellite); Handout/Getty Images (Astronaut repairing space shuttle); Ullstein Bild/Getty Images (Apollo 11 mission’s view of the Earth); European Space Agency - ESA (The great orbital clean-up background); European Space Agency - ESA (Debris mitigation); Max Alexander/Our Fragile Space (Active debris removal); European Space Agency - ESA (Traffic Management); UN Photo/Manuel Elías (International cooperation); Handout/Getty Images (1967: Outer Space Treaty); Alexis Rosenfeld/Getty Images (1968: Rescue Agreement); Max Alexander/Our Fragile Space (1972: Liability Convention); Max Alexander/Our Fragile Space (1975: Registration Convention); NurPhoto/Getty Images (1979: Moon Agreement); UN Photo/Loey Felipe (Pact for the Future)</p><p><b>Act Now</b><br>NASA/ Unsplash (Astronaut floating in space)</p>"
+        }
+      },
+      "fraudAlert": {
+        "label": "Fraud Alert",
+        "popup": {
+          "title": "Fraud Alert",
+          "content": "<p><b>Beware of scams implying association with the United Nations.</b><p>The United Nations has been made aware of various correspondences, being circulated via e-mail, from Internet web sites, text messages and via regular mail or facsimile, falsely stating that they are issued by, or in association with the United Nations and/or its officials. These scams, which may seek to obtain money and/or in many cases personal details from the recipients of such correspondence, are fraudulent.</p><p>The United Nations wishes to warn the public at large about these fraudulent activities being perpetrated purportedly in the name of the Organisation, and/or its officials, through different fraud schemes.</p><ul><li>The United Nations <b>does not charge a fee at any stage of its recruitment process</b> (application, interview, processing, training) or other fee, or request information on applicants’ bank accounts. To apply for a job go to <a href=\"http://careers.un.org/\">careers.un.org</a> and click on Vacancies. See more on <a href='https://careers.un.org/lbw/home.aspx?viewtype=SCAM'>employment-related fraud.</a></li><li>The United Nations <b>does not charge a fee at any stage of its procurement process</b> (supplier registration, bids submission) or other fee. Visit the Procurement Division to see the latest business opportunities with the United Nations.</li><li>The United Nations does not request any information related to bank accounts or other private information.</li><li>The United Nations does not offer prizes, awards, funds, certificates, automated teller machine (ATM) cards, compensation for Internet fraud, or scholarships, or conduct lotteries.</li><li>The United Nations does not approve military vacations or pensions, or release packages in exchange for a fee.</li></ul><p>The United Nations strongly recommends that the recipients of solicitations, such as those described above exercise extreme caution in respect of such solicitations. Financial loss and identity theft could result from the transfer of money or personal information to those issuing such fraudulent correspondence. Victims of such scams may also report them to their local law enforcement authorities for appropriate action.</p><p><b>Not an official document. For information only.</b></p>"
+        }
+      },
+      "privacyNotice": {
+        "label": "Privacy Notice",
+        "popup": {
+          "title": "Privacy Notice",
+          "content": "<p><b>UN.ORG Data Protection and Privacy Notice</b><br>This notice applies to all websites within the UN.ORG domain name (“UN websites”).<br>Your privacy and the protection of personal data are important to the United Nations (UN). This data protection and privacy notice describes the UN’s policy concerning the gathering and sharing of personal data through UN websites. By visiting a UN website, you are accepting the practices described in this policy.</p><p><b>Secretary-General’s Bulletin</b><br>UN websites are guided by a set of principles on personal data protection and privacy that were established by the Secretary‑General’s Bulletin enshrining the Data protection and privacy policy for the Secretariat of the United Nations (ST/SGB/2024/1).</p><p><b>What information does the United Nations collect?</b></p><p><b>Normal website usage</b><br>In general, you can browse a UN website without telling us who you are or revealing any personal information about yourself.<br>Our systems automatically gather some anonymous information about visitors during general browsing. This includes technical network information such as the IP (Internet Protocol) address you appear to be connecting from, its domain name, the type of browser you are employing, the operating system, and other information such as the website from which you reached a UN website, the files you downloaded from UN websites, the pages you visited on UN websites, and the dates/times of those visits to UN websites.</p><p>UN websites may, from time to time, avail of web analytics services provided by third parties for the purposes of evaluating the use of UN websites, compiling reports on website activity for website operators and for intergovernmental organs requesting such statistical reports, as well as for other services relating to website activity and internet usage. The information collected by such third parties, including your IP address, may be stored on the servers of such third parties and be subject to their respective privacy policies as well as any laws and regulations applicable to them.</p><p><b>Personal data</b><br>UN websites only collect personal data with your knowledge.<br>If you register for a newsletter, login to certain UN websites, order a book or other merchandise, request information, provide feedback, apply for a job, join a discussion group, or join an electronic mailing list, you may be asked to provide personal information such as your name, postal address and/or e-mail address.</p><p>Joining electronic discussion groups may mean that other participants of the discussion group (including non-UN employees) will see personal information that you have volunteered to provide. For open discussion groups, this information will be public.</p><p>If you conduct a transaction such as ordering merchandise or booking a tour of United Nations Headquarters, you may also be asked to provide your credit card details. These details are transferred to a secure, online payment service, hosted by a third party. Credit card information is not retained by the UN.</p><p><b>Cookies</b><br>UN websites may use cookies to provide statistics that help us to give you the best experience of our sites.</p><p><b>What does the United Nations do with the information it collects?</b></p><p><b>Normal web site usage</b><br>Information is gathered by automated means during general browsing of a UN website through the use of “cookies” or “web beacons”. Information such as the IP address associated with your connection to the internet and the pages accessed is used to analyze trends and usage of that UN website and to improve the usefulness of the site. Your IP address is not connected with any personal data.</p><p><b>Personal data</b><br>The UN may use the personal data you provide for the purposes for which it is collected, such as:</p><ul><li>Contacting you – either in response to a query or suggestion, or to mail newsletters, documents, publications, etc. to you.</li><li>Managing and processing your job application.</li><li>Confirming your purchases and registrations on the site.</li><li>Obtaining payment for purchases through the site (via credit card).</li><li>'Remembering' your online profile and preferences.</li><li>Helping you quickly find information that is relevant to you based on your interests and helping us create site content most relevant to you.</li><li>Undertaking statistical analysis.</li></ul><p><b>What if I don’t want to provide personal data?</b><br>Providing personal data on a UN website is optional. If you choose not to provide personal data, you may not be able to carry out certain actions such as purchase items, register for a newsletter, or apply for a job.</p><p><b>How does the United Nations protect your personal data?</b><br>We never sell any information collected through UN websites. We do not regularly share any personal data collected on the UN website to any third party, with the exception of information transferred securely to a third-party service provider, such as a credit card processor in connection with a purchase made through a UN website. We employ a range of technologies and security measures to protect the information maintained on our systems from loss, misuse, unauthorized access or disclosure, alteration, or destruction.</p><p>All United Nations staff who have access to, and are associated with the processing of personal data, are obliged to comply with the rules concerning the classification and handling of all United Nations data, including with respect to the confidentiality of personal data they handle in their official capacity. These include the rules enshrined in ST/SGB/2024/1.</p><p><b>How long does the United Nations retain your personal data?</b><br>Your personal data will be kept only as long as it is necessary for the purposes set out in this notice. How long personal information is stored for depends on the personal information in question and what it is being used for, as well as whether there is any administrative or regulatory requirement for retaining the personal information.</p><p><b>How do you make requests concerning your personal data?</b><br>In some cases, you can request modification or deletion of your personal data directly by returning to the web page where you first provided the information and following the instructions provided. When such option is not available, you can submit the following requests concerning personal data collected by UN websites for consideration by sending an email to us via the Contact page.</p><ul><li>Request whether any personal data relating to you is being processed.</li><li>Request access to the personal data relating to you that is being processed.</li><li>Request to rectify, complete, delete, or stop processing personal data relating to you.</li></ul><p>You can find more information about the procedure concerning such requests in ST/SGB/2024/1.</p><p><b>Notification of changes</b><br>The present notice is subject to amendment at the discretion of the United Nations. Any changes will be posted on this page.</p><p><b>Privileges and immunities</b><br>Nothing in or relating to the present notice shall be deemed a waiver, express or implied, of the privileges and immunities of the United Nations, including its subsidiary organs.</p><p><b>Contact</b><br>For questions or queries regarding this data protection and privacy policy, please contact us via the <a href=\"https://www.un.org/en/contact-us-0\">Contact page.</a></p>"
+        }
+      },
+      "termsOfUse": {
+        "label": "Terms of Use",
+        "popup": {
+          "title": "Terms of Use",
+          "content": "<p><b>Terms and conditions of use of United Nations websites</b></p><p><a href=\"https://www.un.org/en/sections/about-website/terms-use/index.html#Disclaimers\"><b>Disclaimers</b></a> <a href=\"https://www.un.org/en/sections/about-website/terms-use/index.html#countries\"><b>Country and area nomenclature</b></a> <a href=\"https://www.un.org/en/sections/about-website/terms-use/index.html#privacy\"><b>Privacy notice</b></a> <a href=\"https://www.un.org/en/sections/about-website/terms-use/index.html#immunities\"><b>Preservation of Immunities</b></a> <a href=\"https://www.un.org/en/sections/about-website/terms-use/index.html#general\"><b>General</b></a></p><p>The use of this web site constitutes agreement with the following terms and conditions:</p><p>(a) The United Nations maintains this web site (the “Site”) as a courtesy to those who may choose to access the Site (“Users”). The information presented herein is for informative purposes only. The United Nations grants permission to Users to visit the Site and to download and copy the information, documents and materials (collectively, “Materials”) from the Site for the User’s personal, non-commercial use, without any right to resell or redistribute them or to compile or create derivative works therefrom, subject to the terms and conditions outlined below, and also subject to more specific restrictions that may apply to specific Material within this Site.</p><p>(b) The United Nations administers this Site. All Material on this Site from the United Nations appears subject to the present Terms and Conditions.</p><p>(c) Unless expressly stated otherwise, the findings, interpretations and conclusions expressed in the Materials on this Site are those of the various United Nations staff members, consultants and advisers to the United Nations Secretariat who prepared the work and do not necessarily represent the views of the United Nations or its Member States.</p><p><b>Disclaimers</b></p><p>Materials provided on this Site are provided “as is”, without warranty of any kind, either express or implied, including, without limitation, warranties of merchantability, fitness for a particular purpose and non-infringement. The United Nations specifically does not <a href=\"https://www.un.org/en/sections/about-website/terms-use/index.html#Disclaimers\">https://www.un.org/en/sections/about-website/terms-use/index.html#Disclaimers</a><br><a href=\"https://www.un.org/en/sections/about-website/terms-use/index.html#countries\">https://www.un.org/en/sections/about-website/terms-use/index.html#countries</a><br><a href=\"https://www.un.org/en/sections/about-website/terms-use/index.html#privacy\">https://www.un.org/en/sections/about-website/terms-use/index.html#privacy</a><br><a href=\"https://www.un.org/en/sections/about-website/terms-use/index.html#immunities\">https://www.un.org/en/sections/about-website/terms-use/index.html#immunities</a><br><a href=\"https://www.un.org/en/sections/about-website/terms-use/index.html#immunities\">https://www.un.org/en/sections/about-website/terms-use/index.html#immunities</a><br><a href=\"https://www.un.org/en/sections/about-website/terms-use/index.html#general\">https://www.un.org/en/sections/about-website/terms-use/index.html#general</a></p><p>make any warranties or representations as to the accuracy or completeness of any such Materials. The United Nations periodically adds, changes, improves or updates the Materials on this Site without notice. Under no circumstances shall the United Nations be liable for any loss, damage, liability or expense incurred or suffered that is claimed to have resulted from the use of this Site, including, without limitation, any fault, error, omission, interruption or delay with respect thereto. The use of this Site is at the User’s sole risk. Under no circumstances, including but not limited to negligence, shall the United Nations or its affiliates be liable for any direct, indirect, incidental, special or consequential damages, even if the United Nations has been advised of the possibility of such damages.</p><p>The User specifically acknowledges and agrees that the United Nations is not liable for any conduct of any User.</p><p>This site may contain advice, opinions and statements of various information providers. The United Nations does not represent or endorse the accuracy or reliability of any advice, opinion, statement or other information provided by any information provider, any User of this Site or any other person or entity. Reliance upon any such advice, opinion, statement, or other information shall also be at the User’s own risk. Neither the United Nations nor its affiliates, nor any of their respective agents, employees, information providers or content providers, shall be liable to any User or anyone else for any inaccuracy, error, omission, interruption, deletion, defect, alteration of or use of any content herein, or for its timeliness or completeness, nor shall they be liable for any failure of performance, computer virus or communication line failure, regardless of cause, or for any damages resulting therefrom.</p><p>As a condition of use of this Site, the User agrees to indemnify the United Nations and its affiliates from and against any and all actions, claims, losses, damages, liabilities and expenses (including reasonable attorneys’ fees) arising out of the User’s use of this Site, including, without limitation, any claims alleging facts that if true would constitute a breach by the User of these Terms and Conditions. If the User is dissatisfied with any Material on this Site or with any of its Terms and Conditions of Use, the User’s sole and exclusive remedy is to discontinue using the Site.</p><p>This Site may contain links and references to third-party web sites. The linked sites are not under the control of the United Nations, and the United Nations is not responsible for the content of any linked site or any link contained in a linked site. The United Nations provides these links only as a convenience, and the inclusion of a link or reference does not imply the endorsement of the linked site by the United Nations.</p><p>If this Site contains bulletin boards, chat rooms, access to mailing lists or other message or communication facilities (collectively, “Forums”), the User agrees to use the Forums only to send and receive messages and materials that are proper and related to the particular Forum. By way of example and not as a limitation, the User agrees that when using a Forum, he or she shall not do any of the following:</p><ul><li>(a) Defame, abuse, harass, stalk, threaten or otherwise violate the legal rights (such as rights of privacy and publicity) of others;</li><li>(b) Publish, post, distribute or disseminate any defamatory, infringing, obscene, indecent or unlawful material or information;</li><li>(c) Upload or attach files that contain software or other material protected by intellectual property laws (or by rights of privacy and publicity) unless the User owns or controls the rights thereto or has received all consents therefor as may be required by law;</li><li>(d) Upload or attach files that contain viruses, corrupted files or any other similar software or programs that may damage the operation of another’s computer;</li><li>(e) Delete any author attributions, legal notices or proprietary designations or labels in any file that is uploaded;</li><li>(f) Falsify the origin or source of software or other material contained in a file that is uploaded;</li><li>(g) Advertise or offer to sell any goods or services, or conduct or forward surveys, contests or chain letters, or download any file posted by another user of a Forum that the User knows, or reasonably should know, cannot be legally distributed in such manner.</li></ul><p>The User acknowledges that all Forums and discussion groups are public and not private communications. Further, the User acknowledges that chats, postings, conferences, e-mails and other communications by other Users are not endorsed by the United Nations, and that such communications shall not be considered to have been reviewed, screened or approved by the United Nations. The United Nations reserves the right to remove, for any reason and without notice, any content of the Forums received from Users, including, without limitation, e-mail and bulletin board postings.</p><p>The boundaries and names shown and the designations used on the maps on this site do not imply official endorsement or acceptance by the United Nations.</p><p><b>Country and area nomenclature</b><br>The designations employed and the presentation of material in this website do not imply the expression of any opinion whatsoever on the part of the Secretariat of the United Nations concerning the legal status of any country, territory, city or area or of its authorities, or concerning the delimitation of its frontiers or boundaries. The term “country” as used in this material also refers, as appropriate, to territories or areas.</p><p><b>Privacy notice</b><br>Please see the UN.ORG Data Protection and <a href='https://www.un.org/en/about-us/privacy-notice'>Privacy Notice</a>.</p><p><b>Preservation of immunities</b><br>Nothing herein shall constitute or be considered to be a limitation upon or a waiver of the privileges and immunities of the United Nations, which are specifically reserved.</p><p><b>General</b><br></p><p>The United Nations reserves its exclusive right in its sole discretion to alter, limit or discontinue the Site or any Materials in any respect. The United Nations shall have no obligation to take the needs of any User into consideration in connection therewith.</p><p>The United Nations reserves the right to deny in its sole discretion any user access to this Site or any portion thereof without notice.</p><p>No waiver by the United Nations of any provision of these Terms and Conditions shall be binding except as set forth in writing and signed by its duly authorized representative.</p>"
+        }
+      },
+      "copyright": {
+        "label": "COPYRIGHT",
+        "link": "https://www.un.org/en/about-us/copyright"
+      },
+      "un": {
+        "label": "2025 United Nations",
+        "link": "https://www.un.org/"
+      },
+      "other": [
+        {
+          "label": "Pact for the Future",
+          "link": "https://www.un.org/en/summit-of-the-future/pact-for-the-future"
+        },
+        {
+          "label": "Space Sustainability Guidelines",
+          "link": "https://spacesustainability.unoosa.org/"
+        },
+        {
+          "label": "UN Office for Outer Space",
+          "link": "https://www.unoosa.org/"
+        }
+      ]
+    }
+  }
+}

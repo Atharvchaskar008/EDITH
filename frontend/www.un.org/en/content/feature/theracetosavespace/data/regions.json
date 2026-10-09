@@ -1,0 +1,28 @@
+[
+  {
+    "name": "middleEastAndNorthAfrica",
+    "countries": [
+      "Algeria", "Bahrain", "Djibouti", "Egypt", "Iran", "Iraq", "Jordan", "Kuwait", 
+      "Lebanon", "Libya", "Morocco", "Oman", "Qatar", "Saudi Arabia", "Syria", "Tunisia", 
+      "United Arab Emirates", "West Bank and Gaza", "Yemen"
+    ]
+  },
+  {
+    "name": "easternAndSouthernAfrica",
+    "countries": [
+      "Angola", "Botswana", "Burundi", "Comoros", "Democratic Republic of Congo", "Eritrea", 
+      "Eswatini", "Ethiopia", "Kenya", "Lesotho", "Madagascar", "Malawi", "Mauritius", 
+      "Mozambique", "Namibia", "Rwanda", "Seychelles", "Sao Tome & Principe", "Somalia", 
+      "South Africa", "South Sudan", "Sudan", "Tanzania", "Uganda", "Zambia", "Zimbabwe"
+    ]
+  },
+  {
+    "name": "westernAndCentralAfrica",
+    "countries": [
+      "Benin", "Burkina Faso", "Cabo Verde", "Chad", "Cameroon", "Central African Republic", 
+      "Cote d’Ivoire", "Equatorial Guinea", "Gabon", "Gambia", "Ghana", "Guinea", 
+      "Guinea-Bissau", "Liberia", "Mali", "Mauritania", "Niger", "Nigeria", "Republic of Congo", 
+      "Senegal", "Sierra Leone", "Togo"
+    ]
+  }
+]
