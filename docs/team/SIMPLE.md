@@ -46,7 +46,7 @@ The numbers change with every run. Read the current ones off the dashboard.
 - It does **not** plan burns between two satellites of the same fleet (for example Starlink and Starlink), because public data cannot predict them.
 - A burn is rejected if it makes **another** dangerous pass of the same satellite worse. Each pass is computed with and without the burn.
 - Some pairs meet once every lap. A burn that clears one meeting moves the danger to the next. EDITH sees this and proposes **no burn** instead of a bad one (example: 2024-173D and STARLINK-38027).
-- It looks **24 hours** ahead, not 3 days. We ran 3 days once: passes between different owners stayed at about 1,100 a day, but passes inside one fleet grew from 913 to 9,258 a day. Those are not real; they come from the error in public data.
+- It looks **24 hours** ahead, not 3 days. We ran 3 days once: passes outside fleets stayed at about 1,150 a day, but passes inside one fleet grew from 862 to 9,209 a day. Those are not real; they come from the error in public data.
 
 ## Why these tools
 

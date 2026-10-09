@@ -46,7 +46,7 @@ The Python package is named `fusion`.
 
 ## Results
 
-Measured on a 12-core laptop on 9 October 2026, on live data.
+Measured on a 12-core laptop on 9 October 2026, on live data, in the run of 12:10 UTC. The numbers change with every run.
 
 | Measure | Value |
 |---|---|
@@ -246,7 +246,7 @@ The main system is complete without them; each pack adds a capability through a 
 - **The measured uncertainty understates the true error.** It compares public element sets with each other, not with true positions. This is why ranking uses the worst case.
 - **Objects smaller than about 10 cm are not in any public catalogue.**
 - **Object size is approximate**: a radar size where one is published, a size class otherwise.
-- **Beyond one day, passes inside a fleet are not predictions.** A full-sky run over 72 hours found about 1,100 passes a day between objects of different owners on each of the three days, while passes between two satellites of one fleet grew from 913 on the first day to 9,258 on the third: the error in public data scrambles the spacing that fleets keep. The scheduled run therefore looks 24 hours ahead.
+- **Beyond one day, passes inside a fleet are not predictions.** A full-sky run over 72 hours found about 1,150 passes a day outside fleets on each of the three days, while passes between two satellites of one fleet grew from 862 on the first day to 9,209 on the third: the error in public data scrambles the spacing that fleets keep. The scheduled run therefore looks 24 hours ahead.
 - **Some passes get no burn.** Two objects in similar orbits can meet once every lap; an along-track burn that clears one meeting moves the danger to the next. EDITH detects this and says so instead of proposing the burn.
 - **Burns are treated as instantaneous**, and the safety re-screen covers 24 hours.
 - **At most five burn searches per run**, to keep a run to minutes. It is a setting, and a burn for any other pass can be requested afterwards.

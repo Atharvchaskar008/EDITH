@@ -1,4 +1,4 @@
-# Fusion API
+# EDITH API
 
 The server is `fusion/api/main.py`. Start it with `.venv\Scripts\python -m uvicorn fusion.api.main:app --port 8000`. Interactive documentation generated from the code is at http://localhost:8000/docs.
 
@@ -27,7 +27,7 @@ All times are UTC ISO 8601. Distances are km, speeds km/s, delta-v m/s. Results 
 | `GET /addons` | `{"hooks", "packs", "validation_report", "alerts_for_latest_run", "briefings_for_latest_run", "cdm_for_latest_run", "replay_2009", "pitch_files"}`. The briefing and CDM entries are counts |
 | `GET /addons/files/{path}` | A file from `addons/` (json, md, png, txt, csv only) |
 | `GET /runs/latest/files/{path}` | A file from the latest run folder: `briefings/<event_id>.briefing.json`, `cdm/<event_id>.cdm.txt`, `summary.json`. Add `?source=replay` for the replay folder |
-| `GET /` | The plain test page |
+| `GET /` | The operator dashboard |
 | `GET /landing` | The story page for visitors (`landing/index.html`), which reads its live numbers from `/latest` |
 
 The event routes accept `?source=replay` to read the 2009 replay folder instead of the latest run.

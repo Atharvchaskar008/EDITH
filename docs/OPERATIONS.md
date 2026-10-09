@@ -22,7 +22,7 @@ Fill in `.env` with a free Space-Track login to get the full catalogue, includin
 | Run the tests | `.venv\Scripts\python -m pytest -q` |
 | One run from the terminal | `.venv\Scripts\python -m fusion.pipeline` |
 | Start the server | `.venv\Scripts\python -m uvicorn fusion.api.main:app --port 8000` |
-| Open the test page | http://localhost:8000 |
+| Open the dashboard | http://localhost:8000 |
 | Open the landing page (EDITH) | http://localhost:8000/landing |
 | Build the 2009 collision replay | `.venv\Scripts\python -m fusion.replay.replay_2009` (about 1 minute; needs teammate A's pack) |
 | Compare with CelesTrak's own list | `.venv\Scripts\python -m fusion.validation` (downloads 6 MB when its copy is over 12 hours old) |
@@ -133,5 +133,5 @@ Every tunable number is in `fusion/config.py`. The ones most likely to be change
 - **In the 2009 replay only 2,897 of teammate A's 5,152 background objects are used.** The others have orbit data dated after the replay time, so they were not public yet.
 - **The radius for objects with no measured radar size is still a guess** by size class (2 m for "large").
 - A burn's safety re-screen covers 24 hours, not the full 72-hour window.
-- The scheduled run and the dashboard's button use the 24-hour window. A full-sky run over 72 hours (9 October 2026: 18,497 passes, 15 minutes) finds about 1,100 passes a day between objects of different owners on each of the three days, but passes between two satellites of one fleet grow from 913 on the first day to 9,258 on the third. Fleets are phased so that their satellites miss each other; the error in public orbit data (77 km along-track for Starlink after three days) scrambles that phasing, so those later passes are not real predictions.
+- The scheduled run and the dashboard's button use the 24-hour window. A full-sky run over 72 hours (9 October 2026: 18,497 passes, 15 minutes) finds about 1,150 passes a day outside fleets on each of the three days (1,179, 1,182 and 1,124), but passes between two working satellites of one fleet grow from 862 on the first day to 4,941 on the second and 9,209 on the third; 14,916 of those 15,012 are Starlink pairs. Fleets are phased so that their satellites miss each other; the error in public orbit data (77 km along-track for Starlink after three days) scrambles that phasing, so those later passes are not real predictions.
 - When two operational satellites of different operators meet, the system picks one to move; it has no knowledge of what the other operator plans.
