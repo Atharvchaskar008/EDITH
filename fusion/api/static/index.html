@@ -18,6 +18,7 @@
   .tiles div { padding: 26px 0; }
   .tiles b { display: block; font-size: clamp(34px, 5.4vw, 76px); line-height: 1; letter-spacing: -.03em; }
   .tiles span, .facts span { color: #9a9a9a; font-size: 14px; }
+  .tiles .sub, .when { display: block; color: #6f6f6f; font-size: 12px; }
   .run { display: flex; align-items: center; gap: 18px; padding: 22px 0 0; }
   button { background: #fff; color: #000; border: 0; padding: 13px 24px; font-family: inherit; font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; cursor: pointer; }
   button:disabled { opacity: .45; cursor: default; }
@@ -26,7 +27,7 @@
   .split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 48px; }
   #planbox { border-bottom: 1px solid #fff; padding-bottom: 18px; }
   .big { font-size: clamp(24px, 3.2vw, 44px); font-weight: 600; letter-spacing: -.02em; line-height: 1.1; margin: 0; }
-  .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 12px; margin-top: 16px; }
   .facts b { display: block; font-size: 18px; }
   .why { color: #9a9a9a; margin: 14px 0 0; max-width: 90ch; }
   .ask { display: flex; align-items: center; gap: 18px; margin-top: 16px; color: #9a9a9a; }
@@ -76,12 +77,13 @@
 <div class="tiles">
   <div><b id="t-objects">-</b><span>objects watched</span></div>
   <div><b id="t-passes">-</b><span>close passes ahead</span></div>
-  <div><b id="t-red">-</b><span>dangerous</span></div>
-  <div><b id="t-burns">-</b><span>moves planned</span></div>
+  <div><b id="t-red">-</b><span>dangerous</span><span id="t-rest" class="sub"></span></div>
+  <div><b id="t-burns">-</b><span>burns ready</span></div>
 </div>
 
 <div class="run"><button id="run">Run now</button><span id="status">Ready.</span></div>
 <p class="check"><span id="validation"></span> <a id="report" href="#proof-title" hidden>Proof</a></p>
+<p class="check" id="runinfo"></p>
 
 <div class="split">
   <div id="planbox"><h2>Plan</h2><div id="plan"><p class="why">Pick a pass.</p></div></div>
@@ -108,7 +110,7 @@ let picked = null, runId = null, source = "latest", onlyBurns = false;
 let checked = null, typed = 0;  // the result of checking one satellite, shown when source is "object"
 let fleet = null;  // the fleet whose passes the list shows, when one was picked under Fleets
 let priority = true, reds = null, shown = null;  // Priority: the dangerous passes that are not inside one fleet
-const PASS_HEAD = '<tr><th>Level</th><th>Objects</th><th class="hide">In</th><th>Distance</th><th>Risk</th><th>Plan</th></tr>';
+const PASS_HEAD = "<tr><th>Level</th><th>Objects</th><th>Distance</th><th>Risk</th><th>Plan</th></tr>";
 const FLEET_HEAD = "<tr><th>Fleet</th><th>Satellites</th><th>Passes</th><th>Dangerous</th><th>Own fleet</th><th>Burns</th></tr>";
 const get = async path => { const r = await fetch(path); if (!r.ok) throw new Error(path); return r.json(); };
 const n = x => Number(x).toLocaleString("en-US");
@@ -117,6 +119,8 @@ const odds = p => p == null ? "-" : p >= 0.5 ? "likely" : 1 / p > 1e9 ? "under 1
 const dist = km => km < 1 ? Math.round(km * 1000) + " m" : km.toFixed(2) + " km";
 const short = km => km < 1 ? Math.round(km * 1000) + " m" : km.toFixed(km < 10 ? 1 : 0) + " km";  // for a picture's axis
 const word = level => level ? level[0] + level.slice(1).toLowerCase() : "";
+const clock = t => new Date(t).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });  // in the viewer's own time
+const when = t => source === "replay" ? new Date(t).toUTCString().slice(5, 22) + " UTC" : "in " + Math.max(0, (new Date(t) - Date.now()) / 3.6e6).toFixed(1) + " h";
 const fail = () => { $("error").textContent = "Cannot reach the system."; };
 
 async function loadTop() {
@@ -126,7 +130,12 @@ async function loadTop() {
   $("t-red").textContent = n(r.levels.RED);
   reds = r.levels.RED; aboutPriority();
   $("t-burns").textContent = n(r.plans.maneuver);
+  $("t-rest").textContent = n(r.levels.AMBER) + " to watch, " + n(r.levels.GREEN) + " safe";
   $("error").textContent = "";
+  const took = r.duration_s >= 90 ? Math.floor(r.duration_s / 60) + " min " + Math.round(r.duration_s % 60) + " s" : Math.round(r.duration_s) + " s";
+  let info = "Last run at " + clock(r.t0) + ", took " + took + ", looking " + r.window_hours + " hours ahead.";
+  try { const m = await get("/monitor"); if (m.scheduler_on && m.next_run) info += " Next run by itself at " + clock(m.next_run) + "."; } catch (e) { /* the line is shorter without it */ }
+  $("runinfo").textContent = info;
   try {
     const v = await get("/validation");
     $("validation").textContent = "Checked against CelesTrak: distances match to " + v.same_input.all_matches.miss_difference_m.median.toFixed(2) + " m.";
@@ -165,12 +174,11 @@ async function loadEvents() {
     $("about").textContent = hit ? "Iridium 33 and Cosmos 2251 collided on 10 February 2009. The data public a day earlier predicted a miss of " + dist(hit.miss_distance_km) + ", so the honest rating is amber, not red." : "";
   }
   $("events").innerHTML = events.map(e => {
-    const hours = source !== "replay" ? Math.max(0, (new Date(e.tca) - Date.now()) / 3.6e6).toFixed(1) + " h" : "-";
-    const plan = e.plan_decision === "MANEUVER" ? "<b>Move</b>" : e.plan_decision === "MONITOR" ? "Watch" : "";
+    const plan = e.plan_decision === "MANEUVER" ? "<b>Burn ready</b>" : e.plan_decision === "MONITOR" ? "Watch" : "";
     return `<tr class="row ${e.event_id === picked ? "picked" : ""}" data-id="${esc(e.event_id)}">
       <td class="${e.risk_level}">${word(e.risk_level)}</td>
-      <td>${esc(e.primary_name)} / ${esc(e.secondary_name)}${e.synthetic ? ' <span class="tag">TEST</span>' : ""}</td>
-      <td class="hide">${hours}</td><td>${dist(e.miss_distance_km)}</td><td>${odds(e.pc_max)}</td><td>${plan}</td></tr>`;
+      <td>${esc(e.primary_name)} / ${esc(e.secondary_name)}${e.synthetic ? ' <span class="tag">TEST</span>' : ""}<span class="when">${when(e.tca)}</span></td>
+      <td>${dist(e.miss_distance_km)}</td><td>${odds(e.pc_max)}</td><td>${plan}</td></tr>`;
   }).join("") || '<tr><td colspan="6">Nothing to show.</td></tr>';
   document.querySelectorAll("tr.row").forEach(row => row.onclick = () => {
     picked = row.dataset.id; loadEvents().catch(fail); loadPlan();
@@ -178,18 +186,40 @@ async function loadEvents() {
   });
 }
 
-function burn(p) {
+// how unsure each object's position is: the largest of its three measured errors
+const doubt = e => e.sigma_rtn_primary_km && e.sigma_rtn_secondary_km
+  ? short(Math.max(...e.sigma_rtn_primary_km)) + " and " + short(Math.max(...e.sigma_rtn_secondary_km)) : "-";
+
+// a pass and its risk, for a card that has no burn
+function facts(e) {
+  return `<div class="facts">
+      <div><b>${when(e.tca)}</b><span>the pass</span></div>
+      <div><b>${dist(e.miss_distance_km)}</b><span>distance</span></div>
+      <div><b>${odds(e.pc_max)}</b><span>risk, worst case</span></div>
+      <div><b>${odds(e.pc)}</b><span>risk, best estimate</span></div>
+      <div><b>${e.relative_speed_kms.toFixed(1)} km/s</b><span>closing speed</span></div>
+      <div><b>${doubt(e)}</b><span>doubt in each position</span></div>
+    </div>`;
+}
+
+function burn(p, e) {
   const way = p.dv_rtn_ms[1] > 0 ? "Speed up" : "Slow down";
+  const lead = (new Date(e.tca) - new Date(p.burn_time)) / 3.6e6, back = (new Date(p.return_burn_time) - new Date(e.tca)) / 3.6e6;
+  const mover = p.maneuvering_id === e.primary_id ? e.primary_name : e.secondary_name;
   // runs made before the other passes were compared have no count of them
   const others = p.other_passes_checked == null
     ? `<b>${p.secondary_conjunctions_created}</b><span>new dangers</span>`
     : `<b>${p.secondary_conjunctions_created} new, ${p.other_passes_worsened} worse</b><span>its other passes${p.other_passes_checked ? ", " + p.other_passes_checked + " checked" : ""}</span>`;
   return `<p class="big">${way} by ${(p.dv_magnitude_ms * 1000).toFixed(0)} mm/s</p>
     <div class="facts">
-      <div><b>${p.lead_time_orbits} orbits early</b><span>when</span></div>
+      <div><b>${lead.toFixed(1)} h before the pass</b><span>the burn, ${p.lead_time_orbits} orbits early</span></div>
       <div><b>${dist(p.miss_before_km)} to ${dist(p.miss_after_km)}</b><span>distance</span></div>
-      <div><b>${odds(p.pc_max_before)} to ${odds(p.pc_max_after)}</b><span>risk</span></div>
+      <div><b>${odds(p.pc_max_before)} to ${odds(p.pc_max_after)}</b><span>risk, worst case</span></div>
       <div>${others}</div>
+      <div><b>${esc(mover)}</b><span>the one that moves</span></div>
+      <div><b>${when(e.tca)}</b><span>the pass</span></div>
+      <div><b>${odds(p.pc_before)} to ${odds(p.pc_after)}</b><span>risk, best estimate</span></div>
+      <div><b>${back.toFixed(1)} h after the pass</b><span>burn back to its old orbit</span></div>
     </div><p class="why">${esc(p.rationale)}</p>`;
 }
 
@@ -273,14 +303,7 @@ function pictures(d, moved, movedWord) {
 
 // a pass found by checking one satellite: it is not in the run, so it has no plan
 function showPass(e) {
-  const hours = Math.max(0, (new Date(e.tca) - Date.now()) / 3.6e6).toFixed(1);
-  $("plan").innerHTML = `<p class="big">${e.risk_level === "RED" ? "Dangerous" : e.risk_level === "AMBER" ? "Watch" : "Safe"}</p>
-    <div class="facts">
-      <div><b>in ${hours} h</b><span>when</span></div>
-      <div><b>${dist(e.miss_distance_km)}</b><span>distance</span></div>
-      <div><b>${odds(e.pc_max)}</b><span>risk, worst case</span></div>
-      <div><b>${e.relative_speed_kms.toFixed(1)} km/s</b><span>closing speed</span></div>
-    </div>` + pictures({ event: e });
+  $("plan").innerHTML = `<p class="big">${e.risk_level === "RED" ? "Dangerous" : e.risk_level === "AMBER" ? "Watch" : "Safe"}</p>` + facts(e) + pictures({ event: e });
 }
 
 // the two documents written for every dangerous pass of a run: the standard warning message and the briefing
@@ -300,11 +323,11 @@ async function loadPlan() {
     if (id !== picked) return;
     const p = d.plan, whatIf = d.what_if_plan;
     let html;
-    if (!p) html = '<p class="big">Safe</p><p class="why">Low risk. No plan needed.</p>' + pictures(d);
-    else if (p.decision === "MANEUVER") html = burn(p) + papers(id) + pictures(d, p, "after the burn");
+    if (!p) html = '<p class="big">Safe</p>' + facts(d.event) + '<p class="why">Low risk. No plan needed.</p>' + pictures(d);
+    else if (p.decision === "MANEUVER") html = burn(p, d.event) + papers(id) + pictures(d, p, "after the burn");
     else {
-      html = `<p class="big">${p.decision === "MONITOR" ? "Watch" : "No action"}</p><p class="why">${esc(p.rationale)}</p>`;
-      if (whatIf) html += "<h2>What if it moved</h2>" + burn(whatIf);
+      html = `<p class="big">${p.decision === "MONITOR" ? "Watch" : "No action"}</p>${facts(d.event)}<p class="why">${esc(p.rationale)}</p>`;
+      if (whatIf) html += "<h2>What if it moved</h2>" + burn(whatIf, d.event);
       else if (source !== "replay" && !p.requested_at) html += '<div class="ask"><button id="ask">Plan now</button><span id="asked"></span></div>';
       html += papers(id) + pictures(d, whatIf, "if it moved");
     }
