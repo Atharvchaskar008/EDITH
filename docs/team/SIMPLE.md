@@ -66,8 +66,16 @@ Python only gives the orders. The heavy maths runs in compiled C and C++ librari
 
 ## What to say in 3 minutes
 
-1. The problem: 30,000 objects, 440 million pairs, nobody can watch them all (20 s).
-2. Press Run. While it runs, show the ranked list and the red count (40 s).
-3. Click a burn plan: the burn, the gap with and without it, the safety check "0 new, 0 worse". Then type a satellite the judge names (60 s).
-4. Show the 2009 replay and the validation line: 0.35 m against CelesTrak, no offset against ESA (40 s).
-5. Say the limits yourself before they ask (20 s).
+Have the dashboard open before you start. Do not press "Run now" during the talk: a run takes about four minutes. Read the numbers off the screen; they change with every run.
+
+| Time | Do | Say |
+|---|---|---|
+| 0:00 | Nothing yet | "About 30,000 tracked objects fly in low orbit at 7.5 km every second. That is 440 million pairs. Nobody can watch them by hand. EDITH does, from public data, every six hours, on a laptop." |
+| 0:25 | Point at the four numbers and the line under the button | "Right now: this many objects, this many close passes in the next 24 hours, this many dangerous. We checked our distances against CelesTrak: they match to 0.35 m." |
+| 0:50 | Click the first "Move" row | "These two would pass this close. EDITH says which one moves, when, and how hard. First picture: the gap with and without the burn. Second: every burn it tried, with the chosen one ringed. '0 new, 0 worse' means the burn was checked against every other object for 24 hours." |
+| 1:35 | Click a "Watch" row, press "Plan now" | "A run plans five burns. For any other pass, one button, about 20 seconds." While it runs: "Passes between two satellites of one fleet are left out of this list. Public data is too rough for those." |
+| 2:00 | Type ISS, or the satellite the judge names | "Any satellite, by name. Its close passes for the next 24 hours, checked in seconds." |
+| 2:20 | Click "2009 replay" | "The real 2009 collision, from the data public the day before. EDITH finds it at the right second, as the most dangerous pass of Iridium 33. It rates it amber, because public data predicted a 584 m miss. That error is why we rank by worst case, and why we measured the error of public data ourselves." |
+| 2:45 | Nothing | "It advises people; it does not fly satellites. 118 tests run on GitHub on every push." |
+
+If a judge asks why some dangerous pass has no burn, show 2024-173D and STARLINK-38027: they meet every lap, so a burn that clears one meeting moves the danger to the next, and EDITH says so.
