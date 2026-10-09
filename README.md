@@ -10,7 +10,7 @@
 ![SGP4](https://img.shields.io/badge/SGP4-orbit_model-555555)
 ![Pydantic](https://img.shields.io/badge/Pydantic-data_models-E92063?logo=pydantic&logoColor=white)
 ![LightGBM](https://img.shields.io/badge/LightGBM-risk_trend_model-9ACD32)
-![pytest](https://img.shields.io/badge/pytest-121_tests-0A9EDC?logo=pytest&logoColor=white)
+![pytest](https://img.shields.io/badge/pytest-122_tests-0A9EDC?logo=pytest&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-dashboard-F7DF1E?logo=javascript&logoColor=black)
 
 EDITH screens every publicly tracked object in low Earth orbit against every other, ranks the close passes by collision probability, and recommends the smallest avoidance burn that makes a dangerous pass safe. It re-runs every six hours without supervision and serves its results through a web API and an operator dashboard.
@@ -374,7 +374,7 @@ The main system is complete without them; each pack adds a capability through a 
 
 | Area | State |
 |---|---|
-| Engine, pipeline, scheduler, API | Complete; 121 tests, run on GitHub on every push |
+| Engine, pipeline, scheduler, API | Complete; 122 tests, run on GitHub on every push |
 | Validation pack | Complete; 54 tests |
 | Operator Dashboard | Working: conjunction metrics, ranked passes, burn plans with SVG geometry, what-if burns on request, satellite pass lookup, fleet aggregations, alerts, and 2009 replay |
 | 3D Interactive Landing Page | Working: WebGL Three.js interactive Earth globe with orbital tracks, visitor mission walkthrough, and audio effects at http://localhost:3000 |

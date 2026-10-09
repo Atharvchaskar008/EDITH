@@ -31,6 +31,7 @@ SPACETRACK_CACHE_HOURS = 2.0  # they allow one bulk catalogue request per hour
 SPACETRACK_TIMEOUT_S = 180.0
 
 CACHE_MAX_AGE_HOURS = 2.0
+CACHE_FALLBACK_MAX_AGE_HOURS = 24.0  # a stored copy this recent is used when CelesTrak will not send the group again
 REQUEST_PAUSE_S = 2.0
 REQUEST_TIMEOUT_S = 30.0
 MAX_TLE_AGE_DAYS = 14.0

@@ -76,7 +76,7 @@ Alerts compare a run only with earlier runs of the same mode and window. If the 
 
 ## Failure handling
 
-- A failed download is retried, then fails the run with a readable message; stale data is never used silently.
+- A failed CelesTrak download is retried. CelesTrak refuses to send a group again while its data has not changed, so if the download still fails and a copy under 24 hours old is stored, that copy is used and the run log says so. Otherwise the run fails with a readable message; old data is never used silently.
 - A failed stage records its error in `run.json` and `log.json` and leaves no `DONE` file, so the previous run stays visible.
 - An element set that SGP4 rejects becomes missing values and is skipped, not a crash.
 - Only one run executes at a time; a second request returns the identifier of the run in progress.

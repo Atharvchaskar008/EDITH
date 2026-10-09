@@ -35,8 +35,14 @@ def object_type_from_name(name: str) -> str:
     return "PAYLOAD"
 
 
-def download_group(group: str, cache_dir: Path, use_cache: bool = True, session: Any = None) -> list[dict]:
-    """GP records of one CelesTrak group, from cache when it is fresh enough."""
+def download_group(
+    group: str, cache_dir: Path, use_cache: bool = True, session: Any = None, stored: Optional[dict[str, float]] = None
+) -> list[dict]:
+    """GP records of one CelesTrak group, from cache when it is fresh enough.
+
+    CelesTrak refuses (403) to send a group again while its data has not
+    changed. If the download fails and a copy under a day old is stored, that
+    copy is used and its age in hours is written into `stored`."""
     path = cache_dir / f"celestrak_{group}.json"
     if use_cache and path.exists():
         age_hours = (time.time() - path.stat().st_mtime) / 3600.0
@@ -66,6 +72,13 @@ def download_group(group: str, cache_dir: Path, use_cache: bool = True, session:
         except Exception as error:  # network or decoding problem: retry
             last_error = error
             time.sleep(config.REQUEST_PAUSE_S * (attempt + 1))
+    if use_cache and path.exists():
+        age_hours = (time.time() - path.stat().st_mtime) / 3600.0
+        if age_hours < config.CACHE_FALLBACK_MAX_AGE_HOURS:
+            log.warning("CelesTrak group '%s' not downloaded (%s); using the copy from %.1f hours ago", group, last_error, age_hours)
+            if stored is not None:
+                stored[group] = round(age_hours, 1)
+            return json.loads(path.read_text(encoding="utf-8"))
     raise CatalogError(f"Could not download CelesTrak group '{group}': {last_error}")
 
 
@@ -90,10 +103,11 @@ def load_catalog_with_stats(
     now = to_utc(now or datetime.now(timezone.utc))
     by_id: dict[int, SpaceObject] = {}
     stats: dict[str, Any] = {"groups": {}, "bad_records": 0}
+    stored: dict[str, float] = {}  # groups read from a stored copy because the download was refused
 
     groups = list(dict.fromkeys(config.PRIMARY_GROUPS + config.SECONDARY_GROUPS))
     for group in groups:
-        records = download_group(group, cache_dir, use_cache, session)
+        records = download_group(group, cache_dir, use_cache, session, stored)
         stats["groups"][group] = len(records)
         is_primary = group in config.PRIMARY_GROUPS
         operational = is_primary or group == "active"
@@ -146,6 +160,8 @@ def load_catalog_with_stats(
     for obj in inject or []:
         usable.append(obj)
     stats["injected"] = len(inject or [])
+    if stored:
+        stats["stored_copies"] = stored
     stats["objects"] = len(usable)
     stats["primaries"] = sum(o.is_primary for o in usable)
     stats["operational"] = sum(o.operational for o in usable)

@@ -1,4 +1,6 @@
 import json
+import os
+import time
 
 import pytest
 
@@ -91,6 +93,34 @@ def test_download_failure_is_a_clear_error_not_stale_data(tmp_path):
     (tmp_path / "celestrak_fleet.json").write_text(json.dumps([make_omm(1)]))
     with pytest.raises(ingest.CatalogError, match="Could not download CelesTrak group 'fleet'"):
         load(Session(groups(), failures=99), tmp_path, use_cache=False)
+
+
+def test_a_refused_download_falls_back_to_a_recent_stored_copy(tmp_path):
+    class Refusing(Session):
+        """CelesTrak when it will not send the fleet group again."""
+
+        def get(self, url, params=None, headers=None, timeout=None):
+            self.calls.append(params["GROUP"])
+            return Reply(None, fail=True) if params["GROUP"] == "fleet" else Reply(self.groups[params["GROUP"]])
+
+    copy = tmp_path / "celestrak_fleet.json"
+    copy.write_text(json.dumps([make_omm(1, "FLEET 1")]))
+
+    def aged(hours):
+        then = time.time() - hours * 3600.0
+        os.utime(copy, (then, then))
+
+    aged(3)  # past the two-hour cache, so a download is tried first
+    session = Refusing(groups())
+    objects, stats = load(session, tmp_path)
+    assert session.calls[:3] == ["fleet", "fleet", "fleet"]
+    assert stats["stored_copies"] == {"fleet": pytest.approx(3.0, abs=0.1)}
+    assert next(o for o in objects if o.norad_id == 1).is_primary
+
+    aged(30)  # more than a day old: not used
+    with pytest.raises(ingest.CatalogError, match="Could not download CelesTrak group 'fleet'"):
+        load(Refusing(groups()), tmp_path)
+    assert "stored_copies" not in load(Session(groups()), tmp_path)[1]  # a normal download leaves no such note
 
 
 def test_empty_group_is_reported(tmp_path):

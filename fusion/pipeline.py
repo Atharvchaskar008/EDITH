@@ -158,6 +158,8 @@ def run_pipeline(
             summary["catalog"] = stats
             sources = "CelesTrak and Space-Track" if stats.get("spacetrack") else "CelesTrak"
             report(stage, 100, f"Loaded {len(catalog):,} tracked objects in low Earth orbit from {sources}")
+            for group, age in (stats.get("stored_copies") or {}).items():
+                report(stage, 100, f"CelesTrak would not send its group '{group}' again; the copy from {age:g} hours ago was used")
         else:
             catalog = list(catalog)
             report(stage, 100, f"Using a supplied catalogue of {len(catalog):,} objects")
