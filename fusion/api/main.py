@@ -33,7 +33,7 @@ from fusion.maneuver.verify import closest_approach_to_orbit
 from fusion.monitor.scheduler import Monitor
 from fusion.risk.pc import encounter_plane
 
-RUNS_ROOT = Path(os.environ.get("FUSION_RUNS_DIR", "data/runs"))
+RUNS_ROOT = Path(os.environ.get("FUSION_RUNS_DIR", pipeline.RUNS_ROOT))
 STATIC_DIR = Path(__file__).parent / "static"
 SERVED_ADDON_TYPES = {".json", ".md", ".png", ".txt", ".csv"}
 

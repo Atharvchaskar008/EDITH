@@ -46,7 +46,7 @@ _TYPE_MAP = {
 }
 
 
-def credentials(env_file: Path | str = ".env") -> Optional[tuple[str, str]]:
+def credentials(env_file: Path | str = config.ENV_FILE) -> Optional[tuple[str, str]]:
     """Login from the environment or a .env file; None if not configured."""
     values = dict(os.environ)
     path = Path(env_file)
@@ -61,8 +61,8 @@ def credentials(env_file: Path | str = ".env") -> Optional[tuple[str, str]]:
 
 
 def fetch_leo_records(
-    cache_dir: Path | str = "data/cache",
-    env_file: Path | str = ".env",
+    cache_dir: Path | str = config.CACHE_DIR,
+    env_file: Path | str = config.ENV_FILE,
     session: Any = None,
 ) -> list[dict[str, Any]]:
     """Raw GP records for every tracked LEO object, or [] without a login.
@@ -138,5 +138,5 @@ def to_objects(records: list[dict[str, Any]]) -> list[SpaceObject]:
     return objects
 
 
-def load_leo_objects(cache_dir: Path | str = "data/cache", env_file: Path | str = ".env") -> list[SpaceObject]:
+def load_leo_objects(cache_dir: Path | str = config.CACHE_DIR, env_file: Path | str = config.ENV_FILE) -> list[SpaceObject]:
     return to_objects(fetch_leo_records(cache_dir, env_file))

@@ -1,5 +1,13 @@
 """Every tunable number in the project lives here."""
 
+from pathlib import Path
+
+# Data folders are fixed to the project, so commands work from any directory.
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = PROJECT_ROOT / "data"
+CACHE_DIR = DATA_DIR / "cache"
+ENV_FILE = PROJECT_ROOT / ".env"
+
 # --- Catalogue -------------------------------------------------------------
 CELESTRAK_GP_URL = "https://celestrak.org/NORAD/elements/gp.php"
 

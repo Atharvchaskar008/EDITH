@@ -32,7 +32,7 @@ from fusion.synthetic import make_conjunction
 
 log = logging.getLogger(__name__)
 
-RUNS_ROOT = Path("data/runs")
+RUNS_ROOT = config.DATA_DIR / "runs"
 RUN_ID_PATTERN = re.compile(r"^\d{8}T\d{4}Z$")
 STAGES = ["INGEST", "PROPAGATE", "SCREEN", "ASSESS", "PLAN", "VERIFY", "DONE"]
 
