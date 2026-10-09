@@ -148,7 +148,6 @@ Two pull requests were merged into `main`. Teammate A's came as a copy of the wh
 | C alerts | `watch.process_single_run` | `addons.after_run`, called by the pipeline after the run files are written and before `DONE`. It is given only earlier runs of the same mode and window. `events.json` is backed up and restored if the pack damages it; plan ids are kept in step if the pack renames an event |
 | C briefings, CDM | `briefing.generate_run_briefings`, `cdm_export.export_run_cdms` | Same step; one file per red and amber event |
 | C prediction | `predict.predict_final_risk` | Hook; the pack returns log10 of the probability, we store a probability in `pc_predicted_final` and pass the run time as `run_time` |
-| C pitch files | `out/pitch/*.md` | Listed by `GET /addons`. Several answers in `judge_questions.md` describe things our system does not do (measured uncertainty, one constellation only, a 99.9% plane filter); use `docs/PROJECT_EXPLAINED.md` instead |
 
 Rules that follow from this:
 

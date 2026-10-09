@@ -1,6 +1,6 @@
 # Teammate C Addon: Operations, Alerting & ML Risk Prediction (`addons/c_ops`)
 
-This pack provides autonomous monitoring, operator alerting, CCSDS CDM export, operator shift briefings, machine learning risk-trend modeling, and pitch collateral for the Fusion space conjunction assessment platform.
+This pack provides autonomous monitoring, operator alerting, CCSDS CDM export, operator shift briefings, and machine learning risk-trend modeling for the Fusion space conjunction assessment platform.
 
 It is completely self-contained within `addons/c_ops/` and communicates with the main system via standard JSON run folders.
 
@@ -18,10 +18,6 @@ It is completely self-contained within `addons/c_ops/` and communicates with the
 3. **ESA Dataset Analysis & Risk Prediction Model (`esa_data.py`, `train.py`, `predict.py`)**:
    - Trained on 162,634 CDMs from ESA's Collision Avoidance Challenge (Zenodo record 4463683).
    - LightGBM model predicting final risk from early warnings (>= 2 days before TCA), cutting MAE by 47% over baseline.
-4. **Pitch Pack (`out/pitch/`)**:
-   - 7-slide pitch deck (`slides.md`) with strict word and note limits.
-   - 3-minute timed live demo script (`demo_script.md`) with failure recovery protocols.
-   - 15 toughest judge questions and answers (`judge_questions.md`).
 
 ---
 

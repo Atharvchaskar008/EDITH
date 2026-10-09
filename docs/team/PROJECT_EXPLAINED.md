@@ -328,8 +328,6 @@ You can rerun the speed measurements in front of a judge: `.venv\Scripts\python 
 | How do you avoid drowning the operator in alerts? | Passes are tracked across runs, and only changes raise an alert: the latest run raised 5 for 2,099 passes. The dashboard opens on 26 priority passes, not on 2,099 |
 | What would real operations need? | Precise orbit data from the operator, coordination between operators, and a link to the satellite's command system. Ours is decision support from public data, built so better data can replace the public data without changing the rest |
 
-**Do not use teammate C's `judge_questions.md` as written.** It was written before the system existed and several answers describe things we do not do: protection of "one constellation" (we cover all of low Earth orbit), an "orbital plane filter removing 99.9%" (we use a KD-tree), and compatibility with NASA and ESA exchange systems (not tested). Its slides also contain unfilled placeholders.
-
 ---
 
 ## 10. What is not done yet
@@ -364,7 +362,7 @@ You can rerun the speed measurements in front of a judge: `.venv\Scripts\python 
 |---|---|---|
 | Atharv | The whole main system: engine, server, monitoring, dashboard, the connection of the packs. Also the validation pack (reference calculator, measured uncertainty, checks against ESA and CelesTrak), which was planned for teammate B | Done |
 | Teammate A | History pack: measured sizes, 2009 replay data, a test kit | Received and connected |
-| Teammate C | Operations pack: alerts, pass history, briefings, standard warning messages, the risk-trend model, pitch material | Received and connected |
+| Teammate C | Operations pack: alerts, pass history, briefings, standard warning messages, the risk-trend model | Received and connected |
 
 The main system still runs with the packs removed; each pack adds features.
 

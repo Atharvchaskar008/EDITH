@@ -51,9 +51,6 @@
 - `out/risk_model.png`: Test set scatter plot comparing predicted vs actual final risk with MAEs in the title.
 - `out/risk_model_operational.joblib`: Serialized LightGBM model bundle using the 14 operational numerical features.
 - `out/risk_model_full.joblib`: Serialized LightGBM model bundle trained on all dataset features including object category.
-- `out/pitch/slides.md`: 7-slide pitch deck adhering strictly to word and speaker note limits with explicit placeholders.
-- `out/pitch/demo_script.md`: Timed 3-minute live demonstration script with failure recovery protocols for every step.
-- `out/pitch/judge_questions.md`: 15 toughest judge questions with concise 2-3 sentence honest operational answers.
 
 ---
 

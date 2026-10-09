@@ -595,7 +595,6 @@ def addon_status() -> dict:
         "briefings_for_latest_run": len(list((folder / "briefings").glob("*.json"))) if folder else 0,
         "cdm_for_latest_run": len(list((folder / "cdm").glob("*.txt"))) if folder else 0,
         "replay_2009": _folder("replay") is not None,
-        "pitch_files": sorted(p.name for p in (root / "c_ops" / "out" / "pitch").glob("*.md")),
     }
 
 
