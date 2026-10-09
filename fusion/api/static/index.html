@@ -80,7 +80,7 @@
 <div class="split">
   <div id="planbox"><h2>Plan</h2><div id="plan"><p class="why">Pick a pass.</p></div></div>
   <div>
-    <h2>Close passes <span class="tabs"><a id="showLatest" class="on">All</a><a id="showBurns">With a plan</a><a id="showFleets">Fleets</a><a id="showReplay">2009 replay</a></span></h2>
+    <h2>Close passes <span class="tabs"><a id="showPriority" class="on">Priority</a><a id="showLatest">All</a><a id="showBurns">With a plan</a><a id="showFleets">Fleets</a><a id="showReplay">2009 replay</a></span></h2>
     <div class="find"><input id="q" placeholder="Check any satellite: name or number" autocomplete="off"><ul id="found"></ul><p id="about" class="why"></p></div>
     <table>
       <thead id="head"></thead>
@@ -98,6 +98,7 @@ const $ = id => document.getElementById(id);
 let picked = null, runId = null, source = "latest", onlyBurns = false;
 let checked = null, typed = 0;  // the result of checking one satellite, shown when source is "object"
 let fleet = null;  // the fleet whose passes the list shows, when one was picked under Fleets
+let priority = true, reds = null, shown = null;  // Priority: the dangerous passes that are not inside one fleet
 const PASS_HEAD = '<tr><th>Level</th><th>Objects</th><th class="hide">In</th><th>Distance</th><th>Risk</th><th>Plan</th></tr>';
 const FLEET_HEAD = "<tr><th>Fleet</th><th>Satellites</th><th>Passes</th><th>Dangerous</th><th>Own fleet</th><th>Burns</th></tr>";
 const get = async path => { const r = await fetch(path); if (!r.ok) throw new Error(path); return r.json(); };
@@ -114,6 +115,7 @@ async function loadTop() {
   $("t-objects").textContent = n(r.screen.objects_screened);
   $("t-passes").textContent = n(r.events);
   $("t-red").textContent = n(r.levels.RED);
+  reds = r.levels.RED; aboutPriority();
   $("t-burns").textContent = n(r.plans.maneuver);
   $("error").textContent = "";
   try {
@@ -121,6 +123,11 @@ async function loadTop() {
     $("validation").textContent = "Checked against CelesTrak: distances match to " + v.same_input.all_matches.miss_difference_m.median.toFixed(2) + " m.";
     if (v.report) { $("report").hidden = false; $("report").href = "/addons/files/" + v.report; }
   } catch (e) { $("validation").textContent = ""; }
+}
+
+function aboutPriority() {
+  if (source !== "latest" || !priority || reds == null || shown == null) return;
+  $("about").textContent = shown + " of the " + reds + " dangerous passes. The other " + (reds - shown) + " are between two satellites of one fleet and are left to its operator.";
 }
 
 // one row per fleet: passes to act on, passes inside the fleet (left to its operator), burns planned for it
@@ -141,8 +148,14 @@ async function loadFleets() {
 async function loadEvents() {
   if (source === "fleets" && !fleet) return loadFleets();
   const events = source === "object" ? (checked ? checked.passes.slice(0, 60) : [])
-    : await get("/events?limit=60&source=" + (source === "fleets" ? "latest&fleet=" + encodeURIComponent(fleet) : source) + (onlyBurns ? "&plan=MANEUVER" : ""));
+    : await get("/events?limit=" + (priority ? 300 : 60) + "&source=" + (source === "fleets" ? "latest&fleet=" + encodeURIComponent(fleet) : source) +
+        (onlyBurns ? "&plan=MANEUVER" : "") + (priority ? "&level=RED&own_fleet=false" : ""));
   $("head").innerHTML = PASS_HEAD;
+  shown = events.length; aboutPriority();
+  if (source === "replay") {
+    const hit = events.find(e => [e.primary_id, e.secondary_id].sort().join() === "22675,24946");
+    $("about").textContent = hit ? "Iridium 33 and Cosmos 2251 collided on 10 February 2009. The data public a day earlier predicted a miss of " + dist(hit.miss_distance_km) + ", so the honest rating is amber, not red." : "";
+  }
   $("events").innerHTML = events.map(e => {
     const hours = source !== "replay" ? Math.max(0, (new Date(e.tca) - Date.now()) / 3.6e6).toFixed(1) + " h" : "-";
     const plan = e.plan_decision === "MANEUVER" ? "<b>Move</b>" : e.plan_decision === "MONITOR" ? "Watch" : "";
@@ -287,7 +300,7 @@ async function loadPlan() {
 // a run plans only its first few dangerous passes; this searches for a burn for any other one
 async function askPlan(id) {
   $("ask").disabled = true;
-  $("asked").textContent = "Searching for the smallest safe burn. One to two minutes.";
+  $("asked").textContent = "Searching for the smallest safe burn. About 20 seconds, up to a minute.";
   try {
     const r = await fetch("/events/" + encodeURIComponent(id) + "/plan", { method: "POST" });
     const p = await r.json();
@@ -300,8 +313,10 @@ async function askPlan(id) {
 }
 
 async function loadAlerts() {
-  const alerts = await get("/alerts?severity=CRITICAL&limit=5");
-  $("alerts").innerHTML = alerts.map(a => `<li>${esc(a.message)}</li>`).join("") || "<li>Nothing new.</li>";
+  // changes since the previous run, the most serious first, leaving out passes inside one fleet
+  const rank = { CRITICAL: 0, WARNING: 1, INFO: 2 };
+  const alerts = (await get("/alerts?own_fleet=false")).sort((a, b) => (rank[a.severity] ?? 3) - (rank[b.severity] ?? 3)).slice(0, 5);
+  $("alerts").innerHTML = alerts.map(a => `<li>${esc(a.message)}</li>`).join("") || "<li>Nothing new since the previous run.</li>";
 }
 
 function refresh() { loadTop().catch(fail); loadEvents().catch(fail); loadAlerts().catch(() => {}); }
@@ -324,9 +339,9 @@ async function poll() {
 }
 
 function show(which, burns, tab) {
-  source = which; onlyBurns = burns; picked = null; fleet = null;
+  source = which; onlyBurns = burns; picked = null; fleet = null; priority = tab === "showPriority"; shown = null;
   $("plan").innerHTML = '<p class="why">Pick a pass.</p>';
-  ["showLatest", "showBurns", "showFleets", "showReplay"].forEach(id => $(id).classList.toggle("on", id === tab));
+  ["showPriority", "showLatest", "showBurns", "showFleets", "showReplay"].forEach(id => $(id).classList.toggle("on", id === tab));
   if (which !== "object") { $("q").value = ""; $("found").innerHTML = ""; }
   $("about").textContent = which === "fleets" ? "Pick a fleet to see its passes. Own fleet: passes between two of its own satellites, left to its operator." : "";
   loadEvents().catch(fail);
@@ -364,6 +379,7 @@ async function check(id, name) {
     loadEvents();
   } catch (e) { $("about").textContent = "Cannot reach the system."; }
 }
+$("showPriority").onclick = () => show("latest", false, "showPriority");
 $("showLatest").onclick = () => show("latest", false, "showLatest");
 $("showBurns").onclick = () => show("latest", true, "showBurns");
 $("showFleets").onclick = () => show("fleets", false, "showFleets");

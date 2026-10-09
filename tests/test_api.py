@@ -84,6 +84,7 @@ def test_addon_outputs_are_served_when_present_and_absent_otherwise(client, runs
     (folder / "alerts.json").write_text(json.dumps([{"alert_id": "a", "run_id": folder.name, "event_id": "e", "kind": "NEW", "message": "New red pass."}]))
     try:
         assert client.get("/alerts").json()[0]["message"] == "New red pass."
+        assert len(client.get("/alerts?own_fleet=false").json()) == 1 and client.get("/alerts?own_fleet=true").json() == []
         assert client.get("/runs/latest/files/alerts.json").status_code == 200
         assert client.get("/runs/latest/files/../../secret.txt").status_code == 404
     finally:
@@ -182,6 +183,9 @@ def test_events_carry_their_plan_decision_and_can_be_filtered_by_it(client):
     assert events[0]["plan_decision"] == "MANEUVER"
     assert len(client.get("/events?plan=maneuver").json()) == 1
     assert client.get("/events?plan=MONITOR").json() == []
+    # the pass is with an object that cannot move, so it is not one inside a fleet
+    assert events[0]["own_fleet"] is False
+    assert len(client.get("/events?own_fleet=false").json()) == 1 and client.get("/events?own_fleet=true").json() == []
 
 
 def test_a_burn_can_be_requested_for_an_event_the_run_did_not_plan(client, runs, monkeypatch):

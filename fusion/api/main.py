@@ -67,6 +67,18 @@ class OnRequest:
                 raise HTTPException(409, "This run was made before its full catalogue was kept. Start a new run first.")
             return self.loaded[1]
 
+    def warm_up(self) -> None:
+        """Load the latest run's catalogue ahead of the first request, in the background."""
+        def load() -> None:
+            folder = latest_run()
+            try:
+                if folder is not None:
+                    self.catalog(folder)
+            except HTTPException:
+                pass  # a run made before the full catalogue was kept
+
+        threading.Thread(target=load, daemon=True).start()
+
     def plan(self, folder: Path, event_id: str) -> dict:
         if not self.plan_lock.acquire(blocking=False):
             raise HTTPException(409, "Another burn search is in progress. Try again when it has finished.")
@@ -144,6 +156,7 @@ class Runner:
                 mode=request.mode, run_id=run_id, runs_root=RUNS_ROOT,
             )
             record["status"] = "DONE"
+            on_request.warm_up()
         except Exception as error:
             record.update(status="FAILED", error=f"{type(error).__name__}: {error}")
         finally:
@@ -163,6 +176,7 @@ monitor = Monitor(lambda: runner.start(RunRequest(quick=True)))
 async def lifespan(_app: FastAPI):
     if os.environ.get("FUSION_SCHEDULER", "1") == "1":
         monitor.start()
+        on_request.warm_up()
     yield
     monitor.stop()
 
@@ -282,32 +296,54 @@ def latest_summary() -> dict:
 
 # --- events, plans, alerts ---------------------------------------------------
 
+_fleet_cache: dict[tuple[Path, float], dict[int, str]] = {}
+
+
 def _fleet_names(folder: Optional[Path]) -> dict[int, str]:
-    """The fleet of each working satellite that appears in the run's events."""
-    objects = read_json(folder / "catalog.json", []) if folder else []
-    names = {o["norad_id"]: fleet_of(SpaceObject.model_validate(o)) for o in objects}
-    return {norad_id: name for norad_id, name in names.items() if name}
+    """The fleet of each working satellite that appears in the run's events. A
+    finished run's catalogue does not change, so the answer is kept."""
+    path = folder / "catalog.json" if folder else None
+    if path is None or not path.exists():
+        return {}
+    key = (path, path.stat().st_mtime)
+    if key not in _fleet_cache:
+        if len(_fleet_cache) > 8:
+            _fleet_cache.clear()
+        names = {o["norad_id"]: fleet_of(SpaceObject.model_validate(o)) for o in read_json(path, [])}
+        _fleet_cache[key] = {norad_id: name for norad_id, name in names.items() if name}
+    return _fleet_cache[key]
+
+
+def _own_fleet(event: dict, names: dict[int, str]) -> bool:
+    """Whether the pass is between two working satellites of one fleet."""
+    name = names.get(event["primary_id"])
+    return bool(name) and name == names.get(event["secondary_id"])
 
 
 @app.get("/events")
 def list_events(
     limit: int = 50, level: Optional[str] = None, plan: Optional[str] = None,
-    fleet: Optional[str] = None, source: str = "latest",
+    fleet: Optional[str] = None, own_fleet: Optional[bool] = None, source: str = "latest",
 ) -> list[dict]:
     """Events, most dangerous first, each with its plan's decision as `plan_decision`
-    (null for green events). `plan=MANEUVER` keeps only events with a burn planned;
-    `fleet=STARLINK` keeps only events that involve a working satellite of that fleet."""
+    (null for green events) and `own_fleet` (the pass is between two satellites of
+    one fleet). `plan=MANEUVER` keeps only events with a burn planned;
+    `fleet=STARLINK` keeps only events that involve a working satellite of that
+    fleet; `own_fleet=false` leaves out the passes inside one fleet."""
     folder = _folder(source)
     events = _events(folder)
     decisions = {p.get("event_id"): p.get("decision") for p in _plans(folder)}
+    names = _fleet_names(folder)
     for event in events:
         event["plan_decision"] = decisions.get(event.get("event_id"))
+        event["own_fleet"] = _own_fleet(event, names)
+    if own_fleet is not None:
+        events = [e for e in events if e["own_fleet"] == own_fleet]
     if level:
         events = [e for e in events if e.get("risk_level") == level.upper()]
     if plan:
         events = [e for e in events if e["plan_decision"] == plan.upper()]
     if fleet:
-        names = _fleet_names(folder)
         events = [e for e in events if fleet.upper() in (names.get(e["primary_id"]), names.get(e["secondary_id"]))]
     return events[: max(0, limit)]
 
@@ -436,15 +472,22 @@ def event_detail(event_id: str, source: str = "latest") -> dict:
 
 @app.get("/alerts")
 def list_alerts(
-    since: Optional[str] = None, kind: Optional[str] = None, severity: Optional[str] = None, limit: int = 0
+    since: Optional[str] = None, kind: Optional[str] = None, severity: Optional[str] = None,
+    own_fleet: Optional[bool] = None, limit: int = 0,
 ) -> list[dict]:
     """Alerts written by the alert add-on; empty without it. `kind` and `severity`
-    filter (a full-sky run produces hundreds), `limit` keeps the first few."""
+    filter (a full-sky run produces hundreds), `own_fleet=false` leaves out alerts
+    about passes inside one fleet, `limit` keeps the first few."""
     alerts: list[dict] = []
     for folder in reversed(completed_runs()):
         if since and folder.name <= since:
             break
-        alerts.extend(read_json(folder / "alerts.json", []))
+        found = read_json(folder / "alerts.json", [])
+        if own_fleet is not None:
+            names = _fleet_names(folder)
+            inside = {e["event_id"] for e in _events(folder) if _own_fleet(e, names)}
+            found = [a for a in found if (a.get("event_id") in inside) == own_fleet]
+        alerts.extend(found)
         if not since:
             break  # by default only the latest run's alerts
     if kind:
