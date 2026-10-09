@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Fusion test page</title>
+<style>
+  body { font: 14px/1.4 system-ui, sans-serif; margin: 16px; color: #111; }
+  h1 { font-size: 18px; margin: 0 0 4px; } h2 { font-size: 15px; margin: 18px 0 6px; }
+  table { border-collapse: collapse; width: 100%; } th, td { border-bottom: 1px solid #ddd; padding: 3px 8px; text-align: left; }
+  tr.row { cursor: pointer; } tr.row:hover, tr.picked { background: #eef; }
+  .RED { color: #b00020; font-weight: 600; } .AMBER { color: #a15c00; font-weight: 600; } .GREEN { color: #1b6e1b; }
+  pre { background: #f5f5f5; padding: 8px; white-space: pre-wrap; margin: 0; } .note { color: #666; } .error { color: #b00020; }
+</style>
+</head>
+<body>
+<h1>Fusion test page</h1>
+<div class="note">A plain page for checking the engine. The real dashboard comes later.</div>
+
+<h2>Run</h2>
+<button id="run">Run now</button>
+<label><input type="checkbox" id="synthetic"> include test object</label>
+<label><input type="checkbox" id="quick" checked> quick (24 h)</label>
+<label><input type="checkbox" id="primaries"> protected set only (faster)</label>
+<pre id="status">No run started from this page.</pre>
+<div id="monitor" class="note"></div>
+
+<h2>Close passes <span id="count" class="note"></span></h2>
+<table><thead><tr><th>Risk</th><th>Objects</th><th>Closest approach (UTC)</th><th>In</th><th>Miss</th><th>Probability</th><th>Worst case</th><th>Uncertainty</th></tr></thead><tbody id="events"></tbody></table>
+
+<h2>Plan for the selected pass</h2>
+<pre id="plan">Click a row.</pre>
+
+<h2>Alerts</h2>
+<pre id="alerts">No alerts yet.</pre>
+<div id="error" class="error"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+let picked = null, runId = null;
+const get = async path => { const r = await fetch(path); if (!r.ok) throw new Error(path + ": " + (await r.text())); return r.json(); };
+const sci = x => x == null ? "-" : x.toExponential(1);
+const fail = e => { $("error").textContent = e.message; };
+
+async function loadEvents() {
+  const events = await get("/events?limit=100");
+  $("count").textContent = "(" + events.length + " shown, most dangerous first)";
+  $("events").innerHTML = events.map(e => {
+    const hours = (new Date(e.tca) - Date.now()) / 3.6e6;
+    return `<tr class="row ${e.event_id === picked ? "picked" : ""}" data-id="${e.event_id}">
+      <td class="${e.risk_level}">${e.risk_level}</td>
+      <td>${e.primary_name} / ${e.secondary_name}${e.synthetic ? " <b>[TEST]</b>" : ""}</td>
+      <td>${e.tca.slice(0, 19).replace("T", " ")}</td><td>${hours.toFixed(1)} h</td>
+      <td>${e.miss_distance_km.toFixed(3)} km</td><td>${sci(e.pc)}</td><td>${sci(e.pc_max)}</td><td>${e.sigma_source || "-"}</td></tr>`;
+  }).join("") || "<tr><td colspan=8>No completed run yet.</td></tr>";
+  document.querySelectorAll("tr.row").forEach(row => row.onclick = () => { picked = row.dataset.id; loadEvents(); loadPlan(); });
+}
+
+async function loadPlan() {
+  if (!picked) return;
+  try {
+    const p = await get("/events/" + encodeURIComponent(picked) + "/plan");
+    if (p.decision !== "MANEUVER") { $("plan").textContent = p.decision + "\n" + (p.rationale || ""); return; }
+    const along = p.dv_rtn_ms[1] > 0 ? "along the direction of travel" : "against the direction of travel";
+    $("plan").textContent = [
+      "Decision: MANEUVER (object " + p.maneuvering_id + " burns)",
+      "Burn: " + p.burn_time.slice(0, 19).replace("T", " ") + " UTC, " + p.lead_time_orbits + " orbits before the pass",
+      "Size: " + (p.dv_magnitude_ms * 1000).toFixed(0) + " mm/s " + along,
+      "Miss distance: " + p.miss_before_km.toFixed(3) + " km -> " + p.miss_after_km.toFixed(2) + " km",
+      "Probability: " + sci(p.pc_before) + " -> " + sci(p.pc_after) + "   worst case: " + sci(p.pc_max_before) + " -> " + sci(p.pc_max_after),
+      "New close passes created: " + p.secondary_conjunctions_created,
+      "Return burn: " + p.return_burn_time.slice(0, 19).replace("T", " ") + " UTC, leftover offset " + p.residual_along_track_km.toFixed(1) + " km",
+      "", p.rationale,
+    ].join("\n");
+  } catch (e) { $("plan").textContent = "No plan for this pass (plans are made for red and amber passes)."; }
+}
+
+async function loadSide() {
+  const m = await get("/monitor");
+  $("monitor").textContent = "Completed runs: " + m.run_count + " | last: " + (m.last_run || "none") +
+    " | next scheduled: " + (m.next_run || "scheduler off") + (m.running ? " | a run is in progress: " + m.current_run : "");
+  if (m.running && !runId) runId = m.current_run;
+  const alerts = await get("/alerts");
+  $("alerts").textContent = alerts.length ? alerts.map(a => a.message).join("\n") : "No alerts yet.";
+}
+
+async function poll() {
+  if (!runId) return;
+  const s = await get("/run/" + runId + "/status");
+  $("status").textContent = "Run " + runId + ": " + s.status + " (" + s.stage + ")\n" + s.log.slice(-8).map(l => l.message).join("\n") + (s.error ? "\n" + s.error : "");
+  if (s.status !== "RUNNING") { runId = null; loadEvents().catch(fail); }
+}
+
+$("run").onclick = async () => {
+  const body = { synthetic: $("synthetic").checked, quick: $("quick").checked, mode: $("primaries").checked ? "PRIMARIES" : null };
+  const r = await fetch("/run", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  runId = (await r.json()).run_id;
+};
+setInterval(() => poll().catch(fail), 2000);
+setInterval(() => { loadSide().catch(fail); if (!runId) loadEvents().catch(fail); }, 15000);
+loadEvents().catch(fail); loadSide().catch(fail);
+</script>
+</body>
+</html>
