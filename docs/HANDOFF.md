@@ -67,6 +67,7 @@ Atharv wants about 50 commits over the whole project, in plain natural language 
 | `fusion/frames.py` | RTN basis, vector and covariance rotation |
 | `fusion/core/sat.py` | `satrec_from_omm`, `get_satrec(obj)` (cached), `state_at`, `state_at_offset`, `period_s`, `perigee_apogee_km`, `object_from_omm`, `state_to_omm`, `fit_omm_to_state` |
 | `fusion/core/refine.py` | `closest_approach(sat1, sat2, t_lo, t_hi)`: exact time and distance of closest approach |
+| `fusion/core/spacetrack.py` | `load_leo_objects()`: every tracked LEO object from Space-Track, cached; returns nothing when `.env` has no login. Tested with a fake session only; the query has not yet run against the live service, so check the first real response. `load_catalog` in prompt 2 must merge these with the CelesTrak groups, de-duplicated by `norad_id` |
 | `fusion/synthetic.py` | `make_conjunction(primary, t_tca, miss_km)`: labelled test object passing a chosen distance from a real satellite |
 | `tests/conftest.py` | Made-up Iridium-like test satellite (`primary` fixture) |
 
