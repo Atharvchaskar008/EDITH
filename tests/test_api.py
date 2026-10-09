@@ -129,7 +129,7 @@ def test_failed_run_reports_its_error(client, monkeypatch):
 
 def test_test_page_is_served(client):
     page = client.get("/")
-    assert page.status_code == 200 and "Fusion test page" in page.text
+    assert page.status_code == 200 and "<title>EDITH</title>" in page.text
 
 
 def test_scheduler_reports_its_next_run():

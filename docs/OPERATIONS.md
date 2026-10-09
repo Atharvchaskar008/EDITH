@@ -1,4 +1,4 @@
-# Running Fusion
+# Operations guide
 
 All commands are run from the project root on Windows, using the project's own Python.
 

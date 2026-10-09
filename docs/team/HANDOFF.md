@@ -1,5 +1,7 @@
 # Handoff: where the project stands and what to do next
 
+> **Paths changed on 9 October 2026.** The build briefs (`harness_*.md`) and `CONTRACTS.md` were removed once the work they described was finished; data shapes are in `docs/API.md` and `fusion/contracts.py`. `RUN.md` is now `docs/OPERATIONS.md`, the architecture page was rewritten, and this file lives in `docs/team/`. Mentions of the removed files below are history.
+
 This file is for whichever AI assistant continues the build (Claude or Gemini). Read it first, then `docs/CONTRACTS.md`, then the next unfinished prompt in `docs/harness_ATHARV.md`. Update the "Progress" section at the end of every working session.
 
 ## The project in five lines
@@ -63,7 +65,7 @@ Atharv wants about 50 commits over the whole project, in plain natural language 
 | 9 Harden the engine on real data | Done: parallel search and planning, repeatability and failure tests, timings |
 | 10 Connect A's pack | Done: measured sizes, test kit checked, 2009 replay built and served |
 | 11 Connect B's and C's packs | Done. C: alerts, history, summary, briefings, CDM files, risk-trend prediction. B (built by us on 9 October 2026 because the teammate's branch never arrived): measured uncertainty, reference probability cases, validation against ESA and CelesTrak |
-| 12 Close out session 1 | Done: `docs/RUN.md`, `docs/API.md`, and the event detail route already returns tracks and the encounter picture |
+| 12 Close out session 1 | Done: `docs/OPERATIONS.md`, `docs/API.md`, and the event detail route already returns tracks and the encounter picture |
 | D1–D6 | Not started |
 
 ## Measured on real data (9 October 2026, CelesTrak plus Space-Track)

@@ -2,140 +2,171 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Fusion test page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EDITH</title>
 <style>
-  body { font: 14px/1.4 system-ui, sans-serif; margin: 16px; color: #111; }
-  h1 { font-size: 18px; margin: 0 0 4px; } h2 { font-size: 15px; margin: 18px 0 6px; }
-  table { border-collapse: collapse; width: 100%; } th, td { border-bottom: 1px solid #ddd; padding: 3px 8px; text-align: left; }
-  tr.row { cursor: pointer; } tr.row:hover, tr.picked { background: #eef; }
-  .RED { color: #b00020; font-weight: 600; } .AMBER { color: #a15c00; font-weight: 600; } .GREEN { color: #1b6e1b; }
-  pre { background: #f5f5f5; padding: 8px; white-space: pre-wrap; margin: 0; } .note { color: #666; } .error { color: #b00020; }
-  #summary { margin-top: 6px; font-weight: 600; }
-  #planbox { position: sticky; top: 0; background: #fff; padding-bottom: 8px; border-bottom: 2px solid #ccc; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 0 clamp(16px, 4vw, 56px) 56px; background: #000; color: #fff; font: 16px/1.5 "Helvetica Neue", "Segoe UI", Arial, sans-serif; }
+  header { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; border-bottom: 1px solid #262626; }
+  h1 { margin: 0; font-size: 28px; letter-spacing: .3em; }
+  header a, .tabs a, .check a { color: #fff; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid #fff; cursor: pointer; }
+  h2 { margin: 36px 0 12px; font-size: 12px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase; color: #9a9a9a; display: flex; gap: 22px; align-items: baseline; flex-wrap: wrap; }
+  .tabs { display: flex; gap: 18px; }
+  .tabs a { border-bottom-color: transparent; color: #9a9a9a; }
+  .tabs a.on { color: #fff; border-bottom-color: #fff; }
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid #262626; }
+  .tiles div { padding: 26px 0; }
+  .tiles b { display: block; font-size: clamp(34px, 5.4vw, 76px); line-height: 1; letter-spacing: -.03em; }
+  .tiles span, .facts span { color: #9a9a9a; font-size: 14px; }
+  .run { display: flex; align-items: center; gap: 18px; padding: 22px 0 0; }
+  button { background: #fff; color: #000; border: 0; padding: 13px 24px; font-family: inherit; font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; cursor: pointer; }
+  button:disabled { opacity: .45; cursor: default; }
+  #status, .check { color: #9a9a9a; }
+  .check { margin: 10px 0 0; font-size: 14px; }
+  #planbox { position: sticky; top: 0; background: #000; border-bottom: 1px solid #fff; padding-bottom: 18px; z-index: 2; }
+  #planbox h2 { margin-top: 22px; }
+  .big { font-size: clamp(24px, 3.2vw, 44px); font-weight: 600; letter-spacing: -.02em; line-height: 1.1; margin: 0; }
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
+  .facts b { display: block; font-size: 18px; }
+  .why { color: #9a9a9a; margin: 14px 0 0; max-width: 90ch; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; color: #9a9a9a; font-weight: 400; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+  th, td { padding: 10px 10px 10px 0; border-bottom: 1px solid #1c1c1c; }
+  tr.row { cursor: pointer; }
+  tr.row:hover, tr.picked { background: #161616; }
+  .RED { font-weight: 700; } .AMBER { color: #cfcfcf; } .GREEN { color: #6f6f6f; }
+  .tag { border: 1px solid #fff; padding: 1px 7px; font-size: 11px; letter-spacing: .12em; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { padding: 9px 0; border-bottom: 1px solid #1c1c1c; color: #cfcfcf; }
+  #error { font-weight: 700; margin-top: 18px; }
+  @media (max-width: 760px) { .tiles, .facts { grid-template-columns: repeat(2, 1fr); } .hide { display: none; } }
 </style>
 </head>
 <body>
-<h1>Fusion test page</h1>
-<div class="note">A plain page for checking the engine. The real dashboard comes later.</div>
-<div id="summary"></div>
-<div class="note"><span id="validation"></span> <a id="report" href="#" target="_blank" style="display:none">Full validation report</a></div>
+<header><h1>EDITH</h1><a href="/landing">Story</a></header>
 
-<h2>Run</h2>
-<button id="run">Run now</button>
-<label><input type="checkbox" id="synthetic"> include test object</label>
-<label><input type="checkbox" id="quick" checked> quick (24 h)</label>
-<label><input type="checkbox" id="primaries"> protected set only (faster)</label>
-<pre id="status">No run started from this page.</pre>
-<div id="monitor" class="note"></div>
-
-<div id="planbox">
-<h2>Plan for the selected pass</h2>
-<pre id="plan">Click a row in the table below.</pre>
+<div class="tiles">
+  <div><b id="t-objects">-</b><span>objects watched</span></div>
+  <div><b id="t-passes">-</b><span>close passes ahead</span></div>
+  <div><b id="t-red">-</b><span>dangerous</span></div>
+  <div><b id="t-burns">-</b><span>moves planned</span></div>
 </div>
 
-<h2>Close passes <span id="count" class="note"></span></h2>
-<div><a href="#" id="showLatest">Today's sky</a> | <a href="#" id="showBurns">Today: passes with a burn plan</a> | <a href="#" id="showReplay">2009 collision replay</a> <span id="sourceNote" class="note"></span></div>
-<table><thead><tr><th>Risk</th><th>Plan</th><th>Objects</th><th>Closest approach (UTC)</th><th>In</th><th>Miss</th><th>Probability</th><th>Worst case</th><th>Predicted final</th><th>Uncertainty</th></tr></thead><tbody id="events"></tbody></table>
+<div class="run"><button id="run">Run now</button><span id="status">Ready.</span></div>
+<p class="check"><span id="validation"></span> <a id="report" href="#" target="_blank" hidden>Proof</a></p>
 
-<h2>Alerts <span class="note">(most important changes since the previous run)</span></h2>
-<pre id="alerts">No alerts yet.</pre>
-<div id="error" class="error"></div>
+<div id="planbox"><h2>Plan</h2><div id="plan"><p class="why">Pick a pass below.</p></div></div>
+
+<h2>Close passes <span class="tabs"><a id="showLatest" class="on">All</a><a id="showBurns">With a plan</a><a id="showReplay">2009 replay</a></span></h2>
+<table>
+  <thead><tr><th>Level</th><th>Objects</th><th class="hide">In</th><th>Distance</th><th>Risk</th><th>Plan</th></tr></thead>
+  <tbody id="events"></tbody>
+</table>
+
+<h2>What changed</h2>
+<ul id="alerts"><li>Nothing yet.</li></ul>
+<div id="error"></div>
 
 <script>
 const $ = id => document.getElementById(id);
 let picked = null, runId = null, source = "latest", onlyBurns = false;
-const get = async path => { const r = await fetch(path); if (!r.ok) throw new Error(path + ": " + (await r.text())); return r.json(); };
-const sci = x => x == null ? "-" : x.toExponential(1);
-const fail = e => { $("error").textContent = e.message; };
+const get = async path => { const r = await fetch(path); if (!r.ok) throw new Error(path); return r.json(); };
+const n = x => Number(x).toLocaleString("en-US");
+const esc = s => String(s == null ? "" : s).replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+const odds = p => p == null ? "-" : p >= 0.5 ? "likely" : 1 / p > 1e9 ? "under 1 in a billion" : "1 in " + n(Math.round(1 / p));
+const dist = km => km < 1 ? Math.round(km * 1000) + " m" : km.toFixed(2) + " km";
+const word = level => level ? level[0] + level.slice(1).toLowerCase() : "";
+const fail = () => { $("error").textContent = "Cannot reach the system."; };
+
+async function loadTop() {
+  const r = await get("/latest");
+  $("t-objects").textContent = n(r.screen.objects_screened);
+  $("t-passes").textContent = n(r.events);
+  $("t-red").textContent = n(r.levels.RED);
+  $("t-burns").textContent = n(r.plans.maneuver);
+  $("error").textContent = "";
+  try {
+    const v = await get("/validation");
+    $("validation").textContent = "Checked against CelesTrak: distances match to " + v.same_input.all_matches.miss_difference_m.median.toFixed(2) + " m.";
+    if (v.report) { $("report").hidden = false; $("report").href = "/addons/files/" + v.report; }
+  } catch (e) { $("validation").textContent = ""; }
+}
 
 async function loadEvents() {
-  const events = await get("/events?limit=100&source=" + source + (onlyBurns ? "&plan=MANEUVER" : ""));
-  $("count").textContent = "(" + events.length + " shown, most dangerous first)";
+  const events = await get("/events?limit=60&source=" + source + (onlyBurns ? "&plan=MANEUVER" : ""));
   $("events").innerHTML = events.map(e => {
-    const hours = source === "latest" ? ((new Date(e.tca) - Date.now()) / 3.6e6).toFixed(1) + " h" : "-";
-    return `<tr class="row ${e.event_id === picked ? "picked" : ""}" data-id="${e.event_id}">
-      <td class="${e.risk_level}">${e.risk_level}</td><td>${e.plan_decision === "MANEUVER" ? "<b>BURN</b>" : (e.plan_decision || "-").toLowerCase()}</td>
-      <td>${e.primary_name} / ${e.secondary_name}${e.synthetic ? " <b>[TEST]</b>" : ""}</td>
-      <td>${e.tca.slice(0, 19).replace("T", " ")}</td><td>${hours}</td>
-      <td>${e.miss_distance_km.toFixed(3)} km</td><td>${sci(e.pc)}</td><td>${sci(e.pc_max)}</td><td>${sci(e.pc_predicted_final)}</td><td>${e.sigma_source || "-"}</td></tr>`;
-  }).join("") || "<tr><td colspan=10>Nothing to show.</td></tr>";
-  document.querySelectorAll("tr.row").forEach(row => row.onclick = () => { picked = row.dataset.id; loadEvents(); loadPlan(); });
+    const hours = source === "latest" ? Math.max(0, (new Date(e.tca) - Date.now()) / 3.6e6).toFixed(1) + " h" : "-";
+    const plan = e.plan_decision === "MANEUVER" ? "<b>Move</b>" : e.plan_decision === "MONITOR" ? "Watch" : "";
+    return `<tr class="row ${e.event_id === picked ? "picked" : ""}" data-id="${esc(e.event_id)}">
+      <td class="${e.risk_level}">${word(e.risk_level)}</td>
+      <td>${esc(e.primary_name)} / ${esc(e.secondary_name)}${e.synthetic ? ' <span class="tag">TEST</span>' : ""}</td>
+      <td class="hide">${hours}</td><td>${dist(e.miss_distance_km)}</td><td>${odds(e.pc_max)}</td><td>${plan}</td></tr>`;
+  }).join("") || '<tr><td colspan="6">Nothing to show.</td></tr>';
+  document.querySelectorAll("tr.row").forEach(row => row.onclick = () => { picked = row.dataset.id; loadEvents().catch(fail); loadPlan(); });
+}
+
+function burn(p) {
+  const way = p.dv_rtn_ms[1] > 0 ? "Speed up" : "Slow down";
+  return `<p class="big">${way} by ${(p.dv_magnitude_ms * 1000).toFixed(0)} mm/s</p>
+    <div class="facts">
+      <div><b>${p.lead_time_orbits} orbits early</b><span>when</span></div>
+      <div><b>${dist(p.miss_before_km)} to ${dist(p.miss_after_km)}</b><span>distance</span></div>
+      <div><b>${odds(p.pc_max_before)} to ${odds(p.pc_max_after)}</b><span>risk</span></div>
+      <div><b>${p.secondary_conjunctions_created}</b><span>new dangers</span></div>
+    </div><p class="why">${esc(p.rationale)}</p>`;
 }
 
 async function loadPlan() {
   if (!picked) return;
   try {
     const p = await get("/events/" + encodeURIComponent(picked) + "/plan?source=" + source);
-    if (p.decision !== "MANEUVER") {
-      let text = p.decision + "\n" + (p.rationale || "");
-      const whatIf = source === "replay" ? (await get("/replay/2009")).what_if_plans.find(w => w.event_id === picked) : null;
-      if (whatIf) text += "\n\nWHAT-IF (not the system's decision): the burn that would have made this pass safe\n" + burnText(whatIf);
-      $("plan").textContent = text; return;
+    if (p.decision === "MANEUVER") { $("plan").innerHTML = burn(p); return; }
+    let html = `<p class="big">${p.decision === "MONITOR" ? "Watch" : "No action"}</p><p class="why">${esc(p.rationale)}</p>`;
+    if (source === "replay") {
+      const whatIf = (await get("/replay/2009")).what_if_plans.find(w => w.event_id === picked);
+      if (whatIf) html += "<h2>What if it had moved</h2>" + burn(whatIf);
     }
-    $("plan").textContent = burnText(p);
-  } catch (e) { $("plan").textContent = "No plan for this pass (plans are made for red and amber passes)."; }
+    $("plan").innerHTML = html;
+  } catch (e) { $("plan").innerHTML = '<p class="big">Safe</p><p class="why">Low risk. No plan needed.</p>'; }
 }
 
-function burnText(p) {
-    const along = p.dv_rtn_ms[1] > 0 ? "along the direction of travel" : "against the direction of travel";
-    return [
-      "Decision: MANEUVER (object " + p.maneuvering_id + " burns)",
-      "Burn: " + p.burn_time.slice(0, 19).replace("T", " ") + " UTC, " + p.lead_time_orbits + " orbits before the pass",
-      "Size: " + (p.dv_magnitude_ms * 1000).toFixed(0) + " mm/s " + along,
-      "Miss distance: " + p.miss_before_km.toFixed(3) + " km -> " + p.miss_after_km.toFixed(2) + " km",
-      "Probability: " + sci(p.pc_before) + " -> " + sci(p.pc_after) + "   worst case: " + sci(p.pc_max_before) + " -> " + sci(p.pc_max_after),
-      "New close passes created: " + p.secondary_conjunctions_created,
-      "Return burn: " + p.return_burn_time.slice(0, 19).replace("T", " ") + " UTC, leftover offset " + p.residual_along_track_km.toFixed(1) + " km",
-      "", p.rationale,
-    ].join("\n");
+async function loadAlerts() {
+  const alerts = await get("/alerts?severity=CRITICAL&limit=5");
+  $("alerts").innerHTML = alerts.map(a => `<li>${esc(a.message)}</li>`).join("") || "<li>Nothing new.</li>";
 }
 
-async function loadSide() {
-  const m = await get("/monitor");
-  $("monitor").textContent = "Completed runs: " + m.run_count + " | last: " + (m.last_run || "none") +
-    " | next scheduled: " + (m.next_run || "scheduler off") + (m.running ? " | a run is in progress: " + m.current_run : "");
-  if (m.running && !runId) runId = m.current_run;
-  const alerts = await get("/alerts?severity=CRITICAL&limit=15");
-  $("alerts").textContent = alerts.length ? alerts.map(a => a.kind + ": " + a.message).join("\n") : "No alerts yet.";
-}
+function refresh() { loadTop().catch(fail); loadEvents().catch(fail); loadAlerts().catch(() => {}); }
 
-async function loadSummary() {
+$("run").onclick = async () => {
+  $("run").disabled = true;
+  $("status").textContent = "Starting...";
   try {
-    const r = await get("/latest"), n = x => x.toLocaleString("en-US");
-    $("summary").textContent = "Latest run " + r.run_id + ": " + n(r.screen.objects_screened) + " objects screened, " +
-      n(r.events) + " close passes in the next " + r.window_hours + " h (" + n(r.levels.RED) + " red, " + n(r.levels.AMBER) +
-      " amber, " + n(r.levels.GREEN) + " green), " + r.plans.maneuver + " burns planned, run time " + Math.round(r.duration_s) + " s.";
-  } catch (e) { $("summary").textContent = ""; }
-  try {
-    const v = await get("/validation");
-    $("validation").textContent = "Checked against CelesTrak: " + v.summary;
-    $("report").style.display = v.report ? "inline" : "none";
-    if (v.report) $("report").href = "/addons/files/" + v.report;
-  } catch (e) { $("validation").textContent = ""; $("report").style.display = "none"; }
-}
+    const r = await fetch("/run", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ synthetic: false, quick: true, mode: null }) });
+    runId = (await r.json()).run_id;
+  } catch (e) { $("run").disabled = false; fail(); }
+};
 
 async function poll() {
   if (!runId) return;
   const s = await get("/run/" + runId + "/status");
-  $("status").textContent = "Run " + runId + ": " + s.status + " (" + s.stage + ")\n" + s.log.slice(-8).map(l => l.message).join("\n") + (s.error ? "\n" + s.error : "");
-  if (s.status !== "RUNNING") { runId = null; loadEvents().catch(fail); loadSummary(); }
+  const last = s.log.length ? s.log[s.log.length - 1].message : s.stage;
+  $("status").textContent = s.status === "RUNNING" ? last : s.status === "DONE" ? "Done. " + last : "Failed. " + (s.error || "");
+  if (s.status !== "RUNNING") { runId = null; $("run").disabled = false; refresh(); }
 }
 
-$("run").onclick = async () => {
-  const body = { synthetic: $("synthetic").checked, quick: $("quick").checked, mode: $("primaries").checked ? "PRIMARIES" : null };
-  const r = await fetch("/run", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
-  runId = (await r.json()).run_id;
-};
-function show(which, note, burns = false) {
-  source = which; onlyBurns = burns; picked = null; $("plan").textContent = "Click a row in the table below."; $("sourceNote").textContent = note;
-  loadEvents().catch(fail); return false;
+function show(which, burns, tab) {
+  source = which; onlyBurns = burns; picked = null;
+  $("plan").innerHTML = '<p class="why">Pick a pass below.</p>';
+  ["showLatest", "showBurns", "showReplay"].forEach(id => $(id).classList.toggle("on", id === tab));
+  loadEvents().catch(fail);
 }
-$("showLatest").onclick = () => show("latest", "");
-$("showBurns").onclick = () => show("latest", "Only the passes for which a burn was planned in the latest run.", true);
-$("showReplay").onclick = () => show("replay", "Replay: public data from 9 February 2009, 24 hours before the collision.");
+$("showLatest").onclick = () => show("latest", false, "showLatest");
+$("showBurns").onclick = () => show("latest", true, "showBurns");
+$("showReplay").onclick = () => show("replay", false, "showReplay");
+
 setInterval(() => poll().catch(fail), 2000);
-setInterval(() => { loadSide().catch(fail); loadSummary(); if (!runId) loadEvents().catch(fail); }, 15000);
-loadEvents().catch(fail); loadSide().catch(fail); loadSummary();
+setInterval(() => { if (!runId) refresh(); }, 20000);
+refresh();
 </script>
 </body>
 </html>

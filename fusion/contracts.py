@@ -1,4 +1,4 @@
-"""Data shapes shared by every module. See docs/CONTRACTS.md."""
+"""Data shapes shared by every module. See docs/API.md."""
 
 from __future__ import annotations
 

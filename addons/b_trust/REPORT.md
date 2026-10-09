@@ -1,6 +1,6 @@
 # Trust pack: final report
 
-Built on 9 October 2026. All eight tasks are done and none is blocked. Details and deviations from the brief are in `PROGRESS.md`.
+Built on 9 October 2026. All eight tasks are done and none is blocked. Details and deviations from the brief are in `METHOD.md`.
 
 ## 1. Tasks
 
@@ -61,7 +61,7 @@ Built on 9 October 2026. All eight tasks are done and none is blocked. Details a
 - The ESA comparison is tight where it matters and loose in the far tail: one in ten of all warnings differs by more than 2.7 in log10. The file does not show why.
 - The reading of ESA's size columns (half the sum of the two spans) was inferred from the data: it removes the offset exactly, where the full sum leaves a factor of 4.
 - The maximum probability published by SOCRATES could not be reproduced, because its object sizes are not documented.
-- 16 days of history were used, not 45; the manoeuvre filter drops 44% of Iridium NEXT pairs; SOCRATES was downloaded up to 2.7 km only. Reasons are in `PROGRESS.md`.
+- 16 days of history were used, not 45; the manoeuvre filter drops 44% of Iridium NEXT pairs; SOCRATES was downloaded up to 2.7 km only. Reasons are in `METHOD.md`.
 
 ## 5. Tests
 

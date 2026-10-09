@@ -1,4 +1,4 @@
-# Progress
+# Method notes
 
 Built on 9 October 2026, on `main`, by the project lead's assistant (the teammate's branch never arrived). All eight tasks are done; none is blocked.
 
