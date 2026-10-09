@@ -100,3 +100,35 @@ def test_default_threshold_depends_on_mode(primary, t_tca):
     two_km = make_conjunction(primary, t_tca, 2.0)
     assert len(screen([primary, two_km], window(t_tca), hours=2, mode="PRIMARIES")) == 1
     assert screen([primary, two_km], window(t_tca), hours=2, mode="ALL_LEO") == []
+
+
+def test_search_is_repeatable_and_the_same_across_processes(primary, t_tca):
+    objs = [primary] + [
+        make_conjunction(primary, t_tca + timedelta(minutes=9 * i), 0.3 + 0.1 * i, 50 + 20 * i, norad_id=99001 + i)
+        for i in range(3)
+    ]
+    one = screen(objs, window(t_tca), hours=2, mode="ALL_LEO", workers=1)
+    again = screen(objs, window(t_tca), hours=2, mode="ALL_LEO", workers=1)
+    assert [e.model_dump() for e in one] == [e.model_dump() for e in again]
+
+
+def test_parallel_search_gives_the_same_events(primary, t_tca, monkeypatch):
+    from fusion import config
+
+    monkeypatch.setattr(config, "PARALLEL_MIN_WORK", 0)
+    monkeypatch.setattr(config, "SCREEN_TASK_S", 600.0)
+    objs = [primary] + [
+        make_conjunction(primary, t_tca + timedelta(minutes=9 * i), 0.3 + 0.1 * i, 50 + 20 * i, norad_id=99001 + i)
+        for i in range(3)
+    ]
+    stats = {}
+    serial = screen(objs, window(t_tca), hours=2, mode="ALL_LEO", workers=1)
+    parallel = screen(objs, window(t_tca), hours=2, mode="ALL_LEO", workers=2, stats=stats)
+    assert stats["workers"] == 2
+    assert [e.model_dump() for e in parallel] == [e.model_dump() for e in serial]
+
+
+def test_primaries_mode_without_primaries_says_so(primary, t_tca):
+    nobody = [primary.model_copy(update={"is_primary": False}), make_conjunction(primary, t_tca, 0.3)]
+    with pytest.raises(ValueError, match="needs at least one primary"):
+        screen(nobody, window(t_tca), hours=1, mode="PRIMARIES")

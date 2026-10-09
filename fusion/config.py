@@ -42,7 +42,10 @@ SCREEN_THRESHOLD_ALL_LEO_KM = 1.0
 MAX_CLOSING_SPEED_KMS = 15.5
 ALTITUDE_PAD_KM = 30.0
 MIN_RELATIVE_SPEED_KMS = 0.1  # slower pairs are formation neighbours
-PROPAGATE_CHUNK_S = 1800.0
+PROPAGATE_CHUNK_S = 600.0  # time span propagated at once; bounds memory per process
+SCREEN_WORKERS = 0  # processes for the search; 0 means one fewer than the CPU cores
+SCREEN_TASK_S = 1800.0  # time span handed to a worker as one task
+PARALLEL_MIN_WORK = 5e7  # objects x time steps below which the search stays in one process
 
 # --- Risk ------------------------------------------------------------------
 RED_PC_MAX = 1e-4
