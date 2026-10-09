@@ -60,8 +60,10 @@ Atharv wants about 50 commits over the whole project, in plain natural language 
 | 6 Pipeline and run folders | Done, run end to end on real data |
 | 7 Server and scheduler | Done, checked against a real run |
 | 8 Basic test page | Done (`fusion/api/static/index.html`, served at `/`) |
-| 9 Harden the engine on real data | Not started. **This is next** |
-| 10–12 | Not started (10 and 11 need the teammate packs) |
+| 9 Harden the engine on real data | Done: parallel search and planning, repeatability and failure tests, timings |
+| 10 Connect A's pack | Waiting for `addons/a_history/` |
+| 11 Connect B's and C's packs | Waiting for `addons/b_trust/` and `addons/c_ops/` |
+| 12 Close out session 1 | Done: `docs/RUN.md`, `docs/API.md`, and the event detail route already returns tracks and the encounter picture |
 | D1–D6 | Not started |
 
 ## Measured on real data (9 October 2026, CelesTrak plus Space-Track)
@@ -71,8 +73,9 @@ Space-Track is working: the login is in `.env` and the bulk query returns the fu
 | What | Result |
 |---|---|
 | Catalogue | 29,686 usable LEO objects: 17,597 payloads, 9,892 debris, 1,571 rocket bodies, 626 unknown; 15,891 operational; 692 with no size class (5 m default) |
-| `PRIMARIES` search (80 Iridium NEXT), 72 h | about 4 minutes; 258 events within 5 km per 24 h |
-| `ALL_LEO` search, 72 h | about 32 minutes (single process); about 57 events within 1 km per hour |
+| `PRIMARIES` search (80 Iridium NEXT), 72 h | about 4 minutes single-process; 258 events within 5 km per 24 h |
+| `ALL_LEO` search, 72 h | about 7 minutes on 11 worker processes (32 minutes single-process); about 65 events within 1 km per hour |
+| Full `ALL_LEO` run, 24 h window, 5 burn plans | about 4 minutes |
 | Risk assessment | under 1 ms per event |
 | Risk levels, `PRIMARIES`, 24 h | 0 RED, 0 AMBER, 258 GREEN (top worst-case probability 9e-6) |
 | Risk levels, `ALL_LEO`, 2 h | 3 RED, 22 AMBER, 89 GREEN |
@@ -80,10 +83,10 @@ Space-Track is working: the login is in `.env` and the bulk query returns the fu
 What this means:
 
 - With real object sizes, Iridium alone usually has no RED event on a given day. A demo of the burn planner needs either `ALL_LEO` mode (about 100 RED events per 72 h) or the synthetic test object.
-- A full 72-hour `ALL_LEO` run takes about half an hour. For a live demo use the 24-hour quick window (about 11 minutes) or `PRIMARIES` mode, or add multiprocessing over time chunks in prompt 9.
+- The search and the burn planning both run across CPU cores. A full-sky 24-hour run with five burn plans takes about 4 minutes, so it can be started early in a demo and shown finishing.
 - Before Space-Track, with CelesTrak only (18,539 objects, every object assumed 5 m): `ALL_LEO` took 14 minutes and a third of events were RED. Those numbers are superseded.
 
-## What exists in the code (77 tests passing, 1 skipped until teammate B's cases arrive)
+## What exists in the code (86 tests passing, 1 skipped until teammate B's cases arrive)
 
 | File | What it does |
 |---|---|
@@ -148,4 +151,11 @@ These points keep our code consistent with what the packs expect. Follow them wh
 - Server routes beyond `docs/CONTRACTS.md`: `GET /latest` (the latest run's `run.json`), `GET /runs/latest/files/<path>` and `GET /addons/files/<path>` (serve add-on outputs; only json, md, png, txt, csv), `source=replay` on the event routes to read the 2009 replay folder.
 - `GET /events/{id}` returns `{event, plan, track, encounter}`. `track` has positions every 5 s for 10 minutes either side of closest approach for both objects, plus the manoeuvred track when a burn is planned. `encounter` has the miss vector and covariance in the encounter plane, the hard-body radius, and the miss vector after the burn. Prompt 12's API additions are therefore already done.
 
-**Next step:** prompt 9 in `docs/harness_ATHARV.md` (harden the engine on real data: repeat runs, sanity checks, failure handling, speed). Speed is the main issue: a 72-hour `ALL_LEO` run takes about 32 minutes single-process; splitting the search across CPU cores by time chunk is the obvious fix.
+**Next step:** the backend is complete apart from connecting the teammate packs. Either start the frontend (prompts D1 to D6 in `docs/harness_ATHARV.md`, building from `docs/API.md`), or, if a pack has arrived in `addons/`, do prompt 10 or 11 for it first.
+
+Notes from hardening:
+
+- The search hands 30-minute blocks to worker processes; results are sorted, so a run gives identical events however many workers are used (there is a test for this).
+- The catalogue is pickled once and handed to workers as bytes; passing the object list directly made start-up take almost a minute.
+- The burn safety re-screen uses a 30 s step (`VERIFY_STEP_S`), with every candidate refined exactly; this cut a plan from about 80 s to about 30 s with the same result.
+- Worker start-up costs about 35 s on the full catalogue, so small jobs (below `PARALLEL_MIN_WORK`) stay in one process.
