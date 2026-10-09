@@ -1,0 +1,19 @@
+{
+  "snapshot_folder": "2026-10-09T07-26-14Z",
+  "iridium_next_band_km": {
+    "min_perigee_km": 627.5,
+    "max_apogee_km": 779.4
+  },
+  "collision_2009_debris": {
+    "cosmos_2251_count": 588,
+    "iridium_33_count": 109,
+    "total_in_orbit": 697,
+    "overlapping_iridium_next_band": 614,
+    "overlap_percentage": 88.1
+  },
+  "fengyun_1c_debris": {
+    "total_in_orbit": 1980,
+    "overlapping_iridium_next_band": 1148,
+    "overlap_percentage": 58.0
+  }
+}

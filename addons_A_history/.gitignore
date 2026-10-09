@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+data/cache/
+data/runs/
+data/snapshots/
+node_modules/
+dist/
+addons/*/.venv/
+addons/*/esa/
+addons/*/cache/
+addons/*/snapshots/
