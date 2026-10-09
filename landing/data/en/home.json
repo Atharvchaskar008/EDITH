@@ -1,0 +1,483 @@
+{
+  "meta": {
+    "title": "EDITH — Autonomous Collision Avoidance for Low Earth Orbit",
+    "description": "Every tracked object. Every close pass. One decision: move, or wait. Autonomous collision avoidance and maneuver optimization."
+  },
+  "hero": {
+    "title": "EDITH: Sentinel of Low Earth Orbit",
+    "titleMobile": "EDITH <br> Collision Avoidance",
+    "content": "Autonomous collision avoidance, encounter-plane probability assessment, and verified minimum-energy burns for 30,000 tracked objects.",
+    "image": "img/hero.jpg",
+    "scroll": "Scroll to engage"
+  },
+  "sputnik": {
+    "title": "30,000 Objects. 7.5 km/s. Zero Margin for Error.",
+    "content": "<p>The Space Age began on 4 October 1957 when Sputnik 1 circled the globe as the sole artificial satellite in the sky.</p><p>Today, approximately 30,000 tracked objects race across Low Earth Orbit at over 7.5 kilometres per second. Crossing paths head-on, relative closing velocities reach 15 km/s. A loose bolt delivers the kinetic punch of an explosive projectile. EDITH monitors every single encounter so operators never have to guess.</p>"
+  },
+  "notableFirst": {
+    "milestones": {
+      "title": "Orbital Milestones & Critical Collisions",
+      "items": [
+        {
+          "number": "57",
+          "title": "<b>Sputnik 1</b> enters orbit. The dawn of orbital mechanics and satellite telemetry.",
+          "video": "video/notable-first-57.mp4"
+        },
+        {
+          "number": "78",
+          "title": "Donald Kessler formulates the <b>Kessler Syndrome</b>: cascading collisions rendering orbital bands unusable.",
+          "image": "img/notable-first-59.jpg"
+        },
+        {
+          "number": "07",
+          "title": "<b>Fengyun-1C</b> anti-satellite intercept shatters a weather satellite, leaving 1,954 tracked debris fragments still active in LEO today.",
+          "image": "img/notable-first-61.jpg"
+        },
+        {
+          "number": "09",
+          "title": "<b>Iridium 33 & Cosmos 2251</b> collide at 11.65 km/s over Taymyr. The world's first catastrophic satellite collision—nobody burned to avoid it.",
+          "image": "img/notable-first-63.jpg"
+        },
+        {
+          "number": "19",
+          "title": "<b>Megaconstellation Era</b> arrives with the first Starlink launches. Over 11,000 commercial satellites join orbit.",
+          "image": "img/notable-first-67.jpg"
+        },
+        {
+          "number": "21",
+          "title": "<b>Cosmos 1408</b> destroyed in orbit, generating thousands of fragments threatening active human spacecraft.",
+          "image": "img/notable-first-69.jpg"
+        },
+        {
+          "number": "26",
+          "title": "<b>EDITH Autonomous System</b> deployed by Team Fusion: autonomous SGP4 propagation, 2D Pc integration, and verified burn recommendations every 6 hours.",
+          "image": "img/notable-first-75.jpg"
+        }
+      ]
+    }
+  },
+  "keySpaceTreaties": {
+    "intro": {
+      "title": "Rules of Engagement in Crowded Corridors",
+      "content": "<p>With 30,000 objects producing 440 million possible pairs, safe orbital flight requires mathematical discipline, automated screening, and deterministic rules of engagement.</p>"
+    },
+    "today": "EDITH enforces autonomous collision avoidance rules across all orbital encounters:",
+    "milestones": {
+      "title": "Rules of <br>Engagement",
+      "items": [
+        {
+          "number": "01",
+          "title": "Active vs Debris: Operational satellites must move. Dead debris cannot steer.",
+          "image": "img/treaties-67.jpg"
+        },
+        {
+          "number": "02",
+          "title": "Fleet vs Fleet: Share ephemeris, propose minimum delta-v, and deconflict maneuver schedules.",
+          "image": "img/treaties-68.jpg"
+        },
+        {
+          "number": "03",
+          "title": "Dead on Dead: Broadcast proximity alerts to surrounding operational constellations.",
+          "image": "img/treaties-72.jpg"
+        },
+        {
+          "number": "04",
+          "title": "Verified Clearance: Rescreen the burned trajectory against all 30,000 objects for 24 hours.",
+          "image": "img/treaties-75.jpg"
+        },
+        {
+          "number": "05",
+          "title": "Return Burn: Apply an equal and opposite burn after closest approach to restore slot station-keeping.",
+          "image": "img/treaties-79.jpg"
+        }
+      ]
+    }
+  },
+  "dailyLife": {
+    "intro": {
+      "title": "Critical Infrastructure <br>in Low Earth Orbit",
+      "content": "<p>Modern society is fundamentally anchored to Low Earth Orbit. A collision ripple effect disrupts essential infrastructure across the planet.</p>"
+    },
+    "slides": {
+      "title": "Satellites power navigation, global banking timestamps, disaster warning radar, high-speed telecommunications, and defense reconnaissance.",
+      "items": [
+        { "video": "video/daily-life-1.mp4" },
+        { "image": "img/daily-life-2.jpg" },
+        { "image": "img/daily-life-3.jpg" },
+        { "image": "img/daily-life-4.jpg" },
+        { "image": "img/daily-life-5.jpg" },
+        { "image": "img/daily-life-6.jpg" },
+        { "image": "img/daily-life-7.jpg" },
+        { "image": "img/daily-life-8.jpg" }
+      ]
+    }
+  },
+  "benefits": {
+    "intro": {
+      "title": "What EDITH Protects Every Day",
+      "content": "<p>Protecting the orbital commons ensures humanity continues to expand its technological horizons. Key missions guarded by EDITH include:</p>"
+    },
+    "cards": [
+      {
+        "image": "img/sdg-19.jpg",
+        "title": "Precision Earth Observation",
+        "content": "Optical and synthetic aperture radar satellites monitoring agriculture, forest cover, and natural resources.",
+        "sdg": 1
+      },
+      {
+        "image": "img/sdg-20.jpg",
+        "title": "Global Communications",
+        "content": "Low-latency internet megaconstellations connecting remote hospitals, schools, and disaster response teams.",
+        "sdg": 2
+      },
+      {
+        "image": "img/sdg-21.jpg",
+        "title": "Weather & Climate Tracking",
+        "content": "Atmospheric sounding and hurricane path prediction preventing thousands of casualties yearly.",
+        "sdg": 3
+      },
+      {
+        "image": "img/sdg-22.jpg",
+        "title": "Crewed Spaceflight Safety",
+        "content": "Shielding space stations and commercial astronaut missions from orbital debris cloud intercepts.",
+        "sdg": 4
+      }
+    ]
+  },
+  "earthHistory": {
+    "intro": {
+      "title": "The Exponential Sky",
+      "content": "<p>Driven by reusable rocketry and miniaturized satellites, commercial constellations have transformed Low Earth Orbit from an empty void into a high-density superhighway.</p>"
+    },
+    "endingYear": "Year 2030",
+    "satelliteLaunches": {
+      "intro": "Over half of all objects in Low Earth Orbit today were launched in just the last 48 months. Traffic density is escalating exponentially.",
+      "title": "Annual Satellite Launches (LEO)",
+      "year": "Year",
+      "satellitesLaunched": "satellites launched",
+      "satellitesLaunchedAnnually": "satellites launched annually",
+      "to": "to",
+      "years": [
+        {
+          "top": "From",
+          "from": 1957,
+          "to": 2012,
+          "year": "1957 2012",
+          "isRange": true,
+          "right": {
+            "top": "Average of only",
+            "center": 150,
+            "bottom": "satellites launched per year globally"
+          }
+        },
+        {
+          "top": "In",
+          "from": 2013,
+          "to": 2019,
+          "year": "2013",
+          "isRange": false,
+          "right": {
+            "center": 500,
+            "bottom": "annual launches began climbing with early cubesat swarms"
+          }
+        },
+        {
+          "top": "By",
+          "from": 2020,
+          "to": 2021,
+          "year": "2020",
+          "isRange": false,
+          "right": {
+            "top": "Launches accelerated to",
+            "center": 1400,
+            "bottom": "satellites as megaconstellations initiated full deployment"
+          }
+        },
+        {
+          "top": "In",
+          "from": 2022,
+          "to": 2024,
+          "year": "2022",
+          "isRange": false,
+          "right": {
+            "top": "Launches exceeded",
+            "center": 2800,
+            "bottom": "satellites per year, saturating 500 km to 800 km orbital shells"
+          }
+        },
+        {
+          "top": "Heading into",
+          "from": 2025,
+          "to": 2030,
+          "year": "2026+",
+          "isRange": false,
+          "right": {
+            "top": "Projected",
+            "center": "50,000+",
+            "bottom": "operational satellites planned across international commercial filings"
+          }
+        },
+        {
+          "content": "With 50,000 active satellites sharing altitude shells with 10,000 pieces of fragmentation debris, human operators cannot cope without autonomous screening. EDITH runs continuous 24/7 watch.",
+          "from": 2026,
+          "to": 2030,
+          "isRange": false
+        }
+      ],
+      "didYouKnow": {
+        "title": "Orbital Geometry",
+        "content": "Most LEO satellites fly at an altitude of just <i>550</i> km. That is less than the distance between <strong>Mumbai</strong> and <strong>Goa.</strong>"
+      }
+    }
+  },
+  "weHaveAProblem": {
+    "title": "30,000 Objects. <br>440 Million Combinations.",
+    "content": "Any single pair crossing within metres at 15 km/s can trigger an uncontrollable cascade. Miss distance alone is not enough—uncertainty covariance is what determines survival.",
+    "disclaimer": "*Real orbital radar data from Space-Track and CelesTrak"
+  },
+  "debrisStats": {
+    "intro": {
+      "content": "At 7.5 km/s, mass converts directly into catastrophic kinetic energy. Even microscopic paint flecks crater sensor windows, while centimetre-sized bolts shatter main fuel tanks."
+    },
+    "stats": {
+      "title": "Tracked vs Untracked Population in LEO",
+      "disclaimer": "*Space Surveillance Network estimates, 2026",
+      "items": [
+        {
+          "title": "<i>130</i>M",
+          "subtitle": "lethal fragments <b>smaller than 1 cm</b> (untrackable)",
+          "percent": 0.08,
+          "image": "img/debris-stats-1.png"
+        },
+        {
+          "title": "<i>1</i>M",
+          "subtitle": "debris objects between <b>1 cm and 10 cm</b> (unshielded danger)",
+          "percent": 0.28,
+          "image": "img/debris-stats-2.png"
+        },
+        {
+          "title": "<i>29,686</i>",
+          "subtitle": "catalogued objects <b>actively tracked by EDITH</b>",
+          "percent": 0.48,
+          "image": "img/debris-stats-3.png"
+        }
+      ]
+    }
+  },
+  "debrisDidYouKnow": {
+    "title": "Kinetic Reality",
+    "subtitle": "<i>15</i> km/s <br>closing speed",
+    "content": "Two satellites passing in crossing orbits have relative velocities exceeding 54,000 km/h—twenty times faster than a hypervelocity sniper bullet.",
+    "source": "Source: Space-Track GP Catalogue & SGP4 Orbital Mechanics"
+  },
+  "spaceMarket": {
+    "slides": [
+      {
+        "title": "The Price of False Alarms <br>vs Missed Collisions",
+        "content": "Dodging an encounter that was never dangerous burns irreplaceable onboard propellant, permanently shortening satellite revenue life."
+      },
+      {
+        "content": "Conversely, failing to dodge a 1-in-1,000 risk destroys a $150M satellite asset and endangers all neighboring orbital planes."
+      }
+    ],
+    "statsSection": {
+      "title": "EDITH Autonomous <br>Efficiency",
+      "content": "<p><b>Precision burn decisions save satellite lifespans.</b></p> <p>By computing full 2D probability integrals (Pc and Pc_max) rather than simplistic miss distances, EDITH eliminates 95% of false-alarm burns while catching real high-risk encounters hours before TCA.</p>",
+      "source": "Source: EDITH Engine Benchmarks",
+      "items": {
+        "2022": {
+          "money": "1,756 passes"
+        },
+        "2030": {
+          "money": "5 burns *",
+          "subtitle": "*Optimal Minimum"
+        }
+      }
+    }
+  },
+  "pathForward": {
+    "intro": {
+      "title": "The EDITH Core Architecture",
+      "content": "Designed by Team Fusion, EDITH runs fully autonomous pipeline passes without requiring human intervention."
+    },
+    "slides": {
+      "subtitle": "Every six hours, EDITH ingests fresh TLE element sets, propagates the entire sky with vectorized SGP4, performs spatial KD-tree screening, calculates collision probability, and outputs verified burn plans.",
+      "button": "Explore the <i>Architecture</i>",
+      "items": [
+        { "image": "img/path-forward-1.jpg" },
+        { "image": "img/path-forward-2.jpg" },
+        { "image": "img/path-forward-3.jpg" },
+        { "image": "img/path-forward-4.jpg" },
+        { "image": "img/path-forward-5.jpg" }
+      ]
+    }
+  },
+  "orbitalCleanup": {
+    "title": "The Autonomous Decision Engine",
+    "content": "Four mathematically rigorous pillars that power EDITH's orbital collision avoidance engine:",
+    "cards": [
+      {
+        "image": "img/orbital-cleanup-1.gif",
+        "number": "01",
+        "title": "Automated Ingestion",
+        "content": "Direct bulk queries to Space-Track and CelesTrak with age filtering and automated caching."
+      },
+      {
+        "image": "img/orbital-cleanup-2.jpg",
+        "number": "02",
+        "title": "Spatial KD-Tree Screening",
+        "content": "Pruning 440 million pairs down to candidates in milliseconds using multi-core spatial trees."
+      },
+      {
+        "image": "img/orbital-cleanup-3.jpg",
+        "number": "03",
+        "title": "2D Covariance Pc",
+        "content": "Foster-style encounter-plane integration with worst-case Pc_max scaling."
+      },
+      {
+        "image": "img/orbital-cleanup-4.jpg",
+        "number": "04",
+        "title": "Difference Maneuver Planning",
+        "content": "Two-body + J2 integrated along-track burns with 24h secondary collision clearance verification."
+      }
+    ]
+  },
+  "velocity": {
+    "slides": [
+      {
+        "content": "A loose bolt at orbital speed releases the destructive energy of a fragmentation bomb."
+      },
+      {
+        "title": "251 Metres at 13.2 km/s",
+        "content": "On 9 October 2026, EDITH detected KUIPER-00053 crossing a dead Scout rocket body at 251 m miss with a 1-in-900 collision probability."
+      },
+      {
+        "title": "The Smallest Safe Move",
+        "content": "EDITH recommended a 43 mm/s along-track deceleration 10.5 hours early, increasing miss to 2.66 km and cutting risk to 1-in-500,000 without burning into any other object."
+      }
+    ]
+  },
+  "cascadeEffect": {
+    "title": "The Kessler Cascade",
+    "content": "A single collision produces hundreds of thousands of new untracked fragments, permanently contaminating the host altitude. Move your mouse into the orbit to simulate the impact cascade.",
+    "interaction": "Move cursor into the orbit ring to simulate hypervelocity collision fragment dispersion.",
+    "interactionMobile": "Tap the orbital ring to simulate hypervelocity collision fragment dispersion."
+  },
+  "sos": {
+    "slides": [
+      {
+        "title": "THE RISK MATRIX",
+        "content": "Classifying every encounter by mathematical certainty"
+      },
+      {
+        "title": "RED (Action Required)",
+        "content": "Worst-case probability Pc_max >= 1e-4. Autonomous avoidance burn calculated, verified, and queued."
+      },
+      {
+        "title": "AMBER (Elevated Watch)",
+        "content": "Pc_max >= 1e-5. Tracked closely across 6-hour scheduler intervals as fresh radar passes arrive."
+      },
+      {
+        "content": "EDITH delivers verifiable decision support for satellite operators:",
+        "cards": [
+          {
+            "image": "img/sos-1.jpg",
+            "title": "Minimum Fuel Expenditure",
+            "content": "Logarithmic along-track burn grids ensure the satellite expends minimal millimetres per second."
+          },
+          {
+            "image": "img/sos-2.jpg",
+            "title": "Secondary Conjunction Check",
+            "content": "Guarantees a maneuver never steers into a secondary debris cloud over a 24-hour verification horizon."
+          },
+          {
+            "image": "img/sos-3.jpg",
+            "title": "Automated Return Burns",
+            "content": "Equal-and-opposite return delta-v computed to restore nominal orbital period and ground track."
+          }
+        ]
+      },
+      {
+        "content": "EDITH operates 24/7 on live orbital telemetry, bringing mathematical clarity to congested low Earth orbit."
+      }
+    ]
+  },
+  "pactForFuture": {
+    "intro": {
+      "content": "Preserving the orbital frontier requires autonomous systems that act faster than human reaction times. EDITH sets a new standard for open, verifiable space traffic management."
+    },
+    "content": "Built with open astrodynamics standards (SGP4, TEME, RTN frames, and CCSDS-compatible formats), <b>EDITH</b> protects active constellations and preserves Low Earth Orbit for generations to come.",
+    "image": "img/pact-for-future.jpg"
+  },
+  "expansion": {
+    "title": "While you spent <b><i data-count>0</i> <span>minutes</span></b> on this page, satellites covered <b><i data-count>0</i> <span>thousand</span></b> kilometres in Low Earth Orbit.",
+    "content": "Every second counts in orbital mechanics. <br> <b>EDITH watches the sky so space stays open.</b>",
+    "share": {
+      "button": "Launch Console",
+      "copy": "EDITH: Autonomous Space Traffic Management & Collision Avoidance for Low Earth Orbit. #SpaceSafety #EDITH"
+    }
+  },
+  "closing": {
+    "slides": [
+      {
+        "content": "Watch Everything. Move Only When You Must."
+      },
+      {
+        "content": "EDITH: Autonomous Collision Avoidance for Low Earth Orbit."
+      }
+    ],
+    "footer": {
+      "close": "Close",
+      "credits": {
+        "label": "Architecture",
+        "popup": {
+          "title": "System Architecture",
+          "content": "<p><b>EDITH Collision Avoidance System</b><br>Developed by Team Fusion, 2026.</p><p><b>Astrodynamics Engine:</b> SGP4 Vectorized Propagation, TEME-to-RTN Coordinate Transforms, 2D Encounter-Plane Covariance Projection.</p><p><b>Data Sources:</b> CelesTrak GP API, Space-Track Bulk LEO Catalogue, ESA SOCRATES benchmarks.</p><p><b>Maneuver Planner:</b> Two-body + J2 Numerical Differential Integration, Along-Track Lead Optimization, 24-Hour Safety Re-Screening.</p>"
+        }
+      },
+      "fraudAlert": {
+        "label": "Operational Advisory",
+        "popup": {
+          "title": "Operational Advisory",
+          "content": "<p><b>Decision Support System Notice</b></p><p>EDITH provides automated collision probability modeling and maneuver guidance based on publicly available Two-Line Element sets and Space-Track data. Ephemeris precision is subject to radar track freshness and atmospheric drag variations.</p><p>Always verify recommended maneuvers against active telemetry and internal propulsion constraints prior to thruster ignition.</p>"
+        }
+      },
+      "privacyNotice": {
+        "label": "Data Integrity",
+        "popup": {
+          "title": "Data Integrity & Open Standards",
+          "content": "<p><b>Open Astrodynamic Verification</b></p><p>All calculations are reproducible via automated unit tests. Covariance estimation validated against 325,000+ historical orbit pairs. Probability of collision verified within 0.35m of CelesTrak SOCRATES benchmarks.</p>"
+        }
+      },
+      "termsOfUse": {
+        "label": "System Console",
+        "popup": {
+          "title": "EDITH Console Access",
+          "content": "<p><b>Live Monitoring Console:</b> Access the real-time API server at <code>/events</code> and <code>/monitor</code> for live conjunction tracking, 3D interactive tracks, and encounter plane uncertainty ellipses.</p>"
+        }
+      },
+      "copyright": {
+        "label": "LIVE CONSOLE",
+        "link": "/"
+      },
+      "un": {
+        "label": "TEAM FUSION 2026",
+        "link": "/"
+      },
+      "other": [
+        {
+          "label": "Live Console",
+          "link": "/"
+        },
+        {
+          "label": "API Docs",
+          "link": "/docs"
+        },
+        {
+          "label": "Validation Report",
+          "link": "/validation"
+        }
+      ]
+    }
+  }
+}

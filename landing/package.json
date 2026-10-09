@@ -1,0 +1,17 @@
+{
+  "name": "edith-landing",
+  "version": "1.0.0",
+  "description": "EDITH: Autonomous Collision Avoidance for Low Earth Orbit",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "edith",
+    "collision-avoidance",
+    "space",
+    "astrodynamics"
+  ],
+  "author": "Team Fusion",
+  "license": "UNLICENSED"
+}

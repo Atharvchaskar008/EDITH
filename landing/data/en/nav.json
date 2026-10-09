@@ -1,0 +1,16 @@
+{
+  "logo": "img/logo-en.svg",
+  "soundOn": "SOUND ON",
+  "soundOff": "SOUND OFF",
+  "temp": "Temp",
+  "top": "Top",
+  "sections": [
+    "Sentinel",
+    "Orbital Dawn",
+    "The Crowded Sky",
+    "The 440M Problem",
+    "Collision Physics",
+    "Rules of Engagement",
+    "Autonomous Defense"
+  ]
+}

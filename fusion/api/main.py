@@ -398,3 +398,17 @@ def landing_page() -> FileResponse:
     if not page.exists():
         raise HTTPException(404, "The landing page is not in this checkout")
     return FileResponse(page)
+
+
+@app.get("/landing/{path:path}")
+def landing_assets(path: str) -> FileResponse:
+    """Assets for the landing page (3D models, fonts, styles, bundles, json)."""
+    landing_root = (config.PROJECT_ROOT / "landing").resolve()
+    target = (landing_root / path).resolve()
+    if target.is_file() and str(target).startswith(str(landing_root)):
+        return FileResponse(target)
+    index = landing_root / "index.html"
+    if index.is_file():
+        return FileResponse(index)
+    raise HTTPException(404, "Not found")
+

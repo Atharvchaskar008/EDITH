@@ -1,646 +1,82 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-capo="">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EDITH</title>
-<meta name="description" content="EDITH watches every tracked object in low Earth orbit, finds the dangerous close passes and recommends the smallest safe move.">
-<style>
-  :root { --bg: #000; --ink: #fff; --soft: #a3a3a3; --dim: #5c5c5c; --line: #262626; --pad: clamp(20px, 6vw, 96px); }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font: 400 18px/1.55 "Helvetica Neue", "Segoe UI", Inter, Arial, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-  a { color: inherit; }
-  .mono { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-variant-numeric: tabular-nums; }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EDITH</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="fonts.googleapis.com">
+    <link rel="preconnect" href="fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto+Serif:ital,opsz,wdth,wght,GRAD@0,8..144,50..150,100..900,-50..100;1,8..144,50..150,100..900,-50..100&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap">
+    <link rel="stylesheet" href="./fonts.googleapis.com/css2-local.css">
+    
+    <!-- Nuxt Core Stylesheets -->
+    <link rel="stylesheet" href="./_nuxt/entry.Lbjj4KvL.css">
+    <link rel="prefetch" as="style" crossorigin href="./_nuxt/error-404.ygbHJO5Q.css">
+    <link rel="prefetch" as="style" crossorigin href="./_nuxt/error-500.B11Ibp8J.css">
 
-  .progress { position: fixed; inset: 0 0 auto 0; height: 2px; z-index: 20; }
-  .progress i { display: block; height: 100%; background: var(--ink); transform-origin: left; transform: scaleX(0); }
-  .top { position: fixed; inset: 0 0 auto 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: 18px var(--pad); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; mix-blend-mode: difference; }
-  .top b { font-weight: 700; letter-spacing: .3em; }
-  .top a { text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+    <!-- Preloads -->
+    <link rel="modulepreload" as="script" crossorigin href="./_nuxt/yuWd4Q9_.js">
+    <link rel="prefetch" as="script" crossorigin href="./_nuxt/bZV1oJL-.js">
+    <link rel="prefetch" as="script" crossorigin href="./_nuxt/BiAMmc90.js">
 
-  section { position: relative; min-height: 100vh; padding: 18vh var(--pad) 14vh; display: flex; flex-direction: column; justify-content: center; border-top: 1px solid var(--line); }
-  .label { font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--soft); margin: 0 0 28px; }
-  .say { font-size: clamp(34px, 6vw, 96px); line-height: 1.02; letter-spacing: -.02em; font-weight: 600; margin: 0; max-width: 16ch; }
-  .say.wide { max-width: 22ch; }
-  .body { font-size: clamp(18px, 1.6vw, 24px); color: var(--soft); max-width: 46ch; margin: 36px 0 0; }
-  .body strong { color: var(--ink); font-weight: 500; }
-  .note { font-size: 13px; color: var(--dim); margin-top: 28px; letter-spacing: .04em; }
+    <!-- Meta Tags -->
+    <meta name="description" content="EDITH: Autonomous collision avoidance, encounter-plane probability assessment, and verified maneuver recommendations for Low Earth Orbit.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="EDITH — Autonomous Collision Avoidance">
+    <meta name="twitter:description" content="Every tracked object. Every close pass. One decision: move, or wait.">
+    <meta name="twitter:image" content="./share.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="EDITH — Autonomous Collision Avoidance for Low Earth Orbit">
+    <meta property="og:description" content="Every tracked object. Every close pass. One decision: move, or wait.">
+    <meta property="og:image" content="./share.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
-  .reveal { opacity: 0; transform: translateY(44px); transition: opacity .9s ease, transform .9s cubic-bezier(.2, .7, .2, 1); }
-  .reveal.in { opacity: 1; transform: none; }
-  .reveal.d1 { transition-delay: .12s; } .reveal.d2 { transition-delay: .24s; } .reveal.d3 { transition-delay: .36s; } .reveal.d4 { transition-delay: .48s; }
+    <!-- Favicons -->
+    <link rel="icon" sizes="any" href="./fav.ico">
+    <link rel="icon" href="./fav.svg">
+    <link rel="icon" href="./fav-mask.svg" color="#ffffff">
+    <link rel="manifest" href="./manifest.json">
 
-  .top .links { display: flex; gap: 26px; align-items: center; }
-  .top button { background: none; border: 0; padding: 0; color: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer; opacity: .7; }
-  .top button[aria-pressed="true"] { opacity: 1; }
-
-  /* opening: the scene stays on screen while the years run */
-  .hero { display: block; height: 340vh; padding: 0; border-top: 0; }
-  .stage { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 var(--pad); }
-  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .hero .inner { position: relative; padding-bottom: 9vh; will-change: opacity, transform; }
-  .hero h1, .years .year { font-size: clamp(88px, 23vw, 400px); line-height: .82; letter-spacing: -.045em; font-weight: 700; margin: 0 0 0 -.04em; }
-  .hero p { font-size: clamp(18px, 2vw, 30px); max-width: 30ch; margin: 28px 0 0; }
-  .years { position: absolute; left: var(--pad); right: var(--pad); bottom: 9vh; opacity: 0; pointer-events: none; }
-  .years .year { font-variant-numeric: tabular-nums; }
-
-  /* slides that move sideways as you scroll down */
-  .slides { display: block; height: 320vh; padding: 0; }
-  .slides .viewport { position: sticky; top: 0; height: 100vh; overflow: hidden; }
-  .slides .track { display: flex; width: 300vw; height: 100%; will-change: transform; }
-  .slide { width: 100vw; padding: 0 var(--pad); display: flex; flex-direction: column; justify-content: center; }
-  .slide .huge { font-size: clamp(110px, 26vw, 460px); font-weight: 700; line-height: .86; letter-spacing: -.05em; }
-  .slide .unit { font-size: .2em; letter-spacing: 0; color: var(--soft); margin-left: .2em; font-weight: 500; }
-  .slide .line { font-size: clamp(24px, 3.4vw, 54px); font-weight: 600; letter-spacing: -.02em; margin: 26px 0 0; max-width: 20ch; }
-  .slides .dots { position: absolute; left: var(--pad); bottom: 7vh; display: flex; gap: 10px; }
-  .slides .dots i { width: 34px; height: 2px; background: var(--dim); transition: background .3s; }
-  .slides .dots i.on { background: var(--ink); }
-
-  .aside { border-left: 1px solid var(--ink); padding: 4px 0 4px 26px; margin: 52px 0 0; max-width: 50ch; }
-  .aside .label { margin: 0 0 12px; }
-  .aside p { font-size: clamp(21px, 2.1vw, 31px); line-height: 1.24; letter-spacing: -.01em; margin: 0; }
-  .cue { position: absolute; right: var(--pad); bottom: 9vh; font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--soft); writing-mode: vertical-rl; }
-  .cue::after { content: ""; display: block; width: 1px; height: 64px; background: var(--ink); margin: 14px auto 0; animation: drop 2.2s ease-in-out infinite; transform-origin: top; }
-  @keyframes drop { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
-
-  /* timeline */
-  .timeline { position: relative; margin: 56px 0 0; padding-left: clamp(24px, 4vw, 56px); max-width: 980px; }
-  .timeline::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--line); }
-  .timeline .fill { position: absolute; left: 0; top: 0; width: 1px; height: 0; background: var(--ink); }
-  .timeline li { list-style: none; display: grid; grid-template-columns: minmax(96px, 16%) 1fr; gap: 28px; padding: 26px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
-  .timeline ol { margin: 0; padding: 0; }
-  .timeline .year { font-size: clamp(26px, 3.4vw, 54px); font-weight: 600; letter-spacing: -.02em; }
-  .timeline p { margin: 0; color: var(--soft); font-size: clamp(17px, 1.5vw, 22px); max-width: 44ch; }
-
-  /* numbers */
-  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; margin-top: 56px; border-top: 1px solid var(--line); }
-  .tile { padding: 34px 28px 34px 0; border-bottom: 1px solid var(--line); }
-  .tile .value { font-size: clamp(44px, 6.4vw, 104px); font-weight: 600; letter-spacing: -.03em; line-height: 1; }
-  .tile .unit { font-size: .38em; letter-spacing: 0; color: var(--soft); margin-left: .25em; font-weight: 500; }
-  .tile .what { color: var(--soft); margin-top: 14px; max-width: 26ch; font-size: 16px; }
-  .live { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--soft); margin-top: 30px; }
-  .live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--dim); }
-  .live.on::before { background: var(--ink); animation: pulse 1.8s ease-in-out infinite; }
-  @keyframes pulse { 50% { opacity: .25; } }
-
-  /* stepper */
-  .steps { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(28px, 6vw, 110px); align-items: start; padding-top: 12vh; padding-bottom: 12vh; }
-  .steps .pin { position: sticky; top: 22vh; }
-  .steps .count { font-size: clamp(110px, 20vw, 320px); font-weight: 700; line-height: .8; letter-spacing: -.05em; }
-  .steps .name { font-size: clamp(30px, 4vw, 64px); font-weight: 600; letter-spacing: -.02em; margin-top: 22px; }
-  .steps .step { min-height: 58vh; display: flex; flex-direction: column; justify-content: center; border-top: 1px solid var(--line); opacity: .28; transition: opacity .5s; }
-  .steps .step.on { opacity: 1; }
-  .steps .step h3 { font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--soft); margin: 0 0 16px; font-weight: 400; }
-  .steps .step p { font-size: clamp(22px, 2.6vw, 40px); line-height: 1.18; letter-spacing: -.01em; margin: 0; max-width: 20ch; }
-
-  /* decision */
-  .decision { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 90px); align-items: center; margin-top: 48px; }
-  .decision svg { width: 100%; height: auto; overflow: visible; }
-  .decision svg .path { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 900; stroke-dashoffset: 900; transition: stroke-dashoffset 2s ease .2s; }
-  .decision svg .moved { stroke-dasharray: 6 8; opacity: 0; transition: opacity 1s ease 1.9s; }
-  .decision.in svg .path { stroke-dashoffset: 0; }
-  .decision.in svg .moved { opacity: 1; }
-  .decision svg text { fill: var(--soft); font-size: 13px; letter-spacing: .08em; }
-  .decision svg .big { fill: var(--ink); font-size: 26px; font-weight: 600; letter-spacing: -.01em; }
-  .facts { margin: 0; padding: 0; list-style: none; }
-  .facts li { display: flex; justify-content: space-between; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--line); color: var(--soft); }
-  .facts li b { color: var(--ink); font-weight: 500; text-align: right; }
-
-  /* cards */
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1px; background: var(--line); margin-top: 56px; border: 1px solid var(--line); }
-  .card { background: var(--bg); padding: 34px 28px 40px; min-height: 280px; display: flex; flex-direction: column; }
-  .card .who { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--soft); }
-  .card .does { font-size: clamp(26px, 2.6vw, 38px); font-weight: 600; letter-spacing: -.02em; margin: auto 0 14px; }
-  .card p { margin: 0; color: var(--soft); font-size: 16px; }
-
-  /* bars */
-  .bars { margin-top: 56px; max-width: 1100px; }
-  .bar { display: grid; grid-template-columns: minmax(150px, 22%) 1fr; gap: 24px; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--line); }
-  .bar .who { color: var(--soft); }
-  .bar .track { position: relative; height: 22px; }
-  .bar .fill { position: absolute; left: 0; top: 4px; height: 14px; min-width: 2px; background: var(--ink); border-radius: 0 3px 3px 0; width: 0; transition: width 1.6s cubic-bezier(.2, .7, .2, 1); }
-  .bar .val { position: absolute; top: 0; transform: translateX(12px); left: 0; transition: left 1.6s cubic-bezier(.2, .7, .2, 1); white-space: nowrap; }
-
-  /* cascade */
-  .cascade { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 90px); align-items: center; }
-  .cascade canvas { width: 100%; aspect-ratio: 1; cursor: pointer; display: block; }
-  .button { display: inline-block; margin-top: 30px; padding: 14px 22px; border: 1px solid var(--ink); background: none; color: var(--ink); font: inherit; font-size: 13px; letter-spacing: .18em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: background .25s, color .25s; }
-  .button:hover, .button:focus-visible { background: var(--ink); color: var(--bg); outline: none; }
-  .button + .button { margin-left: 12px; }
-
-  .limits { margin: 56px 0 0; padding: 0; list-style: none; max-width: 1000px; counter-reset: n; }
-  .limits li { counter-increment: n; display: grid; grid-template-columns: 64px 1fr; padding: 24px 0; border-bottom: 1px solid var(--line); font-size: clamp(20px, 2.2vw, 32px); letter-spacing: -.01em; line-height: 1.2; }
-  .limits li::before { content: "0" counter(n); color: var(--dim); font-size: 13px; letter-spacing: .18em; padding-top: .6em; }
-
-  .closing { align-items: flex-start; }
-  .closing .say { font-size: clamp(44px, 8.4vw, 150px); max-width: 12ch; }
-  footer { padding: 34px var(--pad) 44px; border-top: 1px solid var(--line); color: var(--dim); font-size: 13px; display: flex; flex-wrap: wrap; gap: 12px 40px; justify-content: space-between; }
-
-  @media (max-width: 820px) {
-    .steps, .decision, .cascade { grid-template-columns: 1fr; }
-    .steps .pin { position: static; }
-    .steps .step { min-height: 0; padding: 34px 0; opacity: 1; }
-    .cue { display: none; }
-    .button + .button { margin-left: 0; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .hero, .slides { height: auto; }
-    .stage { position: relative; }
-    .years { display: none; }
-    .slides .viewport { position: static; height: auto; overflow: visible; }
-    .slides .track { display: block; width: auto; }
-    .slide { width: auto; min-height: 70vh; border-top: 1px solid var(--line); }
-    .slides .dots { display: none; }
-    .reveal, .bar .fill, .bar .val, .decision svg .path, .decision svg .moved { transition: none; }
-    .cue::after, .live.on::before { animation: none; }
-  }
-</style>
+    <!-- Nuxt Application Script -->
+    <script type="module" src="./_nuxt/yuWd4Q9_.js" crossorigin></script>
+    <script id="unhead:payload" type="application/json">
+        {
+            "title": "EDITH — Autonomous Collision Avoidance for Low Earth Orbit"
+        }
+    </script>
 </head>
+
 <body>
-<div class="progress"><i id="progress"></i></div>
-<header class="top"><b>EDITH</b><span class="mono" id="chapter">00 / 14</span><span class="links"><button id="sound" type="button" aria-pressed="false">Sound off</button><a href="/">Live console</a></span></header>
-
-<section class="hero" data-n="00" id="hero">
-  <div class="stage">
-    <canvas id="sky" aria-hidden="true"></canvas>
-    <div class="inner" id="hero-title">
-      <p class="label reveal">Collision avoidance for low Earth orbit</p>
-      <h1 class="reveal d1">EDITH</h1>
-      <p class="reveal d2">Every tracked object. Every close pass. One decision: move, or wait.</p>
-    </div>
-    <div class="years" id="hero-years" aria-hidden="true">
-      <div class="year" id="year">1957</div>
-      <p><span class="mono" id="year-objects">0</span> of today's tracked objects had been launched by this year</p>
-    </div>
-    <div class="cue" id="cue">Scroll to begin</div>
-  </div>
-</section>
-
-<section data-n="01">
-  <p class="label reveal">01 &nbsp; The sky above us</p>
-  <h2 class="say reveal d1">Space is not empty.</h2>
-  <p class="body reveal d2">About <strong>30,000 tracked objects</strong> circle the Earth below 2,000 km. Each one covers <strong>7.5 km every second</strong>. When two of them cross paths they can meet at 15 km a second. At that speed a loose bolt destroys a satellite, and every crash leaves thousands of new pieces behind.</p>
-</section>
-
-<section class="slides" data-n="01" id="slides" aria-label="How fast 7.5 kilometres a second is">
-  <div class="viewport">
-    <div class="track" id="slide-track">
-      <article class="slide"><p class="label">How fast is 7.5 km a second</p><div class="huge mono">2.5<span class="unit">min</span></div><p class="line">Mumbai to Delhi.</p></article>
-      <article class="slide"><p class="label">How fast is 7.5 km a second</p><div class="huge mono">95<span class="unit">min</span></div><p class="line">Once around the whole Earth.</p></article>
-      <article class="slide"><p class="label">And when two meet head-on</p><div class="huge mono">15<span class="unit">km/s</span></div><p class="line">More than ten times the speed of a rifle bullet.</p></article>
-    </div>
-    <div class="dots" id="slide-dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
-  </div>
-</section>
-
-<section data-n="02">
-  <p class="label reveal">02 &nbsp; How the sky filled up</p>
-  <h2 class="say wide reveal d1">Sixty-nine years, one object to thirty thousand.</h2>
-  <div class="timeline" id="timeline">
-    <span class="fill"></span>
-    <ol>
-      <li class="reveal"><span class="year mono">1957</span><p>The first satellite reaches orbit. One object, and all the room in the world.</p></li>
-      <li class="reveal"><span class="year mono">1978</span><p>Donald Kessler shows that collisions can feed on themselves: each crash makes debris, and debris makes more crashes.</p></li>
-      <li class="reveal"><span class="year mono">2007</span><p>A missile test destroys the weather satellite Fengyun-1C. 1,954 of its pieces are still in our catalogue today.</p></li>
-      <li class="reveal"><span class="year mono">2009</span><p>Iridium 33, a working satellite, and Cosmos 2251, a dead one, collide at 11.65 km a second. Nobody moved either of them.</p></li>
-      <li class="reveal"><span class="year mono">2019</span><p>The first large batch of Starlink satellites is launched. Our catalogue now holds 11,132 of them.</p></li>
-      <li class="reveal"><span class="year mono">2021</span><p>Another missile test, another cloud of fragments crossing the paths of working spacecraft.</p></li>
-      <li class="reveal"><span class="year mono">Now</span><p>The count changes between one download and the next. Somebody has to keep watching.</p></li>
-    </ol>
-  </div>
-</section>
-
-<section data-n="03">
-  <p class="label reveal">03 &nbsp; What is up there</p>
-  <h2 class="say reveal d1">Counted this morning.</h2>
-  <div class="tiles">
-    <div class="tile reveal"><div class="value mono" data-count="29688" id="n-objects">0</div><div class="what">tracked objects in low Earth orbit</div></div>
-    <div class="tile reveal d1"><div class="value mono" data-count="17597">0</div><div class="what">satellites, working and dead</div></div>
-    <div class="tile reveal d2"><div class="value mono" data-count="9892">0</div><div class="what">pieces of debris</div></div>
-    <div class="tile reveal d3"><div class="value mono" data-count="1571">0</div><div class="what">spent rocket bodies</div></div>
-  </div>
-  <p class="note reveal">From the public catalogues of CelesTrak and Space-Track. Anything smaller than about 10 cm is not tracked by anyone publicly.</p>
-  <aside class="aside reveal"><p class="label">Worth knowing</p><p>More than half of everything in low Earth orbit today was launched since 2021.</p></aside>
-</section>
-
-<section data-n="04">
-  <p class="label reveal">04 &nbsp; The problem</p>
-  <h2 class="say wide reveal d1">30,000 objects make 440 million pairs.</h2>
-  <p class="body reveal d2">Any one of those pairs could be the next collision. Missing a real danger costs a satellite and litters an orbit for decades. Dodging a danger that was never real burns fuel, and fuel is a satellite's lifetime. <strong>No person can watch them all, and nobody can afford to guess.</strong></p>
-</section>
-
-<section data-n="05">
-  <p class="label reveal">05 &nbsp; The next 24 hours</p>
-  <h2 class="say reveal d1">Today's sky.</h2>
-  <div class="tiles">
-    <div class="tile reveal"><div class="value mono" data-count="1756" id="n-passes">0</div><div class="what">passes closer than 1 km</div></div>
-    <div class="tile reveal d1"><div class="value mono" data-count="35" id="n-red">0</div><div class="what">rated red: worst-case risk of 1 in 10,000 or more</div></div>
-    <div class="tile reveal d2"><div class="value mono" data-count="183" id="n-amber">0</div><div class="what">rated amber: worth watching</div></div>
-    <div class="tile reveal d3"><div class="value mono" data-count="5" id="n-burns">0</div><div class="what">burns planned and checked</div></div>
-  </div>
-  <div class="live reveal" id="live">Figures from the run of 9 October 2026</div>
-</section>
-
-<section class="steps" data-n="06" id="steps">
-  <div class="pin">
-    <p class="label">06 &nbsp; How EDITH works</p>
-    <div class="count mono" id="step-count">01</div>
-    <div class="name" id="step-name">Collect</div>
-  </div>
-  <div>
-    <div class="step" data-name="Collect"><h3>Step one</h3><p>Download the orbit of every tracked object from two public catalogues.</p></div>
-    <div class="step" data-name="Predict"><h3>Step two</h3><p>Work out where each one will be, every ten seconds, for the next three days.</p></div>
-    <div class="step" data-name="Search"><h3>Step three</h3><p>Sort the sky into neighbourhoods and compare only neighbours. 440 million pairs become a few thousand.</p></div>
-    <div class="step" data-name="Weigh"><h3>Step four</h3><p>For each close pass, work out the chance of a collision, and the worst that chance could be.</p></div>
-    <div class="step" data-name="Decide"><h3>Step five</h3><p>For a dangerous pass, try up to 744 burns and keep the smallest one that makes it safe.</p></div>
-    <div class="step" data-name="Check"><h3>Step six</h3><p>Fly the new path against everything else for a day. A fix that causes a new danger is thrown away.</p></div>
-    <div class="step" data-name="Report"><h3>Step seven</h3><p>Say only what changed since last time, and write one page for each dangerous pass.</p></div>
-    <div class="step" data-name="Repeat"><h3>Step eight</h3><p>Do it all again in six hours, with nobody pressing a button.</p></div>
-  </div>
-</section>
-
-<section data-n="07">
-  <p class="label reveal">07 &nbsp; One real decision</p>
-  <h2 class="say wide reveal d1">A satellite, a dead rocket stage, 251 metres.</h2>
-  <div class="decision" id="decision">
-    <svg viewBox="0 0 520 330" role="img" aria-label="Before the burn the two paths cross 251 metres apart; after it, 2.66 kilometres apart. Not to scale.">
-      <path class="path" d="M20 250 L500 70"/>
-      <path class="path" d="M20 122 L500 182"/>
-      <path class="path moved" d="M20 62 L500 122"/>
-      <circle cx="262" cy="156" r="4" fill="#fff"/>
-      <line x1="132" y1="80" x2="132" y2="132" stroke="#5c5c5c" stroke-width="1"/>
-      <text x="20" y="284">ROCKET STAGE</text>
-      <text x="340" y="222">SATELLITE, AS PREDICTED</text>
-      <text x="20" y="44">SATELLITE, AFTER THE BURN</text>
-      <text class="big" x="286" y="196">251 m</text>
-      <text class="big" x="144" y="116">2.66 km</text>
-      <text x="20" y="322">NOT TO SCALE</text>
-    </svg>
-    <ul class="facts reveal d2">
-      <li>The pair <b>KUIPER-00053 and SCOUT B-1 R/B</b></li>
-      <li>Closing speed <b class="mono">13.2 km/s</b></li>
-      <li>Worst-case risk before <b>1 in 900</b></li>
-      <li>EDITH's answer <b>slow down by 43 mm/s, 10.5 hours early</b></li>
-      <li>Distance after <b class="mono">2.66 km</b></li>
-      <li>Worst-case risk after <b>1 in 500,000</b></li>
-      <li>New dangers created <b>none</b></li>
-      <li>Back in its old orbit <b>49 minutes after the pass</b></li>
-    </ul>
-  </div>
-  <p class="note reveal">From the run of 9 October 2026, 12:10 UTC, on live public data.</p>
-</section>
-
-<section data-n="08">
-  <p class="label reveal">08 &nbsp; Who should move</p>
-  <h2 class="say reveal d1">Not every warning deserves a burn.</h2>
-  <div class="cards">
-    <div class="card reveal"><span class="who">Satellite and debris</span><span class="does">Plan a burn.</span><p>The debris cannot move, so a burn is the only way out. These go first.</p></div>
-    <div class="card reveal d1"><span class="who">Two operators</span><span class="does">Plan, and tell both.</span><p>Either could move. EDITH proposes one and writes the warning both can read.</p></div>
-    <div class="card reveal d2"><span class="who">One fleet</span><span class="does">List it. Plan nothing.</span><p>Their operator steers them with data we cannot see. Ours is not good enough to second-guess it.</p></div>
-    <div class="card reveal d3"><span class="who">Two dead objects</span><span class="does">Warn.</span><p>Nobody can act. Everybody nearby should know.</p></div>
-  </div>
-</section>
-
-<section data-n="09">
-  <p class="label reveal">09 &nbsp; How wrong is public data</p>
-  <h2 class="say wide reveal d1">Public orbits come without error bars. So we measured them.</h2>
-  <div class="bars" id="bars">
-    <div class="bar"><span class="who">Dead satellites</span><div class="track"><span class="fill" data-km="0.06"></span><span class="val mono">0.06 km</span></div></div>
-    <div class="bar"><span class="who">Rocket bodies</span><div class="track"><span class="fill" data-km="0.15"></span><span class="val mono">0.15 km</span></div></div>
-    <div class="bar"><span class="who">Debris</span><div class="track"><span class="fill" data-km="0.22"></span><span class="val mono">0.22 km</span></div></div>
-    <div class="bar"><span class="who">Working satellites</span><div class="track"><span class="fill" data-km="0.37"></span><span class="val mono">0.37 km</span></div></div>
-    <div class="bar"><span class="who">Starlink</span><div class="track"><span class="fill" data-km="12"></span><span class="val mono">12 km</span></div></div>
-  </div>
-  <p class="note reveal">Typical error along the direction of travel after one day, from 325,558 pairs of orbit records of 768 objects. The bars share one scale.</p>
-  <p class="body reveal">So EDITH plans burns where the data can be trusted, <strong>and says so where it cannot.</strong></p>
-  <aside class="aside reveal"><p class="label">Worth knowing</p><p>Of 427 close passes between satellites of one fleet that CelesTrak listed a day earlier, one was still there in our run.</p></aside>
-</section>
-
-<section data-n="10">
-  <p class="label reveal">10 &nbsp; 2009, replayed</p>
-  <h2 class="say wide reveal d1">We gave EDITH only what the world knew one day before.</h2>
-  <div class="tiles">
-    <div class="tile reveal"><div class="value">First</div><div class="what">where it ranked the Iridium and Cosmos pass</div></div>
-    <div class="tile reveal d1"><div class="value mono">16:55:59</div><div class="what">its predicted time. The collision is reported at 16:56</div></div>
-    <div class="tile reveal d2"><div class="value mono">584<span class="unit">m</span></div><div class="what">the miss distance public data predicted</div></div>
-    <div class="tile reveal d3"><div class="value">Amber</div><div class="what">its rating. Not red</div></div>
-  </div>
-  <p class="body reveal">Public data said they would miss. They did not. <strong>That is why EDITH ranks every pass by the worst case, and why better data matters more than better software.</strong></p>
-  <aside class="aside reveal"><p class="label">Worth knowing</p><p>The largest pieces of both satellites are still in orbit, still listed under the names Iridium 33 and Cosmos 2251.</p></aside>
-</section>
-
-<section data-n="11">
-  <p class="label reveal">11 &nbsp; Checked from outside</p>
-  <h2 class="say wide reveal d1">We did not take our own word for it.</h2>
-  <div class="tiles">
-    <div class="tile reveal"><div class="value mono">0.35<span class="unit">m</span></div><div class="what">difference from CelesTrak's own distances on its 200 closest passes, from the same data</div></div>
-    <div class="tile reveal d1"><div class="value mono" data-count="20000">0</div><div class="what">real European Space Agency warnings recomputed, with no offset from ESA's own probability</div></div>
-    <div class="tile reveal d2"><div class="value mono" data-count="325558">0</div><div class="what">pairs of orbit records used to measure how wrong public data is</div></div>
-  </div>
-  <a class="button reveal" href="/addons/files/b_trust/out/VALIDATION_REPORT.md">Read the validation report</a>
-</section>
-
-<section data-n="12">
-  <div class="cascade">
-    <div>
-      <p class="label reveal">12 &nbsp; Why one collision matters</p>
-      <h2 class="say reveal d1">Two objects in. Hundreds out.</h2>
-      <p class="body reveal d2">A crash does not remove two objects from orbit. It replaces them with a cloud, and every piece keeps flying at the same speed. <strong>Click the ring to see it.</strong></p>
-      <p class="note mono reveal" id="cascade-count">Objects on this orbit: 2</p>
-      <button class="button reveal" id="cascade-reset" type="button">Start again</button>
-    </div>
-    <canvas id="cascade" aria-label="Two dots circle a ring in opposite directions. Clicking makes them collide into a spreading cloud of fragments."></canvas>
-  </div>
-</section>
-
-<section data-n="13">
-  <p class="label reveal">13 &nbsp; What it cannot do</p>
-  <h2 class="say reveal d1">The honest part.</h2>
-  <ul class="limits">
-    <li class="reveal">It cannot see anything smaller than about 10 cm. Nobody tracks those in public.</li>
-    <li class="reveal">It cannot know what another operator is planning.</li>
-    <li class="reveal">It cannot be more precise than public data, which is rough for anything that manoeuvres.</li>
-    <li class="reveal">It does not fly satellites. It advises the people who do.</li>
-  </ul>
-</section>
-
-<section data-n="14">
-  <p class="label reveal">14 &nbsp; How fast</p>
-  <h2 class="say reveal d1">The whole sky, before the coffee is cold.</h2>
-  <div class="tiles">
-    <div class="tile reveal"><div class="value mono"><span data-count="3.5" data-decimals="1" id="n-minutes">0</span><span class="unit">min</span></div><div class="what">for every object against every other, 24 hours ahead, on one laptop</div></div>
-    <div class="tile reveal d1"><div class="value mono"><span data-count="1.5" data-decimals="1">0</span><span class="unit">million</span></div><div class="what">positions calculated each second, on each processor core</div></div>
-    <div class="tile reveal d2"><div class="value mono"><span data-count="40">0</span><span class="unit">ms</span></div><div class="what">to find every nearby pair among 440 million</div></div>
-  </div>
-</section>
-
-<section class="closing">
-  <h2 class="say reveal">Watch everything. Move only when you must.</h2>
-  <div class="reveal d1"><a class="button" href="/">Open the live console</a><a class="button" href="/docs">See the data it serves</a></div>
-</section>
-
-<footer>
-  <span>EDITH is decision support built from public orbit data. Not for operational use.</span>
-  <span>Team Fusion, 2026</span>
-</footer>
-
-<script>
-const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const $ = id => document.getElementById(id);
-const fmt = (n, d = 0) => n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
-
-// reveal on scroll, counters, chapter number
-function count(el) {
-  const target = parseFloat(el.dataset.count), d = +(el.dataset.decimals || 0);
-  if (reduced) { el.textContent = fmt(target, d); return; }
-  const start = performance.now();
-  (function tick(now) {
-    const k = Math.min(1, (now - start) / 1400), eased = 1 - Math.pow(1 - k, 3);
-    el.textContent = fmt(target * eased, d);
-    if (k < 1) requestAnimationFrame(tick);
-  })(start);
-}
-const seen = new IntersectionObserver(entries => entries.forEach(e => {
-  if (!e.isIntersecting) return;
-  e.target.classList.add("in");
-  e.target.querySelectorAll("[data-count]").forEach(count);
-  if (e.target.matches("[data-count]")) count(e.target);
-  seen.unobserve(e.target);
-}), { threshold: 0.18 });
-document.querySelectorAll(".reveal, .decision").forEach(el => seen.observe(el));
-
-const chapters = [...document.querySelectorAll("section[data-n]")];
-const chapterWatch = new IntersectionObserver(entries => entries.forEach(e => {
-  if (e.isIntersecting) $("chapter").textContent = e.target.dataset.n + " / 14";
-}), { rootMargin: "-45% 0px -45% 0px" });
-chapters.forEach(s => chapterWatch.observe(s));
-
-// Today's tracked objects by the year they were launched, 1957 to 2026, counted from our own catalogue.
-const LAUNCHED_BY = [0, 3, 8, 19, 207, 227, 267, 318, 688, 826, 880, 1016, 1107, 1447, 1573, 1681, 1926, 2151, 2484, 2858, 3113, 3382, 3477, 3555, 4055, 4247, 4348, 4481, 4629, 4769, 5038, 5233, 5360, 5567, 5960, 6216, 6920, 7074, 7248, 7302, 7495, 7603, 9777, 10196, 10268, 10384, 10448, 10511, 10555, 10656, 10750, 10899, 10985, 11137, 11304, 11400, 11568, 11749, 11843, 11936, 12076, 12275, 12416, 12783, 13800, 16152, 18437, 21463, 25791, 29161];
-const clamp01 = x => Math.max(0, Math.min(1, x));
-const smooth = (a, b, x) => { const k = clamp01((x - a) / (b - a)); return k * k * (3 - 2 * k); };
-const progressOf = el => { const span = el.offsetHeight - innerHeight; return span > 0 ? clamp01((scrollY - el.offsetTop) / span) : 0; };
-const yearIndex = p => Math.round((LAUNCHED_BY.length - 1) * clamp01((p - 0.22) / 0.7));
-let heroProgress = 0;
-
-// progress bar, the opening sequence, the sideways slides and the timeline's line
-const timeline = $("timeline"), timelineFill = timeline.querySelector(".fill");
-const hero = $("hero"), slides = $("slides"), slideDots = [...$("slide-dots").children];
-function onScroll() {
-  const max = document.documentElement.scrollHeight - innerHeight;
-  $("progress").style.transform = "scaleX(" + (max > 0 ? scrollY / max : 0) + ")";
-  const box = timeline.getBoundingClientRect();
-  const done = Math.max(0, Math.min(1, (innerHeight * 0.7 - box.top) / box.height));
-  timelineFill.style.height = (done * 100) + "%";
-  if (reduced) return;
-
-  heroProgress = progressOf(hero);
-  const leaving = smooth(0.03, 0.15, heroProgress);
-  $("hero-title").style.opacity = 1 - leaving;
-  $("hero-title").style.transform = "translateY(" + (-60 * leaving) + "px)";
-  $("cue").style.opacity = 1 - leaving;
-  $("hero-years").style.opacity = smooth(0.16, 0.24, heroProgress);
-  const index = yearIndex(heroProgress);
-  $("year").textContent = 1957 + index;
-  $("year-objects").textContent = fmt(LAUNCHED_BY[index]);
-
-  const across = progressOf(slides);
-  $("slide-track").style.transform = "translateX(" + (-across * 2 * innerWidth) + "px)";
-  slideDots.forEach((dot, i) => dot.classList.toggle("on", i === Math.round(across * 2)));
-}
-addEventListener("scroll", onScroll, { passive: true });
-addEventListener("resize", onScroll);
-onScroll();
-
-// the eight steps
-const steps = [...document.querySelectorAll(".step")];
-const stepWatch = new IntersectionObserver(entries => entries.forEach(e => {
-  if (!e.isIntersecting) return;
-  steps.forEach(s => s.classList.toggle("on", s === e.target));
-  $("step-count").textContent = String(steps.indexOf(e.target) + 1).padStart(2, "0");
-  $("step-name").textContent = e.target.dataset.name;
-}), { rootMargin: "-45% 0px -45% 0px" });
-steps.forEach(s => stepWatch.observe(s));
-steps[0].classList.add("on");
-
-// the measured-error bars: one linear scale, the largest value fills 82% of the track
-const barWatch = new IntersectionObserver(entries => entries.forEach(e => {
-  if (!e.isIntersecting) return;
-  const fills = [...e.target.querySelectorAll(".fill")], top = Math.max(...fills.map(f => +f.dataset.km));
-  fills.forEach(f => {
-    const share = 82 * (+f.dataset.km) / top;
-    f.style.width = share + "%";
-    f.nextElementSibling.style.left = "max(2px, " + share + "%)";
-  });
-  barWatch.disconnect();
-}), { threshold: 0.3 });
-barWatch.observe($("bars"));
-
-// hero: a ring for the Earth and points on tilted circular orbits
-(function sky() {
-  const canvas = $("sky"), ctx = canvas.getContext("2d");
-  let w = 0, h = 0, ratio = 1, visible = true, t = 0;
-  const rand = (a, b) => a + Math.random() * (b - a);
-  const stars = Array.from({ length: 220 }, () => [Math.random(), Math.random(), rand(0.2, 0.9)]);
-  const FULL = 900, CALM = 170;  // points when the sky is full, and behind the title
-  const objects = Array.from({ length: FULL }, () => ({
-    r: rand(1.1, 1.75), tilt: rand(0, Math.PI), node: rand(0, Math.PI * 2), phase: rand(0, Math.PI * 2), size: rand(0.7, 1.9),
-  }));
-  // behind the title a calm sky; it empties, then fills year by year as the page scrolls
-  function howMany() {
-    const p = heroProgress;
-    if (p < 0.12) return CALM;
-    if (p < 0.2) return Math.round(CALM * (1 - (p - 0.12) / 0.08));
-    return Math.round(FULL * LAUNCHED_BY[yearIndex(p)] / LAUNCHED_BY[LAUNCHED_BY.length - 1]);
-  }
-  function place(o, spin, time) {
-    const u = o.phase + time * Math.pow(o.r, -1.5) * 0.35, node = o.node + spin;
-    return [
-      o.r * (Math.cos(u) * Math.cos(node) - Math.sin(u) * Math.sin(node) * Math.cos(o.tilt)),
-      o.r * (Math.cos(u) * Math.sin(node) + Math.sin(u) * Math.cos(node) * Math.cos(o.tilt)),
-      o.r * Math.sin(u) * Math.sin(o.tilt),
-    ];
-  }
-  function resize() {
-    ratio = Math.min(2, devicePixelRatio || 1);
-    w = canvas.clientWidth; h = canvas.clientHeight;
-    canvas.width = w * ratio; canvas.height = h * ratio;
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-  }
-  function draw() {
-    ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = "#fff";
-    for (const [x, y, a] of stars) { ctx.globalAlpha = a * 0.5; ctx.fillRect(x * w, y * h, 1, 1); }
-    // as the years run, the view pulls back a little and turns
-    const away = smooth(0.2, 0.9, heroProgress), spin = heroProgress * 1.4;
-    const R = Math.min(w, h) * (0.3 - 0.07 * away), cx = w * (0.68 - 0.1 * away), cy = h * 0.44;
-    const points = objects.slice(0, howMany()).map(o => [place(o, spin, t), o.size]);
-    for (const [[x, y, z], size] of points) {
-      if (z < 0 && x * x + y * y < 1) continue;  // behind the Earth
-      ctx.globalAlpha = z < 0 ? 0.28 : 0.95;
-      ctx.beginPath(); ctx.arc(cx + x * R, cy - y * R, size, 0, Math.PI * 2); ctx.fill();
-    }
-    ctx.globalAlpha = 1;
-    ctx.fillStyle = "#000"; ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = "#fff"; ctx.lineWidth = 1; ctx.stroke();
-    ctx.fillStyle = "#fff";
-    for (const [[x, y, z], size] of points) {  // the ones in front of the Earth, drawn over it
-      if (z >= 0 && x * x + y * y < 1) { ctx.beginPath(); ctx.arc(cx + x * R, cy - y * R, size, 0, Math.PI * 2); ctx.fill(); }
-    }
-  }
-  function frame() { if (visible) { t += 0.016; draw(); } requestAnimationFrame(frame); }
-  new IntersectionObserver(e => { visible = e[0].isIntersecting; }).observe(canvas);
-  addEventListener("resize", () => { resize(); draw(); });
-  resize(); draw();
-  if (!reduced) requestAnimationFrame(frame);
-})();
-
-// one collision: two points on a ring become a spreading cloud
-(function cascade() {
-  const canvas = $("cascade"), ctx = canvas.getContext("2d");
-  let size = 0, ratio = 1, visible = false, bits = [], armed = false;
-  function reset() {
-    bits = [{ a: 0.4, speed: 0.012, r: 0, s: 3.2 }, { a: 2.9, speed: -0.012, r: 0, s: 3.2 }];
-    armed = false;
-    $("cascade-count").textContent = "Objects on this orbit: 2";
-  }
-  function resize() {
-    ratio = Math.min(2, devicePixelRatio || 1);
-    size = canvas.clientWidth;
-    canvas.width = canvas.height = size * ratio;
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-  }
-  function step() {
-    for (const b of bits) b.a += b.speed;
-    if (armed && bits.length === 2) {
-      const gap = Math.abs(Math.atan2(Math.sin(bits[0].a - bits[1].a), Math.cos(bits[0].a - bits[1].a)));
-      if (gap < 0.03) {
-        const at = bits[0].a;
-        bits = Array.from({ length: 240 }, () => ({
-          a: at, speed: (Math.random() < 0.5 ? 1 : -1) * (0.004 + Math.random() * 0.016),
-          r: (Math.random() - 0.5) * 0.16, s: 0.6 + Math.random() * 1.3,
-        }));
-        $("cascade-count").textContent = "Objects on this orbit: " + bits.length;
-      }
-    }
-  }
-  function draw() {
-    const c = size / 2, R = size * 0.36;
-    ctx.clearRect(0, 0, size, size);
-    ctx.strokeStyle = "#262626"; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(c, c, R, 0, Math.PI * 2); ctx.stroke();
-    ctx.strokeStyle = "#fff"; ctx.beginPath(); ctx.arc(c, c, size * 0.2, 0, Math.PI * 2); ctx.stroke();
-    ctx.fillStyle = "#fff";
-    for (const b of bits) {
-      const r = R * (1 + b.r);
-      ctx.beginPath(); ctx.arc(c + Math.cos(b.a) * r, c + Math.sin(b.a) * r, b.s, 0, Math.PI * 2); ctx.fill();
-    }
-  }
-  function frame() { if (visible) { step(); draw(); } requestAnimationFrame(frame); }
-  canvas.addEventListener("click", () => { armed = true; });
-  $("cascade-reset").addEventListener("click", reset);
-  new IntersectionObserver(e => { visible = e[0].isIntersecting; }).observe(canvas);
-  addEventListener("resize", () => { resize(); draw(); });
-  reset(); resize(); draw();
-  if (!reduced) requestAnimationFrame(frame);
-})();
-
-// a quiet drone made in the browser from three low tones; off until asked for
-(function sound() {
-  const button = $("sound");
-  let audio = null, volume = null;
-  button.addEventListener("click", () => {
-    const on = button.getAttribute("aria-pressed") !== "true";
-    if (on && !audio) {
-      audio = new (window.AudioContext || window.webkitAudioContext)();
-      volume = audio.createGain();
-      volume.gain.value = 0;
-      const filter = audio.createBiquadFilter();
-      filter.type = "lowpass";
-      filter.frequency.value = 420;
-      [55, 82.5, 110.4].forEach((hertz, i) => {
-        const tone = audio.createOscillator(), level = audio.createGain();
-        tone.type = i ? "sine" : "triangle";
-        tone.frequency.value = hertz;
-        level.gain.value = i ? 0.5 : 0.8;
-        tone.connect(level).connect(filter);
-        tone.start();
-      });
-      const sway = audio.createOscillator(), depth = audio.createGain();
-      sway.frequency.value = 0.07;
-      depth.gain.value = 140;
-      sway.connect(depth).connect(filter.frequency);
-      sway.start();
-      filter.connect(volume).connect(audio.destination);
-    }
-    if (audio) {
-      audio.resume();
-      volume.gain.linearRampToValueAtTime(on ? 0.05 : 0, audio.currentTime + 1.2);
-    }
-    button.setAttribute("aria-pressed", String(on));
-    button.textContent = on ? "Sound on" : "Sound off";
-  });
-})();
-
-// live numbers from the running system, when this page is served by it
-(async function live() {
-  try {
-    const response = await fetch("/latest");
-    if (!response.ok) return;
-    const run = await response.json();
-    const set = (id, value) => { const el = $(id); if (el && value != null) { el.dataset.count = value; if (el.closest(".in")) count(el); } };
-    set("n-objects", run.screen && run.screen.objects_screened);
-    set("n-passes", run.events);
-    set("n-red", run.levels && run.levels.RED);
-    set("n-amber", run.levels && run.levels.AMBER);
-    set("n-burns", run.plans && run.plans.maneuver);
-    if (run.duration_s) set("n-minutes", (run.duration_s / 60).toFixed(1));
-    const at = run.t0 ? new Date(run.t0).toUTCString().replace("GMT", "UTC") : run.run_id;
-    $("live").textContent = "Live: latest run, " + at;
-    $("live").classList.add("on");
-  } catch (error) { /* opened as a file, or the system is not running: the built-in figures stay */ }
-})();
-</script>
+    <div id="__nuxt"></div>
+    <div id="teleports"></div>
+    <script type="application/json" data-nuxt-data="nuxt-app" data-ssr="false" id="__NUXT_DATA__">
+        [{
+            "prerenderedAt": 1,
+            "serverRendered": 2
+        }, 1755621441227, false]
+    </script>
+    <script>
+        (function() {
+            var path = window.location.pathname;
+            var base = path.endsWith('/') ? path : path.substring(0, path.lastIndexOf('/') + 1) || '/';
+            if (!base.endsWith('/')) base += '/';
+            
+            window.__NUXT__ = {};
+            window.__NUXT__.config = {
+                public: {},
+                app: {
+                    baseURL: base,
+                    buildId: "8ed340a3-67fd-437e-881f-610cc11e6009",
+                    buildAssetsDir: base + "_nuxt/",
+                    cdnURL: ""
+                }
+            };
+        })();
+    </script>
 </body>
+
 </html>

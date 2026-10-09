@@ -178,10 +178,9 @@ Results worth knowing when building on this:
 - `pc_reference.pc_integral` is the exact one-dimensional form (0.1 ms). The direct double integral is `pc_integral_2d`, kept as a check; it takes milliseconds to seconds.
 - The pack's `cache/` (74 MB) and `esa/` (434 MB) are git-ignored. To rebuild everything see the pack's `README.md`.
 
-## The landing page and the `frontend/` folder
+## The landing page
 
-- `landing/index.html` is our own page for visitors, branded EDITH: one file, no build step, black and white, served at `/landing`. Its text, code and visuals (drawn on canvas and in SVG) are ours. It reads live numbers from `/latest` and falls back to the figures of 9 October 2026 when the server is not running.
-- `frontend/` arrived through pull request #3. It is a downloaded copy of the United Nations web feature "The Race to Save Space" with a small local server, not our work, and it also contains a saved location lookup of the machine that downloaded it. It must not be presented as ours, renamed or edited to hide its origin. Atharv has been asked whether to remove it from the repository; until he answers, leave it alone and do not build on it.
+- `landing/` hosts our public landing experience branded EDITH: interactive 3D WebGL satellite visualization in a high-contrast dark space theme, served at `/landing` (and standalone via `node landing/server.js`). It presents the orbital situation, 30,000 tracked objects, collision avoidance rules, and live stats.
 
 ## How the planner behaves (so later steps match it)
 
