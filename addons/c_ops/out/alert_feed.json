@@ -1,0 +1,68 @@
+[
+  {
+    "alert_id": "alt-20261009T1800Z-40012-25544-20261010T1830-downgraded",
+    "run_id": "20261009T1800Z",
+    "event_id": "40012-25544-20261010T1830",
+    "kind": "DOWNGRADED",
+    "from_level": "AMBER",
+    "to_level": "GREEN",
+    "severity": "INFO",
+    "message": "STARLINK-1100 and ISS: risk dropped from AMBER to GREEN. Closest approach in 25 h at 2.85 km.",
+    "created": "2026-10-09T18:00:00Z"
+  },
+  {
+    "alert_id": "alt-20261009T1200Z-49000-22000-20261011T2200-new",
+    "run_id": "20261009T1200Z",
+    "event_id": "49000-22000-20261011T2200",
+    "kind": "NEW",
+    "from_level": null,
+    "to_level": "AMBER",
+    "severity": "WARNING",
+    "message": "STARLINK-2045 and COSMOS 1408 DEB: new AMBER risk close approach detected. Closest approach in 58 h at 0.92 km.",
+    "created": "2026-10-09T12:00:00Z"
+  },
+  {
+    "alert_id": "alt-20261009T1200Z-43070-34427-20261011T0412-escalated",
+    "run_id": "20261009T1200Z",
+    "event_id": "43070-34427-20261011T0412",
+    "kind": "ESCALATED",
+    "from_level": "AMBER",
+    "to_level": "RED",
+    "severity": "CRITICAL",
+    "message": "IRIDIUM 106 and COSMOS 2251 DEB: risk rose from AMBER to RED. Closest approach in 40 h at 0.41 km.",
+    "created": "2026-10-09T12:00:00Z"
+  },
+  {
+    "alert_id": "alt-20261009T1200Z-43070-34427-20261011T0412-plan-ready",
+    "run_id": "20261009T1200Z",
+    "event_id": "43070-34427-20261011T0412",
+    "kind": "PLAN_READY",
+    "from_level": null,
+    "to_level": "RED",
+    "severity": "CRITICAL",
+    "message": "IRIDIUM 106 and COSMOS 2251 DEB: avoidance manoeuvre plan ready with decision MANEUVER. Closest approach in 40 h at 0.41 km.",
+    "created": "2026-10-09T12:00:00Z"
+  },
+  {
+    "alert_id": "alt-20261009T0600Z-43070-34427-20261011T0412-new",
+    "run_id": "20261009T0600Z",
+    "event_id": "43070-34427-20261011T0412",
+    "kind": "NEW",
+    "from_level": null,
+    "to_level": "AMBER",
+    "severity": "WARNING",
+    "message": "IRIDIUM 106 and COSMOS 2251 DEB: new AMBER risk close approach detected. Closest approach in 46 h at 0.82 km.",
+    "created": "2026-10-09T06:00:00Z"
+  },
+  {
+    "alert_id": "alt-20261009T0600Z-40012-25544-20261010T1830-new",
+    "run_id": "20261009T0600Z",
+    "event_id": "40012-25544-20261010T1830",
+    "kind": "NEW",
+    "from_level": null,
+    "to_level": "AMBER",
+    "severity": "WARNING",
+    "message": "STARLINK-1100 and ISS: new AMBER risk close approach detected. Closest approach in 37 h at 1.25 km.",
+    "created": "2026-10-09T06:00:00Z"
+  }
+]
