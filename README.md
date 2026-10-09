@@ -10,7 +10,7 @@
 ![SGP4](https://img.shields.io/badge/SGP4-orbit_model-555555)
 ![Pydantic](https://img.shields.io/badge/Pydantic-data_models-E92063?logo=pydantic&logoColor=white)
 ![LightGBM](https://img.shields.io/badge/LightGBM-risk_trend_model-9ACD32)
-![pytest](https://img.shields.io/badge/pytest-120_tests-0A9EDC?logo=pytest&logoColor=white)
+![pytest](https://img.shields.io/badge/pytest-121_tests-0A9EDC?logo=pytest&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-dashboard-F7DF1E?logo=javascript&logoColor=black)
 
 EDITH screens every publicly tracked object in low Earth orbit against every other, ranks the close passes by collision probability, and recommends the smallest avoidance burn that makes a dangerous pass safe. It re-runs every six hours without supervision and serves its results through a web API and an operator dashboard.
@@ -40,25 +40,28 @@ The Python package is named `fusion`.
 - **Ranks** each pass by collision probability and by the worst case over the unknown uncertainty, and labels it red, amber or green.
 - **Recommends** an avoidance burn for dangerous passes: which object moves, when, in which direction and by how much.
 - **Verifies** that the burn creates no new dangerous pass and worsens none the satellite already had, and plans a return burn to restore the original orbit.
-- **Answers on request**: a burn plan for any pass the run did not plan, the close passes of any satellite found by name or number, and a summary per fleet.
+- **Answers on request**: what a burn would take for a pass the system only watches, the close passes of any satellite found by name or number, and a summary per fleet.
 - **Reports** what changed since the previous run, with a one-page briefing and a standard-format warning message (CDM) for each dangerous pass.
 - **Checks itself** against CelesTrak's published conjunction list after every run.
 
 ## Results
 
-Measured on a 12-core laptop on 9 October 2026, on live data, in the run of 12:10 UTC. The numbers change with every run.
+Measured on a 12-core laptop on 9 October 2026, on live data, in the run of 21:18 UTC. The numbers change with every run.
 
 | Measure | Value |
 |---|---|
-| Objects screened | 29,688 |
+| Objects screened | 29,679 |
 | Pairs considered | about 440 million |
-| Close passes within 1 km, next 24 hours | 1,756 |
-| Risk levels | 35 red, 183 amber, 1,538 green |
-| Burns planned, all verified free of new dangerous passes | 5 |
-| Full run, 24-hour window, orbit data cached | about 3.5 minutes |
-| Full-sky search only, 72-hour window | about 7 minutes |
+| Close passes within 1 km, next 24 hours | 2,332 |
+| Risk levels | 69 red, 235 amber, 2,028 green |
+| Red passes between two satellites of one fleet, left to its operator | 45 |
+| Burns ready, each verified to create no dangerous pass and worsen none | 17 |
+| Red passes with a stated reason for no burn | 7: no safe burn 4, neither object can move 2, too soon 1 |
+| Full run, 24-hour window, orbit data cached | 6 min 45 s, of which the search is under 2 minutes and the 21 burn searches under 4 |
 
-Example recommendation from that run: KUIPER-00053 and a spent rocket stage were predicted to pass 251 m apart at 13.2 km/s. EDITH proposed a 43 mm/s burn against the direction of travel 6.5 orbits earlier, which moves the pass to 2.66 km and lowers the worst-case probability from 1 in 900 to 1 in 500,000.
+Example recommendation from that run: STARLINK-4043 and FLOCK 4G-8 were predicted to pass 76 m apart at 12.7 km/s. EDITH proposed that the Starlink slow down by 66 mm/s half an orbit before the pass, which moves the pass to 451 m and lowers the worst-case probability from 1 in 196 to 1 in 737,000.
+
+A burn is advice. Red means worth an operator's attention on the worst case; the burn is ready in case better tracking confirms the risk.
 
 ## How it works
 
@@ -169,11 +172,11 @@ Then open http://localhost:8000 and press **Run now**.
 
 | Address | Content |
 |---|---|
-| http://localhost:8000 | Operator dashboard: headline numbers, ranked passes, burn plans with pictures, a plan on request, a check of any satellite, fleets, alerts, 2009 replay |
+| http://localhost:8000 | Operator dashboard: headline numbers, ranked passes, burn plans with pictures, a what-if burn on request, a check of any satellite, fleets, alerts, 2009 replay |
 | http://localhost:8000/landing | Story page for visitors |
 | http://localhost:8000/docs | Interactive API documentation |
 
-The dashboard opens on **Priority**: the dangerous passes that are not between two satellites of one fleet. **Plan now** searches for a burn for any pass the run did not plan, in about 20 seconds.
+The dashboard opens on **Priority**: the dangerous passes that are not between two satellites of one fleet. Every row says **Burn ready** or gives the reason there is none. On a pass the system only watches, **Plan now** shows what a burn would take, in about 20 seconds.
 
 | Fleets | Check any satellite |
 |---|---|
@@ -189,7 +192,7 @@ The dashboard opens on **Priority**: the dangerous passes that are not between t
 | `GET /events` | Close passes, most dangerous first; filter by `level`, `plan`, `fleet` or `own_fleet` |
 | `GET /events/{id}` | One pass with its plan, both tracks and the encounter-plane picture |
 | `GET /events/{id}/plan` | The decision for one pass |
-| `POST /events/{id}/plan` | Search now for a burn for a pass the run did not plan |
+| `POST /events/{id}/plan` | Search now for a burn for a pass the run only watches |
 | `GET /objects/search?q=` | Find any tracked object by name or catalogue number |
 | `GET /objects/{id}/passes` | Check one object now: its close passes in the next 24 hours |
 | `GET /fleets` | One row per fleet: passes, dangerous passes to act on, burns planned |
@@ -211,7 +214,7 @@ Every setting is in `fusion/config.py`. The ones most often changed:
 | `SCREEN_THRESHOLD_ALL_LEO_KM` | 1 | Largest miss distance reported in full-sky mode |
 | `RED_PC_MAX`, `AMBER_PC_MAX` | 1e-4, 1e-5 | Risk levels, on worst-case probability |
 | `TARGET_PC_AFTER`, `TARGET_PC_MAX_AFTER` | 1e-6, 1e-5 | What a burn must achieve |
-| `MAX_PLANS_PER_RUN` | 5 | Burn searches per run |
+| `MAX_PLANS_PER_RUN` | 40 | Ceiling on burn searches per run; a 24-hour run needs about 20 |
 | `SCHEDULER_INTERVAL_HOURS` | 6 | Time between automatic runs (each looks 24 hours ahead) |
 
 Environment variables: `FUSION_SCHEDULER=0` disables the automatic runs; `FUSION_RUNS_DIR` moves the runs folder. Operating details are in [docs/OPERATIONS.md](docs/OPERATIONS.md).
@@ -263,7 +266,7 @@ The main system is complete without them; each pack adds a capability through a 
 - **Beyond one day, passes inside a fleet are not predictions.** A full-sky run over 72 hours found about 1,150 passes a day outside fleets on each of the three days, while passes between two satellites of one fleet grew from 862 on the first day to 9,209 on the third: the error in public data scrambles the spacing that fleets keep. The scheduled run therefore looks 24 hours ahead.
 - **Some passes get no burn.** Two objects in similar orbits can meet once every lap; an along-track burn that clears one meeting moves the danger to the next. EDITH detects this and says so instead of proposing the burn.
 - **Burns are treated as instantaneous**, and the safety re-screen covers 24 hours.
-- **At most five burn searches per run**, to keep a run to minutes. It is a setting, and a burn for any other pass can be requested afterwards.
+- **Some burns stop short of the target.** The search goes up to 100 mm/s. In the latest run 6 of the 17 burns brought the worst case back to green but left the best-estimate probability just above 1 in a million; each says it is the best available.
 - **Pairs drifting together at under 0.1 km/s are not assessed**; the short-encounter probability method does not apply to them.
 - **This is decision support, not an operational system.** It does not command spacecraft.
 
@@ -271,9 +274,9 @@ The main system is complete without them; each pack adds a capability through a 
 
 | Area | State |
 |---|---|
-| Engine, pipeline, scheduler, API | Complete; 120 tests, run on GitHub on every push |
+| Engine, pipeline, scheduler, API | Complete; 121 tests, run on GitHub on every push |
 | Validation pack | Complete; 54 tests |
-| Dashboard | Working: numbers, ranked list, plans with three pictures, plan on request, satellite check, fleets, alerts, replay. A 3D view is not built |
+| Dashboard | Working: numbers, ranked list, plans with three pictures, what-if burns on request, satellite check, fleets, alerts, replay. A 3D view is not built |
 
 ## Data sources and acknowledgements
 

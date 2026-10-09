@@ -35,11 +35,11 @@ We added a third source, **Space-Track** (the US government's public catalogue),
 
 ## 2. Our answer in one minute
 
-EDITH downloads the orbit of every publicly tracked object in low Earth orbit (about 29,700 today), works out where each will be over the next 24 hours, finds every pair that will pass within 1 km, calculates how likely each pass is to be a collision using uncertainty we measured ourselves, and marks it red, amber or green. For the dangerous passes where one object cannot move, it searches hundreds of small thruster firings, picks the smallest one that makes the pass safe, checks that the move does not steer the satellite into something else, and plans a second firing to put the satellite back. Then it reports what changed since the last run, writes a one-page briefing for each dangerous pass, compares itself with CelesTrak's own list, and repeats every 6 hours. A full run takes about 4 minutes. Between runs it answers three requests: a burn plan for any pass the run did not plan, the close passes of any satellite found by name, and a summary of each fleet.
+EDITH downloads the orbit of every publicly tracked object in low Earth orbit (about 29,700 today), works out where each will be over the next 24 hours, finds every pair that will pass within 1 km, calculates how likely each pass is to be a collision using uncertainty we measured ourselves, and marks it red, amber or green. For the dangerous passes where one object cannot move, it searches hundreds of small thruster firings, picks the smallest one that makes the pass safe, checks that the move does not steer the satellite into something else, and plans a second firing to put the satellite back. Then it reports what changed since the last run, writes a one-page briefing for each dangerous pass, compares itself with CelesTrak's own list, and repeats every 6 hours. A full run takes about 7 minutes. Between runs it answers three requests: what a burn would take for a pass it only watches, the close passes of any satellite found by name, and a summary of each fleet.
 
 ### The 60-second version to say out loud
 
-> "There are about 30,000 tracked objects in low Earth orbit, crossing each other's paths at up to 15 km a second. We built a system that watches all of them. Every run it checks 440 million pairs, finds every pass closer than 1 km, and ranks them by collision probability. Today that is about 2,100 passes in the next 24 hours, 56 of them red. For a red pass where one side cannot move, such as a satellite against a dead rocket stage, it finds the smallest burn that makes it safe, checks the new path against everything else, and plans the burn that puts the satellite back.
+> "There are about 30,000 tracked objects in low Earth orbit, crossing each other's paths at up to 15 km a second. We built a system that watches all of them. Every run it checks 440 million pairs, finds every pass closer than 1 km, and ranks them by collision probability. Today that is about 2,300 passes in the next 24 hours, 69 of them red. For every red pass where a burn is possible, it finds the smallest burn that makes it safe, checks the new path against everything else, and plans the burn that puts the satellite back.
 >
 > We did not take our own word for it. From the same orbit data, our close-approach distances match CelesTrak's own to 35 centimetres. Our probability matches the European Space Agency's on 20,000 real warnings with no offset. And because public data has no error bars, we measured them from 325,000 pairs of orbit records: debris is predictable to about 200 metres a day, Starlink to about 12 kilometres. The system acts on that: it does not pretend to plan burns between two satellites of a fleet whose positions it cannot predict."
 
@@ -47,7 +47,7 @@ EDITH downloads the orbit of every publicly tracked object in low Earth orbit (a
 
 ## 3. How it works, step by step
 
-Think of it as an assembly line. Each run of the line takes about 4 minutes.
+Think of it as an assembly line. Each run of the line takes about 7 minutes.
 
 ### Step 1: Get the data
 
@@ -90,7 +90,7 @@ Think of it as an assembly line. Each run of the line takes about 4 minutes.
   | The pass is between | What the system does | Why |
   |---|---|---|
   | A working satellite and something that cannot move (debris, dead satellite, rocket stage) | Burn plan, first in line | A burn is the only way out, and predictions for objects that cannot manoeuvre are the stable ones |
-  | Two working satellites of different operators | Burn plan if a slot is free, with a note that the operators must coordinate | Either could move |
+  | Two working satellites of different operators | Burn plan, with a note that the operators must coordinate | Either could move |
   | Two satellites of the same fleet (for example Starlink and Starlink) | Listed, no burn plan | Their operator steers them with precise data we cannot see, and we measured that public predictions for them are off by kilometres |
   | Two objects that cannot move | Warning only | Nobody can act |
 
@@ -116,7 +116,7 @@ Think of it as an assembly line. Each run of the line takes about 4 minutes.
 
 - At the end of a run the system compares its own list of passes with CelesTrak's published list.
 - Each run is saved as one folder of result files. A small web server (FastAPI) hands the results to any screen. The whole line re-runs every 6 hours on fresh data, with no person involved.
-- Each run also keeps its full list of objects, so that between runs the server can plan a burn for any pass ("Plan now"), check any one satellite against everything at its height, and summarise each fleet.
+- Each run also keeps its full list of objects, so that between runs the server can show what a burn would take for a pass it only watches ("Plan now"), check any one satellite against everything at its height, and summarise each fleet.
 - **Code:** `fusion/validation.py`, `fusion/pipeline.py`, `fusion/api/main.py`, `fusion/monitor/scheduler.py`
 
 ---
@@ -129,20 +129,20 @@ Think of it as an assembly line. Each run of the line takes about 4 minutes.
 | Measured object sizes (teammate A) | Working | 11,063 objects get a measured radar size |
 | Close-pass search over the full sky | Working | Matches CelesTrak to 0.35 m on its 200 closest conjunctions; equals an independent calculation on all 7 of teammate A's test cases |
 | Collision probability and worst case | Working | No offset from ESA's on 20,000 real warnings; matches random sampling; matches 30 independent reference cases to 2% |
-| Measured uncertainty | Working | 2,042 of 2,099 passes in the latest run use it; the other 57 involve objects of unknown type and use an assumed value |
-| Burn planner, safety re-check, return burn | Working | 5 burns in the latest run, each creating no new dangerous pass and worsening none |
-| Burn plan on request ("Plan now") | Working | STARLINK-4043 and FLOCK 4G-8: a verified burn in 20 seconds |
+| Measured uncertainty | Working | 2,276 of 2,332 passes in the latest run use it; the other 56 involve objects of unknown type and use an assumed value |
+| Burn planner, safety re-check, return burn | Working | 17 burns in the latest run, each creating no new dangerous pass and worsening none |
+| What-if burn on request ("Plan now") | Working | A verified burn in about 20 seconds for a pass the system only watches |
 | Check of any one satellite | Working | The ISS: 4 passes within 10 km in the next 24 hours, checked against 1,549 objects in 6 seconds |
 | Fleet summary | Working | Starlink: 11,129 satellites, 19 dangerous passes to act on, 25 inside its own fleet |
-| Alerts and pass history (teammate C) | Working | Latest run: 5 new passes; most passes carry a nine-run history |
-| Briefings and standard warning messages (teammate C) | Working | 264 of each in the latest run |
+| Alerts and pass history (teammate C) | Working | Latest run: 7 new passes; most passes carry a history of nine runs or more |
+| Briefings and standard warning messages (teammate C) | Working | 304 of each in the latest run |
 | Predicted final risk (teammate C) | Working, experimental | Filled for every pass |
 | 2009 collision replay (teammate A's data) | Working | Section 6 |
-| Comparison with CelesTrak's list after each run | Working | 278 passes in common in the latest run |
+| Comparison with CelesTrak's list after each run | Working | 270 passes in common in the latest run |
 | Web server with all data routes | Working | Tested, and checked in a real Chrome browser |
 | Automatic re-run every 6 hours | Working | Watched on a second copy of the server with the timer set to 2 minutes: it started a run by itself, the run finished in 242 seconds (2,184 passes, 5 burns), and the timer firing twice more during the run started nothing. The 6-hour wait itself has not been sat through |
 | Dashboard | Working | A priority list, burn plans with three pictures, Plan now, the satellite check, fleets, alerts, the validation line, and the 2009 replay |
-| Automated tests | 120 in the main system, 54 in the validation pack, all passing | GitHub runs them on every push |
+| Automated tests | 121 in the main system, 54 in the validation pack, all passing | GitHub runs them on every push |
 
 ### What the data covers
 
@@ -157,39 +157,44 @@ Think of it as an assembly line. Each run of the line takes about 4 minutes.
 
 ---
 
-## 5. Real results from the latest run (18:36 UTC, 24 hours ahead)
+## 5. Real results from the latest run (21:18 UTC, 24 hours ahead)
 
 The numbers change with every run. Read the current ones off the dashboard.
 
-- 29,683 objects; 2,099 passes closer than 1 km: 56 red, 208 amber, 1,835 green.
-- What happened to the 56 red passes:
+- 29,679 objects; 2,332 passes closer than 1 km: 69 red, 235 amber, 2,028 green.
+- What happened to the 69 red passes:
 
   | Outcome | Count |
   |---|---|
-  | Burn planned and verified | 5 |
-  | Same fleet (25 Starlink pairs, 5 Qianfan): left to the operator | 30 |
-  | Not planned: the limit of 5 burn searches per run was reached. Any of these can be planned with "Plan now" | 17 |
-  | Neither object can move: warning only | 4 |
+  | Burn ready, verified | 17 |
+  | Same fleet (Starlink and Qianfan pairs): left to the operator | 45 |
+  | No safe burn: every burn tried would create or worsen another dangerous pass | 4 |
+  | Neither object can move: warning only | 2 |
+  | Too soon to burn | 1 |
 
-- The dashboard's Priority list is the 26 red passes that are not inside one fleet.
-- All five burns were for a satellite against something that cannot move: three rocket stages, one piece of debris and one unnamed object. Sizes: 19 to 100 mm/s.
+- The dashboard's Priority list is the 24 red passes that are not inside one fleet. Every one has a burn ready or says why not.
+- Burn sizes: 19 to 100 mm/s. 11 of the 17 reach the full safety target. The other 6 bring the worst case back to green at the largest burn searched (100 mm/s) but leave the best-estimate probability just above 1 in a million; each says it is the best available.
+- The run took 6 min 45 s: under 2 minutes for the search and under 4 for the 21 burn searches.
+
+**"Burn ready" is advice, not an order.** A pass is red on its worst case, because public data does not say how uncertain the positions really are. Our best estimate is usually far lower (for KUIPER-00053 below: worst case 1 in 900, best estimate 1 in 64,000). A real operator would first get better tracking, and would burn only if the risk stayed above about 1 in 10,000 close to the pass. The burn is ready so that no time is lost if it does.
 
 ### Four real cases
 
 > **A burn, and why early is cheaper.** KUIPER-00053 and the spent rocket stage SCOUT B-1 R/B will pass 251 m apart at 13.2 km/s. Worst case: 1 in 900. The rocket stage cannot move.
-> **Recommendation now, with 6 hours left:** slow down by 66 mm/s half a lap before the pass. The pass becomes 585 m and the worst case 1 in 880,000.
+> **Recommendation in the evening, a few hours before the pass:** slow down by 66 mm/s half a lap before the pass. The pass becomes 585 m and the worst case 1 in 880,000.
 > **The same pass at midday, with 10 more hours in hand:** 43 mm/s, 6.5 laps early, moved it to 2.66 km. The earlier the burn, the smaller it is.
 
 > **A late change of height.** STARLINK-6223 and an unnamed object will pass 238 m apart at 13.3 km/s. The Starlink's position along its path is uncertain by kilometres, so sliding it along the path would not help.
 > **Recommendation:** speed up by 100 mm/s half a lap before the pass, which changes its height at the meeting point.
 > **Result:** the pass becomes 419 m, and the worst case falls from 1 in 5,000 to 1 in 1.2 million.
 
-> **A burn asked for with "Plan now".** STARLINK-4043 and FLOCK 4G-8 will pass 76 m apart at 12.7 km/s, worst case 1 in 196. The run had used its five searches.
-> **Result, 20 seconds after the button:** slow down by 66 mm/s half a lap early. The pass becomes 451 m and the worst case 1 in 737,000.
+> **Two working satellites.** STARLINK-4043 and FLOCK 4G-8 will pass 76 m apart at 12.7 km/s, worst case 1 in 196. Either could move.
+> **Recommendation:** the Starlink slows down by 66 mm/s half a lap early, because its orbit data is newer. The plan says the two operators would need to agree.
+> **Result:** the pass becomes 451 m and the worst case 1 in 737,000.
 
 > **A pass that gets no burn, and why.** 2024-173D and STARLINK-38027 meet once every lap, at 7.9, 5.0, 2.4, 0.18, 1.7, 3.2 and 4.4 km. The 0.18 km meeting is red.
 > **What the system did:** tried 5 burns. 2 created a new dangerous pass and 3 made another dangerous pass of the satellite worse, because clearing one meeting moves the danger to the next.
-> **Result:** no burn proposed, with that reason on the screen.
+> **Result:** no burn proposed. The list says "No safe burn" and the card gives the count above.
 
 ---
 
@@ -290,7 +295,7 @@ The page to hand a judge is `addons/b_trust/out/VALIDATION_REPORT.md`, with four
 
 | Question | Answer, with our own measurement |
 |---|---|
-| Why Python? | The orbit maths runs in the compiled C++ core of the `sgp4` library, the neighbour search in SciPy's compiled KD-tree, the array maths in NumPy's compiled C. Python connects them. It is also the standard language of this field, and it let one person build and test the whole engine in a day. The result is fast enough by a wide margin: the whole sky in 3.5 minutes, when the data itself only changes a few times a day |
+| Why Python? | The orbit maths runs in the compiled C++ core of the `sgp4` library, the neighbour search in SciPy's compiled KD-tree, the array maths in NumPy's compiled C. Python connects them. It is also the standard language of this field, and it let one person build and test the whole engine in a day. The result is fast enough by a wide margin: the whole sky searched in under 2 minutes, when the data itself only changes a few times a day |
 | Is Python not slow? | Plain Python is, so we do not use it for the heavy part. Compiled SGP4 through NumPy arrays: 1.5 million positions per second on one core, 18 times the same maths in plain Python |
 | Why NumPy? | It holds all 30,000 objects as one block of numbers, so one instruction does the work of 30,000 loop steps, in compiled code. It is also what SciPy and `sgp4` take as input, so nothing is copied or converted |
 | Why a KD-tree and not just compare everything? | 440 million pairs at each moment, 8,640 moments in a day. The KD-tree finds the nearby pairs in 40 ms. Checking every pair with NumPy takes 60 s and gives the identical answer. Over a day on one core: 6 minutes against 145 hours. The choice of method matters far more than the choice of language |
@@ -320,12 +325,13 @@ You can rerun the speed measurements in front of a judge: `.venv\Scripts\python 
 | Did you catch the 2009 collision? | A day before, from public data: the most dangerous pass of Iridium 33 (first of two), at the right second, rated amber. Public data said a 584 m miss; they hit. We say that plainly: it shows the limit of public data and why we rank by worst case |
 | Why was 2009 amber and not red? | Public data predicted a 584 m miss, which gives a worst case of 1 in 90,000. Red starts at 1 in 10,000. Nobody could have rated it red from that data, and we do not move the line to make the story look better |
 | Why only 24 hours ahead? | We ran 72 hours once. Passes outside fleets stayed at about 1,150 a day. Passes inside one fleet grew from 862 on day one to 9,209 on day three, which is the error of public data, not real danger |
-| Why does a dangerous pass have no burn? | Four honest reasons, and the plan states which: both satellites are of one fleet; neither object can move; the run's limit of five was reached (then press Plan now); or every burn tried would create or worsen another dangerous pass |
-| Can it plan a burn for a pass the run skipped? | Yes. Plan now searches and checks a burn for any pass in about 20 seconds, up to a minute for a crowded satellite |
+| Why does a dangerous pass have no burn? | Four honest reasons, and the list says which: both satellites are of one fleet; neither object can move; the pass is too soon; or every burn tried would create or worsen another dangerous pass |
+| Does a satellite have to move when it says "Burn ready"? | No. It is advice. Red is judged on the worst case, and our best estimate is usually far lower. The burn is ready in case better tracking confirms the risk |
+| What is "Plan now" for? | The run plans every dangerous pass it can. Plan now shows what a burn would take for a pass the system only watches, in about 20 seconds, marked as a what-if |
 | Can I check one satellite? | Yes. Type its name or number. It is checked against everything at its height for the next 24 hours: the ISS takes 6 seconds, a Starlink about 17 |
-| How fast is it? | The whole sky, 24 hours ahead, with measured uncertainty, burn plans, alerts, briefings and the CelesTrak comparison: 205 to 250 seconds on a 12-core laptop with the data already downloaded |
+| How fast is it? | The whole sky, 24 hours ahead, with measured uncertainty, a burn search for every dangerous pass, alerts, briefings and the CelesTrak comparison: about 7 minutes on a 12-core laptop with the data already downloaded. The search itself is under 2 minutes and the 21 burn searches under 4 |
 | Does a burn waste the satellite's position in its fleet? | No: a return burn of the same size is planned after the pass |
-| How do you avoid drowning the operator in alerts? | Passes are tracked across runs, and only changes raise an alert: the latest run raised 5 for 2,099 passes. The dashboard opens on 26 priority passes, not on 2,099 |
+| How do you avoid drowning the operator in alerts? | Passes are tracked across runs, and only changes raise an alert: the latest run raised 7 for 2,332 passes. The dashboard opens on 24 priority passes, not on 2,332 |
 | What would real operations need? | Precise orbit data from the operator, coordination between operators, and a link to the satellite's command system. Ours is decision support from public data, built so better data can replace the public data without changing the rest |
 
 ---
@@ -346,11 +352,12 @@ You can rerun the speed measurements in front of a judge: `.venv\Scripts\python 
 | Added | What it does | Checked on live data |
 |---|---|---|
 | Safer burns | Every dangerous pass found after a burn is computed again without it. A burn that creates one, or worsens one the satellite already had, is rejected, and a different kind of burn is tried | The plan card shows "0 new, 0 worse"; the 2024-173D case above |
-| Plan now | A burn plan for any pass the run did not plan | 20 seconds for STARLINK-4043 and FLOCK 4G-8 |
+| Every dangerous pass planned | A run searches for a burn for every dangerous pass it can, and each row says "Burn ready" or gives the reason there is none | 17 burns ready and 7 reasons in the run of 21:18 UTC |
+| Plan now | What a burn would take for a pass the system only watches | About 20 seconds |
 | Three pictures per pass | The gap with and without the burn; every burn tried, with the chosen one ringed; the risk at each run | In a real Chrome browser |
 | Check any satellite | Its passes within 10 km for the next 24 hours | The ISS: 4 passes, none dangerous, 6 seconds |
 | Fleets | One row per fleet: passes, dangerous passes to act on, passes inside the fleet, burns planned | Starlink, Yaogan, Flock, Kuiper and 220 more |
-| Priority list | The dashboard opens on the dangerous passes that are not inside one fleet | 26 of 56 |
+| Priority list | The dashboard opens on the dangerous passes that are not inside one fleet | 24 of 69 |
 | 24-hour scheduled run | The automatic run looks 24 hours ahead, not 72 | Section 7 has the reason |
 | Proof section | The dashboard draws the four validation results: distances against CelesTrak, probability against ESA, the error of public data by its age, and how far the ranking depends on our assumptions | In a real Chrome browser |
 | Documents on each plan | Links to the standard warning message (CDM) and the briefing written for that pass | Both open |
@@ -376,7 +383,7 @@ The main system still runs with the packs removed; each pack adds features.
 - **Our measured uncertainty is itself too small.** It compares public records with each other. The 2009 replay shows the consequence.
 - **Small junk is invisible.** Pieces under about 10 cm are not tracked publicly.
 - **Object size is the assumption that matters most,** and public data gives it only roughly (a radar size, or a guess by class).
-- **Only 5 burn searches per run,** to keep a run to minutes; 17 red passes were left unplanned in the latest run. Any of them can be planned with one button.
+- **Some burns stop short of the target.** The search goes up to 100 mm/s. 6 of the 17 burns in the latest run bring the worst case back to green but leave the best estimate just above 1 in a million. Each says it is the best available.
 - **Some passes get no burn.** For a pair that meets every lap, no burn on our grid clears every meeting. The system says so; it does not solve it.
 - **We look 24 hours ahead.** Further out, public data is too rough for satellites that manoeuvre (section 7).
 - **Burns are treated as instantaneous,** and the safety re-check covers 24 hours.
@@ -395,12 +402,12 @@ The timed script, with what to click and what to say, is in `docs/team/SIMPLE.md
 | 25 s | The problem, in three sentences |
 | 25 s | The four numbers at the top, and the line "distances match CelesTrak to 0.35 m" |
 | 45 s | A burn plan: the burn, the gap with and without it, every burn tried, "0 new, 0 worse" |
-| 25 s | Plan now on a pass the run did not plan |
+| 25 s | The Plan column: every dangerous pass has a burn ready or a stated reason |
 | 20 s | A satellite the judge names, typed into the box |
 | 25 s | The 2009 replay: found, timed right, rated amber, and what that teaches |
 | 15 s | The limits, said by us |
 
-Do not press "Run now" during the talk; a run takes about four minutes.
+Do not press "Run now" during the talk; a run takes about seven minutes.
 
 ---
 

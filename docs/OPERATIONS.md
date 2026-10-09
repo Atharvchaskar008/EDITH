@@ -55,6 +55,7 @@ Measured on a 12-core laptop on 9 October 2026, with 29,686 objects.
 | Run | Time |
 |---|---|
 | Full sky, 24 hours, 5 burn plans, both teammate packs, orbit data already downloaded | 3 minutes (177 s) |
+| The same with every plannable red pass planned (21 burn searches, the default since the evening of 9 October) | 6 min 45 s (405 s): search 111 s, burn searches 225 s |
 | The same when the orbit data has to be downloaded on a slow connection | 7 minutes (438 s, of which 173 s is the download) |
 | Full sky, 72 hours, search only | about 7 minutes |
 | Protected set only, 24 hours, 1 burn plan | about 2.5 minutes |
@@ -113,7 +114,7 @@ Every tunable number is in `fusion/config.py`. The ones most likely to be change
 | `SCREEN_THRESHOLD_ALL_LEO_KM`, `SCREEN_THRESHOLD_KM` | 1, 5 | Largest miss distance reported in each mode |
 | `RED_PC_MAX`, `AMBER_PC_MAX` | 1e-4, 1e-5 | Risk levels, on worst-case probability |
 | `TARGET_PC_AFTER`, `TARGET_PC_MAX_AFTER` | 1e-6, 1e-5 | What a burn must achieve |
-| `MAX_PLANS_PER_RUN` | 5 | Burn searches per run |
+| `MAX_PLANS_PER_RUN` | 40 | Ceiling on burn searches per run. A 24-hour full-sky run needs about 20; set it to 5 for a run of about 4 minutes |
 | `VERIFY_HOURS` | 24 | How long a burn is re-screened for new close passes |
 | `VERIFY_WORSE_TOLERANCE` | 0.10 | Rise in worst-case probability that counts as making another pass of the satellite worse |
 | `SCHEDULER_INTERVAL_HOURS` | 6 | Time between automatic runs |
