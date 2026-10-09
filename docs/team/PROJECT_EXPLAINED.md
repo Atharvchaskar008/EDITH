@@ -142,7 +142,7 @@ Think of it as an assembly line. Each run of the line takes about 7 minutes.
 | Web server with all data routes | Working | Tested, and checked in a real Chrome browser |
 | Automatic re-run every 6 hours | Working | Watched on a second copy of the server with the timer set to 2 minutes: it started a run by itself, the run finished in 242 seconds (2,184 passes, 5 burns), and the timer firing twice more during the run started nothing. The 6-hour wait itself has not been sat through |
 | Dashboard | Working | A priority list, burn plans with three pictures, Plan now, the satellite check, fleets, alerts, the validation line, and the 2009 replay |
-| Automated tests | 121 in the main system, 54 in the validation pack, all passing | GitHub runs them on every push |
+| Automated tests | 122 in the main system, 54 in the validation pack, all passing | GitHub runs them on every push, on Python 3.11 to 3.14 |
 
 ### What the data covers
 
