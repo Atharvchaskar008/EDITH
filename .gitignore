@@ -11,3 +11,4 @@ dist/
 addons/*/.venv/
 addons/*/esa/
 addons/*/cache/
+addons/*/snapshots/
