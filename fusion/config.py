@@ -59,7 +59,9 @@ SIGMA_RATE_RTN_KM_PER_DAY = {
 }
 
 # --- Manoeuvre -------------------------------------------------------------
-TARGET_PC_AFTER = 1e-6
+TARGET_PC_AFTER = 1e-6  # probability after the burn must be below this ...
+TARGET_PC_MAX_AFTER = 1e-5  # ... and the worst case must be back to GREEN
+VERIFY_HOURS = 24.0  # how long the manoeuvred orbit is re-screened for new close approaches
 DV_GRID_MIN_MS = 0.001
 DV_GRID_MAX_MS = 0.1
 DV_GRID_POINTS = 12

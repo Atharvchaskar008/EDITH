@@ -74,13 +74,18 @@ class SearchGrid(BaseModel):
     lead_orbits: list[float]
     dv_ms: list[float]  # signed along-track delta-v
     pc_after: list[list[Optional[float]]]  # [dv][lead]
+    pc_max_after: Optional[list[list[Optional[float]]]] = None
     miss_after_km: list[list[Optional[float]]]
+    # worst-case probability after a 30 mm/s burn in the other two directions, per lead time
+    radial_30mms_pc_max_after: Optional[list[float]] = None
+    cross_track_30mms_pc_max_after: Optional[list[float]] = None
 
 
 class ManeuverPlan(BaseModel):
     event_id: str
     decision: Decision
     rationale: Optional[str] = None
+    maneuvering_id: Optional[int] = None  # which of the two objects burns
     burn_time: Optional[datetime] = None
     lead_time_orbits: Optional[float] = None
     dv_rtn_ms: Optional[list[float]] = None
@@ -89,6 +94,8 @@ class ManeuverPlan(BaseModel):
     miss_after_km: Optional[float] = None
     pc_before: Optional[float] = None
     pc_after: Optional[float] = None
+    pc_max_before: Optional[float] = None
+    pc_max_after: Optional[float] = None
     secondary_conjunctions_created: Optional[int] = None
     return_burn_time: Optional[datetime] = None
     return_dv_rtn_ms: Optional[list[float]] = None
