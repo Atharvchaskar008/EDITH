@@ -19,7 +19,7 @@ About 30,000 tracked objects fly around the Earth below 2,000 km: satellites, de
 
 ## What you can ask it
 
-- **"Plan now"**: a run plans burns for its first 5 dangerous passes. For any other pass, one button searches for a burn and checks it, in one to two minutes.
+- **"Plan now"**: a run plans burns for its first 5 dangerous passes. For any other pass, one button searches for a burn and checks it, in about 20 seconds (up to a minute for a crowded satellite).
 - **"Check any satellite"**: type a name or number (for example ISS). It lists that satellite's close passes within 10 km for the next 24 hours, in seconds.
 - **"Fleets"**: one row per fleet (Starlink, Kuiper and so on): how many passes, how many are dangerous, how many burns are planned.
 
@@ -61,7 +61,7 @@ Python only gives the orders. The heavy maths runs in compiled C and C++ librari
 ## How to show it
 
 - Start: `.venv\Scripts\python -m uvicorn fusion.api.main:app --port 8000`
-- Dashboard: http://localhost:8000. Press "Run now". Click "With a plan" and a row: the burn, and three pictures (the gap with and without the burn, every burn tried, the risk run by run). Click a red "Watch" row under "All" and press "Plan now". Type ISS in the box. Click "Fleets".
+- Dashboard: http://localhost:8000. It opens on "Priority": the dangerous passes that are not inside one fleet. Click a "Move" row: the burn, and three pictures (the gap with and without the burn, every burn tried, the risk run by run). Click a "Watch" row and press "Plan now". Type ISS in the box. Click "Fleets". Click "2009 replay".
 - Story page: http://localhost:8000/landing
 
 ## What to say in 3 minutes

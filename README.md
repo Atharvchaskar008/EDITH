@@ -2,6 +2,7 @@
 
 **Autonomous collision avoidance for low Earth orbit, built on public orbit data.**
 
+[![tests](https://github.com/Atharvchaskar008/EDITH/actions/workflows/tests.yml/badge.svg)](https://github.com/Atharvchaskar008/EDITH/actions/workflows/tests.yml)
 ![Python](https://img.shields.io/badge/Python-3.14-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-web_API-009688?logo=fastapi&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-array_maths-013243?logo=numpy&logoColor=white)
@@ -9,7 +10,7 @@
 ![SGP4](https://img.shields.io/badge/SGP4-orbit_model-555555)
 ![Pydantic](https://img.shields.io/badge/Pydantic-data_models-E92063?logo=pydantic&logoColor=white)
 ![LightGBM](https://img.shields.io/badge/LightGBM-risk_trend_model-9ACD32)
-![pytest](https://img.shields.io/badge/pytest-117_tests-0A9EDC?logo=pytest&logoColor=white)
+![pytest](https://img.shields.io/badge/pytest-118_tests-0A9EDC?logo=pytest&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-dashboard-F7DF1E?logo=javascript&logoColor=black)
 
 EDITH screens every publicly tracked object in low Earth orbit against every other, ranks the close passes by collision probability, and recommends the smallest avoidance burn that makes a dangerous pass safe. It re-runs every six hours without supervision and serves its results through a web API and an operator dashboard.
@@ -119,8 +120,8 @@ The full report, with its limits, is in [addons/b_trust/out/VALIDATION_REPORT.md
 Tested on Python 3.14 and Windows 11. Other versions and platforms are untested.
 
 ```
-git clone https://github.com/Atharvchaskar008/Fusion-skn.git
-cd Fusion-skn
+git clone https://github.com/Atharvchaskar008/EDITH.git
+cd EDITH
 python -m venv .venv
 .venv\Scripts\python -m pip install -r requirements.txt
 .venv\Scripts\python -m pip install -r requirements-addons.txt
@@ -159,6 +160,12 @@ Then open http://localhost:8000 and press **Run now**.
 | http://localhost:8000/landing | Story page for visitors |
 | http://localhost:8000/docs | Interactive API documentation |
 
+The dashboard opens on **Priority**: the dangerous passes that are not between two satellites of one fleet. **Plan now** searches for a burn for any pass the run did not plan, in about 20 seconds.
+
+| Fleets | Check any satellite |
+|---|---|
+| ![One row per fleet](docs/images/fleets.png) | ![The close passes of the ISS](docs/images/check.png) |
+
 ### API
 
 | Route | Returns |
@@ -166,7 +173,7 @@ Then open http://localhost:8000 and press **Run now**.
 | `POST /run` | Starts a run |
 | `GET /run/{id}/status` | Stage, progress and log of a run |
 | `GET /latest` | Summary of the latest finished run |
-| `GET /events` | Close passes, most dangerous first; filter by `level`, `plan` or `fleet` |
+| `GET /events` | Close passes, most dangerous first; filter by `level`, `plan`, `fleet` or `own_fleet` |
 | `GET /events/{id}` | One pass with its plan, both tracks and the encounter-plane picture |
 | `GET /events/{id}/plan` | The decision for one pass |
 | `POST /events/{id}/plan` | Search now for a burn for a pass the run did not plan |
@@ -250,7 +257,7 @@ The main system is complete without them; each pack adds a capability through a 
 
 | Area | State |
 |---|---|
-| Engine, pipeline, scheduler, API | Complete; 117 tests |
+| Engine, pipeline, scheduler, API | Complete; 118 tests, run on GitHub on every push |
 | Validation pack | Complete; 54 tests |
 | Dashboard | Working: numbers, ranked list, plans with three pictures, plan on request, satellite check, fleets, alerts, replay. A 3D view is not built |
 
