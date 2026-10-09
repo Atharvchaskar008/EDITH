@@ -26,7 +26,7 @@ from fusion.contracts import ConjunctionEvent, ManeuverPlan, SpaceObject
 from fusion.core.ingest import load_catalog_with_stats
 from fusion.core.sat import to_utc
 from fusion.core.screen import screen, worker_count
-from fusion.maneuver.planner import plan, quick_decision
+from fusion.maneuver.planner import plan, quick_decision, slot_priority
 from fusion.risk.pc import assess
 from fusion.synthetic import make_conjunction
 
@@ -178,7 +178,10 @@ def run_pipeline(
 
         stage = "PLAN"
         reds = [e for e in events if e.risk_level == "RED"]
-        reds.sort(key=lambda e: (not e.synthetic, -(e.pc_max or 0.0)))  # the test object first
+        # the test object first, then passes where only one object can move
+        reds.sort(key=lambda e: (
+            not e.synthetic, slot_priority(by_id[e.primary_id], by_id[e.secondary_id]), -(e.pc_max or 0.0),
+        ))
         # decide cheaply which red events need a burn search, then search those in parallel
         searches: list[ConjunctionEvent] = []
         decided: dict[str, ManeuverPlan] = {}

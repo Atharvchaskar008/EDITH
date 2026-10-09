@@ -137,3 +137,29 @@ def test_mover_choice(red_case):
     assert choose_mover(debris, primary)[0] is primary
     other = primary.model_copy(update={"norad_id": 7, "epoch": primary.epoch + timedelta(days=1)})
     assert choose_mover(primary, other)[0] is other  # newer orbit data moves
+
+
+def test_same_fleet_pairs_get_no_burn_and_one_mover_passes_come_first(primary):
+    from fusion.maneuver.planner import fleet, same_fleet, slot_priority
+
+    def sat(name, operational=True):
+        return primary.model_copy(update={"name": name, "operational": operational})
+
+    assert fleet(sat("STARLINK-5246")) == "STARLINK" and fleet(sat("IRIDIUM 106")) == "IRIDIUM"
+    assert fleet(sat("STARLINK-5246", operational=False)) == "" and fleet(sat("OBJECT A")) == "" and fleet(sat("2026-229A")) == ""
+    assert same_fleet(sat("STARLINK-5246"), sat("STARLINK-34453")) == "STARLINK"
+    assert same_fleet(sat("STARLINK-2063"), sat("FLOCK 4G-24")) == ""
+    assert same_fleet(sat("OBJECT A"), sat("OBJECT B")) == ""
+    assert slot_priority(sat("KUIPER-00483"), sat("FENGYUN 1C DEB", operational=False)) == 0
+    assert slot_priority(sat("STARLINK-2063"), sat("FLOCK 4G-24")) == 1
+
+
+def test_two_satellites_of_one_fleet_are_left_to_their_operator(red_case):
+    event, catalog, now = red_case
+    fleet_pair = [
+        catalog[0].model_copy(update={"name": "STARLINK-1", "operational": True}),
+        catalog[1].model_copy(update={"name": "STARLINK-2", "operational": True}),
+    ]
+    result = plan(event, fleet_pair, now=now, verify=False)
+    assert result.decision == "MONITOR" and "STARLINK fleet" in result.rationale
+    assert plan(event, fleet_pair, now=now, force=True, verify=False).decision == "MANEUVER"

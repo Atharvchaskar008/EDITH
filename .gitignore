@@ -12,3 +12,6 @@ addons/*/.venv/
 addons/*/esa/
 addons/*/cache/
 addons/*/snapshots/
+data/replay_2009/
+data/alert_feed.json
+data/validation.json

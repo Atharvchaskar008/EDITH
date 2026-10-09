@@ -197,10 +197,20 @@ def latest_summary() -> dict:
 # --- events, plans, alerts ---------------------------------------------------
 
 @app.get("/events")
-def list_events(limit: int = 50, level: Optional[str] = None, source: str = "latest") -> list[dict]:
-    events = _events(_folder(source))
+def list_events(
+    limit: int = 50, level: Optional[str] = None, plan: Optional[str] = None, source: str = "latest"
+) -> list[dict]:
+    """Events, most dangerous first, each with its plan's decision as `plan_decision`
+    (null for green events). `plan=MANEUVER` keeps only events with a burn planned."""
+    folder = _folder(source)
+    events = _events(folder)
+    decisions = {p.get("event_id"): p.get("decision") for p in read_json(folder / "plans.json", [])} if folder else {}
+    for event in events:
+        event["plan_decision"] = decisions.get(event.get("event_id"))
     if level:
         events = [e for e in events if e.get("risk_level") == level.upper()]
+    if plan:
+        events = [e for e in events if e["plan_decision"] == plan.upper()]
     return events[: max(0, limit)]
 
 
@@ -269,8 +279,11 @@ def event_detail(event_id: str, source: str = "latest") -> dict:
 
 
 @app.get("/alerts")
-def list_alerts(since: Optional[str] = None) -> list[dict]:
-    """Alerts written by the alert add-on; empty when it is not running."""
+def list_alerts(
+    since: Optional[str] = None, kind: Optional[str] = None, severity: Optional[str] = None, limit: int = 0
+) -> list[dict]:
+    """Alerts written by the alert add-on; empty without it. `kind` and `severity`
+    filter (a full-sky run produces hundreds), `limit` keeps the first few."""
     alerts: list[dict] = []
     for folder in reversed(completed_runs()):
         if since and folder.name <= since:
@@ -278,7 +291,11 @@ def list_alerts(since: Optional[str] = None) -> list[dict]:
         alerts.extend(read_json(folder / "alerts.json", []))
         if not since:
             break  # by default only the latest run's alerts
-    return alerts
+    if kind:
+        alerts = [a for a in alerts if a.get("kind") == kind.upper()]
+    if severity:
+        alerts = [a for a in alerts if a.get("severity") == severity.upper()]
+    return alerts[:limit] if limit > 0 else alerts
 
 
 @app.get("/summary")

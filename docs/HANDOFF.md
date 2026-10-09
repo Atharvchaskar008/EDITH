@@ -61,8 +61,8 @@ Atharv wants about 50 commits over the whole project, in plain natural language 
 | 7 Server and scheduler | Done, checked against a real run |
 | 8 Basic test page | Done (`fusion/api/static/index.html`, served at `/`) |
 | 9 Harden the engine on real data | Done: parallel search and planning, repeatability and failure tests, timings |
-| 10 Connect A's pack | Waiting for `addons/a_history/` |
-| 11 Connect B's and C's packs | Waiting for `addons/b_trust/` and `addons/c_ops/` |
+| 10 Connect A's pack | Done: measured sizes, test kit checked, 2009 replay built and served |
+| 11 Connect B's and C's packs | C done: alerts, history, summary, briefings, CDM files, risk-trend prediction. B's pack has not arrived; its two hooks stay on their fallbacks |
 | 12 Close out session 1 | Done: `docs/RUN.md`, `docs/API.md`, and the event detail route already returns tracks and the encounter picture |
 | D1–D6 | Not started |
 
@@ -86,7 +86,7 @@ What this means:
 - The search and the burn planning both run across CPU cores. A full-sky 24-hour run with five burn plans takes about 4 minutes, so it can be started early in a demo and shown finishing.
 - Before Space-Track, with CelesTrak only (18,539 objects, every object assumed 5 m): `ALL_LEO` took 14 minutes and a third of events were RED. Those numbers are superseded.
 
-## What exists in the code (86 tests passing, 1 skipped until teammate B's cases arrive)
+## What exists in the code (101 tests passing, 1 skipped until teammate B's cases arrive)
 
 | File | What it does |
 |---|---|
@@ -101,7 +101,9 @@ What this means:
 | `fusion/core/screen.py` | `screen(catalog, t0, hours, threshold_km, mode, step_s, on_progress, stats)`: both modes; `order_pair()` gives the stable primary/secondary order |
 | `fusion/risk/covariance.py` | `sigma_rtn(obj, age)`: measured value from B's pack if present, else the assumed table |
 | `fusion/risk/pc.py` | `pc_2d`, `pc_disc`, `pc_max_disc`, `encounter_plane`, `event_covariances`, `assess(event, catalog_by_id)` |
-| `fusion/addons.py` | The three optional hooks into the teammate packs, each with a fallback |
+| `fusion/addons.py` | The three optional hooks into the teammate packs, each with a fallback, and `after_run` (alerts, briefings, CDM files) |
+| `fusion/replay/replay_2009.py` | The 2009 replay: builds the catalogue known a day before the collision, runs the pipeline, stores a what-if burn |
+| `scripts/why_python.py` | Measures compiled SGP4 and the KD-tree against plain Python and against checking every pair |
 | `fusion/maneuver/orbit.py` | `ManeuveredOrbit(obj, burn_time, dv_rtn_ms, duration_s, return_after_s)`: SGP4 orbit plus the integrated effect of a burn and its return burn; `.states(seconds)`, `.delta(seconds)` |
 | `fusion/maneuver/verify.py` | `closest_approach_to_orbit(orbit, other, centre_s, half_window_s)` and `new_conjunctions(orbit, catalog, exclude_ids, baseline=...)` |
 | `fusion/maneuver/planner.py` | `plan(event, catalog, now, baseline, force, verify)` returns a `ManeuverPlan`; `choose_mover()` decides which object burns |
@@ -132,9 +134,36 @@ These points keep our code consistent with what the packs expect. Follow them wh
 - **B's `measured_sigma(norad_id, object_type, tle_age_days)`** returns three RTN sigmas in km or `None`. Our hook in `fusion/addons.py` adapts the arguments.
 - **B's probability test cases** give RTN sigmas per object; build each covariance with `cov_rtn_to_teme` before calling our `pc_2d`.
 
+## Teammate packs: what arrived and how they are connected (9 October 2026)
+
+Two pull requests were merged into `main`. Teammate A's came as a copy of the whole project in `addons_A_history/`; the pack was moved to `addons/a_history/` and the copy (identical to an older version of our files) was removed. Teammate B's pack has not arrived.
+
+| Pack | What we use | How |
+|---|---|---|
+| A sizes | `enrich.enrich_catalog` | Hook in `fusion/addons.py`, called at the end of `load_catalog`. We take the pack's radius only where it has a measured radar size (`_has_real_rcs`); elsewhere we keep the Space-Track size class. 11,063 of 29,685 objects get a measured size; debris median radius goes from 0.40 m to 0.10 m. First call downloads `satcat.csv` into the pack's `cache/` |
+| A test kit | `out/testkit/cases.json` | `tests/test_teammate_packs.py` checks our search against the kit and against an independent dense calculation. We do not call the kit's `check()`: its expected lists hold one closest approach per pair, which is incomplete for cases 1, 5, 6 and 7 |
+| A replay | `out/replay_2009.json` | `python -m fusion.replay.replay_2009` writes `data/replay_2009/` |
+| C alerts | `watch.process_single_run` | `addons.after_run`, called by the pipeline after the run files are written and before `DONE`. It is given only earlier runs of the same mode and window. `events.json` is backed up and restored if the pack damages it; plan ids are kept in step if the pack renames an event |
+| C briefings, CDM | `briefing.generate_run_briefings`, `cdm_export.export_run_cdms` | Same step; one file per red and amber event |
+| C prediction | `predict.predict_final_risk` | Hook; the pack returns log10 of the probability, we store a probability in `pc_predicted_final` and pass the run time as `run_time` |
+| C pitch files | `out/pitch/*.md` | Listed by `GET /addons`. Several answers in `judge_questions.md` describe things our system does not do (measured uncertainty, one constellation only, a 99.9% plane filter); use `docs/PROJECT_EXPLAINED.md` instead |
+
+Rules that follow from this:
+
+- The packs need `requirements-addons.txt`. Without those libraries the hooks log a warning and fall back.
+- Our tests run as if `addons/` were empty (session fixture in `tests/conftest.py`). Tests that use the real packs ask for the `real_packs` fixture and skip when a pack or library is missing. `pytest.ini` limits collection to `tests/`, because the packs have their own tests.
+- Never start `addons/c_ops/watch.py` against `data/runs`; it would compare runs of different modes.
+- A replay run (`run_dir` given) gets briefings and CDM files but no alerts.
+
+2009 replay result, as it came out, nothing tuned: at 9 February 2009 17:00 UTC, from 2,899 objects public at that time, Iridium 33 has 2 passes within 5 km in the next 48 hours. Rank 1 is Cosmos 2251: closest approach 10 February 16:55:59 UTC (the reported collision time is 16:56), predicted miss 0.584 km, 11.65 km/s, probability 2.0e-5, worst case 9.7e-5, level AMBER (the RED line is 1e-4), decision MONITOR. The stored what-if burn is 43 mm/s against the direction of travel, 6.75 orbits before, giving a 3.99 km miss and worst case 2.5e-6.
+
+How stable the predictions are (measured between the 08:31 and 10:38 UTC downloads, 1,747 passes): the predicted miss moved by a median of 0.03 km when neither object can manoeuvre, 0.55 km when one or both are operational, and 26.5 km for two Starlink satellites. This is why same-fleet pairs get no burn plan and why burn searches go first to passes where exactly one object can move.
+
 ## How the planner behaves (so later steps match it)
 
 - A burn is planned only for RED events (or with `force=True`). AMBER gives `MONITOR`, GREEN gives `NO_ACTION`.
+- Two operational satellites of the same fleet (same leading word in the name, for example STARLINK) get `MONITOR` with the reason; `force=True` overrides.
+- The burn searches of a run (at most `MAX_PLANS_PER_RUN`) go first to red passes where exactly one object can move (`slot_priority`), then by worst-case probability.
 - The object that burns is the operational one; if both are operational, the one with newer orbit data; if neither is, the plan is `MONITOR` with "warning only". `maneuvering_id` says which object burns, and `dv_rtn_ms` is in that object's frame.
 - A burn must be at least 30 minutes after `now`. If the pass is sooner than half an orbit plus that, the plan is `MONITOR` with "too soon".
 - A burn counts as safe when the probability after it is below 1e-6 AND the worst-case probability is below 1e-5 AND the miss distance grew. If nothing on the grid reaches that, the best available burn is returned and the rationale says so.
@@ -151,7 +180,7 @@ These points keep our code consistent with what the packs expect. Follow them wh
 - Server routes beyond `docs/CONTRACTS.md`: `GET /latest` (the latest run's `run.json`), `GET /runs/latest/files/<path>` and `GET /addons/files/<path>` (serve add-on outputs; only json, md, png, txt, csv), `source=replay` on the event routes to read the 2009 replay folder.
 - `GET /events/{id}` returns `{event, plan, track, encounter}`. `track` has positions every 5 s for 10 minutes either side of closest approach for both objects, plus the manoeuvred track when a burn is planned. `encounter` has the miss vector and covariance in the encounter plane, the hard-body radius, and the miss vector after the burn. Prompt 12's API additions are therefore already done.
 
-**Next step:** the backend is complete apart from connecting the teammate packs. Either start the frontend (prompts D1 to D6 in `docs/harness_ATHARV.md`, building from `docs/API.md`), or, if a pack has arrived in `addons/`, do prompt 10 or 11 for it first.
+**Next step:** the backend is complete with teammate A's and C's packs connected. Start the frontend (prompts D1 to D6 in `docs/harness_ATHARV.md`, building from `docs/API.md`). If `addons/b_trust/` arrives, do the B part of prompt 11 first.
 
 Notes from hardening:
 

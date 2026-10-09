@@ -142,3 +142,43 @@ def test_scheduler_reports_its_next_run():
     finally:
         monitor.stop()
     assert calls == []  # the first run is one interval away, not immediate
+
+
+def test_replay_serves_a_marked_what_if_burn(client, runs):
+    import shutil
+
+    replay = runs.parent / "replay_2009"
+    shutil.copytree(runs / "20261009T1500Z", replay)
+    try:
+        plans = json.loads((replay / "plans.json").read_text())
+        event_id = plans[0]["event_id"]
+        (replay / "what_if_plans.json").write_text(json.dumps(plans))
+        (replay / "plans.json").write_text(json.dumps([{"event_id": event_id, "decision": "MONITOR", "rationale": "Below the action threshold."}]))
+        assert client.get("/replay/2009").json()["what_if_plans"][0]["event_id"] == event_id
+        detail = client.get(f"/events/{event_id}?source=replay").json()
+        assert detail["plan"]["decision"] == "MONITOR" and detail["what_if_plan"]["decision"] == "MANEUVER"
+        assert detail["track"]["what_if"] is True and detail["track"]["maneuvered_km"] is not None
+        assert client.get("/runs/latest/files/plans.json?source=replay").status_code == 200
+        # today's run is unaffected
+        latest = client.get(f"/events/{event_id}").json()
+        assert latest["what_if_plan"] is None and latest["track"]["what_if"] is False
+    finally:
+        shutil.rmtree(replay)
+
+
+def test_scheduler_fires_again_and_again():
+    calls = []
+    monitor = main.Monitor(lambda: calls.append(time.time()), interval_hours=0.5 / 3600)  # every half second
+    monitor.start()
+    try:
+        time.sleep(1.8)
+    finally:
+        monitor.stop()
+    assert len(calls) >= 3 and all(0.3 < b - a < 0.8 for a, b in zip(calls, calls[1:]))
+
+
+def test_events_carry_their_plan_decision_and_can_be_filtered_by_it(client):
+    events = client.get("/events").json()
+    assert events[0]["plan_decision"] == "MANEUVER"
+    assert len(client.get("/events?plan=maneuver").json()) == 1
+    assert client.get("/events?plan=MONITOR").json() == []

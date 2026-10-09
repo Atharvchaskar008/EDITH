@@ -8,6 +8,7 @@ sure it creates no new danger, and plans the burn that undoes it afterwards.
 from __future__ import annotations
 
 import math
+import re
 from datetime import datetime, timezone
 from typing import Optional
 
@@ -41,6 +42,32 @@ def choose_mover(primary: SpaceObject, secondary: SpaceObject) -> tuple[Optional
     if secondary.operational:
         return secondary, f"{primary.name} cannot manoeuvre, so {secondary.name} moves."
     return None, "Neither object can manoeuvre. This is a warning only."
+
+
+_NOT_A_FLEET = {"OBJECT", "TBA", "UNKNOWN"}
+
+
+def fleet(obj: SpaceObject) -> str:
+    """The fleet an operational satellite belongs to, taken from the leading word of
+    its name ("STARLINK-5246" gives "STARLINK"). Empty when it cannot be told."""
+    if not obj.operational:
+        return ""
+    match = re.match(r"[A-Za-z]+", obj.name.strip())
+    word = match.group(0).upper() if match else ""
+    return "" if word in _NOT_A_FLEET else word
+
+
+def same_fleet(primary: SpaceObject, secondary: SpaceObject) -> str:
+    """The shared fleet name when both objects are operational satellites of one fleet."""
+    name = fleet(primary)
+    return name if name and name == fleet(secondary) else ""
+
+
+def slot_priority(primary: SpaceObject, secondary: SpaceObject) -> int:
+    """Burn searches are limited per run. Passes where exactly one object can move
+    come first: a burn is the only way out, and predictions for an object that
+    cannot manoeuvre are the stable ones."""
+    return 0 if primary.operational != secondary.operational else 1
 
 
 def _response_at_tca(mover: SpaceObject, tca: datetime, burn_times: list[datetime]) -> np.ndarray:
@@ -93,6 +120,15 @@ def quick_decision(
     mover, why = choose_mover(primary, secondary)
     if mover is None:
         return ManeuverPlan(decision="MONITOR", rationale=why, **base)
+    shared = same_fleet(primary, secondary)
+    if shared and not force:
+        return ManeuverPlan(
+            decision="MONITOR", rationale=(
+                f"Both satellites belong to the {shared} fleet. Its operator steers them with precise data "
+                "that is not public, and public predictions for such pairs move by tens of kilometres "
+                "between updates, so no burn is proposed here."
+            ), **base,
+        )
     if not burn_slots(event, mover, now):
         return ManeuverPlan(
             decision="MONITOR", maneuvering_id=mover.norad_id,
