@@ -8616,17 +8616,11 @@ function pv(t, e) {
 }
 
 function _v(t) {
-    document.documentElement.getAttribute("data-sound-ready") ? t() : window.addEventListener("soundready", () => {
-        t()
-    })
+    t()
 }
 
 function gv(t) {
-    new Audio("data:audio/mpeg;base64,").play().then(() => {
-        t(!0)
-    }).catch(() => {
-        t(!1)
-    })
+    t(!1)
 }
 const le = {
         $on: hv,
@@ -11041,46 +11035,21 @@ const N1 = "_intro_f79bo_1",
         __name: "Intro",
         setup(t) {
             vt();
-            const e = ie(!1),
-                n = ie(null),
-                s = () => {
-                    document.getElementById("loading").classList.add("none"), setTimeout(() => {
-                        e.value = !0, document.documentElement.classList.add("intro-done"), le.$emit("intro-done"), setTimeout(() => {
-                            document.getElementById("loading").classList.remove("none")
-                        }, 800)
-                    }, 200)
-                };
+            const e = ie(!0);
             return Yt(() => {
-                xn.fromTo(n.value.children, {
-                    opacity: 0,
-                    y: 160
-                }, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1.5,
-                    delay: .2,
-                    ease: "power4.inOut",
-                    stagger: .1
-                })
+                document.documentElement.classList.add("intro-done");
+                document.documentElement.setAttribute("data-sound-ready", "true");
+                le.$emit("intro-done");
+                try {
+                    window.dispatchEvent(new CustomEvent("soundready"));
+                    document.dispatchEvent(new CustomEvent("soundready"));
+                } catch {}
+                const m = document.getElementById("loading");
+                if (m) m.classList.add("none");
             }), (r, i) => (be(), et("div", {
-                class: Y([r.$style.intro, G(e) && r.$style.hide]),
-                onClick: s
-            }, [V("div", {
-                ref_key: "bg",
-                ref: n,
-                class: Y(r.$style.bg)
-            }, [(be(), et("svg", q1, [V("path", {
-                class: Y([r.$style.circle, "Vector"]),
-                "fill-rule": "evenodd",
-                d: "M60.5 1c-32.585 0-59 26.415-59 59s26.415 59 59 59 59-26.415 59-59-26.415-59-59-59ZM.5 60c0-33.137 26.863-60 60-60s60 26.863 60 60-26.863 60-60 60S.5 93.137.5 60Z",
-                "clip-rule": "evenodd"
-            }, null, 2), V("g", {
-                class: Y(r.$style.lines)
-            }, i[0] || (i[0] = [__('<path d="M93.75 55.963c-.69 0-1.251.542-1.251 1.21v5.24c0 .668.56 1.21 1.25 1.21s1.25-.542 1.25-1.21v-5.24c0-.668-.559-1.21-1.249-1.21Z" class="Vector"></path><path d="M86.249 53.946c0-.668.561-1.21 1.251-1.21.69 0 1.249.542 1.249 1.211v12.106c0 .67-.56 1.21-1.25 1.21s-1.25-.542-1.25-1.21V53.946Z" class="Vector"></path><path d="M80 47.895c0-.67.56-1.211 1.25-1.211s1.251.542 1.251 1.21v24.21c0 .67-.56 1.212-1.251 1.212-.69 0-1.25-.542-1.25-1.211v-24.21Z" class="Vector"></path><path d="M73.75 38.21c0-.668.56-1.21 1.25-1.21s1.25.543 1.25 1.21v43.58c0 .668-.56 1.21-1.25 1.21s-1.25-.542-1.25-1.21V38.21Z" class="Vector"></path><path d="M67.621 46.175c0-.668.56-1.21 1.25-1.21s1.25.54 1.25 1.209V73.41c0 .668-.56 1.21-1.25 1.21s-1.25-.542-1.25-1.211V46.175Z" class="Vector"></path><path d="M61.132 54.865c0-.668.56-1.21 1.25-1.21s1.25.542 1.25 1.21v9.856c0 .668-.56 1.21-1.25 1.21s-1.25-.542-1.25-1.21v-9.856Z" class="Vector"></path><path d="M55 57.578c0-.669.56-1.21 1.25-1.21s1.25.541 1.25 1.21v4.842c0 .67-.56 1.21-1.25 1.21S55 63.09 55 62.42v-4.842Z" class="Vector"></path><path d="M48.749 49.105c0-.668.561-1.21 1.251-1.21.69 0 1.249.541 1.249 1.21v20.58c0 .668-.56 1.21-1.25 1.21s-1.25-.542-1.25-1.21v-20.58Z" class="Vector"></path><path d="M42.5 43.053c0-.67.56-1.211 1.25-1.211s1.251.542 1.251 1.21V76.95c0 .669-.56 1.21-1.251 1.21-.69 0-1.25-.541-1.25-1.21V43.053Z" class="Vector"></path><path d="M36.254 51.412c0-.668.56-1.21 1.25-1.21s1.25.542 1.25 1.21v16.76c0 .668-.56 1.21-1.25 1.21s-1.25-.542-1.25-1.21v-16.76Z" class="Vector"></path><path d="M30 56.368c0-.668.56-1.21 1.25-1.21s1.25.542 1.25 1.211v6.053c0 .668-.56 1.21-1.25 1.21S30 63.09 30 62.422v-6.054Z" class="Vector"></path>', 11)]), 2)])), V("strong", {
-                class: Y(r.$style.title)
-            }, "Please, enable sound for an immersive experience", 2), V("small", {
-                class: Y(r.$style.button)
-            }, "Click anywhere to activate the sound", 2)], 2)], 2))
+                class: Y([r.$style.intro, r.$style.hide]),
+                style: "display:none!important;pointer-events:none!important;"
+            }, null, 2))
         }
     },
     G1 = {
@@ -11095,141 +11064,10 @@ const N1 = "_intro_f79bo_1",
     Z1 = {
         __name: "Sound",
         setup(t) {
-            const n = ie(Xt().app.baseURL);
-            let s = Qc,
-                r = {
-                    src: `${n.value}audio/ambient.mp3`,
-                    audio: null,
-                    playing: !1,
-                    play: m => {
-                        !l || r.playing || (r.tween && r.tween.kill(), r.playing = !0, r.audio.play(), i.audio && !i.paused && i.pause(), r.tween = xn.to(r.audio, {
-                            volume: s,
-                            duration: m ? 1 : _s
-                        }))
-                    },
-                    pause: m => {
-                        r.playing = !1, r.tween && r.tween.kill(), r.tween = xn.to(r.audio, {
-                            volume: 0,
-                            duration: m ? 1 : _s,
-                            onComplete: () => {
-                                r.audio.pause()
-                            }
-                        })
-                    }
-                },
-                i = {
-                    src: "",
-                    audio: null,
-                    playing: !1,
-                    play: (m, v) => {
-                        !l || i.playing || (m && (i.src = `${n.value}audio/${m}.mp3`), i.audio.src !== i.src && (i.audio.src = i.src), i.tween && i.tween.kill(), i.playing = !0, i.audio.play(), r.audio && !r.audio.paused && r.pause(), i.tween = xn.to(i.audio, {
-                            volume: s,
-                            duration: v ? 1 : _s
-                        }))
-                    },
-                    pause: m => {
-                        i.playing = !1, i.tween && i.tween.kill(), i.tween = xn.to(i.audio, {
-                            volume: 0,
-                            duration: m ? 1 : _s,
-                            onComplete: () => {
-                                i.audio.pause()
-                            }
-                        })
-                    }
-                },
-                o, a = "ambient",
-                l = !1;
-            const u = () => {
-                    l && (a === "ambient" ? r.play(!0) : i.play(null, !0))
-                },
-                c = () => {
-                    r.audio && r.pause(!0), i.audio && i.pause(!0)
-                },
-                f = m => {
-                    r.audio = new Audio(r.src), r.audio.loop = !0, r.audio.volume = .5, i.audio = new Audio, i.audio.loop = !0, i.audio.volume = .5, o = new Audio, o.volume = .15, le.canAutoplay(v => {
-                        if (v) l = !0, u(), m();
-                        else {
-                            const _ = () => {
-                                l = !0, u(), m();
-                                const w = new CustomEvent("soundready");
-                                document.dispatchEvent(w), document.documentElement.setAttribute("data-sound-ready", !0)
-                            };
-                            document.addEventListener("click", _, {
-                                once: !0
-                            })
-                        }
-                    })
-                },
-                h = m => {
-                    const v = m.detail;
-                    l = v, v ? u() : c()
-                },
-                d = ({
-                    scroll: m
-                }) => {
-                    const v = Array.from(document.querySelectorAll("[data-sound-section]"));
-                    let _;
-                    v.forEach(x => {
-                        const C = x.getBoundingClientRect().top;
-                        C < 0 && C > -x.clientHeight && (_ = x.getAttribute("data-sound-section"))
-                    }), _ && _ !== a ? (a = _, _ === "ambient" ? r.play() : i.play(_)) : _ || (a = "ambient", r.play());
-                    const w = Array.from(document.querySelectorAll("[data-sound-volume]"));
-                    let b;
-                    w.forEach(x => {
-                        const C = x.getBoundingClientRect().top,
-                            P = x.getAttribute("data-sound-volume");
-                        C <= 0 && C > -x.clientHeight && (b = P)
-                    }), b && b !== s ? g(b) : b || g(Qc)
-                },
-                g = m => {
-                    s = Number(m), r.playing && (r.tween = xn.to(r.audio, {
-                        volume: s,
-                        duration: _s
-                    })), i.playing && (i.tween = xn.to(i.audio, {
-                        volume: s,
-                        duration: _s
-                    }))
-                },
-                p = () => {
-                    const m = Array.from(document.querySelectorAll("[data-play-on-scroll]")),
-                        v = new IntersectionObserver(_ => {
-                            _.forEach(w => {
-                                if (w.isIntersecting) {
-                                    const b = w.target.getAttribute("data-play-on-scroll");
-                                    o.src = `${n.value}audio/${b}.mp3`, o.play()
-                                }
-                            })
-                        }, {
-                            threshold: .5
-                        });
-                    m.forEach(_ => {
-                        v.observe(_)
-                    })
-                },
-                y = () => {
-                    Array.from(document.querySelectorAll("[data-play-on-hover]")).forEach(v => {
-                        v.addEventListener("mouseenter", _ => {
-                            if (!l) return;
-                            const w = _.target.getAttribute("data-play-on-hover");
-                            o.src = `${n.value}audio/${w}.mp3`, o.play()
-                        })
-                    })
-                };
-            return Yt(() => {
-                f(() => {
-                    p(), y(), d({
-                        scroll: 0
-                    }), le.$emit("scroll-add-listener", d)
-                }), le.$on("sound", h), le.$on("play-fx", m => {
-                    if (!l) return;
-                    const v = m.detail;
-                    o.src = `${n.value}audio/${v}.mp3`, o.play()
-                }), document.addEventListener("click", m => {
-                    m.target.closest("[data-no-sound]")
-                })
-            }), (m, v) => (be(), et("div", {
+            document.documentElement.setAttribute("data-sound-ready", "true");
+            return (m, v) => (be(), et("div", {
                 ref: "el",
-                class: Y([m.$style.sound])
+                style: "display:none!important;pointer-events:none!important;"
             }, null, 2))
         }
     },
@@ -11334,17 +11172,9 @@ const N1 = "_intro_f79bo_1",
         __name: "SoundToggle",
         props: ["soundOn", "soundOff"],
         setup(t) {
-            const e = ie(!0),
-                n = () => {
-                    e.value = !e.value, le.$emit("sound", e.value)
-                };
             return (s, r) => (be(), et("div", {
-                class: Y([s.$style.soundToggle, G(e) && s.$style.isPlaying]),
-                "data-no-sound": "",
-                onClick: n
-            }, [V("span", null, _t(G(e) ? t.soundOn : t.soundOff), 1), V("div", {
-                class: Y(s.$style.button)
-            }, r[0] || (r[0] = [V("span", null, null, -1)]), 2)], 2))
+                style: "display:none!important;pointer-events:none!important;"
+            }, null, 2))
         }
     },
     bw = {

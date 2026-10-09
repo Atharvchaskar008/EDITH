@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" data-capo="">
+<html lang="en" data-capo="" class="intro-done" data-sound-ready="true">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>EDITH</title>
+    
+    <style>
+        /* Suppress sound prompt, audio toggle, and intro splash overlay */
+        ._soundToggle_152uk_1,
+        ._soundToggle_cdlpw_156,
+        ._intro_f79bo_1,
+        [class*="soundToggle"],
+        [class*="intro_f79bo"] {
+            display: none !important;
+            pointer-events: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            width: 0 !important;
+            overflow: hidden !important;
+        }
+    </style>
     
     <!-- Fonts -->
     <link rel="preconnect" href="fonts.googleapis.com">

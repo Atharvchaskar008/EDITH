@@ -1532,3 +1532,17 @@ html[data-extra-small-nav] ._nav_cdlpw_26 ._gradient_cdlpw_77 {
         padding-left: 0
     }
 }
+
+._soundToggle_152uk_1,
+._soundToggle_cdlpw_156,
+._intro_f79bo_1,
+[class*="soundToggle"],
+[class*="intro_f79bo"] {
+    display: none !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+}
