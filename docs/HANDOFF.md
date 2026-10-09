@@ -56,8 +56,9 @@ Atharv wants about 50 commits over the whole project, in plain natural language 
 | 2 Ingest and propagate | Done, run on real data |
 | 3 Screen and refine | Done, run on real data in both modes |
 | 4 Uncertainty and probability | Done, run on real data |
-| 5 Manoeuvre planner and verification | Not started. **This is next** |
-| 6–12 | Not started |
+| 5 Manoeuvre planner and verification | Done, run on real RED events |
+| 6 Pipeline and run folders | Not started. **This is next** |
+| 7–12 | Not started |
 | D1–D6 | Not started |
 
 ## Measured on real data (9 October 2026, CelesTrak plus Space-Track)
@@ -79,7 +80,7 @@ What this means:
 - A full 72-hour `ALL_LEO` run takes about half an hour. For a live demo use the 24-hour quick window (about 11 minutes) or `PRIMARIES` mode, or add multiprocessing over time chunks in prompt 9.
 - Before Space-Track, with CelesTrak only (18,539 objects, every object assumed 5 m): `ALL_LEO` took 14 minutes and a third of events were RED. Those numbers are superseded.
 
-## What exists in the code (53 tests passing)
+## What exists in the code (65 tests passing, 1 skipped until teammate B's cases arrive)
 
 | File | What it does |
 |---|---|
@@ -95,6 +96,9 @@ What this means:
 | `fusion/risk/covariance.py` | `sigma_rtn(obj, age)`: measured value from B's pack if present, else the assumed table |
 | `fusion/risk/pc.py` | `pc_2d`, `pc_disc`, `pc_max_disc`, `encounter_plane`, `event_covariances`, `assess(event, catalog_by_id)` |
 | `fusion/addons.py` | The three optional hooks into the teammate packs, each with a fallback |
+| `fusion/maneuver/orbit.py` | `ManeuveredOrbit(obj, burn_time, dv_rtn_ms, duration_s, return_after_s)`: SGP4 orbit plus the integrated effect of a burn and its return burn; `.states(seconds)`, `.delta(seconds)` |
+| `fusion/maneuver/verify.py` | `closest_approach_to_orbit(orbit, other, centre_s, half_window_s)` and `new_conjunctions(orbit, catalog, exclude_ids, baseline=...)` |
+| `fusion/maneuver/planner.py` | `plan(event, catalog, now, baseline, force, verify)` returns a `ManeuverPlan`; `choose_mover()` decides which object burns |
 | `scripts/make_fixtures.py` | Rebuilds `data/fixtures/` from a real download |
 | `fusion/synthetic.py` | `make_conjunction(primary, t_tca, miss_km)`: labelled test object passing a chosen distance from a real satellite |
 | `tests/conftest.py` | Made-up Iridium-like test satellite (`primary` fixture) |
@@ -119,4 +123,13 @@ These points keep our code consistent with what the packs expect. Follow them wh
 - **B's `measured_sigma(norad_id, object_type, tle_age_days)`** returns three RTN sigmas in km or `None`. Our hook in `fusion/addons.py` adapts the arguments.
 - **B's probability test cases** give RTN sigmas per object; build each covariance with `cov_rtn_to_teme` before calling our `pc_2d`.
 
-**Next step:** prompt 5 in `docs/harness_ATHARV.md` (the manoeuvre planner and its verification). For the planner, reuse `event_covariances` so the probability after a burn uses the same uncertainty as before it, and reuse `closest_approach` and the KD-tree search for the re-screen.
+## How the planner behaves (so later steps match it)
+
+- A burn is planned only for RED events (or with `force=True`). AMBER gives `MONITOR`, GREEN gives `NO_ACTION`.
+- The object that burns is the operational one; if both are operational, the one with newer orbit data; if neither is, the plan is `MONITOR` with "warning only". `maneuvering_id` says which object burns, and `dv_rtn_ms` is in that object's frame.
+- A burn must be at least 30 minutes after `now`. If the pass is sooner than half an orbit plus that, the plan is `MONITOR` with "too soon".
+- A burn counts as safe when the probability after it is below 1e-6 AND the worst-case probability is below 1e-5 AND the miss distance grew. If nothing on the grid reaches that, the best available burn is returned and the rationale says so.
+- The grid uses a linear response (fast); the chosen burn is then recomputed exactly and re-screened for 24 hours (`VERIFY_HOURS`), not 72, because each re-screen propagates thousands of objects. One plan takes about 6 s in a small test and about 75 s against the full catalogue.
+- Plans carry extra fields beyond `docs/CONTRACTS.md`: `maneuvering_id`, `pc_max_before`, `pc_max_after`, and in the grid `pc_max_after` and the two comparison rows for radial and cross-track burns.
+
+**Next step:** prompt 6 in `docs/harness_ATHARV.md` (the pipeline that runs every stage and writes a run folder), then add `plan_sample.json` and `alerts_sample.json` to `data/fixtures/`. Plan at most `MAX_PLANS_PER_RUN` RED events per run, most dangerous first, because each plan takes about a minute on the full catalogue.
