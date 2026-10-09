@@ -101,9 +101,7 @@ def test_records_become_objects_with_types():
 
 def test_rejected_login_gives_a_clear_error_and_no_query(tmp_path):
     env = tmp_path / ".env"
-    env.write_text("SPACETRACK_USER=a
-SPACETRACK_PASSWORD=wrong
-")
+    env.write_text("SPACETRACK_USER=a\nSPACETRACK_PASSWORD=wrong\n")
     session = FakeSession([record(1)], login_reply={"Login": "Failed"})
     with pytest.raises(RuntimeError, match="rejected the login"):
         spacetrack.fetch_leo_records(tmp_path, env, session)
