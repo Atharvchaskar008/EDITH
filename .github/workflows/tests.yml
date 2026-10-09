@@ -7,15 +7,20 @@ on:
 
 jobs:
   tests:
+    name: Python ${{ matrix.python }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12", "3.13", "3.14"]
     env:
       FUSION_SCHEDULER: "0"
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
-          python-version: "3.14"
+          python-version: ${{ matrix.python }}
           cache: pip
       - name: Install the main system
         run: pip install -r requirements.txt
