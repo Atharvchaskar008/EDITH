@@ -77,6 +77,7 @@ VERIFY_HOURS = 24.0  # how long the manoeuvred orbit is re-screened for new clos
 VERIFY_STEP_S = 30.0  # coarser than the main search: one satellite, every candidate refined exactly
 PLAN_VERIFY_LIMIT = 5  # burns per search that get the full safety re-screen (the slow step)
 PLAN_EXACT_LIMIT = 15  # burns per search that are computed exactly
+VERIFY_PARALLEL_MIN_OBJECTS = 2000  # a re-screen against fewer objects is not worth starting other processes for
 VERIFY_WORSE_TOLERANCE = 0.10  # another dangerous pass of the mover is worsened when its worst case rises by more than this
 DV_GRID_MIN_MS = 0.001
 DV_GRID_MAX_MS = 0.1

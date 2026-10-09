@@ -323,7 +323,7 @@ def plan_on_request(
     by_id = {o.norad_id: o for o in catalog}
 
     what_if = quick_decision(event, by_id, now) is not None
-    result = plan(event, catalog, now=now, baseline=events, force=what_if)
+    result = plan(event, catalog, now=now, baseline=events, force=what_if, workers=worker_count())
     record = result.model_dump(mode="json")
     record.update(what_if=what_if, requested_at=now.isoformat(timespec="seconds").replace("+00:00", "Z"))
     if what_if and result.decision != "MANEUVER":

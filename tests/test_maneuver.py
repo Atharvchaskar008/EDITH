@@ -10,7 +10,7 @@ from fusion.core.screen import screen
 from fusion.frames import rtn_basis
 from fusion.maneuver.orbit import ManeuveredOrbit
 from fusion.maneuver.planner import choose_mover, plan
-from fusion.maneuver.verify import closest_approach_to_orbit, side_effects
+from fusion.maneuver.verify import RescreenPool, closest_approach_to_orbit, side_effects
 from fusion.risk.pc import assess
 from fusion.synthetic import crossing_object, make_conjunction
 
@@ -135,6 +135,26 @@ def test_side_effects_separate_new_dangers_from_worsened_ones(red_case):
     # no burn: the pass is as it was
     same = effects(0.0, 3.0)
     assert same.clean and same.checked == 1
+
+
+def test_the_re_screen_gives_the_same_answer_when_shared_between_processes(red_case):
+    event, catalog, _ = red_case
+    primary = catalog[0]
+    period = period_s(get_satrec(primary))
+    burn = event.tca - timedelta(seconds=2 * period)
+    orbit = ManeuveredOrbit(primary, burn, np.array([0.0, 0.01, 0.0]), 7 * period)
+    everything = catalog + [_crossing_the_burned_path(orbit, 3.0 * period)]
+    alone = side_effects(orbit, everything, event)
+    pool = RescreenPool(primary, everything, 2)
+    try:
+        shared = side_effects(orbit, everything, event, pool=pool)
+        again = side_effects(orbit, everything, event, pool=pool)  # the workers keep the burned orbit
+    finally:
+        pool.close()
+    for result in (shared, again):
+        assert [e.event_id for e in result.worsened] == [e.event_id for e in alone.worsened] and len(alone.worsened) == 1
+        assert result.worsened[0].miss_distance_km == alone.worsened[0].miss_distance_km
+        assert result.created == alone.created == [] and result.checked == alone.checked == 1
 
 
 def test_a_dangerous_pass_the_burn_removes_counts_as_checked(red_case):

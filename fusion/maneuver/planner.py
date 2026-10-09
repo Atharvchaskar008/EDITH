@@ -20,7 +20,7 @@ from fusion.contracts import ConjunctionEvent, ManeuverPlan, SearchGrid, SpaceOb
 from fusion.core.sat import add_seconds, get_satrec, period_s, state_at, to_utc
 from fusion.frames import rtn_basis
 from fusion.maneuver.orbit import ManeuveredOrbit, integrate
-from fusion.maneuver.verify import SideEffects, closest_approach_to_orbit, side_effects
+from fusion.maneuver.verify import SideEffects, closest_approach_to_orbit, rescreen_pool, side_effects
 from fusion.risk.pc import encounter_plane, event_covariances, pc_disc, pc_max_disc
 
 _REFERENCE_DV_MS = 0.05  # size of the trial burn used to measure the response
@@ -145,10 +145,13 @@ def plan(
     baseline: Optional[list[ConjunctionEvent]] = None,
     force: bool = False,
     verify: bool = True,
+    workers: int = 1,
 ) -> ManeuverPlan:
     """Plan for one event. `force` plans a burn even when the event is not RED
     (for testing). `baseline` is the run's event list, used to count the other
-    dangerous passes of the satellite that the burn was checked against."""
+    dangerous passes of the satellite that the burn was checked against.
+    `workers` is the number of processes the safety re-screens may use; a run
+    plans several events at once and gives each one process."""
     now = to_utc(now or datetime.now(timezone.utc))
     by_id = {o.norad_id: o for o in catalog}
     primary, secondary = by_id[event.primary_id], by_id[event.secondary_id]
@@ -236,6 +239,7 @@ def plan(
         return None
 
     chosen = None
+    pool = rescreen_pool(mover, catalog, workers) if verify else None
     while verified < config.PLAN_VERIFY_LIMIT and len(tried) < config.PLAN_EXACT_LIMIT:
         candidate = next_burn()
         if candidate is None:
@@ -257,7 +261,7 @@ def plan(
             reasons["exact"] += 1
             continue
         verified += 1
-        effects = side_effects(orbit, catalog, event, baseline=baseline) if verify else SideEffects()
+        effects = side_effects(orbit, catalog, event, baseline=baseline, pool=pool) if verify else SideEffects()
         if not effects.clean and reached_target:
             reasons["created" if effects.created else "worsened"] += 1
             disturbing.append((bool(dv_values[i] > 0), lead))
@@ -265,6 +269,8 @@ def plan(
         chosen = (lead, burn_time, dv_rtn, orbit, ca, pc_after, pc_max_after, effects, return_s)
         break
 
+    if pool:
+        pool.close()
     rejected = sum(reasons.values())
     why_rejected = ", ".join(text for count, text in (
         (reasons["exact"], f"{reasons['exact']} did not make the pass safe when computed exactly"),

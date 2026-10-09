@@ -64,6 +64,7 @@ class ManeuveredOrbit:
         self.burn_time = to_utc(burn_time)
         self.duration_s = float(duration_s)
         self.return_after_s = return_after_s
+        self.dv_rtn_ms = np.asarray(dv_rtn_ms, dtype=float)
         self._propagator = Propagator([obj])
         dv_rtn = np.asarray(dv_rtn_ms, dtype=float) / 1000.0  # km/s
 

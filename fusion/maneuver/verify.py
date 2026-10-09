@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+import math
+import pickle
+from concurrent.futures import ProcessPoolExecutor
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import Any, Optional
 
 import numpy as np
 from scipy.optimize import minimize_scalar
@@ -79,45 +82,25 @@ def _same_pass(other_a: int, tca_a: datetime, other_b: int, tca_b: datetime) -> 
     return other_a == other_b and abs(tca_a - tca_b) < _SAME_PASS
 
 
-def side_effects(
-    orbit: ManeuveredOrbit,
-    catalog: list[SpaceObject],
-    avoided: ConjunctionEvent,
-    hours: float = config.VERIFY_HOURS,
-    threshold_km: float = config.SCREEN_THRESHOLD_KM,
-    baseline: Optional[list[ConjunctionEvent]] = None,
-) -> SideEffects:
-    """How the burn changes the satellite's other AMBER or RED close approaches.
-
-    The manoeuvred satellite is screened against every object whose altitude
-    band it can reach, from the burn time for `hours`. Each dangerous pass found
-    is compared with the same pass without the burn: one that was not dangerous
-    before is `created`, one whose worst case rose is `worsened`. `avoided` is
-    the pass the burn is for. `baseline` is the run's event list; it adds the
-    dangerous passes the burn removed to the count of passes checked.
-    """
-    mover = orbit.obj
-    partner = avoided.secondary_id if avoided.primary_id == mover.norad_id else avoided.primary_id
+def _reachable(mover: SpaceObject, catalog: list[SpaceObject]) -> list[SpaceObject]:
+    """Every other object whose altitude band the satellite can reach."""
     low, high = mover.perigee_km - config.ALTITUDE_PAD_KM, mover.apogee_km + config.ALTITUDE_PAD_KM
-    others = [
-        o for o in catalog
-        if o.norad_id != mover.norad_id and o.perigee_km <= high and o.apogee_km >= low
-    ]
-    if not others:
-        return SideEffects()
-    by_id = {o.norad_id: o for o in catalog}
-    propagator = Propagator(others)
+    return [o for o in catalog if o.norad_id != mover.norad_id and o.perigee_km <= high and o.apogee_km >= low]
+
+
+def _coarse(
+    orbit: ManeuveredOrbit, propagator: Propagator, threshold_km: float, start: int, stop: int
+) -> list[tuple[int, float]]:
+    """Possible close passes in time steps start..stop-1 after the burn: (index of
+    the other object, seconds after the burn). Each is refined exactly afterwards."""
     dt = config.VERIFY_STEP_S
     half = dt / 2.0
-    span = min(hours * 3600.0, orbit.duration_s)
-    n_steps = int(span / dt) + 1
     chunk = max(1, int(config.PROPAGATE_CHUNK_S / dt))
     radius = threshold_km + config.MAX_CLOSING_SPEED_KMS * half
     margin = max(1.0, _MAX_RELATIVE_ACCEL * half**2)
-
     candidates: list[tuple[int, float]] = []
-    for start in range(0, n_steps, chunk):
-        times = np.arange(start, min(start + chunk, n_steps)) * dt
+    for first in range(start, stop, chunk):
+        times = np.arange(first, min(first + chunk, stop)) * dt
         r, v = propagator.states(orbit.burn_time, times)
         pr, pv = orbit.states(times)
         dr, dv = r - pr[None, :, :], v - pv[None, :, :]
@@ -132,6 +115,87 @@ def side_effects(
             miss2 = rel_r @ rel_r - (rel_r @ rel_v) ** 2 / speed2
             if abs(t_star) <= half + 1.0 and miss2 < (threshold_km + margin) ** 2:
                 candidates.append((int(i), float(times[k] + t_star)))
+    return candidates
+
+
+_worker: dict[str, Any] = {}
+
+
+def _start_worker(packed: bytes) -> None:
+    _worker.update(propagator=Propagator(pickle.loads(packed)), burn=None, orbit=None)
+
+
+def _worker_coarse(task: tuple) -> list[tuple[int, float]]:
+    mover, burn_time, dv_rtn_ms, duration_s, return_after_s, threshold_km, start, stop = task
+    burn = (mover.norad_id, burn_time, dv_rtn_ms, duration_s, return_after_s)
+    if _worker["burn"] != burn:  # the burned orbit is built once per worker and burn
+        _worker.update(burn=burn, orbit=ManeuveredOrbit(mover, burn_time, np.array(dv_rtn_ms), duration_s, return_after_s))
+    return _coarse(_worker["orbit"], _worker["propagator"], threshold_km, start, stop)
+
+
+class RescreenPool:
+    """Worker processes that share the re-screens of one satellite's candidate burns.
+
+    The objects to screen against are sent to every worker once. A burn is then
+    described to the workers by its numbers, and each builds the burned orbit
+    itself and searches one slice of the time after the burn."""
+
+    def __init__(self, mover: SpaceObject, catalog: list[SpaceObject], workers: int):
+        self.others = _reachable(mover, catalog)
+        self.workers = workers
+        self._pool = ProcessPoolExecutor(
+            max_workers=workers, initializer=_start_worker, initargs=(pickle.dumps(self.others),),
+        )
+
+    def candidates(self, orbit: ManeuveredOrbit, n_steps: int, threshold_km: float) -> list[tuple[int, float]]:
+        burn = (orbit.obj, orbit.burn_time, tuple(orbit.dv_rtn_ms.tolist()), orbit.duration_s, orbit.return_after_s)
+        block = max(1, math.ceil(n_steps / self.workers))
+        tasks = [burn + (threshold_km, start, min(start + block, n_steps)) for start in range(0, n_steps, block)]
+        return [candidate for part in self._pool.map(_worker_coarse, tasks) for candidate in part]
+
+    def close(self) -> None:
+        self._pool.shutdown(wait=False, cancel_futures=True)
+
+
+def rescreen_pool(mover: SpaceObject, catalog: list[SpaceObject], workers: int) -> Optional[RescreenPool]:
+    """A pool for this satellite's re-screens, or None when one process is enough."""
+    if workers < 2 or len(_reachable(mover, catalog)) < config.VERIFY_PARALLEL_MIN_OBJECTS:
+        return None
+    return RescreenPool(mover, catalog, workers)
+
+
+def side_effects(
+    orbit: ManeuveredOrbit,
+    catalog: list[SpaceObject],
+    avoided: ConjunctionEvent,
+    hours: float = config.VERIFY_HOURS,
+    threshold_km: float = config.SCREEN_THRESHOLD_KM,
+    baseline: Optional[list[ConjunctionEvent]] = None,
+    pool: Optional[RescreenPool] = None,
+) -> SideEffects:
+    """How the burn changes the satellite's other AMBER or RED close approaches.
+
+    The manoeuvred satellite is screened against every object whose altitude
+    band it can reach, from the burn time for `hours`. Each dangerous pass found
+    is compared with the same pass without the burn: one that was not dangerous
+    before is `created`, one whose worst case rose is `worsened`. `avoided` is
+    the pass the burn is for. `baseline` is the run's event list; it adds the
+    dangerous passes the burn removed to the count of passes checked. `pool`
+    shares the search between processes; the result is the same without it.
+    """
+    mover = orbit.obj
+    partner = avoided.secondary_id if avoided.primary_id == mover.norad_id else avoided.primary_id
+    others = pool.others if pool else _reachable(mover, catalog)
+    if not others:
+        return SideEffects()
+    by_id = {o.norad_id: o for o in catalog}
+    half = config.VERIFY_STEP_S / 2.0
+    span = min(hours * 3600.0, orbit.duration_s)
+    n_steps = int(span / config.VERIFY_STEP_S) + 1
+    candidates = (
+        pool.candidates(orbit, n_steps, threshold_km) if pool
+        else _coarse(orbit, Propagator(others), threshold_km, 0, n_steps)
+    )
 
     effects = SideEffects()
     found: list[tuple[int, datetime]] = []  # dangerous passes with the burn
