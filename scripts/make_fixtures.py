@@ -12,6 +12,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from fusion.core.ingest import load_catalog  # noqa: E402
 from fusion.core.screen import screen  # noqa: E402
+from fusion.maneuver.planner import plan  # noqa: E402
+from fusion.risk.pc import assess  # noqa: E402
 from fusion.synthetic import make_conjunction  # noqa: E402
 
 OUT = Path("data/fixtures")
@@ -25,7 +27,23 @@ def main() -> None:
     sample = primaries + [test_object]
 
     events = screen(sample, now + timedelta(hours=29), hours=2, mode="PRIMARIES")
+    by_id = {o.norad_id: o for o in sample}
+    for event in events:
+        assess(event, by_id)
+    plans = [plan(e, sample, now=now, baseline=events) for e in events if e.risk_level != "GREEN"]
+    alerts = [
+        {
+            "alert_id": f"SAMPLE-{e.primary_id}-{e.secondary_id}", "run_id": "SAMPLE", "event_id": e.event_id,
+            "kind": "NEW", "from_level": None, "to_level": e.risk_level, "severity": "CRITICAL",
+            "message": f"{e.primary_name} and {e.secondary_name}: new {e.risk_level} pass, closest approach in 30 h at {e.miss_distance_km:.2f} km.",
+        }
+        for e in events if e.risk_level != "GREEN"
+    ]
     OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / "plan_sample.json").write_text(
+        json.dumps([p.model_dump(mode="json") for p in plans], indent=1), encoding="utf-8"
+    )
+    (OUT / "alerts_sample.json").write_text(json.dumps(alerts, indent=1), encoding="utf-8")
     (OUT / "catalog_sample.json").write_text(
         json.dumps([o.model_dump(mode="json") for o in sample], indent=1), encoding="utf-8"
     )

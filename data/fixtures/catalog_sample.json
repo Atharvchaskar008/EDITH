@@ -29,7 +29,7 @@
   "apogee_km": 778.997233989784,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -62,7 +62,7 @@
   "apogee_km": 779.1607911379879,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -95,7 +95,7 @@
   "apogee_km": 779.1666868005477,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -128,7 +128,7 @@
   "apogee_km": 779.1073096505188,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -161,7 +161,7 @@
   "apogee_km": 779.3623377738204,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -194,7 +194,7 @@
   "apogee_km": 779.3058427455908,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -227,7 +227,7 @@
   "apogee_km": 779.1022703451217,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -260,7 +260,7 @@
   "apogee_km": 779.2626290734652,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -293,7 +293,7 @@
   "apogee_km": 779.1984069823602,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -326,7 +326,7 @@
   "apogee_km": 779.0783400644159,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -359,7 +359,7 @@
   "apogee_km": 779.2544862812092,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -392,7 +392,7 @@
   "apogee_km": 779.1768162302342,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -425,7 +425,7 @@
   "apogee_km": 779.2197591607082,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -458,7 +458,7 @@
   "apogee_km": 749.1861309371179,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -491,7 +491,7 @@
   "apogee_km": 779.2872629696367,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -524,7 +524,7 @@
   "apogee_km": 779.2223131071105,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -557,7 +557,7 @@
   "apogee_km": 779.1844132956203,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -590,7 +590,7 @@
   "apogee_km": 749.2635054029506,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -623,7 +623,7 @@
   "apogee_km": 779.1627491224035,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -656,7 +656,7 @@
   "apogee_km": 779.2678316640986,
   "is_primary": true,
   "operational": true,
-  "radius_m": 5.0,
+  "radius_m": 2.0,
   "synthetic": false
  },
  {
@@ -669,12 +669,12 @@
    "OBJECT_NAME": "SYNTHETIC TEST OBJECT",
    "OBJECT_ID": "2099-001A",
    "EPOCH": "2026-10-08T16:17:14.000000",
-   "MEAN_MOTION": 13.90922516127906,
-   "ECCENTRICITY": 0.019721802192263174,
-   "INCLINATION": 142.46798976240652,
-   "RA_OF_ASC_NODE": 56.68675545926877,
-   "ARG_OF_PERICENTER": 19.679432135550783,
-   "MEAN_ANOMALY": 257.72445177495763,
+   "MEAN_MOTION": 13.909076939665692,
+   "ECCENTRICITY": 0.019643957636023036,
+   "INCLINATION": 29.381457786307365,
+   "RA_OF_ASC_NODE": 74.93952285307056,
+   "ARG_OF_PERICENTER": 132.6513564762661,
+   "MEAN_ANOMALY": 118.19013419212418,
    "EPHEMERIS_TYPE": 0,
    "CLASSIFICATION_TYPE": "U",
    "NORAD_CAT_ID": 99001,
@@ -685,8 +685,8 @@
    "MEAN_MOTION_DDOT": 0.0
   },
   "epoch": "2026-10-08T16:17:14Z",
-  "perigee_km": 781.3649451348992,
-  "apogee_km": 1069.44284389719,
+  "perigee_km": 781.9843531424003,
+  "apogee_km": 1068.9272089294363,
   "is_primary": false,
   "operational": false,
   "radius_m": 1.0,
