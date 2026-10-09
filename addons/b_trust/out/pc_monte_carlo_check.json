@@ -1,0 +1,62 @@
+{
+ "cases": 9,
+ "smallest_pc": 2.995848071721318e-05,
+ "largest_pc": 0.009707671088605898,
+ "largest_deviation_in_standard_errors": 1.9563003639895735,
+ "rows": [
+  {
+   "pc": 0.009707671088605898,
+   "monte_carlo": 0.0096859,
+   "standard_error": 3.097108868152684e-05,
+   "deviation_in_standard_errors": 0.7029487671475656
+  },
+  {
+   "pc": 0.0077516272258335425,
+   "monte_carlo": 0.0077256,
+   "standard_error": 2.76873890149288e-05,
+   "deviation_in_standard_errors": 0.9400390126894533
+  },
+  {
+   "pc": 0.003675961222414622,
+   "monte_carlo": 0.0036754,
+   "standard_error": 1.913606917535574e-05,
+   "deviation_in_standard_errors": 0.029327988390880914
+  },
+  {
+   "pc": 0.002104658674037953,
+   "monte_carlo": 0.0021175,
+   "standard_error": 1.4536217505768136e-05,
+   "deviation_in_standard_errors": 0.8834021613223143
+  },
+  {
+   "pc": 0.003421367634547916,
+   "monte_carlo": 0.0034287,
+   "standard_error": 1.848497772871258e-05,
+   "deviation_in_standard_errors": 0.39666617724371406
+  },
+  {
+   "pc": 0.0016894554609634862,
+   "monte_carlo": 0.0016881,
+   "standard_error": 1.2981719140352716e-05,
+   "deviation_in_standard_errors": 0.10441305568480198
+  },
+  {
+   "pc": 0.00033087246697697457,
+   "monte_carlo": 0.0003277,
+   "standard_error": 5.723570674937106e-06,
+   "deviation_in_standard_errors": 0.5542810873055981
+  },
+  {
+   "pc": 0.00033109144959058903,
+   "monte_carlo": 0.0003279,
+   "standard_error": 5.72531642435595e-06,
+   "deviation_in_standard_errors": 0.5574276343945554
+  },
+  {
+   "pc": 2.995848071721318e-05,
+   "monte_carlo": 3.17e-05,
+   "standard_error": 8.902105805650705e-07,
+   "deviation_in_standard_errors": 1.9563003639895735
+  }
+ ]
+}

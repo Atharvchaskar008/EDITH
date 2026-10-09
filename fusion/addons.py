@@ -10,13 +10,14 @@ from __future__ import annotations
 
 import contextlib
 import importlib.util
+import inspect
 import io
 import json
 import logging
 import os
 import shutil
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Optional
 
@@ -78,10 +79,25 @@ def _load(pack: str, module: str, function: str) -> Optional[Callable]:
     return found
 
 
+def pack_function(pack: str, module: str, function: str) -> Optional[Callable]:
+    """A function from a pack, wrapped so that it runs with the pack's folder as
+    the working directory; None when the pack or the function is not there."""
+    found = _load(pack, module, function)
+    if found is None:
+        return None
+
+    def call(*args: Any, **kwargs: Any) -> Any:
+        with _inside(ADDONS_DIR / pack):
+            return found(*args, **kwargs)
+
+    return call
+
+
 def reset() -> None:
     """Forget loaded packs (used by tests)."""
     _functions.clear()
     _warned.clear()
+    _extended.clear()
 
 
 def available() -> dict[str, bool]:
@@ -118,14 +134,37 @@ def enrich_catalog(objs: list[SpaceObject]) -> list[SpaceObject]:
         return objs
 
 
+_extended: dict[int, bool] = {}
+OWN_MEASUREMENT_MAX_DAYS = 60.0
+
+
+def _takes_name_and_status(function: Callable) -> bool:
+    """Whether the pack's measured_sigma accepts the object's name and operational flag as well."""
+    key = id(function)
+    if key not in _extended:
+        try:
+            _extended[key] = len(inspect.signature(function).parameters) >= 5
+        except (TypeError, ValueError):
+            _extended[key] = False
+    return _extended[key]
+
+
 def measured_sigma(obj: SpaceObject, tle_age_days: float) -> Optional[np.ndarray]:
     """Measured RTN position sigmas (km) from teammate B's pack, or None."""
     function = _load("b_trust", "tle_error", "measured_sigma")
     if function is None:
         return None
     try:
+        # An object's own measurement describes it as it is today. For orbit data from
+        # another era (the 2009 replay) the catalogue number may even belong to a
+        # different body now, so only its kind of object is used.
+        current = abs((datetime.now(timezone.utc) - obj.epoch).total_seconds()) <= OWN_MEASUREMENT_MAX_DAYS * 86400.0
+        arguments: list[Any] = [obj.norad_id if current else 0, obj.object_type, float(tle_age_days)]
+        if _takes_name_and_status(function):
+            # lets the pack tell a Starlink from a dead satellite, which differ a hundredfold
+            arguments += [obj.name, obj.operational]
         with _inside(ADDONS_DIR / "b_trust"):
-            value = function(obj.norad_id, obj.object_type, float(tle_age_days))
+            value = function(*arguments)
         if value is None:
             return None
         sigma = np.asarray(value, dtype=float)

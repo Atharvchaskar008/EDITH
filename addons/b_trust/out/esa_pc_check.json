@@ -1,0 +1,65 @@
+{
+ "dataset": "ESA Collision Avoidance Challenge, train_data.csv (Zenodo 4463683)",
+ "rows_in_file": 162634,
+ "rows_usable": 95394,
+ "rows_compared": 20000,
+ "risk_floor": -30.0,
+ "hard_body_radius_used": "half the sum of the two spans",
+ "probability": {
+  "rows": 20000,
+  "median_abs_difference_log10": 0.12529212058205896,
+  "p90_abs_difference_log10": 2.728672662080734,
+  "mean_signed_offset_log10": -0.8417156519909252,
+  "median_signed_offset_log10": -0.0007904816439081586,
+  "correlation": 0.5695181161853022,
+  "share_within_0.1_log10": 0.4649
+ },
+ "probability_by_esa_risk_band": {
+  "ESA risk above 1e-6": {
+   "rows": 2100,
+   "median_abs_difference_log10": 0.010012940347311705,
+   "p90_abs_difference_log10": 0.5563520709635646,
+   "mean_signed_offset_log10": -0.4295167082513345,
+   "median_signed_offset_log10": 0.00010196997254063866,
+   "correlation": 0.07898014193639831,
+   "share_within_0.1_log10": 0.7661904761904762
+  },
+  "ESA risk from 1e-10 to 1e-6": {
+   "rows": 7395,
+   "median_abs_difference_log10": 0.07525757552949486,
+   "p90_abs_difference_log10": 1.2171159227349468,
+   "mean_signed_offset_log10": -0.5307151024922117,
+   "median_signed_offset_log10": -0.0007051927155146132,
+   "correlation": 0.21882906718507003,
+   "share_within_0.1_log10": 0.5452332657200811
+  },
+  "ESA risk below 1e-10": {
+   "rows": 10505,
+   "median_abs_difference_log10": 0.285906446392417,
+   "p90_abs_difference_log10": 4.331159882260849,
+   "mean_signed_offset_log10": -1.1430451946273963,
+   "median_signed_offset_log10": -0.002717657995253475,
+   "correlation": 0.44532003988660235,
+   "share_within_0.1_log10": 0.3481199428843408
+  }
+ },
+ "probability_with_the_other_radius": {
+  "rows": 20000,
+  "median_abs_difference_log10": 0.6406399190488079,
+  "p90_abs_difference_log10": 2.8722936852482603,
+  "mean_signed_offset_log10": -0.15270108394712234,
+  "median_signed_offset_log10": 0.6057493980201212,
+  "correlation": 0.5733441740883521,
+  "share_within_0.1_log10": 0.02055
+ },
+ "worst_case_against_esa_max_risk_estimate": {
+  "rows": 20000,
+  "median_abs_difference_log10": 0.017498997889073387,
+  "p90_abs_difference_log10": 0.2732550344851937,
+  "mean_signed_offset_log10": -0.00759334571452589,
+  "median_signed_offset_log10": -0.0007571246168796009,
+  "correlation": 0.975890984797154,
+  "share_within_0.1_log10": 0.76225
+ },
+ "worst_case_numeric_against_closed_form_on_300_rows_median_abs_log10": 5.315923986781712e-06
+}

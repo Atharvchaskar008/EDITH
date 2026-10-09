@@ -18,6 +18,7 @@
 <h1>Fusion test page</h1>
 <div class="note">A plain page for checking the engine. The real dashboard comes later.</div>
 <div id="summary"></div>
+<div class="note"><span id="validation"></span> <a id="report" href="#" target="_blank" style="display:none">Full validation report</a></div>
 
 <h2>Run</h2>
 <button id="run">Run now</button>
@@ -105,6 +106,12 @@ async function loadSummary() {
       n(r.events) + " close passes in the next " + r.window_hours + " h (" + n(r.levels.RED) + " red, " + n(r.levels.AMBER) +
       " amber, " + n(r.levels.GREEN) + " green), " + r.plans.maneuver + " burns planned, run time " + Math.round(r.duration_s) + " s.";
   } catch (e) { $("summary").textContent = ""; }
+  try {
+    const v = await get("/validation");
+    $("validation").textContent = "Checked against CelesTrak: " + v.summary;
+    $("report").style.display = v.report ? "inline" : "none";
+    if (v.report) $("report").href = "/addons/files/" + v.report;
+  } catch (e) { $("validation").textContent = ""; $("report").style.display = "none"; }
 }
 
 async function poll() {

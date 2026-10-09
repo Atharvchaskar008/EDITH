@@ -20,7 +20,7 @@ This file is for whichever AI assistant continues the build (Claude or Gemini). 
 | Frame and units | TEME, km, km/s, UTC everywhere. No frame conversions. Delta-v in m/s only in outputs |
 | RTN frame | R = unit position, N = unit(r × v), T = N × R. Helpers in `fusion/frames.py` |
 | Screening | Altitude-band filter → KD-tree every 10 s with radius `threshold + 15.5 × dt / 2` → exact closest approach with `minimize_scalar` |
-| Uncertainty | Assumed table in config (sigma0 + rate × data age); teammate B's measured values replace it through a hook when present |
+| Uncertainty | Measured from element-set history by the trust pack (`addons/b_trust/tle_error.py`), per object, per kind of object and per age; the assumed table in config is the fallback (objects of unknown type, or no pack) |
 | Probability | 2D encounter-plane integral; also `pc_max` (worst case over covariance scaling). Rank by `pc_max` |
 | Risk levels | RED `pc_max` ≥ 1e-4, AMBER ≥ 1e-5, else GREEN |
 | Burn | Along-track, grid over lead time and size, smallest burn reaching Pc < 1e-6; applied with the difference method (burned minus unburned two-body+J2 orbit, added to the SGP4 orbit); then re-screen and plan a return burn |
@@ -62,7 +62,7 @@ Atharv wants about 50 commits over the whole project, in plain natural language 
 | 8 Basic test page | Done (`fusion/api/static/index.html`, served at `/`) |
 | 9 Harden the engine on real data | Done: parallel search and planning, repeatability and failure tests, timings |
 | 10 Connect A's pack | Done: measured sizes, test kit checked, 2009 replay built and served |
-| 11 Connect B's and C's packs | C done: alerts, history, summary, briefings, CDM files, risk-trend prediction. B's pack has not arrived; its two hooks stay on their fallbacks |
+| 11 Connect B's and C's packs | Done. C: alerts, history, summary, briefings, CDM files, risk-trend prediction. B (built by us on 9 October 2026 because the teammate's branch never arrived): measured uncertainty, reference probability cases, validation against ESA and CelesTrak |
 | 12 Close out session 1 | Done: `docs/RUN.md`, `docs/API.md`, and the event detail route already returns tracks and the encounter picture |
 | D1–D6 | Not started |
 
@@ -86,7 +86,7 @@ What this means:
 - The search and the burn planning both run across CPU cores. A full-sky 24-hour run with five burn plans takes about 4 minutes, so it can be started early in a demo and shown finishing.
 - Before Space-Track, with CelesTrak only (18,539 objects, every object assumed 5 m): `ALL_LEO` took 14 minutes and a third of events were RED. Those numbers are superseded.
 
-## What exists in the code (101 tests passing, 1 skipped until teammate B's cases arrive)
+## What exists in the code (110 tests passing in the main project, 54 in the trust pack, none skipped)
 
 | File | What it does |
 |---|---|
@@ -155,9 +155,28 @@ Rules that follow from this:
 - Never start `addons/c_ops/watch.py` against `data/runs`; it would compare runs of different modes.
 - A replay run (`run_dir` given) gets briefings and CDM files but no alerts.
 
-2009 replay result, as it came out, nothing tuned: at 9 February 2009 17:00 UTC, from 2,899 objects public at that time, Iridium 33 has 2 passes within 5 km in the next 48 hours. Rank 1 is Cosmos 2251: closest approach 10 February 16:55:59 UTC (the reported collision time is 16:56), predicted miss 0.584 km, 11.65 km/s, probability 2.0e-5, worst case 9.7e-5, level AMBER (the RED line is 1e-4), decision MONITOR. The stored what-if burn is 43 mm/s against the direction of travel, 6.75 orbits before, giving a 3.99 km miss and worst case 2.5e-6.
+2009 replay result, as it came out, nothing tuned: at 9 February 2009 17:00 UTC, from 2,899 objects public at that time, Iridium 33 has 2 passes within 5 km in the next 48 hours. Rank 1 is Cosmos 2251: closest approach 10 February 16:55:59 UTC (the reported collision time is 16:56), predicted miss 0.584 km, 11.65 km/s. With the measured uncertainty (kind of object only; see below) the probability is 2.0e-9 and the worst case 1.1e-5: AMBER by a hair, decision MONITOR, and the stored what-if burn is only 1 mm/s. Before the trust pack, with the assumed table, the same pass had probability 2.0e-5 and worst case 9.7e-5 (AMBER just under the RED line) and a what-if burn of 43 mm/s. The lesson to present is that public data put the pass at 584 m with about 200 m of measured uncertainty, and the two still collided.
 
 How stable the predictions are (measured between the 08:31 and 10:38 UTC downloads, 1,747 passes): the predicted miss moved by a median of 0.03 km when neither object can manoeuvre, 0.55 km when one or both are operational, and 26.5 km for two Starlink satellites. This is why same-fleet pairs get no burn plan and why burn searches go first to passes where exactly one object can move.
+
+## The trust pack (teammate B's part, built by us)
+
+`addons/b_trust/` follows `docs/harness_B_trust.md` and is standalone. Its `REPORT.md` and `out/VALIDATION_REPORT.md` have every number. What the main project uses:
+
+| What | How |
+|---|---|
+| Measured uncertainty | `fusion/addons.measured_sigma` calls the pack's `measured_sigma(norad_id, object_type, age, name, operational)`. The last two arguments are passed only if the pack's function takes them; they let it tell a Starlink from a dead satellite. Events then carry `sigma_source: MEASURED` |
+| Reference probability cases | `tests/test_pc.py` checks our `pc_2d` against `out/pc_test_cases.json` (30 cases, 2%) |
+| CelesTrak comparison | `python -m fusion.validation` writes `data/validation.json`: our `closest_approach` on the element sets CelesTrak used, and our latest run against CelesTrak's list. The pipeline refreshes it at the end of a run, without downloading, when the pack's copy of the list is under 12 hours old |
+
+Results worth knowing when building on this:
+
+- With measured uncertainty the first full-sky run went from 40 red, 300 amber to 35 red, 181 amber.
+- A satellite whose own along-track position is uncertain by kilometres (Starlink 12 km after a day, some Kuiper) cannot be made safe by shifting it along its track, so the planner now often picks a burn half an orbit before the pass, which separates the two radially. Burn sizes then reach the 100 mm/s top of the search grid.
+- The first run after a change of uncertainty model raises many downgraded and escalated alerts (165 and 28); the run after that is quiet again.
+- An object's own measurement is used only when its orbit data is recent (within 60 days of today). For the 2009 replay the hook passes catalogue number 0, so the pack answers with the kind of object: number 22675 is today a fragment of Cosmos 2251, not the satellite of 2009.
+- `pc_reference.pc_integral` is the exact one-dimensional form (0.1 ms). The direct double integral is `pc_integral_2d`, kept as a check; it takes milliseconds to seconds.
+- The pack's `cache/` (74 MB) and `esa/` (434 MB) are git-ignored. To rebuild everything see the pack's `README.md`.
 
 ## How the planner behaves (so later steps match it)
 
@@ -180,7 +199,7 @@ How stable the predictions are (measured between the 08:31 and 10:38 UTC downloa
 - Server routes beyond `docs/CONTRACTS.md`: `GET /latest` (the latest run's `run.json`), `GET /runs/latest/files/<path>` and `GET /addons/files/<path>` (serve add-on outputs; only json, md, png, txt, csv), `source=replay` on the event routes to read the 2009 replay folder.
 - `GET /events/{id}` returns `{event, plan, track, encounter}`. `track` has positions every 5 s for 10 minutes either side of closest approach for both objects, plus the manoeuvred track when a burn is planned. `encounter` has the miss vector and covariance in the encounter plane, the hard-body radius, and the miss vector after the burn. Prompt 12's API additions are therefore already done.
 
-**Next step:** the backend is complete with teammate A's and C's packs connected. Start the frontend (prompts D1 to D6 in `docs/harness_ATHARV.md`, building from `docs/API.md`). If `addons/b_trust/` arrives, do the B part of prompt 11 first.
+**Next step:** the backend is complete with all three packs connected. Start the frontend (prompts D1 to D6 in `docs/harness_ATHARV.md`, building from `docs/API.md`). The validation tab has real content now: `GET /validation` and the report at `/addons/files/b_trust/out/VALIDATION_REPORT.md` with its four charts.
 
 Notes from hardening:
 

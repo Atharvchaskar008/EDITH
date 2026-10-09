@@ -136,3 +136,23 @@ def test_briefings_and_cdm_are_counted_and_a_replay_gets_no_alerts(packs, run_fo
     addons.reset()
     assert addons.after_run(run_folder) == {"briefings": 2}
     assert not (run_folder / "alerts.json").exists()
+
+
+def test_measured_sigma_gets_the_name_and_status_when_the_pack_takes_them(packs, primary):
+    write(packs / "b_trust", "tle_error.py",
+          "def measured_sigma(norad_id, object_type, age, name='', operational=None):\n"
+          "    return [0.1, 30.0 if name.startswith('STARLINK') and operational else 0.2, 0.1]\n")
+    starlink = primary.model_copy(update={"name": "STARLINK-1", "operational": True})
+    dead = primary.model_copy(update={"name": "STARLINK-1", "operational": False})
+    assert addons.measured_sigma(starlink, 1.0)[1] == 30.0 and addons.measured_sigma(dead, 1.0)[1] == 0.2
+
+
+def test_an_objects_own_measurement_is_not_used_for_orbit_data_from_another_era(packs, primary):
+    from datetime import datetime, timedelta, timezone
+
+    write(packs / "b_trust", "tle_error.py",
+          "def measured_sigma(norad_id, object_type, age, name='', operational=None):\n"
+          "    return [0.1, 9.0 if norad_id == 90001 else 0.5, 0.1]\n")
+    today = primary.model_copy(update={"epoch": datetime.now(timezone.utc) - timedelta(days=2)})
+    long_ago = primary.model_copy(update={"epoch": datetime(2009, 2, 9, tzinfo=timezone.utc)})
+    assert addons.measured_sigma(today, 1.0)[1] == 9.0 and addons.measured_sigma(long_ago, 1.0)[1] == 0.5

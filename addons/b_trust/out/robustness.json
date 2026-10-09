@@ -1,0 +1,124 @@
+{
+ "events": 175,
+ "baseline": {
+  "uncertainty": "measured, per kind of object and element-set age",
+  "hard_body_radius_m": 10,
+  "levels": {
+   "RED": 158,
+   "AMBER": 17,
+   "GREEN": 0
+  }
+ },
+ "variations": {
+  "Uncertainty halved": {
+   "spearman_pc": 0.999910434393193,
+   "spearman_pc_max": 1.0,
+   "top10_still_in_top10": 10,
+   "events_changing_risk_level": 0
+  },
+  "Uncertainty doubled": {
+   "spearman_pc": 0.9999820868786387,
+   "spearman_pc_max": 1.0,
+   "top10_still_in_top10": 10,
+   "events_changing_risk_level": 0
+  },
+  "Object size 5 m": {
+   "spearman_pc": 1.0,
+   "spearman_pc_max": 0.9994514106583074,
+   "top10_still_in_top10": 7,
+   "events_changing_risk_level": 38
+  },
+  "Object size 20 m": {
+   "spearman_pc": 1.0,
+   "spearman_pc_max": 0.9956761961429857,
+   "top10_still_in_top10": 7,
+   "events_changing_risk_level": 16
+  },
+  "Guessed uncertainty table": {
+   "spearman_pc": 0.4597268248992387,
+   "spearman_pc_max": 0.6660344827586208,
+   "top10_still_in_top10": 7,
+   "events_changing_risk_level": 18
+  }
+ },
+ "miss_distance_alone": {
+  "spearman_between_closeness_and_pc_max": 0.31101433049708915,
+  "examples": [
+   {
+    "larger_miss": {
+     "pair": "STARLINK-37021 / COSMOS 2251 DEB",
+     "miss_m": 140.9,
+     "pc_max": 0.03303059911852566,
+     "uncertainty_long_to_short": 52.1,
+     "miss_direction": "along the long axis of the uncertainty",
+     "element_set_ages_days": [
+      6.0,
+      6.1
+     ]
+    },
+    "smaller_miss": {
+     "pair": "STARLINK-37785 / STARLINK-38249",
+     "miss_m": 87.1,
+     "pc_max": 6.648280513271553e-05,
+     "uncertainty_long_to_short": 88.8,
+     "miss_direction": "between the axes",
+     "element_set_ages_days": [
+      3.9,
+      3.8
+     ]
+    },
+    "probability_ratio": 496.8
+   },
+   {
+    "larger_miss": {
+     "pair": "STARLINK-34217 / CANVAS",
+     "miss_m": 118.0,
+     "pc_max": 0.039948798007772846,
+     "uncertainty_long_to_short": 53.3,
+     "miss_direction": "along the long axis of the uncertainty",
+     "element_set_ages_days": [
+      1.6,
+      0.8
+     ]
+    },
+    "smaller_miss": {
+     "pair": "STARLINK-2135 / STARLINK-4388",
+     "miss_m": 78.4,
+     "pc_max": 8.23424549294532e-05,
+     "uncertainty_long_to_short": 72.9,
+     "miss_direction": "across the long axis of the uncertainty",
+     "element_set_ages_days": [
+      4.1,
+      3.4
+     ]
+    },
+    "probability_ratio": 485.2
+   },
+   {
+    "larger_miss": {
+     "pair": "STARLINK-2140 / EOSSAT-1",
+     "miss_m": 70.7,
+     "pc_max": 0.05690383373238045,
+     "uncertainty_long_to_short": 69.4,
+     "miss_direction": "along the long axis of the uncertainty",
+     "element_set_ages_days": [
+      4.4,
+      4.1
+     ]
+    },
+    "smaller_miss": {
+     "pair": "STARLINK-4384 / STARLINK-38238",
+     "miss_m": 45.6,
+     "pc_max": 0.00021446462813097154,
+     "uncertainty_long_to_short": 95.7,
+     "miss_direction": "between the axes",
+     "element_set_ages_days": [
+      2.5,
+      2.5
+     ]
+    },
+    "probability_ratio": 265.3
+   }
+  ]
+ }
+}

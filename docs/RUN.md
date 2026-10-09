@@ -24,6 +24,8 @@ Fill in `.env` with a free Space-Track login to get the full catalogue, includin
 | Start the server | `.venv\Scripts\python -m uvicorn fusion.api.main:app --port 8000` |
 | Open the test page | http://localhost:8000 |
 | Build the 2009 collision replay | `.venv\Scripts\python -m fusion.replay.replay_2009` (about 1 minute; needs teammate A's pack) |
+| Compare with CelesTrak's own list | `.venv\Scripts\python -m fusion.validation` (downloads 6 MB when its copy is over 12 hours old) |
+| Run the trust pack's own tests | `cd addons\b_trust` then `..\..\.venv\Scripts\python -m pytest -q` |
 | Time the search on real data | `.venv\Scripts\python scripts\measure.py ALL_LEO 12` |
 | Measure compiled libraries against plain Python | `.venv\Scripts\python scripts\why_python.py` |
 | Rebuild the sample files | `.venv\Scripts\python scripts\make_fixtures.py` |
@@ -92,8 +94,8 @@ Other locations:
 | `data/cache/` | Downloaded orbit data, reused for 2 hours |
 | `data/replay_2009/` | The 2009 replay run, built by the replay command |
 | `data/alert_feed.json` | The latest 200 alerts across runs |
-| `data/validation.json` | Comparison with CelesTrak SOCRATES (needs teammate B's pack, not received) |
-| `addons/a_history/`, `addons/c_ops/` | The two teammate packs received. The main project calls them and never edits them |
+| `data/validation.json` | Comparison with CelesTrak SOCRATES, built by `python -m fusion.validation` and refreshed at the end of each run when the pack's copy of CelesTrak's list is under 12 hours old |
+| `addons/a_history/`, `addons/b_trust/`, `addons/c_ops/` | The three packs. The main project calls them and never edits A's or C's. `addons/b_trust/out/VALIDATION_REPORT.md` is the page to hand to judges |
 | `addons/a_history/cache/satcat.csv` | The size catalogue teammate A's pack downloads on first use (about 3 minutes on a slow connection, then reused) |
 
 Do not start `addons/c_ops/watch.py` yourself: the pipeline already calls the alert engine at the end of every run, and compares only runs of the same mode and window.
@@ -117,9 +119,11 @@ Every tunable number is in `fusion/config.py`. The ones most likely to be change
 
 ## Known gaps
 
-- **Uncertainty is an assumed table.** Teammate B's measured values have not arrived. Our own check on 9 October 2026 (two downloads two hours apart, 1,747 predicted passes) shows where the table is wrong: when new orbit data arrived, the predicted miss distance moved by a median of 0.03 km for pairs that cannot manoeuvre, 0.55 km when at least one object is operational, and 26.5 km for two Starlink satellites. So the table is roughly right for debris and far too small for satellites that manoeuvre.
+- **The measured uncertainty understates the real error.** It comes from comparing element sets of the same object with each other (325,558 pairs, 768 objects), not with true positions. ESA's warnings state an along-track uncertainty for debris about 5 times ours. It cannot measure a brand-new element set, and nothing was measured for objects of unknown type (those keep the assumed table; 61 of 1,731 passes in the first run). This is why ranking uses the worst case over every size of uncertainty.
+- **Predictions for satellites that manoeuvre do not last.** Measured along-track error after one day: 0.06 km for dead satellites, 0.15 km for rocket bodies, 0.22 km for debris, 0.37 km for working satellites other than Starlink, 12 km for Starlink. Of CelesTrak's passes from data a day older, 39% of those with one object that cannot manoeuvre are still in our run, 11% of those between two fleets, none of those within one fleet.
 - **Same-fleet pairs get no burn plan.** Because of the point above, a red pass between two satellites of one fleet is listed with the reason and left to its operator. Fleets are recognised from the leading word of the name.
-- **The comparison with CelesTrak SOCRATES is absent** (teammate B's pack). What we have instead: our search equals an independent dense calculation on all seven of teammate A's test cases, the probability matches a 10-million-sample simulation, and the 2009 replay puts the collision pass at 16:55:59 UTC against a reported collision time of 16:56.
+- **Agreement with CelesTrak proves the method, not the data.** From the same element sets our closest approach matches CelesTrak's 200 closest conjunctions to a median of 0.35 m. That says nothing about how close public data is to reality.
+- **Burns are treated as instantaneous**, and a burn for a satellite whose own position is uncertain by kilometres along its track (Starlink, Kuiper) is planned for radial separation half an orbit before the pass, at up to the 100 mm/s limit of the search.
 - **Teammate A's test kit lists one closest approach per pair.** Our search also reports the same pair coming back inside the threshold half an orbit later, and leaves out pairs drifting together at under 0.1 km/s. Both differences are checked in `tests/test_teammate_packs.py`.
 - **The risk-trend prediction is experimental.** It was trained on ESA's warnings, which use far more precise orbit data than ours and start two days before the pass. Teammate C's own report says a simple rule beats it at catching events that end above the danger line.
 - **Briefing text for "monitor" decisions is generic.** Teammate C's briefing ignores our plan's own reason. The plan card should show our reason.

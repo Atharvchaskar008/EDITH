@@ -93,6 +93,20 @@ def _plan_all(
         return list(pool.map(_plan_one, searches))
 
 
+def _refresh_validation(folder: Path, out: Path, report: Callable[[str, float, str], None]) -> None:
+    """Compare this run with CelesTrak's list when teammate B's pack holds a recent
+    copy of it. Nothing is downloaded here, and a failure never fails the run."""
+    try:
+        from fusion import validation  # imported here: that module imports this one
+
+        result = validation.validate(run_dir=folder, out=out, download=False)
+        if result and result.get("latest_run"):
+            matched = result["latest_run"]["all_matches"]["matched"]
+            report("DONE", 90, f"Compared with CelesTrak's own list: {matched} close passes in common")
+    except Exception as error:
+        log.warning("Validation step failed: %s", error)
+
+
 def run_pipeline(
     t0: Optional[datetime] = None,
     on_progress: Progress = None,
@@ -236,6 +250,8 @@ def run_pipeline(
             report(stage, 50, f"Changes since the previous run: {kinds or 'none'}")
         if extras.get("briefings") or extras.get("cdm"):
             report(stage, 80, f"Wrote {extras.get('briefings', 0)} operator briefings and {extras.get('cdm', 0)} standard warning messages")
+        if not run_dir:
+            _refresh_validation(folder, Path(runs_root).parent / "validation.json", report)
         summary.update(status="DONE", duration_s=round(time.time() - started, 1), events=len(events))
         report(stage, 100, f"Run complete in {summary['duration_s']:.0f} s")
         write_json(folder / "log.json", entries)

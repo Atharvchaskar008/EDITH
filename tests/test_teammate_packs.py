@@ -149,3 +149,36 @@ def test_teammate_c_prediction_is_a_probability(real_packs, primary, tmp_path):
     first, _ = _two_runs(tmp_path / "data" / "runs", primary)
     event = json.loads((first / "events.json").read_text(encoding="utf-8"))[0]
     assert 0.0 < event["pc_predicted_final"] <= 1.0
+
+
+B = REAL_ADDONS_DIR / "b_trust"
+
+
+def test_teammate_b_measured_uncertainty_replaces_the_assumed_table(real_packs, primary):
+    from fusion.risk.covariance import sigma_rtn
+
+    needs(B / "out" / "tle_error.json")
+    starlink = primary.model_copy(update={"name": "STARLINK-99999", "norad_id": 999001, "operational": True})
+    dead = primary.model_copy(update={"name": "OLD SATELLITE", "norad_id": 999002, "operational": False})
+    debris = primary.model_copy(update={"name": "SOME DEB", "norad_id": 999003, "operational": False, "object_type": "DEBRIS"})
+    (s_starlink, source), (s_dead, _), (s_debris, _) = (sigma_rtn(o, 1.5) for o in (starlink, dead, debris))
+    assert source == "MEASURED"
+    assert s_starlink[1] > 20 * s_dead[1]  # a satellite that thrusts all the time is far less predictable
+    assert s_debris[1] > s_debris[0] and s_debris[1] > s_debris[2]  # along-track is the largest error
+    assert sigma_rtn(debris, 3.0)[0][1] > s_debris[1]  # and it grows with the age of the data
+
+
+def test_our_closest_approach_matches_celestrak_on_the_same_element_sets(real_packs):
+    from fusion.validation import same_input_events
+
+    stored = B / "out" / "socrates_validation.json"
+    needs(stored)
+    pack = json.loads(stored.read_text(encoding="utf-8"))
+    by_key = {(p["primary_id"], p["secondary_id"], p["tca"]): p for p in pack["pairs"]}
+    events = [e for e in pack["events"] if "primary_tle" in e][:60]
+    assert len(events) >= 30
+    differences = []
+    for ours, theirs in zip(same_input_events(events), events):
+        celestrak = by_key[(theirs["primary_id"], theirs["secondary_id"], theirs["tca"])]
+        differences.append(abs(ours["miss_distance_km"] - celestrak["miss_distance_km_socrates"]) * 1000.0)
+    assert np.median(differences) < 1.0  # metres; CelesTrak publishes the distance to the nearest metre
