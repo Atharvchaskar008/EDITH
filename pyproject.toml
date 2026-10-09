@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "edith"
+version = "1.0.0"
+description = "Autonomous collision avoidance for low Earth orbit, built on public orbit data"
+readme = "README.md"
+requires-python = ">=3.11"
+# the lists of libraries live in the two requirements files, so there is one place to change them
+dynamic = ["dependencies", "optional-dependencies"]
+
+[project.urls]
+Repository = "https://github.com/Atharvchaskar008/EDITH"
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+optional-dependencies = { addons = { file = ["requirements-addons.txt"] } }
+
+[tool.setuptools.packages.find]
+include = ["fusion*"]
+
+[tool.setuptools.package-data]
+"fusion.api" = ["static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
