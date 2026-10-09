@@ -52,13 +52,29 @@ Atharv wants about 50 commits over the whole project, in plain natural language 
 
 | Prompt | Status |
 |---|---|
-| 1 Scaffold, contracts, fixtures | Done except the sample files in `data/fixtures/` (they need real objects, so make them at the end of prompt 2 from a real download) |
-| 2 Ingest and propagate | Not started. Helpers already exist in `fusion/core/sat.py` |
-| 3 Screen and refine | Not started. The exact closest-approach step already exists in `fusion/core/refine.py` |
-| 4–12 | Not started |
+| 1 Scaffold, contracts, fixtures | Done. `plan_sample.json` and `alerts_sample.json` are still to be added to `data/fixtures/` once the planner exists |
+| 2 Ingest and propagate | Done, run on real data |
+| 3 Screen and refine | Done, run on real data in both modes |
+| 4 Uncertainty and probability | Done, run on real data |
+| 5 Manoeuvre planner and verification | Not started. **This is next** |
+| 6–12 | Not started |
 | D1–D6 | Not started |
 
-## What exists in the code (20 tests passing)
+## Measured on real data (9 October 2026, CelesTrak only, no Space-Track login yet)
+
+| What | Result |
+|---|---|
+| Catalogue | 19,360 objects downloaded, 18,539 usable in LEO, 80 Iridium NEXT primaries, 15,891 operational |
+| `PRIMARIES` search, 72 h | about 75 s; 107 events within 5 km per 24 h |
+| `ALL_LEO` search, 72 h | about 14 minutes (single process); about 28 events within 1 km per hour |
+| `ALL_LEO` at a 5 km threshold | about 2,300 events per hour, far too many to rank, which is why `ALL_LEO` uses 1 km |
+| Risk assessment | under 1 ms per event |
+| Risk levels, `PRIMARIES`, 24 h | 1 RED, 10 AMBER, 96 GREEN |
+| Risk levels, `ALL_LEO`, 3 h | 30 RED, 43 AMBER, 10 GREEN |
+
+Open question for Atharv, not yet decided: in `ALL_LEO` mode about a third of events come out RED, because any pass under roughly 600 m reaches the RED threshold on worst-case probability when every object is assumed to be 5 m in radius. Real sizes from teammate A's pack and measured uncertainty from B's pack will change this. Do not retune the thresholds to make the counts look better without asking.
+
+## What exists in the code (53 tests passing)
 
 | File | What it does |
 |---|---|
@@ -68,6 +84,13 @@ Atharv wants about 50 commits over the whole project, in plain natural language 
 | `fusion/core/sat.py` | `satrec_from_omm`, `get_satrec(obj)` (cached), `state_at`, `state_at_offset`, `period_s`, `perigee_apogee_km`, `object_from_omm`, `state_to_omm`, `fit_omm_to_state` |
 | `fusion/core/refine.py` | `closest_approach(sat1, sat2, t_lo, t_hi)`: exact time and distance of closest approach |
 | `fusion/core/spacetrack.py` | `load_leo_objects()`: every tracked LEO object from Space-Track, cached; returns nothing when `.env` has no login. Tested with a fake session only; the query has not yet run against the live service, so check the first real response. `load_catalog` in prompt 2 must merge these with the CelesTrak groups, de-duplicated by `norad_id` |
+| `fusion/core/ingest.py` | `load_catalog()` and `load_catalog_with_stats()`: CelesTrak groups (cached 2 h, retried) merged with Space-Track, filtered to fresh LEO objects, then the size add-on hook |
+| `fusion/core/propagate.py` | `Propagator(objs).states(t0, times_s)`: vectorised SGP4, NaN for failed objects |
+| `fusion/core/screen.py` | `screen(catalog, t0, hours, threshold_km, mode, step_s, on_progress, stats)`: both modes; `order_pair()` gives the stable primary/secondary order |
+| `fusion/risk/covariance.py` | `sigma_rtn(obj, age)`: measured value from B's pack if present, else the assumed table |
+| `fusion/risk/pc.py` | `pc_2d`, `pc_disc`, `pc_max_disc`, `encounter_plane`, `event_covariances`, `assess(event, catalog_by_id)` |
+| `fusion/addons.py` | The three optional hooks into the teammate packs, each with a fallback |
+| `scripts/make_fixtures.py` | Rebuilds `data/fixtures/` from a real download |
 | `fusion/synthetic.py` | `make_conjunction(primary, t_tca, miss_km)`: labelled test object passing a chosen distance from a real satellite |
 | `tests/conftest.py` | Made-up Iridium-like test satellite (`primary` fixture) |
 
@@ -91,4 +114,4 @@ These points keep our code consistent with what the packs expect. Follow them wh
 - **B's `measured_sigma(norad_id, object_type, tle_age_days)`** returns three RTN sigmas in km or `None`. Our hook in `fusion/addons.py` adapts the arguments.
 - **B's probability test cases** give RTN sigmas per object; build each covariance with `cov_rtn_to_teme` before calling our `pc_2d`.
 
-**Next step:** prompt 2 in `docs/harness_ATHARV.md` (download the catalogue and vectorised propagation), then create the fixture files, then prompt 3.
+**Next step:** prompt 5 in `docs/harness_ATHARV.md` (the manoeuvre planner and its verification). For the planner, reuse `event_covariances` so the probability after a burn uses the same uncertainty as before it, and reuse `closest_approach` and the KD-tree search for the re-screen.
