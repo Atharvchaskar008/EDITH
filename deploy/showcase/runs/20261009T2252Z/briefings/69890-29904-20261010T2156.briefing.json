@@ -1,0 +1,75 @@
+{
+  "headline": {
+    "primary_name": "FIRESAT3",
+    "secondary_name": "FENGYUN 1C DEB",
+    "pair_label": "FIRESAT3 vs FENGYUN 1C DEB",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 23.1,
+    "hours_until_closest_approach_text": "23.1 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T21:56:19.962254Z (23.1 hours remaining)",
+      "value": "2026-10-10T21:56:19.962254Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.294 km (294 m)",
+      "value": 0.29385380643814646
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "14.87 km/s (14873 m/s)",
+      "value": 14.872879829018213
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "7.22e-06",
+      "value": 7.220432052264437e-06
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "2.44e-05",
+      "value": 2.4424043301220826e-05
+    },
+    {
+      "label": "Age of FIRESAT3 orbit data",
+      "value_text": "4.6 days",
+      "value": 4.635328433495371
+    },
+    {
+      "label": "Age of FENGYUN 1C DEB orbit data",
+      "value_text": "1.8 days",
+      "value": 1.7561979734953703
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 2.4424043306241143e-05,
+      "miss_distance_km": 0.2938538064852769
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 2.4424043301220826e-05,
+      "miss_distance_km": 0.29385380643814646
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

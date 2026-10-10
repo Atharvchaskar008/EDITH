@@ -1,0 +1,64 @@
+{
+  "headline": {
+    "primary_name": "IRIDIUM 33",
+    "secondary_name": "COSMOS 2251",
+    "pair_label": "IRIDIUM 33 vs COSMOS 2251",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 0.0,
+    "hours_until_closest_approach_text": "0.0 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2009-02-10T16:55:59.806281Z (0.0 hours remaining)",
+      "value": "2009-02-10T16:55:59.806281Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.584 km (584 m)",
+      "value": 0.5838814717402765
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "11.65 km/s (11647 m/s)",
+      "value": 11.647265501067732
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "2.03e-09",
+      "value": 2.03232225706646e-09
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "1.11e-05",
+      "value": 1.114158023508516e-05
+    },
+    {
+      "label": "Age of IRIDIUM 33 orbit data",
+      "value_text": "1.3 days",
+      "value": 1.3396812634375
+    },
+    {
+      "label": "Age of COSMOS 2251 orbit data",
+      "value_text": "1.2 days",
+      "value": 1.2072096734375
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T12:18:46Z",
+    "run_id": "replay_2009",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

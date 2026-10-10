@@ -1,0 +1,145 @@
+{
+  "headline": {
+    "primary_name": "MALLIGYONG-1",
+    "secondary_name": "SHIYAN-31",
+    "pair_label": "MALLIGYONG-1 vs SHIYAN-31",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 8.7,
+    "hours_until_closest_approach_text": "8.7 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T07:36:23.314484Z (8.7 hours remaining)",
+      "value": "2026-10-10T07:36:23.314484Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.659 km (659 m)",
+      "value": 0.658819022084425
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "15.21 km/s (15214 m/s)",
+      "value": 15.213733156088031
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "1.67e-18",
+      "value": 1.665856122632056e-18
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "1.36e-05",
+      "value": 1.356412101301667e-05
+    },
+    {
+      "label": "Age of MALLIGYONG-1 orbit data",
+      "value_text": "1.0 days",
+      "value": 1.0174630702314815
+    },
+    {
+      "label": "Age of SHIYAN-31 orbit data",
+      "value_text": "1.1 days",
+      "value": 1.0514447602314816
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1038Z",
+      "pc_max": 1.3391024463193689e-05,
+      "miss_distance_km": 0.6588190220956441
+    },
+    {
+      "run_id": "20261009T1051Z",
+      "pc_max": 1.3391024469578501e-05,
+      "miss_distance_km": 0.6588190220854139
+    },
+    {
+      "run_id": "20261009T1145Z",
+      "pc_max": 1.3564121013184646e-05,
+      "miss_distance_km": 0.6588190220821075
+    },
+    {
+      "run_id": "20261009T1210Z",
+      "pc_max": 1.3564121013029012e-05,
+      "miss_distance_km": 0.6588190220829269
+    },
+    {
+      "run_id": "20261009T1442Z",
+      "pc_max": 1.356412100977508e-05,
+      "miss_distance_km": 0.6588190220956441
+    },
+    {
+      "run_id": "20261009T1450Z",
+      "pc_max": 1.3564121013029012e-05,
+      "miss_distance_km": 0.6588190220829269
+    },
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 1.3564121013153917e-05,
+      "miss_distance_km": 0.6588190220838464
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 1.3564121013029012e-05,
+      "miss_distance_km": 0.6588190220829269
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 1.356412100977508e-05,
+      "miss_distance_km": 0.6588190220956441
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 1.3564121013033235e-05,
+      "miss_distance_km": 0.6588190220845577
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 1.356412101317125e-05,
+      "miss_distance_km": 0.6588190220829958
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 1.356412100977508e-05,
+      "miss_distance_km": 0.6588190220956441
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 1.3564121012986198e-05,
+      "miss_distance_km": 0.6588190220846216
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 1.356412100977508e-05,
+      "miss_distance_km": 0.6588190220956441
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 1.3564121013060283e-05,
+      "miss_distance_km": 0.6588190220838883
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 1.356412101301667e-05,
+      "miss_distance_km": 0.658819022084425
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:52Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

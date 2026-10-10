@@ -1,0 +1,145 @@
+{
+  "headline": {
+    "primary_name": "VIREON-2",
+    "secondary_name": "COSMOS 1933",
+    "pair_label": "VIREON-2 vs COSMOS 1933",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 7.5,
+    "hours_until_closest_approach_text": "7.5 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T06:23:27.252380Z (7.5 hours remaining)",
+      "value": "2026-10-10T06:23:27.252380Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.181 km (181 m)",
+      "value": 0.180663640901838
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "14.95 km/s (14949 m/s)",
+      "value": 14.94928066289965
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "3.65e-05",
+      "value": 3.650664963036558e-05
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "3.79e-05",
+      "value": 3.7909151602911166e-05
+    },
+    {
+      "label": "Age of VIREON-2 orbit data",
+      "value_text": "1.1 days",
+      "value": 1.136205123287037
+    },
+    {
+      "label": "Age of COSMOS 1933 orbit data",
+      "value_text": "1.0 days",
+      "value": 1.004604983287037
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1038Z",
+      "pc_max": 3.040225955238964e-05,
+      "miss_distance_km": 0.1806636408927875
+    },
+    {
+      "run_id": "20261009T1051Z",
+      "pc_max": 3.0402259550832068e-05,
+      "miss_distance_km": 0.18066364090590212
+    },
+    {
+      "run_id": "20261009T1145Z",
+      "pc_max": 3.790915160719404e-05,
+      "miss_distance_km": 0.1806636408914726
+    },
+    {
+      "run_id": "20261009T1210Z",
+      "pc_max": 3.790915160699901e-05,
+      "miss_distance_km": 0.18066364089160766
+    },
+    {
+      "run_id": "20261009T1442Z",
+      "pc_max": 3.7909151606886454e-05,
+      "miss_distance_km": 0.18066364089247522
+    },
+    {
+      "run_id": "20261009T1450Z",
+      "pc_max": 3.790915160699901e-05,
+      "miss_distance_km": 0.18066364089160766
+    },
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 3.790915160625245e-05,
+      "miss_distance_km": 0.18066364089318582
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 3.7909151606746314e-05,
+      "miss_distance_km": 0.18066364089274
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 3.790915160578067e-05,
+      "miss_distance_km": 0.18066364089466067
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 3.7909151602911166e-05,
+      "miss_distance_km": 0.180663640901838
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 3.7909151602911166e-05,
+      "miss_distance_km": 0.180663640901838
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 3.7909151606469165e-05,
+      "miss_distance_km": 0.18066364089314757
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 3.7909151606746314e-05,
+      "miss_distance_km": 0.18066364089274
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 3.790915161344792e-05,
+      "miss_distance_km": 0.18066364088103506
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 3.7909151606055684e-05,
+      "miss_distance_km": 0.18066364089416745
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 3.7909151602911166e-05,
+      "miss_distance_km": 0.180663640901838
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

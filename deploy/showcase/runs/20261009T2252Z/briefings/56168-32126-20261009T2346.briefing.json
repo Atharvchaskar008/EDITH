@@ -1,0 +1,145 @@
+{
+  "headline": {
+    "primary_name": "CHECKMATE 1",
+    "secondary_name": "FENGYUN 1C DEB",
+    "pair_label": "CHECKMATE 1 vs FENGYUN 1C DEB",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 0.9,
+    "hours_until_closest_approach_text": "0.9 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-09T23:46:16.393275Z (0.9 hours remaining)",
+      "value": "2026-10-09T23:46:16.393275Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.241 km (241 m)",
+      "value": 0.24053665466008425
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "14.82 km/s (14824 m/s)",
+      "value": 14.824134589822096
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "2.04e-05",
+      "value": 2.036573110090973e-05
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "2.25e-05",
+      "value": 2.2539674315025667e-05
+    },
+    {
+      "label": "Age of CHECKMATE 1 orbit data",
+      "value_text": "0.9 days",
+      "value": 0.9466378347569444
+    },
+    {
+      "label": "Age of FENGYUN 1C DEB orbit data",
+      "value_text": "4.6 days",
+      "value": 4.600449684756945
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1038Z",
+      "pc_max": 2.631850033020276e-05,
+      "miss_distance_km": 0.24053665465823898
+    },
+    {
+      "run_id": "20261009T1051Z",
+      "pc_max": 2.6318500329992485e-05,
+      "miss_distance_km": 0.2405366546590889
+    },
+    {
+      "run_id": "20261009T1145Z",
+      "pc_max": 2.253967431612603e-05,
+      "miss_distance_km": 0.24053665465377577
+    },
+    {
+      "run_id": "20261009T1210Z",
+      "pc_max": 2.253967431626752e-05,
+      "miss_distance_km": 0.24053665465293542
+    },
+    {
+      "run_id": "20261009T1442Z",
+      "pc_max": 2.253967431626752e-05,
+      "miss_distance_km": 0.24053665465293542
+    },
+    {
+      "run_id": "20261009T1450Z",
+      "pc_max": 2.253967431626752e-05,
+      "miss_distance_km": 0.24053665465293542
+    },
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 2.2539674315108365e-05,
+      "miss_distance_km": 0.2405366546590889
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 2.253967431626752e-05,
+      "miss_distance_km": 0.24053665465293542
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 2.2539674315178e-05,
+      "miss_distance_km": 0.24053665465902008
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 2.2539674316669613e-05,
+      "miss_distance_km": 0.24053665465069343
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 2.2539674315025667e-05,
+      "miss_distance_km": 0.24053665466008425
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 2.2539674316181535e-05,
+      "miss_distance_km": 0.24053665465355775
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 2.253967431603287e-05,
+      "miss_distance_km": 0.240536654654227
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 2.2539674315408818e-05,
+      "miss_distance_km": 0.24053665465766724
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 2.253967431626752e-05,
+      "miss_distance_km": 0.24053665465293542
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 2.2539674315025667e-05,
+      "miss_distance_km": 0.24053665466008425
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

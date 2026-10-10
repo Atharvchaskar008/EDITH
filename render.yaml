@@ -1,0 +1,20 @@
+# The public showcase on Render: one small web service that presents a recorded
+# run in show-only mode. It starts no runs; the live system needs 12 cores.
+# Refresh what it shows with scripts/make_showcase.py, then commit and push.
+services:
+  - type: web
+    name: edith
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m uvicorn fusion.api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /latest
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.7
+      - key: FUSION_READ_ONLY
+        value: "1"
+      - key: FUSION_SCHEDULER
+        value: "0"
+      - key: FUSION_RUNS_DIR
+        value: deploy/showcase/runs

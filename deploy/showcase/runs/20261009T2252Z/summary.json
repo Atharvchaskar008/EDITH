@@ -1,0 +1,99 @@
+{
+  "run_id": "20261009T2252Z",
+  "run_time": "2026-10-09T22:52:00Z",
+  "counts": {
+    "RED": 76,
+    "AMBER": 259,
+    "GREEN": 2162,
+    "total": 2497
+  },
+  "count_changes_since_previous_run": {
+    "RED": "+2",
+    "AMBER": "+4",
+    "GREEN": "+30"
+  },
+  "alerts_by_kind": {
+    "NEW": [
+      "STARLINK-6276 and STARLINK-32684: new RED risk close approach detected. Closest approach in 24 h at 0.29 km.",
+      "STARLINK-31286 and STARLINK-33611: new RED risk close approach detected. Closest approach in 24 h at 0.64 km.",
+      "STARLINK-30593 and STARLINK-37173: new AMBER risk close approach detected. Closest approach in 24 h at 0.45 km.",
+      "STARLINK-35472 and STARLINK-37922: new AMBER risk close approach detected. Closest approach in 24 h at 0.07 km.",
+      "STARLINK-6328 and STARLINK-36453: new AMBER risk close approach detected. Closest approach in 24 h at 0.56 km.",
+      "STARLINK-31441 and STARLINK-37484: new AMBER risk close approach detected. Closest approach in 24 h at 0.68 km.",
+      "FALCONSAT-10 and STARLINK-34408: new AMBER risk close approach detected. Closest approach in 24 h at 0.89 km.",
+      "STARLINK-31739 and STARLINK-36999: new AMBER risk close approach detected. Closest approach in 24 h at 0.90 km.",
+      "STARLINK-5007 and STARLINK-34140: new AMBER risk close approach detected. Closest approach in 24 h at 0.75 km."
+    ]
+  },
+  "most_dangerous_events": [
+    {
+      "event_id": "56554-67431-20261010T1723",
+      "primary_name": "STARLINK-6295",
+      "secondary_name": "STARLINK-36443",
+      "time_to_closest_approach": "18.5 hours",
+      "miss_distance": "0.111 km",
+      "collision_probability": "3.56e-07",
+      "max_collision_probability": "6.39e-03",
+      "risk_level": "RED"
+    },
+    {
+      "event_id": "57704-66971-20261010T1750",
+      "primary_name": "STARLINK-30346",
+      "secondary_name": "STARLINK-35678",
+      "time_to_closest_approach": "19.0 hours",
+      "miss_distance": "0.231 km",
+      "collision_probability": "2.70e-07",
+      "max_collision_probability": "5.76e-03",
+      "risk_level": "RED"
+    },
+    {
+      "event_id": "52836-62613-20261010T0434",
+      "primary_name": "STARLINK-4043",
+      "secondary_name": "FLOCK 4G-8",
+      "time_to_closest_approach": "5.7 hours",
+      "miss_distance": "0.076 km",
+      "collision_probability": "1.39e-06",
+      "max_collision_probability": "5.10e-03",
+      "risk_level": "RED"
+    },
+    {
+      "event_id": "64677-100039-20261010T1403",
+      "primary_name": "STARLINK-34605",
+      "secondary_name": "STARLINK-37693",
+      "time_to_closest_approach": "15.2 hours",
+      "miss_distance": "0.344 km",
+      "collision_probability": "2.46e-07",
+      "max_collision_probability": "3.36e-03",
+      "risk_level": "RED"
+    },
+    {
+      "event_id": "56105-63915-20261010T1420",
+      "primary_name": "STARLINK-6066",
+      "secondary_name": "STARLINK-34076",
+      "time_to_closest_approach": "15.5 hours",
+      "miss_distance": "0.267 km",
+      "collision_probability": "3.91e-07",
+      "max_collision_probability": "3.30e-03",
+      "risk_level": "RED"
+    }
+  ],
+  "recommended_manoeuvres": [
+    "Event 64513-6180-20261010T0108 (KUIPER-00053 vs SCOUT B-1 R/B): Burn scheduled at 2026-10-10T00:20:15.326541Z with delta-v 65.8 mm/s (0.066 m/s). Miss distance improves from 0.25 km to 0.59 km; collision probability drops from 1.6e-05 to 9.8e-08. Secondary conjunctions created: 0.",
+    "Event 44078-30941-20261010T2135 (EMISAT vs FENGYUN 1C DEB): Burn scheduled at 2026-10-10T08:42:10.680551Z with delta-v 18.7 mm/s (0.019 m/s). Miss distance improves from 0.04 km to 0.64 km; collision probability drops from 4.8e-05 to 8.3e-07. Secondary conjunctions created: 0.",
+    "Event 67317-52258-20261010T0716 (STARLINK-36450 vs CZ-4C R/B): Burn scheduled at 2026-10-10T00:12:22.602105Z with delta-v 100.0 mm/s (0.100 m/s). Miss distance improves from 0.34 km to 2.99 km; collision probability drops from 4.9e-06 to 1.6e-06. Secondary conjunctions created: 0.",
+    "Event 53466-31619-20261010T1215 (STARLINK-4398 vs FENGYUN 1C DEB): Burn scheduled at 2026-10-10T11:29:05.640698Z with delta-v 18.7 mm/s (0.019 m/s). Miss distance improves from 0.31 km to 0.39 km; collision probability drops from 4.5e-07 to 4.4e-07. Secondary conjunctions created: 0.",
+    "Event 68230-68756-20261010T1151 (STARLINK-37100 vs VOLGA R/B): Burn scheduled at 2026-10-10T04:49:26.298782Z with delta-v 100.0 mm/s (0.100 m/s). Miss distance improves from 0.52 km to 4.23 km; collision probability drops from 2.1e-06 to 9.8e-07. Secondary conjunctions created: 0.",
+    "Event 66472-42827-20261010T0232 (STARLINK-35567 vs OBJECT C): Burn scheduled at 2026-10-10T01:45:29.558442Z with delta-v 43.3 mm/s (0.043 m/s). Miss distance improves from 0.70 km to 0.99 km; collision probability drops from 1.3e-06 to 9.9e-07. Secondary conjunctions created: 0.",
+    "Event 56487-65973-20261010T0355 (STARLINK-6196 vs ELECTRON KICK STAGE R/B): Burn scheduled at 2026-10-10T03:07:34.864410Z with delta-v 65.8 mm/s (0.066 m/s). Miss distance improves from 0.22 km to 0.32 km; collision probability drops from 1.6e-06 to 9.9e-07. Secondary conjunctions created: 0.",
+    "Event 52836-62613-20261010T0434 (STARLINK-4043 vs FLOCK 4G-8): Burn scheduled at 2026-10-10T03:47:44.048668Z with delta-v 65.8 mm/s (0.066 m/s). Miss distance improves from 0.08 km to 0.45 km; collision probability drops from 1.4e-06 to 9.5e-07. Secondary conjunctions created: 0.",
+    "Event 38257-57247-20261010T0907 (YAOGAN-14 vs STARLINK-5039): Burn scheduled at 2026-10-10T00:30:01.279753Z with delta-v 100.0 mm/s (0.100 m/s). Miss distance improves from 0.18 km to 3.41 km; collision probability drops from 2.8e-06 to 1.1e-06. Secondary conjunctions created: 0.",
+    "Event 60435-62610-20261010T1220 (STARLINK-32222 vs EDISON-1): Burn scheduled at 2026-10-10T11:33:29.500268Z with delta-v 18.7 mm/s (0.019 m/s). Miss distance improves from 0.54 km to 0.67 km; collision probability drops from 2.0e-07 to 2.0e-07. Secondary conjunctions created: 0.",
+    "Event 55289-100955-20261010T0755 (STARLINK-5320 vs 2026-229A): Burn scheduled at 2026-10-10T00:43:00.310763Z with delta-v 100.0 mm/s (0.100 m/s). Miss distance improves from 0.35 km to 1.30 km; collision probability drops from 3.3e-05 to 1.1e-05. Secondary conjunctions created: 0.",
+    "Event 53522-63226-20261010T0252 (YAOGAN-35 04A vs ETIHAD-SAT): Burn scheduled at 2026-10-10T00:30:20.566892Z with delta-v 65.8 mm/s (0.066 m/s). Miss distance improves from 0.12 km to 1.02 km; collision probability drops from 1.3e-04 to 1.9e-07. Secondary conjunctions created: 0.",
+    "Event 44857-61616-20261010T1216 (RISAT-2BR1 vs TIANPING 3B-02): Burn scheduled at 2026-10-10T01:28:44.705268Z with delta-v 18.7 mm/s (0.019 m/s). Miss distance improves from 0.13 km to 0.97 km; collision probability drops from 1.0e-04 to 9.4e-07. Secondary conjunctions created: 0.",
+    "Event 46266-64796-20261010T1537 (GNOMES-1 vs STARLINK-34646): Burn scheduled at 2026-10-10T03:37:00.144907Z with delta-v 100.0 mm/s (0.100 m/s). Miss distance improves from 0.26 km to 1.68 km; collision probability drops from 3.8e-06 to 1.5e-06. Secondary conjunctions created: 0.",
+    "Event 55450-61872-20261010T0246 (STARLINK-5686 vs 2024-203D): Burn scheduled at 2026-10-10T00:24:50.881319Z with delta-v 100.0 mm/s (0.100 m/s). Miss distance improves from 0.71 km to 1.73 km; collision probability drops from 7.4e-06 to 1.7e-06. Secondary conjunctions created: 0.",
+    "Event 37875-55386-20261010T1333 (YAOGAN-12 vs STARLINK-5555): Burn scheduled at 2026-10-10T12:46:13.376436Z with delta-v 100.0 mm/s (0.100 m/s). Miss distance improves from 0.23 km to 0.74 km; collision probability drops from 2.0e-06 to 8.5e-07. Secondary conjunctions created: 0.",
+    "Event 58406-58702-20261010T1047 (STARLINK-30925 vs TIANMU-1 17): Burn scheduled at 2026-10-10T00:34:39.931672Z with delta-v 100.0 mm/s (0.100 m/s). Miss distance improves from 0.82 km to 3.01 km; collision probability drops from 3.9e-06 to 1.6e-06. Secondary conjunctions created: 0."
+  ]
+}

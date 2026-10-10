@@ -1,0 +1,75 @@
+{
+  "headline": {
+    "primary_name": "CZ-6A DEB",
+    "secondary_name": "TBA - TO BE ASSIGNED",
+    "pair_label": "CZ-6A DEB vs TBA - TO BE ASSIGNED",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 22.9,
+    "hours_until_closest_approach_text": "22.9 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T21:45:07.914454Z (22.9 hours remaining)",
+      "value": "2026-10-10T21:45:07.914454Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.515 km (515 m)",
+      "value": 0.514627255246856
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "0.44 km/s (435 m/s)",
+      "value": 0.4351756732116117
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "1.26e-05",
+      "value": 1.2588309390984073e-05
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "3.02e-05",
+      "value": 3.0201035352101442e-05
+    },
+    {
+      "label": "Age of CZ-6A DEB orbit data",
+      "value_text": "2.4 days",
+      "value": 2.384259782476852
+    },
+    {
+      "label": "Age of TBA - TO BE ASSIGNED orbit data",
+      "value_text": "1.7 days",
+      "value": 1.680220072476852
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MODELLED",
+      "value": "MODELLED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 3.020103405614586e-05,
+      "miss_distance_km": 0.5146272556338339
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 3.0201035352101442e-05,
+      "miss_distance_km": 0.514627255246856
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

@@ -1,0 +1,29 @@
+{
+ "run_id": "20090209T1700Z",
+ "t0": "2009-02-09T17:00:00Z",
+ "mode": "PRIMARIES",
+ "window_hours": 48.0,
+ "synthetic_injected": false,
+ "status": "DONE",
+ "screen": {
+  "objects_screened": 1911,
+  "workers": 1,
+  "candidates": 3,
+  "events": 2
+ },
+ "levels": {
+  "RED": 0,
+  "AMBER": 1,
+  "GREEN": 1
+ },
+ "plans": {
+  "maneuver": 0,
+  "monitor": 1
+ },
+ "addons": {
+  "briefings": 1,
+  "cdm": 1
+ },
+ "duration_s": 52.1,
+ "events": 2
+}

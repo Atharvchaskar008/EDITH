@@ -1,0 +1,145 @@
+{
+  "headline": {
+    "primary_name": "COSMOS 2251 DEB",
+    "secondary_name": "TBA - TO BE ASSIGNED",
+    "pair_label": "COSMOS 2251 DEB vs TBA - TO BE ASSIGNED",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 6.0,
+    "hours_until_closest_approach_text": "6.0 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T04:49:46.296684Z (6.0 hours remaining)",
+      "value": "2026-10-10T04:49:46.296684Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.620 km (620 m)",
+      "value": 0.6195495783921765
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "15.03 km/s (15035 m/s)",
+      "value": 15.034641715755367
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "8.27e-06",
+      "value": 8.272519166128682e-06
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "2.29e-05",
+      "value": 2.2860135557869872e-05
+    },
+    {
+      "label": "Age of COSMOS 2251 DEB orbit data",
+      "value_text": "3.7 days",
+      "value": 3.7359800856944445
+    },
+    {
+      "label": "Age of TBA - TO BE ASSIGNED orbit data",
+      "value_text": "0.7 days",
+      "value": 0.7418407456944445
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MODELLED",
+      "value": "MODELLED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1038Z",
+      "pc_max": 5.317318822474763e-05,
+      "miss_distance_km": 0.38601601346119063
+    },
+    {
+      "run_id": "20261009T1051Z",
+      "pc_max": 5.317318822388139e-05,
+      "miss_distance_km": 0.38601601344306713
+    },
+    {
+      "run_id": "20261009T1145Z",
+      "pc_max": 5.721521580244511e-05,
+      "miss_distance_km": 0.3860160134428217
+    },
+    {
+      "run_id": "20261009T1210Z",
+      "pc_max": 5.721521580009432e-05,
+      "miss_distance_km": 0.3860160134444333
+    },
+    {
+      "run_id": "20261009T1442Z",
+      "pc_max": 5.721521580009432e-05,
+      "miss_distance_km": 0.3860160134444333
+    },
+    {
+      "run_id": "20261009T1450Z",
+      "pc_max": 5.721521580009432e-05,
+      "miss_distance_km": 0.3860160134444333
+    },
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 5.721521579795374e-05,
+      "miss_distance_km": 0.38601601344327446
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 5.7215215800917216e-05,
+      "miss_distance_km": 0.386016013427035
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 5.7215215796631405e-05,
+      "miss_distance_km": 0.386016013445157
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 5.721521579595891e-05,
+      "miss_distance_km": 0.38601601344506314
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 2.2860135557869872e-05,
+      "miss_distance_km": 0.6195495783921765
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 2.286013555792151e-05,
+      "miss_distance_km": 0.6195495783907011
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 2.2860135557861395e-05,
+      "miss_distance_km": 0.619549578391825
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 2.286013555798724e-05,
+      "miss_distance_km": 0.6195495783904266
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 2.2860135557936625e-05,
+      "miss_distance_km": 0.6195495783908269
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 2.2860135557869872e-05,
+      "miss_distance_km": 0.6195495783921765
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

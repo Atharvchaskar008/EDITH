@@ -1,0 +1,95 @@
+{
+  "headline": {
+    "primary_name": "STARLINK-5297",
+    "secondary_name": "STARLINK-30701",
+    "pair_label": "STARLINK-5297 vs STARLINK-30701",
+    "risk_level": "RED",
+    "hours_until_closest_approach": 21.6,
+    "hours_until_closest_approach_text": "21.6 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T20:28:41.472137Z (21.6 hours remaining)",
+      "value": "2026-10-10T20:28:41.472137Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.843 km (843 m)",
+      "value": 0.8431465261609276
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "2.29 km/s (2287 m/s)",
+      "value": 2.286577129025907
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "3.52e-07",
+      "value": 3.5243196985839275e-07
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "1.07e-04",
+      "value": 0.00010675601707244471
+    },
+    {
+      "label": "Age of STARLINK-5297 orbit data",
+      "value_text": "1.6 days",
+      "value": 1.611012739363426
+    },
+    {
+      "label": "Age of STARLINK-30701 orbit data",
+      "value_text": "2.0 days",
+      "value": 2.004068439363426
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 0.0001067559892924974,
+      "miss_distance_km": 0.8431465259610134
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 0.00010675598738774809,
+      "miss_distance_km": 0.8431465262320982
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 0.00010675599472664558,
+      "miss_distance_km": 0.8431465264927622
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 0.0001067559636226262,
+      "miss_distance_km": 0.8431465263230222
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 0.00010675598738774809,
+      "miss_distance_km": 0.8431465262320982
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 0.00010675601707244471,
+      "miss_distance_km": 0.8431465261609276
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

@@ -1,0 +1,494 @@
+[
+ {
+  "time": "2026-10-09T22:52:37Z",
+  "stage": "INGEST",
+  "percent": 0,
+  "message": "Downloading the latest orbit data"
+ },
+ {
+  "time": "2026-10-09T22:53:08Z",
+  "stage": "INGEST",
+  "percent": 100,
+  "message": "Loaded 29,678 tracked objects in low Earth orbit from CelesTrak and Space-Track"
+ },
+ {
+  "time": "2026-10-09T22:53:08Z",
+  "stage": "INGEST",
+  "percent": 100,
+  "message": "CelesTrak would not send its group 'active' again; the copy from 3.2 hours ago was used"
+ },
+ {
+  "time": "2026-10-09T22:53:08Z",
+  "stage": "PROPAGATE",
+  "percent": 0,
+  "message": "Predicting the path of 29,678 objects for the next 24 hours"
+ },
+ {
+  "time": "2026-10-09T22:53:59Z",
+  "stage": "SCREEN",
+  "percent": 2.1,
+  "message": "Searched 0 of 24 hours: 167 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:01Z",
+  "stage": "SCREEN",
+  "percent": 4.2,
+  "message": "Searched 1 of 24 hours: 303 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:04Z",
+  "stage": "SCREEN",
+  "percent": 6.2,
+  "message": "Searched 1 of 24 hours: 424 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:06Z",
+  "stage": "SCREEN",
+  "percent": 8.3,
+  "message": "Searched 2 of 24 hours: 591 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:09Z",
+  "stage": "SCREEN",
+  "percent": 10.4,
+  "message": "Searched 2 of 24 hours: 754 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:11Z",
+  "stage": "SCREEN",
+  "percent": 12.5,
+  "message": "Searched 3 of 24 hours: 910 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:12Z",
+  "stage": "SCREEN",
+  "percent": 14.6,
+  "message": "Searched 3 of 24 hours: 1085 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:14Z",
+  "stage": "SCREEN",
+  "percent": 16.7,
+  "message": "Searched 4 of 24 hours: 1258 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:17Z",
+  "stage": "SCREEN",
+  "percent": 18.7,
+  "message": "Searched 4 of 24 hours: 1411 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:18Z",
+  "stage": "SCREEN",
+  "percent": 20.8,
+  "message": "Searched 5 of 24 hours: 1576 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:20Z",
+  "stage": "SCREEN",
+  "percent": 22.9,
+  "message": "Searched 5 of 24 hours: 1760 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:40Z",
+  "stage": "SCREEN",
+  "percent": 25.0,
+  "message": "Searched 6 of 24 hours: 1907 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:42Z",
+  "stage": "SCREEN",
+  "percent": 27.1,
+  "message": "Searched 6 of 24 hours: 2074 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:45Z",
+  "stage": "SCREEN",
+  "percent": 29.2,
+  "message": "Searched 7 of 24 hours: 2262 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:48Z",
+  "stage": "SCREEN",
+  "percent": 31.2,
+  "message": "Searched 7 of 24 hours: 2410 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:51Z",
+  "stage": "SCREEN",
+  "percent": 33.3,
+  "message": "Searched 8 of 24 hours: 2583 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:52Z",
+  "stage": "SCREEN",
+  "percent": 35.4,
+  "message": "Searched 8 of 24 hours: 2754 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:54Z",
+  "stage": "SCREEN",
+  "percent": 37.5,
+  "message": "Searched 9 of 24 hours: 2924 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:55Z",
+  "stage": "SCREEN",
+  "percent": 39.6,
+  "message": "Searched 9 of 24 hours: 3085 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:58Z",
+  "stage": "SCREEN",
+  "percent": 41.7,
+  "message": "Searched 10 of 24 hours: 3257 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:54:58Z",
+  "stage": "SCREEN",
+  "percent": 43.7,
+  "message": "Searched 10 of 24 hours: 3449 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:55:00Z",
+  "stage": "SCREEN",
+  "percent": 45.8,
+  "message": "Searched 11 of 24 hours: 3615 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:55:15Z",
+  "stage": "SCREEN",
+  "percent": 47.9,
+  "message": "Searched 11 of 24 hours: 3818 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:55:17Z",
+  "stage": "SCREEN",
+  "percent": 50.0,
+  "message": "Searched 12 of 24 hours: 3999 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:55:18Z",
+  "stage": "SCREEN",
+  "percent": 52.1,
+  "message": "Searched 12 of 24 hours: 4188 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:55:20Z",
+  "stage": "SCREEN",
+  "percent": 54.2,
+  "message": "Searched 13 of 24 hours: 4400 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:55:23Z",
+  "stage": "SCREEN",
+  "percent": 56.2,
+  "message": "Searched 13 of 24 hours: 4623 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:55:23Z",
+  "stage": "SCREEN",
+  "percent": 58.3,
+  "message": "Searched 14 of 24 hours: 4822 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:55:24Z",
+  "stage": "SCREEN",
+  "percent": 60.4,
+  "message": "Searched 14 of 24 hours: 5012 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:55:26Z",
+  "stage": "SCREEN",
+  "percent": 62.5,
+  "message": "Searched 15 of 24 hours: 5223 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:55:28Z",
+  "stage": "SCREEN",
+  "percent": 64.6,
+  "message": "Searched 15 of 24 hours: 5432 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:55:28Z",
+  "stage": "SCREEN",
+  "percent": 66.7,
+  "message": "Searched 16 of 24 hours: 5683 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:55:30Z",
+  "stage": "SCREEN",
+  "percent": 68.7,
+  "message": "Searched 16 of 24 hours: 5886 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:56:06Z",
+  "stage": "SCREEN",
+  "percent": 70.8,
+  "message": "Searched 17 of 24 hours: 6144 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:56:11Z",
+  "stage": "SCREEN",
+  "percent": 72.9,
+  "message": "Searched 17 of 24 hours: 6349 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:56:17Z",
+  "stage": "SCREEN",
+  "percent": 75.0,
+  "message": "Searched 18 of 24 hours: 6566 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:56:23Z",
+  "stage": "SCREEN",
+  "percent": 77.1,
+  "message": "Searched 18 of 24 hours: 6791 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:56:33Z",
+  "stage": "SCREEN",
+  "percent": 79.2,
+  "message": "Searched 19 of 24 hours: 7026 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:56:34Z",
+  "stage": "SCREEN",
+  "percent": 79.2,
+  "message": "Searched 19 of 24 hours: 7027 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:56:37Z",
+  "stage": "SCREEN",
+  "percent": 81.3,
+  "message": "Searched 20 of 24 hours: 7243 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:56:41Z",
+  "stage": "SCREEN",
+  "percent": 83.3,
+  "message": "Searched 20 of 24 hours: 7486 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:56:47Z",
+  "stage": "SCREEN",
+  "percent": 85.4,
+  "message": "Searched 21 of 24 hours: 7745 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:56:53Z",
+  "stage": "SCREEN",
+  "percent": 87.5,
+  "message": "Searched 21 of 24 hours: 8014 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:56:53Z",
+  "stage": "SCREEN",
+  "percent": 89.6,
+  "message": "Searched 22 of 24 hours: 8280 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:56:55Z",
+  "stage": "SCREEN",
+  "percent": 91.7,
+  "message": "Searched 22 of 24 hours: 8553 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:57:15Z",
+  "stage": "SCREEN",
+  "percent": 93.8,
+  "message": "Searched 23 of 24 hours: 8870 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:57:17Z",
+  "stage": "SCREEN",
+  "percent": 95.8,
+  "message": "Searched 23 of 24 hours: 9168 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:57:19Z",
+  "stage": "SCREEN",
+  "percent": 97.9,
+  "message": "Searched 24 of 24 hours: 9514 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:57:20Z",
+  "stage": "SCREEN",
+  "percent": 100.0,
+  "message": "Searched 24 of 24 hours: 9844 candidate passes"
+ },
+ {
+  "time": "2026-10-09T22:57:36Z",
+  "stage": "SCREEN",
+  "percent": 100,
+  "message": "Screened every object against every other: 2,497 close passes within 1 km"
+ },
+ {
+  "time": "2026-10-09T22:57:59Z",
+  "stage": "ASSESS",
+  "percent": 100,
+  "message": "Risk levels: 76 red, 259 amber, 2162 green"
+ },
+ {
+  "time": "2026-10-09T22:57:59Z",
+  "stage": "PLAN",
+  "percent": 10,
+  "message": "Searching for the smallest safe burn for 21 red event(s)"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 4.8,
+  "message": "KUIPER-00053 and SCOUT B-1 R/B: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 9.5,
+  "message": "EMISAT and FENGYUN 1C DEB: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 14.3,
+  "message": "STARLINK-36450 and CZ-4C R/B: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 19.0,
+  "message": "STARLINK-4398 and FENGYUN 1C DEB: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 23.8,
+  "message": "STARLINK-37100 and VOLGA R/B: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 28.6,
+  "message": "STARLINK-35567 and OBJECT C: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 33.3,
+  "message": "STARLINK-6196 and ELECTRON KICK STAGE R/B: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 38.1,
+  "message": "STARLINK-4043 and FLOCK 4G-8: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 42.9,
+  "message": "2024-173D and STARLINK-38027: MONITOR"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 47.6,
+  "message": "YAOGAN-14 and STARLINK-5039: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 52.4,
+  "message": "STARLINK-32222 and EDISON-1: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 57.1,
+  "message": "STARLINK-5320 and 2026-229A: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 61.9,
+  "message": "STARLINK-30894 and PELICAN-6: MONITOR"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 66.7,
+  "message": "YAOGAN-35 04A and ETIHAD-SAT: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 71.4,
+  "message": "RISAT-2BR1 and TIANPING 3B-02: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 76.2,
+  "message": "ICEYE-X39 and STARLINK-35882: MONITOR"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 81.0,
+  "message": "GNOMES-1 and STARLINK-34646: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 85.7,
+  "message": "STARLINK-3735 and EXO-0: MONITOR"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 90.5,
+  "message": "STARLINK-5686 and 2024-203D: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 95.2,
+  "message": "YAOGAN-12 and STARLINK-5555: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "PLAN",
+  "percent": 100.0,
+  "message": "STARLINK-30925 and TIANMU-1 17: MANEUVER"
+ },
+ {
+  "time": "2026-10-09T23:03:40Z",
+  "stage": "VERIFY",
+  "percent": 100,
+  "message": "17 burn(s) recommended; 17 checked clear of new or worsened close passes"
+ },
+ {
+  "time": "2026-10-09T23:03:53Z",
+  "stage": "DONE",
+  "percent": 50,
+  "message": "Changes since the previous run: 9 new"
+ },
+ {
+  "time": "2026-10-09T23:03:53Z",
+  "stage": "DONE",
+  "percent": 80,
+  "message": "Wrote 335 operator briefings and 335 standard warning messages"
+ },
+ {
+  "time": "2026-10-09T23:03:55Z",
+  "stage": "DONE",
+  "percent": 90,
+  "message": "Compared with CelesTrak's own list: 259 close passes in common"
+ },
+ {
+  "time": "2026-10-09T23:03:55Z",
+  "stage": "DONE",
+  "percent": 100,
+  "message": "Run complete in 678 s"
+ }
+]

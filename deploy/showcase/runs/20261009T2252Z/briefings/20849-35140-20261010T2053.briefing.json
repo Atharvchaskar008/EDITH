@@ -1,0 +1,85 @@
+{
+  "headline": {
+    "primary_name": "CZ-4 DEB",
+    "secondary_name": "FENGYUN 1C DEB",
+    "pair_label": "CZ-4 DEB vs FENGYUN 1C DEB",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 22.0,
+    "hours_until_closest_approach_text": "22.0 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T20:53:51.521429Z (22.0 hours remaining)",
+      "value": "2026-10-10T20:53:51.521429Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.100 km (100 m)",
+      "value": 0.10023949902107192
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "0.48 km/s (476 m/s)",
+      "value": 0.4759999175675822
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "9.34e-07",
+      "value": 9.344038285552925e-07
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "7.74e-05",
+      "value": 7.736689229286867e-05
+    },
+    {
+      "label": "Age of CZ-4 DEB orbit data",
+      "value_text": "2.0 days",
+      "value": 2.026160591724537
+    },
+    {
+      "label": "Age of FENGYUN 1C DEB orbit data",
+      "value_text": "3.7 days",
+      "value": 3.711234771724537
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 7.736689052169819e-05,
+      "miss_distance_km": 0.10023949931209845
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 7.736689107421758e-05,
+      "miss_distance_km": 0.10023949906244846
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 7.736689341118191e-05,
+      "miss_distance_km": 0.10023949889094205
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 7.736689229286867e-05,
+      "miss_distance_km": 0.10023949902107192
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

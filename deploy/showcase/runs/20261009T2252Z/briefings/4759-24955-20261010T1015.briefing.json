@@ -1,0 +1,145 @@
+{
+  "headline": {
+    "primary_name": "THORAD AGENA D DEB",
+    "secondary_name": "SL-8 R/B",
+    "pair_label": "THORAD AGENA D DEB vs SL-8 R/B",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 11.4,
+    "hours_until_closest_approach_text": "11.4 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T10:15:49.447771Z (11.4 hours remaining)",
+      "value": "2026-10-10T10:15:49.447771Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.259 km (259 m)",
+      "value": 0.2590378573125094
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "7.97 km/s (7967 m/s)",
+      "value": 7.96663256147429
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "2.50e-05",
+      "value": 2.5012567137525907e-05
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "2.92e-05",
+      "value": 2.9154292990458307e-05
+    },
+    {
+      "label": "Age of THORAD AGENA D DEB orbit data",
+      "value_text": "1.1 days",
+      "value": 1.1035302754976852
+    },
+    {
+      "label": "Age of SL-8 R/B orbit data",
+      "value_text": "1.2 days",
+      "value": 1.1736739854976852
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1038Z",
+      "pc_max": 8.924405334780756e-05,
+      "miss_distance_km": 0.25903785726491363
+    },
+    {
+      "run_id": "20261009T1051Z",
+      "pc_max": 8.924405296136868e-05,
+      "miss_distance_km": 0.2590378572135396
+    },
+    {
+      "run_id": "20261009T1145Z",
+      "pc_max": 2.9154292986243904e-05,
+      "miss_distance_km": 0.2590378573409604
+    },
+    {
+      "run_id": "20261009T1210Z",
+      "pc_max": 2.9154292986243904e-05,
+      "miss_distance_km": 0.2590378573409604
+    },
+    {
+      "run_id": "20261009T1442Z",
+      "pc_max": 2.9154292994691096e-05,
+      "miss_distance_km": 0.2590378572709917
+    },
+    {
+      "run_id": "20261009T1450Z",
+      "pc_max": 2.9154292986243904e-05,
+      "miss_distance_km": 0.2590378573409604
+    },
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 2.915429301439535e-05,
+      "miss_distance_km": 0.2590378572135396
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 2.9154292986243904e-05,
+      "miss_distance_km": 0.2590378573409604
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 2.9154292996397417e-05,
+      "miss_distance_km": 0.25903785726307105
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 2.9154292998744335e-05,
+      "miss_distance_km": 0.25903785727936807
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 2.9154292990458307e-05,
+      "miss_distance_km": 0.2590378573125094
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 2.9154293000904056e-05,
+      "miss_distance_km": 0.259037857314627
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 2.9154292957711752e-05,
+      "miss_distance_km": 0.259037857410984
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 2.915429300025247e-05,
+      "miss_distance_km": 0.25903785721719647
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 2.915429301439535e-05,
+      "miss_distance_km": 0.2590378572135396
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 2.9154292990458307e-05,
+      "miss_distance_km": 0.2590378573125094
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

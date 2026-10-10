@@ -1,0 +1,80 @@
+{
+  "headline": {
+    "primary_name": "STARLINK-30320",
+    "secondary_name": "STARLINK-32377",
+    "pair_label": "STARLINK-30320 vs STARLINK-32377",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 22.4,
+    "hours_until_closest_approach_text": "22.4 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T21:13:02.985653Z (22.4 hours remaining)",
+      "value": "2026-10-10T21:13:02.985653Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.215 km (215 m)",
+      "value": 0.21509264437625145
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "6.82 km/s (6823 m/s)",
+      "value": 6.823032269949691
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "1.13e-07",
+      "value": 1.1327974193667939e-07
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "1.70e-05",
+      "value": 1.7033968089656105e-05
+    },
+    {
+      "label": "Age of STARLINK-30320 orbit data",
+      "value_text": "2.6 days",
+      "value": 2.5526505039467593
+    },
+    {
+      "label": "Age of STARLINK-32377 orbit data",
+      "value_text": "2.8 days",
+      "value": 2.821062023946759
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 1.7033968326405372e-05,
+      "miss_distance_km": 0.21509264434785397
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 1.7033967987571424e-05,
+      "miss_distance_km": 0.21509264518840926
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 1.7033968089656105e-05,
+      "miss_distance_km": 0.21509264437625145
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:52Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

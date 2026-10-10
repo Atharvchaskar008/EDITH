@@ -1,0 +1,56 @@
+COMMENT ===================================================================
+COMMENT CCSDS 508.0-B-1 CONJUNCTION DATA MESSAGE (CDM)
+COMMENT NOTICE: CDM-style export from public TLE data and not a certified message.
+COMMENT State vectors are in True Equator, Mean Equinox (TEME) reference frame.
+COMMENT ===================================================================
+CCSDS_CDM_VERS = 1.0
+CREATION_DATE = 2026-10-09T23:03:53Z
+ORIGINATOR = FUSION-SKN
+MESSAGE_ID = 22184-81617-20261010T2143
+COMMENT -------------------------------------------------------------------
+COMMENT RELATIVE METADATA AND CONJUNCTION PARAMETERS
+COMMENT -------------------------------------------------------------------
+TCA = 2026-10-10T21:43:29.440433Z
+MISS_DISTANCE = 765.920
+RELATIVE_SPEED = 14295.545
+RELATIVE_POSITION_R = -738.573
+RELATIVE_POSITION_T = 9.425
+RELATIVE_POSITION_N = -202.619
+COLLISION_PROBABILITY = 8.846659e-08
+COLLISION_PROBABILITY_METHOD = MAXIMUM_PC
+COMMENT -------------------------------------------------------------------
+COMMENT TARGET OBJECT (OBJECT1)
+COMMENT -------------------------------------------------------------------
+OBJECT = OBJECT1
+OBJECT_DESIGNATOR = 22184
+CATALOG_NAME = SATCAT
+OBJECT_NAME = COSMOS 2213
+INTERNATIONAL_DESIGNATOR = UNKNOWN
+REF_FRAME = TEME
+X = -950.189098
+Y = 6324.081103
+Z = -4456.613792
+X_DOT = -0.511020
+Y_DOT = -4.156032
+Z_DOT = -5.794375
+CR_R = 3.938e+03
+CT_T = 1.504e+04
+CN_N = 3.004e+03
+COMMENT -------------------------------------------------------------------
+COMMENT CHASER OBJECT (OBJECT2)
+COMMENT -------------------------------------------------------------------
+OBJECT = OBJECT2
+OBJECT_DESIGNATOR = 81617
+CATALOG_NAME = SATCAT
+OBJECT_NAME = TBA - TO BE ASSIGNED
+INTERNATIONAL_DESIGNATOR = UNKNOWN
+REF_FRAME = TEME
+X = -949.899153
+Y = 6323.488136
+Z = -4456.225263
+X_DOT = 1.100135
+Y_DOT = 4.171644
+Z_DOT = 5.712866
+CR_R = 3.069e+04
+CT_T = 1.230e+07
+CN_N = 3.069e+04

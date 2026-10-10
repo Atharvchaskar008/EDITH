@@ -1,0 +1,85 @@
+{
+  "headline": {
+    "primary_name": "STARLINK-31909",
+    "secondary_name": "STARLINK-36532",
+    "pair_label": "STARLINK-31909 vs STARLINK-36532",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 22.1,
+    "hours_until_closest_approach_text": "22.1 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T20:56:20.144194Z (22.1 hours remaining)",
+      "value": "2026-10-10T20:56:20.144194Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.060 km (60 m)",
+      "value": 0.05972899645728493
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "7.86 km/s (7865 m/s)",
+      "value": 7.864831030642722
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "2.40e-07",
+      "value": 2.4031683832162597e-07
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "3.78e-05",
+      "value": 3.7750528474004205e-05
+    },
+    {
+      "label": "Age of STARLINK-31909 orbit data",
+      "value_text": "1.6 days",
+      "value": 1.5928883426157407
+    },
+    {
+      "label": "Age of STARLINK-36532 orbit data",
+      "value_text": "2.6 days",
+      "value": 2.558998792615741
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 3.77505284709811e-05,
+      "miss_distance_km": 0.059728996363327076
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 3.775052847877894e-05,
+      "miss_distance_km": 0.0597289965656197
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 3.7750528469883213e-05,
+      "miss_distance_km": 0.0597289963902953
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 3.7750528474004205e-05,
+      "miss_distance_km": 0.05972899645728493
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

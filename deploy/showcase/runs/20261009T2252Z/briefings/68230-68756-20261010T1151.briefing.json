@@ -1,0 +1,143 @@
+{
+  "headline": {
+    "primary_name": "STARLINK-37100",
+    "secondary_name": "VOLGA R/B",
+    "pair_label": "STARLINK-37100 vs VOLGA R/B",
+    "risk_level": "RED",
+    "hours_until_closest_approach": 13.0,
+    "hours_until_closest_approach_text": "13.0 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T11:51:59.969280Z (13.0 hours remaining)",
+      "value": "2026-10-10T11:51:59.969280Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.518 km (518 m)",
+      "value": 0.5181816455577188
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "11.90 km/s (11899 m/s)",
+      "value": 11.898996473913998
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "2.13e-06",
+      "value": 2.1339804064620502e-06
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "2.62e-04",
+      "value": 0.00026215263545090975
+    },
+    {
+      "label": "Age of STARLINK-37100 orbit data",
+      "value_text": "1.4 days",
+      "value": 1.420758888888889
+    },
+    {
+      "label": "Age of VOLGA R/B orbit data",
+      "value_text": "1.7 days",
+      "value": 1.6783090288888889
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1210Z",
+      "pc_max": 0.00026215262776537775,
+      "miss_distance_km": 0.5181816456474415
+    },
+    {
+      "run_id": "20261009T1442Z",
+      "pc_max": 0.00026215262826278764,
+      "miss_distance_km": 0.5181816453916892
+    },
+    {
+      "run_id": "20261009T1450Z",
+      "pc_max": 0.00026215262776537775,
+      "miss_distance_km": 0.5181816456474415
+    },
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 0.00026215263876677996,
+      "miss_distance_km": 0.5181816456029575
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 0.00026215262776537775,
+      "miss_distance_km": 0.5181816456474415
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 0.00026215262807063,
+      "miss_distance_km": 0.5181816456389156
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 0.00026215263516525755,
+      "miss_distance_km": 0.5181816456838292
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 0.00026215262785143125,
+      "miss_distance_km": 0.5181816456454272
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 0.00026215262810954195,
+      "miss_distance_km": 0.51818164551486
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 0.00026215261790004535,
+      "miss_distance_km": 0.5181816457630936
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 0.0002621526276428503,
+      "miss_distance_km": 0.5181816456519001
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 0.0002621526284538743,
+      "miss_distance_km": 0.5181816455065132
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 0.00026215263545090975,
+      "miss_distance_km": 0.5181816455577188
+    }
+  ],
+  "plan": {
+    "decision": "MANEUVER",
+    "has_maneuver": true,
+    "recommended_burn_time": "2026-10-10T04:49:26.298782Z",
+    "direction_in_words": "along the direction of travel",
+    "size_mm_s": 100.0,
+    "size_text": "100.0 mm/s (0.1000 m/s)",
+    "miss_before_km": 0.5181816455577188,
+    "miss_before_text": "0.52 km",
+    "miss_after_km": 4.234153776328638,
+    "miss_after_text": "4.23 km",
+    "pc_before": 2.1339804064620502e-06,
+    "pc_before_text": "2.1e-06",
+    "pc_after": 9.757524594546484e-07,
+    "pc_after_text": "9.8e-07",
+    "secondary_conjunctions_created": 0,
+    "return_burn": "Scheduled at 2026-10-10T12:38:57.043780Z with size 100.0 mm/s"
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

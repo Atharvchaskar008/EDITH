@@ -1,0 +1,638 @@
+[
+ {
+  "time": "2026-10-09T12:17:56Z",
+  "stage": "INGEST",
+  "percent": 0,
+  "message": "Downloading the latest orbit data"
+ },
+ {
+  "time": "2026-10-09T12:17:56Z",
+  "stage": "INGEST",
+  "percent": 100,
+  "message": "Using a supplied catalogue of 2,899 objects"
+ },
+ {
+  "time": "2026-10-09T12:17:56Z",
+  "stage": "PROPAGATE",
+  "percent": 0,
+  "message": "Predicting the path of 2,899 objects for the next 48 hours"
+ },
+ {
+  "time": "2026-10-09T12:17:56Z",
+  "stage": "SCREEN",
+  "percent": 1.0,
+  "message": "Searched 0 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:17:57Z",
+  "stage": "SCREEN",
+  "percent": 2.1,
+  "message": "Searched 1 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:17:57Z",
+  "stage": "SCREEN",
+  "percent": 3.1,
+  "message": "Searched 1 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:17:57Z",
+  "stage": "SCREEN",
+  "percent": 4.2,
+  "message": "Searched 2 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:17:58Z",
+  "stage": "SCREEN",
+  "percent": 5.2,
+  "message": "Searched 2 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:17:58Z",
+  "stage": "SCREEN",
+  "percent": 6.2,
+  "message": "Searched 3 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:17:59Z",
+  "stage": "SCREEN",
+  "percent": 7.3,
+  "message": "Searched 3 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:17:59Z",
+  "stage": "SCREEN",
+  "percent": 8.3,
+  "message": "Searched 4 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:00Z",
+  "stage": "SCREEN",
+  "percent": 9.4,
+  "message": "Searched 4 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:00Z",
+  "stage": "SCREEN",
+  "percent": 10.4,
+  "message": "Searched 5 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:01Z",
+  "stage": "SCREEN",
+  "percent": 11.5,
+  "message": "Searched 5 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:01Z",
+  "stage": "SCREEN",
+  "percent": 12.5,
+  "message": "Searched 6 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:01Z",
+  "stage": "SCREEN",
+  "percent": 13.5,
+  "message": "Searched 6 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:02Z",
+  "stage": "SCREEN",
+  "percent": 14.6,
+  "message": "Searched 7 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:02Z",
+  "stage": "SCREEN",
+  "percent": 15.6,
+  "message": "Searched 7 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:03Z",
+  "stage": "SCREEN",
+  "percent": 16.7,
+  "message": "Searched 8 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:03Z",
+  "stage": "SCREEN",
+  "percent": 17.7,
+  "message": "Searched 8 of 48 hours: 0 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:04Z",
+  "stage": "SCREEN",
+  "percent": 18.7,
+  "message": "Searched 9 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:05Z",
+  "stage": "SCREEN",
+  "percent": 19.8,
+  "message": "Searched 9 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:05Z",
+  "stage": "SCREEN",
+  "percent": 20.8,
+  "message": "Searched 10 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:06Z",
+  "stage": "SCREEN",
+  "percent": 21.9,
+  "message": "Searched 10 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:07Z",
+  "stage": "SCREEN",
+  "percent": 22.9,
+  "message": "Searched 11 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:08Z",
+  "stage": "SCREEN",
+  "percent": 24.0,
+  "message": "Searched 11 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:08Z",
+  "stage": "SCREEN",
+  "percent": 25.0,
+  "message": "Searched 12 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:09Z",
+  "stage": "SCREEN",
+  "percent": 26.0,
+  "message": "Searched 12 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:09Z",
+  "stage": "SCREEN",
+  "percent": 27.1,
+  "message": "Searched 13 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:10Z",
+  "stage": "SCREEN",
+  "percent": 28.1,
+  "message": "Searched 13 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:10Z",
+  "stage": "SCREEN",
+  "percent": 29.2,
+  "message": "Searched 14 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:10Z",
+  "stage": "SCREEN",
+  "percent": 30.2,
+  "message": "Searched 14 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:11Z",
+  "stage": "SCREEN",
+  "percent": 31.2,
+  "message": "Searched 15 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:11Z",
+  "stage": "SCREEN",
+  "percent": 32.3,
+  "message": "Searched 15 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:12Z",
+  "stage": "SCREEN",
+  "percent": 33.3,
+  "message": "Searched 16 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:12Z",
+  "stage": "SCREEN",
+  "percent": 34.4,
+  "message": "Searched 16 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:13Z",
+  "stage": "SCREEN",
+  "percent": 35.4,
+  "message": "Searched 17 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:13Z",
+  "stage": "SCREEN",
+  "percent": 36.5,
+  "message": "Searched 17 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:13Z",
+  "stage": "SCREEN",
+  "percent": 37.5,
+  "message": "Searched 18 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:14Z",
+  "stage": "SCREEN",
+  "percent": 38.5,
+  "message": "Searched 18 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:14Z",
+  "stage": "SCREEN",
+  "percent": 39.6,
+  "message": "Searched 19 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:15Z",
+  "stage": "SCREEN",
+  "percent": 40.6,
+  "message": "Searched 19 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:15Z",
+  "stage": "SCREEN",
+  "percent": 41.7,
+  "message": "Searched 20 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:16Z",
+  "stage": "SCREEN",
+  "percent": 42.7,
+  "message": "Searched 20 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:16Z",
+  "stage": "SCREEN",
+  "percent": 43.7,
+  "message": "Searched 21 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:16Z",
+  "stage": "SCREEN",
+  "percent": 44.8,
+  "message": "Searched 21 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:17Z",
+  "stage": "SCREEN",
+  "percent": 45.8,
+  "message": "Searched 22 of 48 hours: 1 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:17Z",
+  "stage": "SCREEN",
+  "percent": 46.9,
+  "message": "Searched 22 of 48 hours: 2 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:18Z",
+  "stage": "SCREEN",
+  "percent": 47.9,
+  "message": "Searched 23 of 48 hours: 2 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:18Z",
+  "stage": "SCREEN",
+  "percent": 49.0,
+  "message": "Searched 23 of 48 hours: 2 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:18Z",
+  "stage": "SCREEN",
+  "percent": 50.0,
+  "message": "Searched 24 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:19Z",
+  "stage": "SCREEN",
+  "percent": 51.0,
+  "message": "Searched 24 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:19Z",
+  "stage": "SCREEN",
+  "percent": 52.1,
+  "message": "Searched 25 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:19Z",
+  "stage": "SCREEN",
+  "percent": 53.1,
+  "message": "Searched 25 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:20Z",
+  "stage": "SCREEN",
+  "percent": 54.2,
+  "message": "Searched 26 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:20Z",
+  "stage": "SCREEN",
+  "percent": 55.2,
+  "message": "Searched 26 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:20Z",
+  "stage": "SCREEN",
+  "percent": 56.2,
+  "message": "Searched 27 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:21Z",
+  "stage": "SCREEN",
+  "percent": 57.3,
+  "message": "Searched 27 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:21Z",
+  "stage": "SCREEN",
+  "percent": 58.3,
+  "message": "Searched 28 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:22Z",
+  "stage": "SCREEN",
+  "percent": 59.4,
+  "message": "Searched 28 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:22Z",
+  "stage": "SCREEN",
+  "percent": 60.4,
+  "message": "Searched 29 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:22Z",
+  "stage": "SCREEN",
+  "percent": 61.5,
+  "message": "Searched 29 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:23Z",
+  "stage": "SCREEN",
+  "percent": 62.5,
+  "message": "Searched 30 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:23Z",
+  "stage": "SCREEN",
+  "percent": 63.5,
+  "message": "Searched 30 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:24Z",
+  "stage": "SCREEN",
+  "percent": 64.6,
+  "message": "Searched 31 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:24Z",
+  "stage": "SCREEN",
+  "percent": 65.6,
+  "message": "Searched 31 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:24Z",
+  "stage": "SCREEN",
+  "percent": 66.7,
+  "message": "Searched 32 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:25Z",
+  "stage": "SCREEN",
+  "percent": 67.7,
+  "message": "Searched 32 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:25Z",
+  "stage": "SCREEN",
+  "percent": 68.7,
+  "message": "Searched 33 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:25Z",
+  "stage": "SCREEN",
+  "percent": 69.8,
+  "message": "Searched 33 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:26Z",
+  "stage": "SCREEN",
+  "percent": 70.8,
+  "message": "Searched 34 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:26Z",
+  "stage": "SCREEN",
+  "percent": 71.9,
+  "message": "Searched 34 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:26Z",
+  "stage": "SCREEN",
+  "percent": 72.9,
+  "message": "Searched 35 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:26Z",
+  "stage": "SCREEN",
+  "percent": 74.0,
+  "message": "Searched 35 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:27Z",
+  "stage": "SCREEN",
+  "percent": 75.0,
+  "message": "Searched 36 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:27Z",
+  "stage": "SCREEN",
+  "percent": 76.0,
+  "message": "Searched 36 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:28Z",
+  "stage": "SCREEN",
+  "percent": 77.1,
+  "message": "Searched 37 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:29Z",
+  "stage": "SCREEN",
+  "percent": 78.1,
+  "message": "Searched 37 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:29Z",
+  "stage": "SCREEN",
+  "percent": 79.2,
+  "message": "Searched 38 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:30Z",
+  "stage": "SCREEN",
+  "percent": 80.2,
+  "message": "Searched 38 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:30Z",
+  "stage": "SCREEN",
+  "percent": 81.2,
+  "message": "Searched 39 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:31Z",
+  "stage": "SCREEN",
+  "percent": 82.3,
+  "message": "Searched 39 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:31Z",
+  "stage": "SCREEN",
+  "percent": 83.3,
+  "message": "Searched 40 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:32Z",
+  "stage": "SCREEN",
+  "percent": 84.4,
+  "message": "Searched 40 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:32Z",
+  "stage": "SCREEN",
+  "percent": 85.4,
+  "message": "Searched 41 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:33Z",
+  "stage": "SCREEN",
+  "percent": 86.5,
+  "message": "Searched 41 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:33Z",
+  "stage": "SCREEN",
+  "percent": 87.5,
+  "message": "Searched 42 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:34Z",
+  "stage": "SCREEN",
+  "percent": 88.5,
+  "message": "Searched 42 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:34Z",
+  "stage": "SCREEN",
+  "percent": 89.6,
+  "message": "Searched 43 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:35Z",
+  "stage": "SCREEN",
+  "percent": 90.6,
+  "message": "Searched 43 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:35Z",
+  "stage": "SCREEN",
+  "percent": 91.7,
+  "message": "Searched 44 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:37Z",
+  "stage": "SCREEN",
+  "percent": 92.7,
+  "message": "Searched 44 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:37Z",
+  "stage": "SCREEN",
+  "percent": 93.7,
+  "message": "Searched 45 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:38Z",
+  "stage": "SCREEN",
+  "percent": 94.8,
+  "message": "Searched 45 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:38Z",
+  "stage": "SCREEN",
+  "percent": 95.8,
+  "message": "Searched 46 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:39Z",
+  "stage": "SCREEN",
+  "percent": 96.9,
+  "message": "Searched 46 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:39Z",
+  "stage": "SCREEN",
+  "percent": 97.9,
+  "message": "Searched 47 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:40Z",
+  "stage": "SCREEN",
+  "percent": 99.0,
+  "message": "Searched 47 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:40Z",
+  "stage": "SCREEN",
+  "percent": 100.0,
+  "message": "Searched 48 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:40Z",
+  "stage": "SCREEN",
+  "percent": 100.0,
+  "message": "Searched 48 of 48 hours: 3 candidate passes"
+ },
+ {
+  "time": "2026-10-09T12:18:40Z",
+  "stage": "SCREEN",
+  "percent": 100,
+  "message": "Screened 1 protected satellites against the rest: 2 close passes within 5 km"
+ },
+ {
+  "time": "2026-10-09T12:18:45Z",
+  "stage": "ASSESS",
+  "percent": 100,
+  "message": "Risk levels: 0 red, 1 amber, 1 green"
+ },
+ {
+  "time": "2026-10-09T12:18:45Z",
+  "stage": "PLAN",
+  "percent": 100,
+  "message": "No red events: no burn is needed"
+ },
+ {
+  "time": "2026-10-09T12:18:45Z",
+  "stage": "VERIFY",
+  "percent": 100,
+  "message": "No burns to verify"
+ },
+ {
+  "time": "2026-10-09T12:18:48Z",
+  "stage": "DONE",
+  "percent": 80,
+  "message": "Wrote 1 operator briefings and 1 standard warning messages"
+ },
+ {
+  "time": "2026-10-09T12:18:48Z",
+  "stage": "DONE",
+  "percent": 100,
+  "message": "Run complete in 52 s"
+ }
+]

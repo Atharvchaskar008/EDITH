@@ -1,0 +1,75 @@
+{
+  "headline": {
+    "primary_name": "STARLINK-3774",
+    "secondary_name": "STARLINK-32376",
+    "pair_label": "STARLINK-3774 vs STARLINK-32376",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 23.3,
+    "hours_until_closest_approach_text": "23.3 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T22:11:34.820215Z (23.3 hours remaining)",
+      "value": "2026-10-10T22:11:34.820215Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.924 km (924 m)",
+      "value": 0.9243207444870878
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "7.34 km/s (7344 m/s)",
+      "value": 7.343564604660055
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "4.55e-07",
+      "value": 4.5526884583133443e-07
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "2.24e-05",
+      "value": 2.2417809998545985e-05
+    },
+    {
+      "label": "Age of STARLINK-3774 orbit data",
+      "value_text": "1.7 days",
+      "value": 1.6725595073032407
+    },
+    {
+      "label": "Age of STARLINK-32376 orbit data",
+      "value_text": "1.8 days",
+      "value": 1.8118822473032408
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 2.2417807920185582e-05,
+      "miss_distance_km": 0.9243207444184485
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 2.2417809998545985e-05,
+      "miss_distance_km": 0.9243207444870878
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

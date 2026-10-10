@@ -1,0 +1,23 @@
+[
+ {
+  "event_id": "24946-22675-20090210T1655",
+  "decision": "MONITOR",
+  "rationale": "Worst-case probability is below the action threshold. Keep watching as new orbit data arrives.",
+  "maneuvering_id": null,
+  "burn_time": null,
+  "lead_time_orbits": null,
+  "dv_rtn_ms": null,
+  "dv_magnitude_ms": null,
+  "miss_before_km": 0.5838814717402765,
+  "miss_after_km": null,
+  "pc_before": 2.03232225706646e-09,
+  "pc_after": null,
+  "pc_max_before": 1.114158023508516e-05,
+  "pc_max_after": null,
+  "secondary_conjunctions_created": null,
+  "return_burn_time": null,
+  "return_dv_rtn_ms": null,
+  "residual_along_track_km": null,
+  "search_grid": null
+ }
+]

@@ -1,0 +1,75 @@
+{
+  "headline": {
+    "primary_name": "STARLINK-35316",
+    "secondary_name": "STARLINK-37641",
+    "pair_label": "STARLINK-35316 vs STARLINK-37641",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 22.6,
+    "hours_until_closest_approach_text": "22.6 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T21:27:38.350848Z (22.6 hours remaining)",
+      "value": "2026-10-10T21:27:38.350848Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.398 km (398 m)",
+      "value": 0.39827273608590213
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "2.12 km/s (2124 m/s)",
+      "value": 2.1241596229625292
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "3.04e-07",
+      "value": 3.0448966239871417e-07
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "3.88e-05",
+      "value": 3.8776648666241966e-05
+    },
+    {
+      "label": "Age of STARLINK-35316 orbit data",
+      "value_text": "1.8 days",
+      "value": 1.7759773455555556
+    },
+    {
+      "label": "Age of STARLINK-37641 orbit data",
+      "value_text": "2.0 days",
+      "value": 2.0342484355555555
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 3.8776649939135507e-05,
+      "miss_distance_km": 0.39827273603079333
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 3.8776648666241966e-05,
+      "miss_distance_km": 0.39827273608590213
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "headline": {
+    "primary_name": "ALOS-4 (DAICHI-4)",
+    "secondary_name": "TBA - TO BE ASSIGNED",
+    "pair_label": "ALOS-4 (DAICHI-4) vs TBA - TO BE ASSIGNED",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 21.8,
+    "hours_until_closest_approach_text": "21.8 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T20:38:28.141326Z (21.8 hours remaining)",
+      "value": "2026-10-10T20:38:28.141326Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.809 km (809 m)",
+      "value": 0.8089207762806738
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "10.17 km/s (10167 m/s)",
+      "value": 10.166598189209319
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "1.88e-05",
+      "value": 1.8838372934574042e-05
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "3.36e-05",
+      "value": 3.356509387751986e-05
+    },
+    {
+      "label": "Age of ALOS-4 (DAICHI-4) orbit data",
+      "value_text": "1.6 days",
+      "value": 1.604920522013889
+    },
+    {
+      "label": "Age of TBA - TO BE ASSIGNED orbit data",
+      "value_text": "2.4 days",
+      "value": 2.4021086620138887
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MODELLED",
+      "value": "MODELLED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 3.356509385511997e-05,
+      "miss_distance_km": 0.8089207763160883
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 3.3565094284662876e-05,
+      "miss_distance_km": 0.808920776389661
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 3.356509433921776e-05,
+      "miss_distance_km": 0.8089207761263008
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 3.356509351038497e-05,
+      "miss_distance_km": 0.8089207762632117
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 3.356509412414961e-05,
+      "miss_distance_km": 0.8089207760157131
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 3.356509387751986e-05,
+      "miss_distance_km": 0.8089207762806738
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

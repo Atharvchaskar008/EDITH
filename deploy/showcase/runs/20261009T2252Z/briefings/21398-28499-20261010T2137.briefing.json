@@ -1,0 +1,75 @@
+{
+  "headline": {
+    "primary_name": "SL-14 R/B",
+    "secondary_name": "ARIANE 5 R/B",
+    "pair_label": "SL-14 R/B vs ARIANE 5 R/B",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 22.8,
+    "hours_until_closest_approach_text": "22.8 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T21:37:58.026736Z (22.8 hours remaining)",
+      "value": "2026-10-10T21:37:58.026736Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.505 km (505 m)",
+      "value": 0.5054128058261186
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "14.93 km/s (14933 m/s)",
+      "value": 14.932747099134362
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "3.60e-08",
+      "value": 3.5997686542342294e-08
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "1.31e-05",
+      "value": 1.3119931457118382e-05
+    },
+    {
+      "label": "Age of SL-14 R/B orbit data",
+      "value_text": "1.6 days",
+      "value": 1.602743570185185
+    },
+    {
+      "label": "Age of ARIANE 5 R/B orbit data",
+      "value_text": "1.7 days",
+      "value": 1.7348702101851852
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 1.3119931458070743e-05,
+      "miss_distance_km": 0.5054128058066839
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 1.3119931457118382e-05,
+      "miss_distance_km": 0.5054128058261186
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:52Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

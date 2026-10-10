@@ -1,0 +1,75 @@
+{
+  "headline": {
+    "primary_name": "COSMOS 2213",
+    "secondary_name": "TBA - TO BE ASSIGNED",
+    "pair_label": "COSMOS 2213 vs TBA - TO BE ASSIGNED",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 22.9,
+    "hours_until_closest_approach_text": "22.9 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T21:43:29.440433Z (22.9 hours remaining)",
+      "value": "2026-10-10T21:43:29.440433Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.766 km (766 m)",
+      "value": 0.7659198862491531
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "14.30 km/s (14296 m/s)",
+      "value": 14.295544999660406
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "8.85e-08",
+      "value": 8.846659228951821e-08
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "1.58e-05",
+      "value": 1.5793105554832083e-05
+    },
+    {
+      "label": "Age of COSMOS 2213 orbit data",
+      "value_text": "1.6 days",
+      "value": 1.629929996863426
+    },
+    {
+      "label": "Age of TBA - TO BE ASSIGNED orbit data",
+      "value_text": "1.5 days",
+      "value": 1.5034608068634259
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MODELLED",
+      "value": "MODELLED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 1.579310554404848e-05,
+      "miss_distance_km": 0.765919886254553
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 1.5793105554832083e-05,
+      "miss_distance_km": 0.7659198862491531
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:52Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

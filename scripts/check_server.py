@@ -2,7 +2,7 @@
 
     python scripts/check_server.py                 check the server on port 8000
     python scripts/check_server.py --run           start a fresh run first and wait for it (about 7 minutes)
-    python scripts/check_server.py --url http://127.0.0.1:8010
+    python scripts/check_server.py --url https://edith.onrender.com     check the public showcase
 
 Prints one line per check and exits with 1 if any failed. It asks for one
 what-if burn and one satellite check, so it takes about half a minute.
@@ -52,8 +52,20 @@ def main() -> int:
         stages = [entry["stage"] for i, entry in enumerate(status["log"]) if i == 0 or entry["stage"] != status["log"][i - 1]["stage"]]
         check("fresh run", status["status"] == "DONE", f"{status['status']} after {time.time() - started:.0f} s; {' > '.join(stages)}" + (f"; {status.get('error')}" if status.get("error") else ""))
 
+    def refused(path: str, method: str = "GET") -> bool:
+        try:
+            call(path, method)
+        except urllib.error.HTTPError as error:
+            return error.code == 403
+        return False
+
     _, monitor = call("/monitor")
-    check("scheduler", bool(monitor["scheduler_on"] and monitor["next_run"]), f"on, next automatic run {str(monitor['next_run'])[:16]} UTC, {monitor['run_count']} finished runs")
+    show_only = bool(monitor.get("read_only"))
+    if show_only:
+        check("show-only server", not monitor["scheduler_on"] and refused("/run", "POST") and refused("/objects/search?q=ISS"),
+              "a recorded showcase: it refuses to start runs, burn searches and satellite checks")
+    else:
+        check("scheduler", bool(monitor["scheduler_on"] and monitor["next_run"]), f"on, next automatic run {str(monitor['next_run'])[:16]} UTC, {monitor['run_count']} finished runs")
     _, latest = call("/latest")
     source = "CelesTrak and Space-Track" if (latest.get("catalog") or {}).get("spacetrack") else "CelesTrak only"
     check("latest run", latest["status"] == "DONE",
@@ -81,12 +93,14 @@ def main() -> int:
     check("priority list", len(priority) <= len(reds), f"{len(priority)} of {len(reds)} red passes are not inside one fleet")
 
     watched = next((e for e in events if e["risk_level"] == "AMBER" and not e["own_fleet"]), None)
-    if watched:
+    if show_only:
+        check("burn on request is refused", watched is None or refused(f"/events/{watched['event_id']}/plan", "POST"))
+    elif watched:
         t = time.time()
         _, asked = call(f"/events/{watched['event_id']}/plan", "POST")
         check("burn on request", asked["what_if"] is True and bool(asked["requested_at"]),
               f"{watched['primary_name']} / {watched['secondary_name']} (amber): {asked['decision']} as a what-if in {time.time() - t:.0f} s")
-    _, found = call("/objects/search?q=ISS")
+    found = [] if show_only else call("/objects/search?q=ISS")[1]
     if found:
         t = time.time()
         _, passes = call(f"/objects/{found[0]['norad_id']}/passes")

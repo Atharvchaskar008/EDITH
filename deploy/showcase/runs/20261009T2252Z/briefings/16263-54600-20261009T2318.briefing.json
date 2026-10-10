@@ -1,0 +1,145 @@
+{
+  "headline": {
+    "primary_name": "SL-14 R/B",
+    "secondary_name": "CZ-6A DEB",
+    "pair_label": "SL-14 R/B vs CZ-6A DEB",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 0.4,
+    "hours_until_closest_approach_text": "0.4 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-09T23:18:21.015949Z (0.4 hours remaining)",
+      "value": "2026-10-09T23:18:21.015949Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.286 km (286 m)",
+      "value": 0.28568973437546136
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "14.99 km/s (14987 m/s)",
+      "value": 14.986539405909896
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "2.10e-06",
+      "value": 2.1014829007511394e-06
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "1.47e-05",
+      "value": 1.4734757210478979e-05
+    },
+    {
+      "label": "Age of SL-14 R/B orbit data",
+      "value_text": "1.3 days",
+      "value": 1.2529859034837962
+    },
+    {
+      "label": "Age of CZ-6A DEB orbit data",
+      "value_text": "0.8 days",
+      "value": 0.7961464134837963
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1038Z",
+      "pc_max": 4.640289817257234e-06,
+      "miss_distance_km": 0.28568973437815776
+    },
+    {
+      "run_id": "20261009T1051Z",
+      "pc_max": 4.6402898158855885e-06,
+      "miss_distance_km": 0.28568973439735873
+    },
+    {
+      "run_id": "20261009T1145Z",
+      "pc_max": 1.473475720925796e-05,
+      "miss_distance_km": 0.28568973439735873
+    },
+    {
+      "run_id": "20261009T1210Z",
+      "pc_max": 1.473475720925796e-05,
+      "miss_distance_km": 0.28568973439735873
+    },
+    {
+      "run_id": "20261009T1442Z",
+      "pc_max": 1.4734757210478979e-05,
+      "miss_distance_km": 0.28568973437546136
+    },
+    {
+      "run_id": "20261009T1450Z",
+      "pc_max": 1.473475720925796e-05,
+      "miss_distance_km": 0.28568973439735873
+    },
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 1.4734757210096298e-05,
+      "miss_distance_km": 0.2856897343792681
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 1.473475720925796e-05,
+      "miss_distance_km": 0.28568973439735873
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 1.4734757210147765e-05,
+      "miss_distance_km": 0.28568973437777523
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 1.4734757210330687e-05,
+      "miss_distance_km": 0.2856897343768316
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 1.4734757210175507e-05,
+      "miss_distance_km": 0.285689734378442
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 1.4734757210216766e-05,
+      "miss_distance_km": 0.28568973437719347
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 1.4734757211741937e-05,
+      "miss_distance_km": 0.2856897344042071
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 1.4734757210073177e-05,
+      "miss_distance_km": 0.2856897343785988
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 1.4734757210379263e-05,
+      "miss_distance_km": 0.28568973437612327
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 1.4734757210478979e-05,
+      "miss_distance_km": 0.28568973437546136
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:52Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

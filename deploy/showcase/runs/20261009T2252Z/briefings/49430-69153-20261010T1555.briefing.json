@@ -1,0 +1,115 @@
+{
+  "headline": {
+    "primary_name": "STARLINK-3138",
+    "secondary_name": "STARLINK-37374",
+    "pair_label": "STARLINK-3138 vs STARLINK-37374",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 17.1,
+    "hours_until_closest_approach_text": "17.1 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T15:55:04.818089Z (17.1 hours remaining)",
+      "value": "2026-10-10T15:55:04.818089Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.704 km (704 m)",
+      "value": 0.7036561916118949
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "0.49 km/s (491 m/s)",
+      "value": 0.49100770542029754
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "1.93e-07",
+      "value": 1.931359562288069e-07
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "7.53e-05",
+      "value": 7.525441290043499e-05
+    },
+    {
+      "label": "Age of STARLINK-3138 orbit data",
+      "value_text": "2.2 days",
+      "value": 2.198571359363426
+    },
+    {
+      "label": "Age of STARLINK-37374 orbit data",
+      "value_text": "2.3 days",
+      "value": 2.263114309363426
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 7.525433925513784e-05,
+      "miss_distance_km": 0.7036561917124073
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 7.525440887345164e-05,
+      "miss_distance_km": 0.7036561915645412
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 7.52544137826283e-05,
+      "miss_distance_km": 0.7036561917057778
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 7.525441662290631e-05,
+      "miss_distance_km": 0.7036561916208469
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 7.525441290043499e-05,
+      "miss_distance_km": 0.7036561916118949
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 7.525441826681587e-05,
+      "miss_distance_km": 0.7036561917946301
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 7.525441392763519e-05,
+      "miss_distance_km": 0.7036561915286597
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 7.525441759892374e-05,
+      "miss_distance_km": 0.7036561915259851
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 7.525449180503704e-05,
+      "miss_distance_km": 0.7036561918146225
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 7.525441290043499e-05,
+      "miss_distance_km": 0.7036561916118949
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

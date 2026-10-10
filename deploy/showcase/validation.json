@@ -1,0 +1,5182 @@
+{
+ "generated": "2026-10-09T23:03:53.367022Z",
+ "source": "CelesTrak SOCRATES",
+ "same_input": {
+  "events": 200,
+  "socrates_rows": 200,
+  "tolerance_s": 60.0,
+  "all_matches": {
+   "matched": 200,
+   "tca_difference_s": {
+    "median": 0.00036149999999999995,
+    "p90": 0.13290899999999992,
+    "max": 0.585661
+   },
+   "miss_difference_m": {
+    "median": 0.3531914171387082,
+    "p90": 1.1189073236615692,
+    "max": 24.924335267860794
+   },
+   "relative_speed_difference_ms": {
+    "median": 0.2697587731170792,
+    "p90": 0.4518733161819654,
+    "max": 0.4931323316376863
+   }
+  },
+  "same_element_sets": {
+   "matched": 200,
+   "tca_difference_s": {
+    "median": 0.00036149999999999995,
+    "p90": 0.13290899999999992,
+    "max": 0.585661
+   },
+   "miss_difference_m": {
+    "median": 0.3531914171387082,
+    "p90": 1.1189073236615692,
+    "max": 24.924335267860794
+   },
+   "relative_speed_difference_ms": {
+    "median": 0.2697587731170792,
+    "p90": 0.4518733161819654,
+    "max": 0.4931323316376863
+   }
+  },
+  "newer_element_sets": {
+   "matched": 0,
+   "tca_difference_s": null,
+   "miss_difference_m": null,
+   "relative_speed_difference_ms": null
+  },
+  "pairs": [
+   {
+    "primary_id": 59300,
+    "secondary_id": 44531,
+    "names": [
+     "STARLINK-31489",
+     "CZ-4B R/B"
+    ],
+    "miss_distance_km": 0.007591461885720625,
+    "miss_distance_km_socrates": 0.008,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 55973,
+    "secondary_id": 33687,
+    "names": [
+     "TIANMU-1 03",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.013011518100803277,
+    "miss_distance_km_socrates": 0.012,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 41920,
+    "secondary_id": 61130,
+    "names": [
+     "IRIDIUM 102",
+     "CZ-6A DEB"
+    ],
+    "miss_distance_km": 0.018183924986890455,
+    "miss_distance_km_socrates": 0.018,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 49402,
+    "secondary_id": 59701,
+    "names": [
+     "KOSEN-1",
+     "STARLINK-32093"
+    ],
+    "miss_distance_km": 0.016276154702738674,
+    "miss_distance_km_socrates": 0.018,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68615,
+    "secondary_id": 100323,
+    "names": [
+     "STARLINK-37176",
+     "STARLINK-38295"
+    ],
+    "miss_distance_km": 0.02179807639674193,
+    "miss_distance_km_socrates": 0.022,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 58661,
+    "secondary_id": 67901,
+    "names": [
+     "TIANMU-1 20",
+     "STARLINK-36336"
+    ],
+    "miss_distance_km": 0.02818861948499555,
+    "miss_distance_km_socrates": 0.029,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 52988,
+    "secondary_id": 57217,
+    "names": [
+     "STARLINK-4291",
+     "KUZGTU 1 (RS47S)"
+    ],
+    "miss_distance_km": 0.030524300711487082,
+    "miss_distance_km_socrates": 0.031,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 53215,
+    "secondary_id": 100214,
+    "names": [
+     "STARLINK-4335",
+     "STARLINK-38172"
+    ],
+    "miss_distance_km": 0.030429543282900574,
+    "miss_distance_km_socrates": 0.031,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 51799,
+    "secondary_id": 60352,
+    "names": [
+     "STARLINK-3637",
+     "STRIX-4"
+    ],
+    "miss_distance_km": 0.029807746880876687,
+    "miss_distance_km_socrates": 0.032,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 56362,
+    "secondary_id": 57217,
+    "names": [
+     "STARLINK-5972",
+     "KUZGTU 1 (RS47S)"
+    ],
+    "miss_distance_km": 0.03240816120751992,
+    "miss_distance_km_socrates": 0.032,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 100132,
+    "secondary_id": 100136,
+    "names": [
+     "OBJECT D",
+     "OBJECT H"
+    ],
+    "miss_distance_km": 0.032584547600818775,
+    "miss_distance_km_socrates": 0.033,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 63972,
+    "secondary_id": 67681,
+    "names": [
+     "STARLINK-34115",
+     "COSMOS 2607"
+    ],
+    "miss_distance_km": 0.034512429077259515,
+    "miss_distance_km_socrates": 0.034,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 67076,
+    "secondary_id": 44612,
+    "names": [
+     "STARLINK-36240",
+     "CZ-2D DEB"
+    ],
+    "miss_distance_km": 0.03426691382849969,
+    "miss_distance_km_socrates": 0.034,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 67561,
+    "secondary_id": 100308,
+    "names": [
+     "STARLINK-36621",
+     "STARLINK-38264"
+    ],
+    "miss_distance_km": 0.035231437150741764,
+    "miss_distance_km_socrates": 0.035,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68965,
+    "secondary_id": 100035,
+    "names": [
+     "STARLINK-36664",
+     "STARLINK-37415"
+    ],
+    "miss_distance_km": 0.03528341029360382,
+    "miss_distance_km_socrates": 0.035,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 65428,
+    "secondary_id": 100501,
+    "names": [
+     "STARLINK-35004",
+     "STARLINK-37704"
+    ],
+    "miss_distance_km": 0.036995368157184585,
+    "miss_distance_km_socrates": 0.036,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 66096,
+    "secondary_id": 66703,
+    "names": [
+     "STARLINK-34386",
+     "PELICAN-6"
+    ],
+    "miss_distance_km": 0.03592342444156849,
+    "miss_distance_km_socrates": 0.036,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 60352,
+    "secondary_id": 66287,
+    "names": [
+     "STRIX-4",
+     "STARLINK-34884"
+    ],
+    "miss_distance_km": 0.03885327540919995,
+    "miss_distance_km_socrates": 0.038,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 57728,
+    "secondary_id": 68366,
+    "names": [
+     "YAOGAN-39 01B",
+     "RASSVET-3 7"
+    ],
+    "miss_distance_km": 0.03920794397683489,
+    "miss_distance_km_socrates": 0.039,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 55047,
+    "secondary_id": 58440,
+    "names": [
+     "NUSAT-33 (ALBANIA-2)",
+     "STARLINK-30950"
+    ],
+    "miss_distance_km": 0.03944534179265905,
+    "miss_distance_km_socrates": 0.04,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 64478,
+    "secondary_id": 100048,
+    "names": [
+     "STARLINK-34490",
+     "STARLINK-37752"
+    ],
+    "miss_distance_km": 0.04088199266032105,
+    "miss_distance_km_socrates": 0.042,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 65023,
+    "secondary_id": 100408,
+    "names": [
+     "STARLINK-34858",
+     "STARLINK-38026"
+    ],
+    "miss_distance_km": 0.04285004169362742,
+    "miss_distance_km_socrates": 0.042,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 56154,
+    "secondary_id": 56156,
+    "names": [
+     "PIESAT B",
+     "PIESAT D"
+    ],
+    "miss_distance_km": 0.04335855001955345,
+    "miss_distance_km_socrates": 0.044,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 49456,
+    "secondary_id": 100390,
+    "names": [
+     "STARLINK-3124",
+     "STARLINK-38276"
+    ],
+    "miss_distance_km": 0.050460543387864105,
+    "miss_distance_km_socrates": 0.046,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 53218,
+    "secondary_id": 100223,
+    "names": [
+     "STARLINK-4384",
+     "STARLINK-38238"
+    ],
+    "miss_distance_km": 0.04561761418801471,
+    "miss_distance_km_socrates": 0.046,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 58734,
+    "secondary_id": 270086,
+    "names": [
+     "STARLINK-31152",
+     "UNKNOWN"
+    ],
+    "miss_distance_km": 0.04672381431061255,
+    "miss_distance_km_socrates": 0.046,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 59940,
+    "secondary_id": 69507,
+    "names": [
+     "STARLINK-31946",
+     "HORN-R"
+    ],
+    "miss_distance_km": 0.04741704017062937,
+    "miss_distance_km_socrates": 0.048,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62727,
+    "secondary_id": 64391,
+    "names": [
+     "OBJECT C",
+     "STARLINK-34278"
+    ],
+    "miss_distance_km": 0.04822920712005127,
+    "miss_distance_km_socrates": 0.048,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 55657,
+    "secondary_id": 67483,
+    "names": [
+     "STARLINK-5328",
+     "ION SCV-021"
+    ],
+    "miss_distance_km": 0.05072393268796238,
+    "miss_distance_km_socrates": 0.051,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 54009,
+    "secondary_id": 100279,
+    "names": [
+     "STARLINK-5099",
+     "STARLINK-37699"
+    ],
+    "miss_distance_km": 0.05090466282812031,
+    "miss_distance_km_socrates": 0.052,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 58645,
+    "secondary_id": 62572,
+    "names": [
+     "TIANMU-1 11",
+     "STARLINK-32750"
+    ],
+    "miss_distance_km": 0.052141550776706125,
+    "miss_distance_km_socrates": 0.052,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68412,
+    "secondary_id": 68484,
+    "names": [
+     "XINZHENGCHENG-01",
+     "VINDLER 2.2"
+    ],
+    "miss_distance_km": 0.05182733840159155,
+    "miss_distance_km_socrates": 0.052,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 51867,
+    "secondary_id": 100048,
+    "names": [
+     "STARLINK-3590",
+     "STARLINK-37752"
+    ],
+    "miss_distance_km": 0.052841775186040836,
+    "miss_distance_km_socrates": 0.053,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 44390,
+    "secondary_id": 64716,
+    "names": [
+     "ICEYE-X4",
+     "STARLINK-34548"
+    ],
+    "miss_distance_km": 0.05400246838160201,
+    "miss_distance_km_socrates": 0.054,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 59771,
+    "secondary_id": 100034,
+    "names": [
+     "STARLINK-31786",
+     "STARLINK-37917"
+    ],
+    "miss_distance_km": 0.05451095738434343,
+    "miss_distance_km_socrates": 0.054,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68148,
+    "secondary_id": 100251,
+    "names": [
+     "STARLINK-36981",
+     "STARLINK-38168"
+    ],
+    "miss_distance_km": 0.05645017824612946,
+    "miss_distance_km_socrates": 0.056,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 53228,
+    "secondary_id": 100169,
+    "names": [
+     "STARLINK-4365",
+     "STARLINK-38149"
+    ],
+    "miss_distance_km": 0.05739690083588347,
+    "miss_distance_km_socrates": 0.057,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 56814,
+    "secondary_id": 29509,
+    "names": [
+     "STARLINK-6059",
+     "CZ-4B DEB"
+    ],
+    "miss_distance_km": 0.05754509152541705,
+    "miss_distance_km_socrates": 0.058,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 67780,
+    "secondary_id": 35571,
+    "names": [
+     "KUIPER-00218",
+     "CZ-4B DEB"
+    ],
+    "miss_distance_km": 0.05776727647640555,
+    "miss_distance_km_socrates": 0.058,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 53249,
+    "secondary_id": 64884,
+    "names": [
+     "STARLINK-4128",
+     "OBJECT J"
+    ],
+    "miss_distance_km": 0.06115461480777277,
+    "miss_distance_km_socrates": 0.06,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 64457,
+    "secondary_id": 100407,
+    "names": [
+     "STARLINK-34445",
+     "STARLINK-37983"
+    ],
+    "miss_distance_km": 0.06002357334389961,
+    "miss_distance_km_socrates": 0.06,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 53497,
+    "secondary_id": 100151,
+    "names": [
+     "STARLINK-4453",
+     "STARLINK-38173"
+    ],
+    "miss_distance_km": 0.061191822579716844,
+    "miss_distance_km_socrates": 0.061,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 57665,
+    "secondary_id": 59128,
+    "names": [
+     "STARLINK-30298",
+     "TRANSPORTER-10 OBJECT AG"
+    ],
+    "miss_distance_km": 0.060989222040483494,
+    "miss_distance_km_socrates": 0.061,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 63431,
+    "secondary_id": 68443,
+    "names": [
+     "HULIANWANG JISHU SHIYAN 6D",
+     "DB-WALI-WMU"
+    ],
+    "miss_distance_km": 0.06084456415626366,
+    "miss_distance_km_socrates": 0.061,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68613,
+    "secondary_id": 100149,
+    "names": [
+     "STARLINK-36187",
+     "STARLINK-38100"
+    ],
+    "miss_distance_km": 0.0609699530078686,
+    "miss_distance_km_socrates": 0.061,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 53660,
+    "secondary_id": 29507,
+    "names": [
+     "STARLINK-4473",
+     "CZ-4B R/B"
+    ],
+    "miss_distance_km": 0.07427822546210827,
+    "miss_distance_km_socrates": 0.062,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 65352,
+    "secondary_id": 66703,
+    "names": [
+     "STARLINK-34716",
+     "PELICAN-6"
+    ],
+    "miss_distance_km": 0.061474654411479694,
+    "miss_distance_km_socrates": 0.062,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 65713,
+    "secondary_id": 8978,
+    "names": [
+     "GEESAT-6 01",
+     "DELTA 1 DEB"
+    ],
+    "miss_distance_km": 0.06283397813189538,
+    "miss_distance_km_socrates": 0.063,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 65827,
+    "secondary_id": 43084,
+    "names": [
+     "STARLINK-35393",
+     "CZ-2C R/B"
+    ],
+    "miss_distance_km": 0.06450704300965356,
+    "miss_distance_km_socrates": 0.063,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 65501,
+    "secondary_id": 100054,
+    "names": [
+     "STARLINK-35140",
+     "STARLINK-37505"
+    ],
+    "miss_distance_km": 0.0632220525067346,
+    "miss_distance_km_socrates": 0.064,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.06618402865197091,
+    "miss_distance_km_socrates": 0.066,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.06725715977612659,
+    "miss_distance_km_socrates": 0.067,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 100184,
+    "secondary_id": 100314,
+    "names": [
+     "STARLINK-37207",
+     "STARLINK-38239"
+    ],
+    "miss_distance_km": 0.06669019413255037,
+    "miss_distance_km_socrates": 0.067,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 55284,
+    "secondary_id": 58758,
+    "names": [
+     "STARLINK-5337",
+     "YUNYAO-1 18"
+    ],
+    "miss_distance_km": 0.06689876792351192,
+    "miss_distance_km_socrates": 0.068,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 57924,
+    "secondary_id": 62149,
+    "names": [
+     "STARLINK-30487",
+     "STARLINK-32468"
+    ],
+    "miss_distance_km": 0.06882974209861477,
+    "miss_distance_km_socrates": 0.068,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.06749855693903328,
+    "miss_distance_km_socrates": 0.068,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62857,
+    "secondary_id": 100300,
+    "names": [
+     "STARLINK-32873",
+     "STARLINK-37874"
+    ],
+    "miss_distance_km": 0.06849389609689993,
+    "miss_distance_km_socrates": 0.069,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 64576,
+    "secondary_id": 22327,
+    "names": [
+     "IRIDE-MS2-HEO-6",
+     "SL-16 DEB"
+    ],
+    "miss_distance_km": 0.06950101126848462,
+    "miss_distance_km_socrates": 0.069,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68914,
+    "secondary_id": 19210,
+    "names": [
+     "STARLINK-37540",
+     "COSMOS 1953"
+    ],
+    "miss_distance_km": 0.06851809003760317,
+    "miss_distance_km_socrates": 0.069,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 47730,
+    "secondary_id": 55053,
+    "names": [
+     "STARLINK-2140",
+     "EOSSAT-1"
+    ],
+    "miss_distance_km": 0.0706742229383591,
+    "miss_distance_km_socrates": 0.071,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 56934,
+    "secondary_id": 68232,
+    "names": [
+     "GEISAT PRECURSOR",
+     "STARLINK-37027"
+    ],
+    "miss_distance_km": 0.07193531172189456,
+    "miss_distance_km_socrates": 0.071,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 65739,
+    "secondary_id": 100420,
+    "names": [
+     "STARLINK-35106",
+     "STARLINK-37692"
+    ],
+    "miss_distance_km": 0.07036337661372037,
+    "miss_distance_km_socrates": 0.071,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.07055860843342,
+    "miss_distance_km_socrates": 0.071,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.07111814346652656,
+    "miss_distance_km_socrates": 0.071,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 51891,
+    "secondary_id": 66177,
+    "names": [
+     "STARLINK-3549",
+     "STARLINK-35352"
+    ],
+    "miss_distance_km": 0.07219862785877118,
+    "miss_distance_km_socrates": 0.072,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 58646,
+    "secondary_id": 66345,
+    "names": [
+     "TIANMU-1 12",
+     "STARLINK-35440"
+    ],
+    "miss_distance_km": 0.07287558719801214,
+    "miss_distance_km_socrates": 0.073,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 65440,
+    "secondary_id": 100380,
+    "names": [
+     "STARLINK-35050",
+     "STARLINK-38274"
+    ],
+    "miss_distance_km": 0.07315415496146538,
+    "miss_distance_km_socrates": 0.073,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 61891,
+    "secondary_id": 44641,
+    "names": [
+     "STARLINK-32383",
+     "COSMOS 2535 DEB"
+    ],
+    "miss_distance_km": 0.07524012792093505,
+    "miss_distance_km_socrates": 0.075,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.07575020427782095,
+    "miss_distance_km_socrates": 0.076,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 46496,
+    "secondary_id": 57844,
+    "names": [
+     "ICEYE-X7",
+     "STARLINK-30292"
+    ],
+    "miss_distance_km": 0.0768981766309823,
+    "miss_distance_km_socrates": 0.077,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 53197,
+    "secondary_id": 63239,
+    "names": [
+     "STARLINK-4403",
+     "TEVEL2-8"
+    ],
+    "miss_distance_km": 0.07702570223130095,
+    "miss_distance_km_socrates": 0.077,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.07676296586251681,
+    "miss_distance_km_socrates": 0.077,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 47408,
+    "secondary_id": 53651,
+    "names": [
+     "STARLINK-2135",
+     "STARLINK-4388"
+    ],
+    "miss_distance_km": 0.0784344430475663,
+    "miss_distance_km_socrates": 0.078,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 60092,
+    "secondary_id": 100282,
+    "names": [
+     "STARLINK-32044",
+     "STARLINK-37981"
+    ],
+    "miss_distance_km": 0.07829047561620897,
+    "miss_distance_km_socrates": 0.078,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 64481,
+    "secondary_id": 100041,
+    "names": [
+     "STARLINK-34526",
+     "STARLINK-37448"
+    ],
+    "miss_distance_km": 0.07905547246815933,
+    "miss_distance_km_socrates": 0.079,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 58509,
+    "secondary_id": 66596,
+    "names": [
+     "STARLINK-31020",
+     "STARLINK-35811"
+    ],
+    "miss_distance_km": 0.07993318391440354,
+    "miss_distance_km_socrates": 0.08,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 64477,
+    "secondary_id": 100046,
+    "names": [
+     "STARLINK-34375",
+     "STARLINK-37807"
+    ],
+    "miss_distance_km": 0.07972993128869336,
+    "miss_distance_km_socrates": 0.08,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 58383,
+    "secondary_id": 62078,
+    "names": [
+     "STARLINK-30921",
+     "CZ-2C R/B"
+    ],
+    "miss_distance_km": 0.08125513482845327,
+    "miss_distance_km_socrates": 0.081,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62653,
+    "secondary_id": 63232,
+    "names": [
+     "PAUSAT-1",
+     "SPHINX/FRAZIER"
+    ],
+    "miss_distance_km": 0.08121407579166992,
+    "miss_distance_km_socrates": 0.081,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 59382,
+    "secondary_id": 100480,
+    "names": [
+     "STARLINK-31705",
+     "STARLINK-37939"
+    ],
+    "miss_distance_km": 0.08056549037235597,
+    "miss_distance_km_socrates": 0.082,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 42840,
+    "secondary_id": 48453,
+    "names": [
+     "LEMUR-2-FURIAUS",
+     "STARLINK-2620"
+    ],
+    "miss_distance_km": 0.08261443589617572,
+    "miss_distance_km_socrates": 0.083,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 53476,
+    "secondary_id": 66307,
+    "names": [
+     "STARLINK-4378",
+     "BANDWAGON-4 OBJECT Q"
+    ],
+    "miss_distance_km": 0.08357980970348537,
+    "miss_distance_km_socrates": 0.083,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.08243160035993029,
+    "miss_distance_km_socrates": 0.083,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 69563,
+    "secondary_id": 100149,
+    "names": [
+     "STARLINK-37936",
+     "STARLINK-38100"
+    ],
+    "miss_distance_km": 0.08217896424583075,
+    "miss_distance_km_socrates": 0.083,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 53632,
+    "secondary_id": 100368,
+    "names": [
+     "STARLINK-4606",
+     "OBJECT C"
+    ],
+    "miss_distance_km": 0.07141683080326798,
+    "miss_distance_km_socrates": 0.084,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 63447,
+    "secondary_id": 100034,
+    "names": [
+     "STARLINK-33799",
+     "STARLINK-37917"
+    ],
+    "miss_distance_km": 0.08799450377049492,
+    "miss_distance_km_socrates": 0.084,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.0840673405989856,
+    "miss_distance_km_socrates": 0.084,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68578,
+    "secondary_id": 369,
+    "names": [
+     "KUIPER-00229",
+     "FTV 3502"
+    ],
+    "miss_distance_km": 0.0836836762445004,
+    "miss_distance_km_socrates": 0.084,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 43831,
+    "secondary_id": 54859,
+    "names": [
+     "SAUDISAT 5A",
+     "STARLINK-5409"
+    ],
+    "miss_distance_km": 0.08557144833894721,
+    "miss_distance_km_socrates": 0.085,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 44879,
+    "secondary_id": 61119,
+    "names": [
+     "TIANQIN 1 (CAS-6)",
+     "CZ-6A DEB"
+    ],
+    "miss_distance_km": 0.08427561192786243,
+    "miss_distance_km_socrates": 0.085,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 64540,
+    "secondary_id": 100277,
+    "names": [
+     "ARCSTONE",
+     "STARLINK-37550"
+    ],
+    "miss_distance_km": 0.08593986453777588,
+    "miss_distance_km_socrates": 0.086,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 40042,
+    "secondary_id": 100182,
+    "names": [
+     "POLYITAN-1",
+     "STARLINK-38140"
+    ],
+    "miss_distance_km": 0.0870687537599057,
+    "miss_distance_km_socrates": 0.087,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 43011,
+    "secondary_id": 59280,
+    "names": [
+     "HEAD-1",
+     "YUNHAI-2 02A"
+    ],
+    "miss_distance_km": 0.08694126927382043,
+    "miss_distance_km_socrates": 0.087,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 53024,
+    "secondary_id": 100296,
+    "names": [
+     "STARLINK-4289",
+     "STARLINK-37811"
+    ],
+    "miss_distance_km": 0.0859496672351968,
+    "miss_distance_km_socrates": 0.087,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 67955,
+    "secondary_id": 68379,
+    "names": [
+     "STARLINK-36872",
+     "CZ-2D R/B"
+    ],
+    "miss_distance_km": 0.08731958697833045,
+    "miss_distance_km_socrates": 0.087,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 69345,
+    "secondary_id": 100221,
+    "names": [
+     "STARLINK-37785",
+     "STARLINK-38249"
+    ],
+    "miss_distance_km": 0.08709294738141217,
+    "miss_distance_km_socrates": 0.088,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 60091,
+    "secondary_id": 32033,
+    "names": [
+     "STARLINK-31441",
+     "BREEZE-M DEB"
+    ],
+    "miss_distance_km": 0.08996255986048016,
+    "miss_distance_km_socrates": 0.09,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.09047918808233532,
+    "miss_distance_km_socrates": 0.09,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.08983278274930376,
+    "miss_distance_km_socrates": 0.09,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.08993796649448765,
+    "miss_distance_km_socrates": 0.09,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62281,
+    "secondary_id": 26365,
+    "names": [
+     "STARLINK-33544",
+     "SIMSAT 1"
+    ],
+    "miss_distance_km": 0.090381716528003,
+    "miss_distance_km_socrates": 0.09,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.09023175756983329,
+    "miss_distance_km_socrates": 0.09,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.090821056152502,
+    "miss_distance_km_socrates": 0.091,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 57908,
+    "secondary_id": 67107,
+    "names": [
+     "STARLINK-30464",
+     "STARLINK-36196"
+    ],
+    "miss_distance_km": 0.09210038412074895,
+    "miss_distance_km_socrates": 0.092,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 60316,
+    "secondary_id": 100429,
+    "names": [
+     "STARLINK-32192",
+     "STARLINK-38027"
+    ],
+    "miss_distance_km": 0.09264137945141256,
+    "miss_distance_km_socrates": 0.092,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.09183240707938076,
+    "miss_distance_km_socrates": 0.092,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.09248784706892398,
+    "miss_distance_km_socrates": 0.092,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 64184,
+    "secondary_id": 43084,
+    "names": [
+     "STARLINK-34197",
+     "CZ-2C R/B"
+    ],
+    "miss_distance_km": 0.09392420961560045,
+    "miss_distance_km_socrates": 0.093,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.09267695688870162,
+    "miss_distance_km_socrates": 0.093,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.09383330095862999,
+    "miss_distance_km_socrates": 0.094,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 56191,
+    "secondary_id": 56898,
+    "names": [
+     "HAWK-7A",
+     "STARLINK-6205"
+    ],
+    "miss_distance_km": 0.09534771791261164,
+    "miss_distance_km_socrates": 0.095,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.09492408756010992,
+    "miss_distance_km_socrates": 0.095,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 56154,
+    "secondary_id": 56156,
+    "names": [
+     "PIESAT B",
+     "PIESAT D"
+    ],
+    "miss_distance_km": 0.09575203890284427,
+    "miss_distance_km_socrates": 0.096,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.0964135170867225,
+    "miss_distance_km_socrates": 0.096,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62622,
+    "secondary_id": 64042,
+    "names": [
+     "FLOCK 4G-9",
+     "STARLINK-34049"
+    ],
+    "miss_distance_km": 0.09373968958439949,
+    "miss_distance_km_socrates": 0.096,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.09809829114767382,
+    "miss_distance_km_socrates": 0.098,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 58957,
+    "secondary_id": 27002,
+    "names": [
+     "RAPTOR1",
+     "KOMPASS"
+    ],
+    "miss_distance_km": 0.09933058756201771,
+    "miss_distance_km_socrates": 0.099,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.09950063619936712,
+    "miss_distance_km_socrates": 0.099,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68072,
+    "secondary_id": 100420,
+    "names": [
+     "STARLINK-36972",
+     "STARLINK-37692"
+    ],
+    "miss_distance_km": 0.09951708376772005,
+    "miss_distance_km_socrates": 0.099,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.09884850621760358,
+    "miss_distance_km_socrates": 0.099,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 55632,
+    "secondary_id": 100933,
+    "names": [
+     "STARLINK-5546",
+     "TRANSPORTER-18 OBJECT BC"
+    ],
+    "miss_distance_km": 0.10030836269521666,
+    "miss_distance_km_socrates": 0.1,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.10196609800826502,
+    "miss_distance_km_socrates": 0.102,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.10229640133044968,
+    "miss_distance_km_socrates": 0.102,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 69556,
+    "secondary_id": 100155,
+    "names": [
+     "STARLINK-37927",
+     "STARLINK-38127"
+    ],
+    "miss_distance_km": 0.09966298434494329,
+    "miss_distance_km_socrates": 0.102,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 100004,
+    "secondary_id": 100445,
+    "names": [
+     "STARLINK-38107",
+     "STARLINK-38325"
+    ],
+    "miss_distance_km": 0.1024309249387,
+    "miss_distance_km_socrates": 0.102,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.10302252922403177,
+    "miss_distance_km_socrates": 0.103,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68955,
+    "secondary_id": 100054,
+    "names": [
+     "STARLINK-36794",
+     "STARLINK-37505"
+    ],
+    "miss_distance_km": 0.10285038566529173,
+    "miss_distance_km_socrates": 0.103,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 56154,
+    "secondary_id": 56156,
+    "names": [
+     "PIESAT B",
+     "PIESAT D"
+    ],
+    "miss_distance_km": 0.10415862431108058,
+    "miss_distance_km_socrates": 0.105,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 57743,
+    "secondary_id": 69018,
+    "names": [
+     "STARLINK-30361",
+     "PELICAN-8"
+    ],
+    "miss_distance_km": 0.10449043425083634,
+    "miss_distance_km_socrates": 0.105,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.10647515250778396,
+    "miss_distance_km_socrates": 0.106,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 52374,
+    "secondary_id": 100050,
+    "names": [
+     "STARLINK-3762",
+     "STARLINK-37826"
+    ],
+    "miss_distance_km": 0.10661748027914798,
+    "miss_distance_km_socrates": 0.107,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 57935,
+    "secondary_id": 100496,
+    "names": [
+     "STARLINK-30712",
+     "STARLINK-37080"
+    ],
+    "miss_distance_km": 0.10739178565329618,
+    "miss_distance_km_socrates": 0.107,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.10691054243023827,
+    "miss_distance_km_socrates": 0.107,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 54043,
+    "secondary_id": 63369,
+    "names": [
+     "YAOGAN-36 02B",
+     "STARLINK-33626"
+    ],
+    "miss_distance_km": 0.10800385865005374,
+    "miss_distance_km_socrates": 0.108,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 61872,
+    "secondary_id": 66854,
+    "names": [
+     "OBJECT D",
+     "STARLINK-36087"
+    ],
+    "miss_distance_km": 0.10779033964094846,
+    "miss_distance_km_socrates": 0.108,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62632,
+    "secondary_id": 5858,
+    "names": [
+     "SIGI",
+     "SL-8 DEB"
+    ],
+    "miss_distance_km": 0.10918931698435029,
+    "miss_distance_km_socrates": 0.108,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.10805166220157895,
+    "miss_distance_km_socrates": 0.108,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 46266,
+    "secondary_id": 66842,
+    "names": [
+     "GNOMES-1",
+     "STARLINK-35769"
+    ],
+    "miss_distance_km": 0.10943352479054044,
+    "miss_distance_km_socrates": 0.109,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 58967,
+    "secondary_id": 100404,
+    "names": [
+     "STARLINK-31314",
+     "STARLINK-37821"
+    ],
+    "miss_distance_km": 0.10894505600725277,
+    "miss_distance_km_socrates": 0.109,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 37168,
+    "secondary_id": 65469,
+    "names": [
+     "SBSS (USA 216)",
+     "STARLINK-34924"
+    ],
+    "miss_distance_km": 0.10946558144896965,
+    "miss_distance_km_socrates": 0.11,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.11110148647247621,
+    "miss_distance_km_socrates": 0.111,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 100912,
+    "secondary_id": 100937,
+    "names": [
+     "TRANSPORTER-18 OBJECT AF",
+     "TRANSPORTER-18 OBJECT BG"
+    ],
+    "miss_distance_km": 0.11114947228445378,
+    "miss_distance_km_socrates": 0.111,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.11156961113789732,
+    "miss_distance_km_socrates": 0.112,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 43613,
+    "secondary_id": 63472,
+    "names": [
+     "ICESAT-2",
+     "STARLINK-33766"
+    ],
+    "miss_distance_km": 0.112469076133598,
+    "miss_distance_km_socrates": 0.113,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 59259,
+    "secondary_id": 100410,
+    "names": [
+     "STARLINK-31506",
+     "STARLINK-37996"
+    ],
+    "miss_distance_km": 0.11400960611590377,
+    "miss_distance_km_socrates": 0.113,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.11269779584591641,
+    "miss_distance_km_socrates": 0.113,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 33498,
+    "secondary_id": 40057,
+    "names": [
+     "STARS (KUKAI)",
+     "VELOX-I"
+    ],
+    "miss_distance_km": 0.11448495875256695,
+    "miss_distance_km_socrates": 0.114,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 43081,
+    "secondary_id": 68692,
+    "names": [
+     "YAOGAN-30 04A",
+     "JILIN GAOFEN OBJECT B"
+    ],
+    "miss_distance_km": 0.11497936431146492,
+    "miss_distance_km_socrates": 0.114,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68686,
+    "secondary_id": 100305,
+    "names": [
+     "STARLINK-37213",
+     "STARLINK-38215"
+    ],
+    "miss_distance_km": 0.11314437439389055,
+    "miss_distance_km_socrates": 0.114,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.11553861774990704,
+    "miss_distance_km_socrates": 0.115,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 31490,
+    "secondary_id": 52786,
+    "names": [
+     "YAOGAN-2",
+     "GEESAT-1 02"
+    ],
+    "miss_distance_km": 0.11671395198379843,
+    "miss_distance_km_socrates": 0.116,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 65246,
+    "secondary_id": 67070,
+    "names": [
+     "STARLINK-34959",
+     "DEAR-5"
+    ],
+    "miss_distance_km": 0.11621429277755717,
+    "miss_distance_km_socrates": 0.116,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68105,
+    "secondary_id": 33765,
+    "names": [
+     "STARLINK-37021",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.1409243352678608,
+    "miss_distance_km_socrates": 0.116,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.11719373710650395,
+    "miss_distance_km_socrates": 0.117,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 64558,
+    "secondary_id": 66568,
+    "names": [
+     "QUICK3",
+     "STARLINK-35803"
+    ],
+    "miss_distance_km": 0.11664133507833423,
+    "miss_distance_km_socrates": 0.117,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 64488,
+    "secondary_id": 68635,
+    "names": [
+     "STARLINK-34217",
+     "CANVAS"
+    ],
+    "miss_distance_km": 0.11800410815798816,
+    "miss_distance_km_socrates": 0.118,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.1176710537417695,
+    "miss_distance_km_socrates": 0.118,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 100885,
+    "secondary_id": 43822,
+    "names": [
+     "TRANSPORTER-18 OBJECT C",
+     "OBJECT BS"
+    ],
+    "miss_distance_km": 0.11825694684097478,
+    "miss_distance_km_socrates": 0.118,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 52686,
+    "secondary_id": 12586,
+    "names": [
+     "STARLINK-4005",
+     "SL-3 R/B"
+    ],
+    "miss_distance_km": 0.12012700717950509,
+    "miss_distance_km_socrates": 0.119,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62434,
+    "secondary_id": 100421,
+    "names": [
+     "STARLINK-32674",
+     "STARLINK-38018"
+    ],
+    "miss_distance_km": 0.11805837778648309,
+    "miss_distance_km_socrates": 0.119,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 64153,
+    "secondary_id": 100184,
+    "names": [
+     "STARLINK-34345",
+     "STARLINK-37207"
+    ],
+    "miss_distance_km": 0.11892472036125415,
+    "miss_distance_km_socrates": 0.119,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 51136,
+    "secondary_id": 58921,
+    "names": [
+     "STARLINK-3253",
+     "NEXSAT-1"
+    ],
+    "miss_distance_km": 0.12042834500880396,
+    "miss_distance_km_socrates": 0.12,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.12017188630279696,
+    "miss_distance_km_socrates": 0.12,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 55598,
+    "secondary_id": 57469,
+    "names": [
+     "STARLINK-5756",
+     "STARLINK-30171"
+    ],
+    "miss_distance_km": 0.12044858958586435,
+    "miss_distance_km_socrates": 0.121,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 63992,
+    "secondary_id": 69022,
+    "names": [
+     "SCS-01 L",
+     "HYDRA-3"
+    ],
+    "miss_distance_km": 0.12126220511675678,
+    "miss_distance_km_socrates": 0.121,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 53974,
+    "secondary_id": 62610,
+    "names": [
+     "STARLINK-5159",
+     "EDISON-1"
+    ],
+    "miss_distance_km": 0.12193929621160052,
+    "miss_distance_km_socrates": 0.122,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 57973,
+    "secondary_id": 55530,
+    "names": [
+     "STARLINK-30502",
+     "CZ-6A DEB"
+    ],
+    "miss_distance_km": 0.12387967058525351,
+    "miss_distance_km_socrates": 0.122,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62190,
+    "secondary_id": 100768,
+    "names": [
+     "HAISHAO-1",
+     "STARLINK-38450"
+    ],
+    "miss_distance_km": 0.11865755955251288,
+    "miss_distance_km_socrates": 0.122,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 56153,
+    "secondary_id": 56156,
+    "names": [
+     "PIESAT A",
+     "PIESAT D"
+    ],
+    "miss_distance_km": 0.12257383970396389,
+    "miss_distance_km_socrates": 0.123,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.1232944084134922,
+    "miss_distance_km_socrates": 0.123,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 69559,
+    "secondary_id": 100170,
+    "names": [
+     "STARLINK-37958",
+     "STARLINK-38217"
+    ],
+    "miss_distance_km": 0.12250798655800411,
+    "miss_distance_km_socrates": 0.123,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 57606,
+    "secondary_id": 62684,
+    "names": [
+     "STARLINK-30255",
+     "IRIS-F2"
+    ],
+    "miss_distance_km": 0.12384552839501187,
+    "miss_distance_km_socrates": 0.124,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.1237116840927236,
+    "miss_distance_km_socrates": 0.124,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.124957708301854,
+    "miss_distance_km_socrates": 0.125,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 65579,
+    "secondary_id": 29793,
+    "names": [
+     "PRAETORIAN SDA_616",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.1248760134488453,
+    "miss_distance_km_socrates": 0.125,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 64486,
+    "secondary_id": 100046,
+    "names": [
+     "STARLINK-34520",
+     "STARLINK-37807"
+    ],
+    "miss_distance_km": 0.12641551918696523,
+    "miss_distance_km_socrates": 0.126,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 65388,
+    "secondary_id": 47437,
+    "names": [
+     "STARLINK-34957",
+     "TRANSPORTER-1 OBJECT AA"
+    ],
+    "miss_distance_km": 0.1261302723696205,
+    "miss_distance_km_socrates": 0.126,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 51774,
+    "secondary_id": 100044,
+    "names": [
+     "STARLINK-3629",
+     "STARLINK-37984"
+    ],
+    "miss_distance_km": 0.12318133928686165,
+    "miss_distance_km_socrates": 0.127,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 58661,
+    "secondary_id": 66010,
+    "names": [
+     "TIANMU-1 20",
+     "STARLINK-35297"
+    ],
+    "miss_distance_km": 0.12681498526866913,
+    "miss_distance_km_socrates": 0.127,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 49072,
+    "secondary_id": 31938,
+    "names": [
+     "TIANHUI 2-02B",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.128697814619193,
+    "miss_distance_km_socrates": 0.128,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 60468,
+    "secondary_id": 66027,
+    "names": [
+     "TRANSPORTER-11 OBJECT A",
+     "STARLINK-35341"
+    ],
+    "miss_distance_km": 0.12858111200664502,
+    "miss_distance_km_socrates": 0.128,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62497,
+    "secondary_id": 100368,
+    "names": [
+     "STARLINK-32729",
+     "OBJECT C"
+    ],
+    "miss_distance_km": 0.13041401651020565,
+    "miss_distance_km_socrates": 0.128,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 65989,
+    "secondary_id": 29962,
+    "names": [
+     "SDA_1679",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.12811981084057253,
+    "miss_distance_km_socrates": 0.128,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.12758191551272033,
+    "miss_distance_km_socrates": 0.128,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 63920,
+    "secondary_id": 35062,
+    "names": [
+     "YAOGAN-40 02C",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.12896846193279432,
+    "miss_distance_km_socrates": 0.129,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 53191,
+    "secondary_id": 64708,
+    "names": [
+     "STARLINK-4369",
+     "STARLINK-34563"
+    ],
+    "miss_distance_km": 0.1266509028148147,
+    "miss_distance_km_socrates": 0.13,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.12985846734442744,
+    "miss_distance_km_socrates": 0.13,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.1298226293758178,
+    "miss_distance_km_socrates": 0.13,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 64927,
+    "secondary_id": 100049,
+    "names": [
+     "STARLINK-34661",
+     "STARLINK-37848"
+    ],
+    "miss_distance_km": 0.12869857352390013,
+    "miss_distance_km_socrates": 0.13,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 60292,
+    "secondary_id": 62613,
+    "names": [
+     "STARLINK-32149",
+     "FLOCK 4G-8"
+    ],
+    "miss_distance_km": 0.1318366666378319,
+    "miss_distance_km_socrates": 0.131,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 53210,
+    "secondary_id": 100158,
+    "names": [
+     "STARLINK-4427",
+     "STARLINK-38192"
+    ],
+    "miss_distance_km": 0.13159090487430755,
+    "miss_distance_km_socrates": 0.132,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 66672,
+    "secondary_id": 34856,
+    "names": [
+     "BRO-17",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.13216322476270015,
+    "miss_distance_km_socrates": 0.132,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68625,
+    "secondary_id": 19210,
+    "names": [
+     "STARLINK-37249",
+     "COSMOS 1953"
+    ],
+    "miss_distance_km": 0.13267137296840217,
+    "miss_distance_km_socrates": 0.132,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 38011,
+    "secondary_id": 54437,
+    "names": [
+     "SSOT",
+     "CZ-6A DEB"
+    ],
+    "miss_distance_km": 0.13375260885911883,
+    "miss_distance_km_socrates": 0.134,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 49261,
+    "secondary_id": 60937,
+    "names": [
+     "CS1",
+     "STARLINK-32259"
+    ],
+    "miss_distance_km": 0.13473103475218387,
+    "miss_distance_km_socrates": 0.134,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 59856,
+    "secondary_id": 31346,
+    "names": [
+     "STARLINK-31691",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.1341221896032037,
+    "miss_distance_km_socrates": 0.134,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 65284,
+    "secondary_id": 100373,
+    "names": [
+     "STARLINK-35006",
+     "STARLINK-38237"
+    ],
+    "miss_distance_km": 0.13374043621311238,
+    "miss_distance_km_socrates": 0.134,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68904,
+    "secondary_id": 100251,
+    "names": [
+     "STARLINK-37528",
+     "STARLINK-38168"
+    ],
+    "miss_distance_km": 0.13431486914958266,
+    "miss_distance_km_socrates": 0.134,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 62079,
+    "secondary_id": 62080,
+    "names": [
+     "SUPERVIEW NEO-2 03",
+     "SUPERVIEW NEO-2 04"
+    ],
+    "miss_distance_km": 0.13484189751242812,
+    "miss_distance_km_socrates": 0.135,
+    "same_element_sets": true
+   },
+   {
+    "primary_id": 68377,
+    "secondary_id": 68378,
+    "names": [
+     "SUPERVIEW NEO-2 05",
+     "SUPERVIEW NEO-2 06"
+    ],
+    "miss_distance_km": 0.1352136864660484,
+    "miss_distance_km_socrates": 0.135,
+    "same_element_sets": true
+   }
+  ]
+ },
+ "latest_run": {
+  "events": 2092,
+  "socrates_rows": 53018,
+  "tolerance_s": 60.0,
+  "all_matches": {
+   "matched": 259,
+   "tca_difference_s": {
+    "median": 0.204688,
+    "p90": 0.7172024000000001,
+    "max": 2.845802
+   },
+   "miss_difference_m": {
+    "median": 295.6122695977222,
+    "p90": 1563.9874087718827,
+    "max": 2207.4764282573146
+   },
+   "relative_speed_difference_ms": {
+    "median": 0.24096358665737228,
+    "p90": 0.5178514680288516,
+    "max": 0.8653179569950709
+   }
+  },
+  "same_element_sets": {
+   "matched": 0,
+   "tca_difference_s": null,
+   "miss_difference_m": null,
+   "relative_speed_difference_ms": null
+  },
+  "newer_element_sets": {
+   "matched": 259,
+   "tca_difference_s": {
+    "median": 0.204688,
+    "p90": 0.7172024000000001,
+    "max": 2.845802
+   },
+   "miss_difference_m": {
+    "median": 295.6122695977222,
+    "p90": 1563.9874087718827,
+    "max": 2207.4764282573146
+   },
+   "relative_speed_difference_ms": {
+    "median": 0.24096358665737228,
+    "p90": 0.5178514680288516,
+    "max": 0.8653179569950709
+   }
+  },
+  "coverage": {
+   "window": [
+    "2026-10-09T22:52:37.351985Z",
+    "2026-10-10T22:52:37.351985Z"
+   ],
+   "max_range_km": 1.0,
+   "socrates_rows_in_window_and_range": 1271,
+   "of_those_found_by_us": 137,
+   "our_events_in_window": 2092,
+   "of_those_in_socrates": 259
+  },
+  "pairs": [
+   {
+    "primary_id": 38257,
+    "secondary_id": 57247,
+    "names": [
+     "YAOGAN-14",
+     "STARLINK-5039"
+    ],
+    "miss_distance_km": 0.17906640383852426,
+    "miss_distance_km_socrates": 0.218,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 64513,
+    "secondary_id": 6180,
+    "names": [
+     "KUIPER-00053",
+     "SCOUT B-1 R/B"
+    ],
+    "miss_distance_km": 0.2508318623019233,
+    "miss_distance_km_socrates": 1.359,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 44078,
+    "secondary_id": 30941,
+    "names": [
+     "EMISAT",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.04174477042761804,
+    "miss_distance_km_socrates": 1.181,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 60435,
+    "secondary_id": 62610,
+    "names": [
+     "STARLINK-32222",
+     "EDISON-1"
+    ],
+    "miss_distance_km": 0.5444695212187239,
+    "miss_distance_km_socrates": 1.44,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 53522,
+    "secondary_id": 63226,
+    "names": [
+     "YAOGAN-35 04A",
+     "ETIHAD-SAT"
+    ],
+    "miss_distance_km": 0.11597955867425377,
+    "miss_distance_km_socrates": 1.21,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 44857,
+    "secondary_id": 61616,
+    "names": [
+     "RISAT-2BR1",
+     "TIANPING 3B-02"
+    ],
+    "miss_distance_km": 0.13096631639146405,
+    "miss_distance_km_socrates": 0.72,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 60546,
+    "secondary_id": 67088,
+    "names": [
+     "ICEYE-X39",
+     "STARLINK-35882"
+    ],
+    "miss_distance_km": 0.31552357174268525,
+    "miss_distance_km_socrates": 2.523,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 52116,
+    "secondary_id": 59175,
+    "names": [
+     "STARLINK-3735",
+     "EXO-0"
+    ],
+    "miss_distance_km": 0.30674973719370896,
+    "miss_distance_km_socrates": 2.448,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 56487,
+    "secondary_id": 65973,
+    "names": [
+     "STARLINK-6196",
+     "ELECTRON KICK STAGE R/B"
+    ],
+    "miss_distance_km": 0.22323261713014758,
+    "miss_distance_km_socrates": 0.317,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 55450,
+    "secondary_id": 61872,
+    "names": [
+     "STARLINK-5686",
+     "OBJECT D"
+    ],
+    "miss_distance_km": 0.7092062084321541,
+    "miss_distance_km_socrates": 2.049,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 37875,
+    "secondary_id": 55386,
+    "names": [
+     "YAOGAN-12",
+     "STARLINK-5555"
+    ],
+    "miss_distance_km": 0.22793002781954919,
+    "miss_distance_km_socrates": 1.158,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 58505,
+    "secondary_id": 21273,
+    "names": [
+     "CHUANGXIN 19 (CX-19)",
+     "DELTA 1 DEB"
+    ],
+    "miss_distance_km": 0.18532857683017823,
+    "miss_distance_km_socrates": 0.282,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 57758,
+    "secondary_id": 270310,
+    "names": [
+     "WILDFIRE 3",
+     "UNKNOWN"
+    ],
+    "miss_distance_km": 0.8153255827047022,
+    "miss_distance_km_socrates": 0.785,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 43082,
+    "secondary_id": 44882,
+    "names": [
+     "YAOGAN-30 04B",
+     "TIANYAN 02"
+    ],
+    "miss_distance_km": 0.22346698447024835,
+    "miss_distance_km_socrates": 0.397,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 43578,
+    "secondary_id": 11427,
+    "names": [
+     "IRIDIUM 159",
+     "SL-8 R/B"
+    ],
+    "miss_distance_km": 0.25116731975781553,
+    "miss_distance_km_socrates": 0.544,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 62727,
+    "secondary_id": 63231,
+    "names": [
+     "OBJECT C",
+     "M-SEL/CORTEZ"
+    ],
+    "miss_distance_km": 0.242354385764636,
+    "miss_distance_km_socrates": 0.564,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 68421,
+    "secondary_id": 18958,
+    "names": [
+     "VIREON-2",
+     "COSMOS 1933"
+    ],
+    "miss_distance_km": 0.180663640901838,
+    "miss_distance_km_socrates": 0.279,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 31598,
+    "secondary_id": 69177,
+    "names": [
+     "COSMO-SKYMED 1",
+     "STRIX-7"
+    ],
+    "miss_distance_km": 0.27924425904223243,
+    "miss_distance_km_socrates": 0.596,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 60182,
+    "secondary_id": 81845,
+    "names": [
+     "ALOS-4 (DAICHI-4)",
+     "UNKNOWN"
+    ],
+    "miss_distance_km": 0.8089207762806738,
+    "miss_distance_km_socrates": 1.524,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 53943,
+    "secondary_id": 67283,
+    "names": [
+     "YAOGAN-36 01A",
+     "HORS 5"
+    ],
+    "miss_distance_km": 0.2746849158306493,
+    "miss_distance_km_socrates": 1.986,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 49384,
+    "secondary_id": 61405,
+    "names": [
+     "YAOGAN-32 02B",
+     "CZ-6A DEB"
+    ],
+    "miss_distance_km": 0.3012597379937197,
+    "miss_distance_km_socrates": 0.384,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 48865,
+    "secondary_id": 68860,
+    "names": [
+     "COSMOS 2550",
+     "STARLINK-37388"
+    ],
+    "miss_distance_km": 0.9947405686965288,
+    "miss_distance_km_socrates": 0.653,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 55607,
+    "secondary_id": 59774,
+    "names": [
+     "STARLINK-5700",
+     "OBJECT B"
+    ],
+    "miss_distance_km": 0.8533170703060228,
+    "miss_distance_km_socrates": 0.989,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 69890,
+    "secondary_id": 29904,
+    "names": [
+     "FIRESAT3",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.29385380643814646,
+    "miss_distance_km_socrates": 0.789,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 67646,
+    "secondary_id": 65789,
+    "names": [
+     "ALSAT-3B",
+     "OBJECT E"
+    ],
+    "miss_distance_km": 0.6911859306289944,
+    "miss_distance_km_socrates": 0.353,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 65262,
+    "secondary_id": 68836,
+    "names": [
+     "OBJECT D",
+     "BESSA"
+    ],
+    "miss_distance_km": 0.3419039970152592,
+    "miss_distance_km_socrates": 0.19,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 68692,
+    "secondary_id": 37567,
+    "names": [
+     "JILIN GAOFEN OBJECT B",
+     "CZ-4C DEB"
+    ],
+    "miss_distance_km": 0.39861600307457096,
+    "miss_distance_km_socrates": 0.887,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 56168,
+    "secondary_id": 32126,
+    "names": [
+     "CHECKMATE 1",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.24053665466008425,
+    "miss_distance_km_socrates": 0.223,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 66659,
+    "secondary_id": 270138,
+    "names": [
+     "JACK K",
+     "UNKNOWN"
+    ],
+    "miss_distance_km": 0.8976968358335222,
+    "miss_distance_km_socrates": 1.716,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 49751,
+    "secondary_id": 52744,
+    "names": [
+     "STARLINK-3229",
+     "GHGSAT-C5"
+    ],
+    "miss_distance_km": 0.06784228700309954,
+    "miss_distance_km_socrates": 1.65,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 66764,
+    "secondary_id": 40978,
+    "names": [
+     "NAHLA",
+     "ATLAS 5 CENTAUR R/B"
+    ],
+    "miss_distance_km": 0.6462584891847726,
+    "miss_distance_km_socrates": 0.391,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 57767,
+    "secondary_id": 42179,
+    "names": [
+     "WILDFIRE 2",
+     "COSMOS 1275 DEB"
+    ],
+    "miss_distance_km": 0.7228951178868143,
+    "miss_distance_km_socrates": 0.566,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 100061,
+    "secondary_id": 18565,
+    "names": [
+     "PRAETORIAN SDA_503",
+     "COSMOS 1691 DEB"
+    ],
+    "miss_distance_km": 0.2869543569594695,
+    "miss_distance_km_socrates": 0.834,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 61568,
+    "secondary_id": 69973,
+    "names": [
+     "QIANFAN-35",
+     "CZ-10B DEB"
+    ],
+    "miss_distance_km": 0.9393094452877143,
+    "miss_distance_km_socrates": 0.634,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 58400,
+    "secondary_id": 65945,
+    "names": [
+     "MALLIGYONG-1",
+     "SHIYAN-31"
+    ],
+    "miss_distance_km": 0.658819022084425,
+    "miss_distance_km_socrates": 0.809,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 57399,
+    "secondary_id": 56750,
+    "names": [
+     "TIANMU-1 07",
+     "KSLV-II R/B"
+    ],
+    "miss_distance_km": 0.7075654761692153,
+    "miss_distance_km_socrates": 1.064,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 57104,
+    "secondary_id": 25655,
+    "names": [
+     "STARLINK-6130",
+     "SL-3 DEB"
+    ],
+    "miss_distance_km": 0.4235460700488555,
+    "miss_distance_km_socrates": 1.137,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 53760,
+    "secondary_id": 56954,
+    "names": [
+     "YAOGAN-35 05A",
+     "HOTSAT-1"
+    ],
+    "miss_distance_km": 0.4343956507107772,
+    "miss_distance_km_socrates": 1.072,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 68875,
+    "secondary_id": 39161,
+    "names": [
+     "KUIPER-00478",
+     "ESTCUBE 1"
+    ],
+    "miss_distance_km": 0.526821683208739,
+    "miss_distance_km_socrates": 1.16,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 56167,
+    "secondary_id": 57764,
+    "names": [
+     "CHECKMATE 2",
+     "WILDFIRE 1"
+    ],
+    "miss_distance_km": 0.5510980899999539,
+    "miss_distance_km_socrates": 0.548,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 69737,
+    "secondary_id": 22417,
+    "names": [
+     "HAIYANG-2E",
+     "SL-16 DEB"
+    ],
+    "miss_distance_km": 0.5107432741607192,
+    "miss_distance_km_socrates": 0.545,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 44058,
+    "secondary_id": 270349,
+    "names": [
+     "ONEWEB-0010",
+     "UNKNOWN"
+    ],
+    "miss_distance_km": 0.6315174358554055,
+    "miss_distance_km_socrates": 0.6,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 56810,
+    "secondary_id": 100614,
+    "names": [
+     "STARLINK-6031",
+     "OBJECT F"
+    ],
+    "miss_distance_km": 0.3373595117912268,
+    "miss_distance_km_socrates": 0.398,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 62379,
+    "secondary_id": 69125,
+    "names": [
+     "HAWK-11B",
+     "STARLINK-37722"
+    ],
+    "miss_distance_km": 0.46140290184858346,
+    "miss_distance_km_socrates": 1.613,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 63262,
+    "secondary_id": 28492,
+    "names": [
+     "LEMUR-2-MARACHE-FRAN",
+     "HELIOS 2A"
+    ],
+    "miss_distance_km": 0.5068368519845563,
+    "miss_distance_km_socrates": 0.424,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 57924,
+    "secondary_id": 67269,
+    "names": [
+     "STARLINK-30487",
+     "OBJECT X"
+    ],
+    "miss_distance_km": 0.1185738679405522,
+    "miss_distance_km_socrates": 0.779,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 42825,
+    "secondary_id": 62726,
+    "names": [
+     "KANOPUS-V-IK",
+     "OBJECT B"
+    ],
+    "miss_distance_km": 0.8700737866749707,
+    "miss_distance_km_socrates": 0.756,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 58400,
+    "secondary_id": 42672,
+    "names": [
+     "MALLIGYONG-1",
+     "CZ-4C DEB"
+    ],
+    "miss_distance_km": 0.3098337826795776,
+    "miss_distance_km_socrates": 0.678,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 62622,
+    "secondary_id": 13121,
+    "names": [
+     "FLOCK 4G-9",
+     "SL-3 R/B"
+    ],
+    "miss_distance_km": 0.3109618205505797,
+    "miss_distance_km_socrates": 0.989,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 44061,
+    "secondary_id": 45321,
+    "names": [
+     "ONEWEB-0006",
+     "SL-14 DEB"
+    ],
+    "miss_distance_km": 0.5597790822669622,
+    "miss_distance_km_socrates": 0.701,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 65618,
+    "secondary_id": 21286,
+    "names": [
+     "HULIANWANG JISHU SHIYAN 7B",
+     "DELTA 1 DEB"
+    ],
+    "miss_distance_km": 0.462346068256338,
+    "miss_distance_km_socrates": 0.392,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 55291,
+    "secondary_id": 64872,
+    "names": [
+     "STARLINK-5327",
+     "SKYCRAFT-4B"
+    ],
+    "miss_distance_km": 0.6541668880762065,
+    "miss_distance_km_socrates": 0.888,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 64590,
+    "secondary_id": 397,
+    "names": [
+     "TRANSPORTER-14 OBJECT BQ",
+     "TIROS 6"
+    ],
+    "miss_distance_km": 0.23364620885809337,
+    "miss_distance_km_socrates": 0.578,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 43575,
+    "secondary_id": 61380,
+    "names": [
+     "IRIDIUM 163",
+     "CZ-6A DEB"
+    ],
+    "miss_distance_km": 0.5774601942988599,
+    "miss_distance_km_socrates": 1.101,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 47936,
+    "secondary_id": 55664,
+    "names": [
+     "GRUS-1D",
+     "STARLINK-5480"
+    ],
+    "miss_distance_km": 0.6826536777276937,
+    "miss_distance_km_socrates": 0.801,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 51644,
+    "secondary_id": 1316,
+    "names": [
+     "ONEWEB-0452",
+     "OPS 4682 DEB"
+    ],
+    "miss_distance_km": 0.38651070251822994,
+    "miss_distance_km_socrates": 1.722,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 60547,
+    "secondary_id": 67397,
+    "names": [
+     "UMBRA-10",
+     "CARBSAR"
+    ],
+    "miss_distance_km": 0.7245324256398646,
+    "miss_distance_km_socrates": 1.797,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 69988,
+    "secondary_id": 19210,
+    "names": [
+     "STARLINK-38064",
+     "COSMOS 1953"
+    ],
+    "miss_distance_km": 0.9397113317950365,
+    "miss_distance_km_socrates": 2.005,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 53572,
+    "secondary_id": 66703,
+    "names": [
+     "STARLINK-4555",
+     "PELICAN-6"
+    ],
+    "miss_distance_km": 0.593020255764605,
+    "miss_distance_km_socrates": 0.545,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 56192,
+    "secondary_id": 62663,
+    "names": [
+     "ION SCV-010",
+     "FLOCK 4G-5"
+    ],
+    "miss_distance_km": 0.6374881670779127,
+    "miss_distance_km_socrates": 0.939,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 43573,
+    "secondary_id": 40558,
+    "names": [
+     "IRIDIUM 155",
+     "DMSP 5D-2 F13 DEB"
+    ],
+    "miss_distance_km": 0.4834258660083557,
+    "miss_distance_km_socrates": 0.716,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 54865,
+    "secondary_id": 64531,
+    "names": [
+     "STARLINK-5411",
+     "TRANSPORTER-14 OBJECT D"
+    ],
+    "miss_distance_km": 0.7016726613886802,
+    "miss_distance_km_socrates": 1.63,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 41875,
+    "secondary_id": 3048,
+    "names": [
+     "GOKTURK 1A",
+     "SL-8 R/B"
+    ],
+    "miss_distance_km": 0.6889504261370412,
+    "miss_distance_km_socrates": 0.719,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 56727,
+    "secondary_id": 35682,
+    "names": [
+     "DUBAISAT-1",
+     "IRIDIUM 177"
+    ],
+    "miss_distance_km": 0.7179030022782706,
+    "miss_distance_km_socrates": 0.752,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 64801,
+    "secondary_id": 28499,
+    "names": [
+     "STARLINK-34604",
+     "ARIANE 5 R/B"
+    ],
+    "miss_distance_km": 0.4210243181833454,
+    "miss_distance_km_socrates": 0.277,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 68618,
+    "secondary_id": 19210,
+    "names": [
+     "STARLINK-37179",
+     "COSMOS 1953"
+    ],
+    "miss_distance_km": 0.9183726878015754,
+    "miss_distance_km_socrates": 1.075,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 68613,
+    "secondary_id": 19210,
+    "names": [
+     "STARLINK-36187",
+     "COSMOS 1953"
+    ],
+    "miss_distance_km": 0.9837194827866927,
+    "miss_distance_km_socrates": 0.668,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 41852,
+    "secondary_id": 47231,
+    "names": [
+     "AEROCUBE 8D",
+     "GAOFEN-14 01"
+    ],
+    "miss_distance_km": 0.6116302230184795,
+    "miss_distance_km_socrates": 1.501,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 58497,
+    "secondary_id": 33060,
+    "names": [
+     "MISRSAT-2",
+     "ORBCOMM FM38"
+    ],
+    "miss_distance_km": 0.6681251339747324,
+    "miss_distance_km_socrates": 0.956,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 56163,
+    "secondary_id": 35121,
+    "names": [
+     "CHECKMATE 5",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.6206656636001838,
+    "miss_distance_km_socrates": 0.634,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 64820,
+    "secondary_id": 35829,
+    "names": [
+     "KUIPER-00073",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.440112010642686,
+    "miss_distance_km_socrates": 0.336,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 44322,
+    "secondary_id": 69919,
+    "names": [
+     "RCM-1",
+     "GRUS-3D"
+    ],
+    "miss_distance_km": 0.46321437686324507,
+    "miss_distance_km_socrates": 0.571,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 66410,
+    "secondary_id": 15615,
+    "names": [
+     "CHUTIAN-2 B",
+     "ATLAS 41E DEB"
+    ],
+    "miss_distance_km": 0.5920245269904395,
+    "miss_distance_km_socrates": 0.579,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 100103,
+    "secondary_id": 50621,
+    "names": [
+     "STARLINK-38214",
+     "COSMOS 1408 DEB"
+    ],
+    "miss_distance_km": 0.32772228242370277,
+    "miss_distance_km_socrates": 0.526,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 41852,
+    "secondary_id": 47231,
+    "names": [
+     "AEROCUBE 8D",
+     "GAOFEN-14 01"
+    ],
+    "miss_distance_km": 0.674574758754687,
+    "miss_distance_km_socrates": 0.741,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 44517,
+    "secondary_id": 30565,
+    "names": [
+     "COSMOS 2540",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.6113877304022778,
+    "miss_distance_km_socrates": 0.907,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 43929,
+    "secondary_id": 57165,
+    "names": [
+     "IRIDIUM 171",
+     "SL-8 DEB"
+    ],
+    "miss_distance_km": 0.8389866978537313,
+    "miss_distance_km_socrates": 0.682,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 51635,
+    "secondary_id": 16194,
+    "names": [
+     "ONEWEB-0439",
+     "SL-14 R/B"
+    ],
+    "miss_distance_km": 0.8853113730734126,
+    "miss_distance_km_socrates": 0.928,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 49079,
+    "secondary_id": 55729,
+    "names": [
+     "ONEWEB-0289",
+     "COSMOS 2499 DEB"
+    ],
+    "miss_distance_km": 0.762435853862347,
+    "miss_distance_km_socrates": 0.623,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 69933,
+    "secondary_id": 43486,
+    "names": [
+     "LEMUR-2-CRIMBOREALIS",
+     "CZ-2D R/B"
+    ],
+    "miss_distance_km": 0.32655588772513744,
+    "miss_distance_km_socrates": 0.396,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 65773,
+    "secondary_id": 54470,
+    "names": [
+     "KUIPER-00153",
+     "CZ-6A DEB"
+    ],
+    "miss_distance_km": 0.730567924916926,
+    "miss_distance_km_socrates": 1.43,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 55600,
+    "secondary_id": 44890,
+    "names": [
+     "STARLINK-5755",
+     "OBJECT M"
+    ],
+    "miss_distance_km": 0.7763158932098224,
+    "miss_distance_km_socrates": 0.373,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 64881,
+    "secondary_id": 100370,
+    "names": [
+     "239ALFEROV (RS61S)",
+     "HONGHU-03"
+    ],
+    "miss_distance_km": 0.8117714697999946,
+    "miss_distance_km_socrates": 0.664,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 49133,
+    "secondary_id": 60551,
+    "names": [
+     "STARLINK-3077",
+     "BRO-14"
+    ],
+    "miss_distance_km": 0.8410030062214325,
+    "miss_distance_km_socrates": 1.119,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 55615,
+    "secondary_id": 38863,
+    "names": [
+     "STARLINK-5712",
+     "CZ-2C DEB"
+    ],
+    "miss_distance_km": 0.8722373443529605,
+    "miss_distance_km_socrates": 0.945,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 100708,
+    "secondary_id": 31919,
+    "names": [
+     "QIANFAN 16 OBJECT G",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.7892392145453186,
+    "miss_distance_km_socrates": 0.836,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 65545,
+    "secondary_id": 29978,
+    "names": [
+     "YAOGAN-40 03A",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.5523021769636737,
+    "miss_distance_km_socrates": 0.641,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 60485,
+    "secondary_id": 68214,
+    "names": [
+     "TOMORROW-S2",
+     "STARLINK-35854"
+    ],
+    "miss_distance_km": 0.879405764358404,
+    "miss_distance_km_socrates": 2.645,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 64536,
+    "secondary_id": 68753,
+    "names": [
+     "FOSSASAT-2E21",
+     "SL-4 R/B"
+    ],
+    "miss_distance_km": 0.7804203048744639,
+    "miss_distance_km_socrates": 0.517,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 59371,
+    "secondary_id": 60202,
+    "names": [
+     "RESURS-P 4",
+     "STARLINK-32041"
+    ],
+    "miss_distance_km": 0.35278581810108606,
+    "miss_distance_km_socrates": 1.968,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 69890,
+    "secondary_id": 44612,
+    "names": [
+     "FIRESAT3",
+     "CZ-2D DEB"
+    ],
+    "miss_distance_km": 0.4305013052824008,
+    "miss_distance_km_socrates": 0.834,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 43609,
+    "secondary_id": 14240,
+    "names": [
+     "HAIYANG-1C",
+     "COSMOS 1486"
+    ],
+    "miss_distance_km": 0.9854819808966074,
+    "miss_distance_km_socrates": 1.09,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 42960,
+    "secondary_id": 61388,
+    "names": [
+     "IRIDIUM 107",
+     "CZ-6A DEB"
+    ],
+    "miss_distance_km": 0.8824382951882147,
+    "miss_distance_km_socrates": 0.714,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 68880,
+    "secondary_id": 61154,
+    "names": [
+     "KUIPER-00489",
+     "CZ-6A DEB"
+    ],
+    "miss_distance_km": 0.6187145014527726,
+    "miss_distance_km_socrates": 0.613,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 67749,
+    "secondary_id": 3584,
+    "names": [
+     "OBJECT D",
+     "COSMOS 249 DEB"
+    ],
+    "miss_distance_km": 0.5861317321394969,
+    "miss_distance_km_socrates": 1.305,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 61936,
+    "secondary_id": 37326,
+    "names": [
+     "HAIYANG-4 01",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.7836402541860142,
+    "miss_distance_km_socrates": 0.984,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 69090,
+    "secondary_id": 37453,
+    "names": [
+     "QIANFAN-144",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.7827764780925393,
+    "miss_distance_km_socrates": 0.705,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 67093,
+    "secondary_id": 30169,
+    "names": [
+     "STARLINK-35784",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.8345147544589328,
+    "miss_distance_km_socrates": 1.468,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 61936,
+    "secondary_id": 62083,
+    "names": [
+     "HAIYANG-4 01",
+     "KINEIS-5E"
+    ],
+    "miss_distance_km": 0.9975042541723779,
+    "miss_distance_km_socrates": 1.008,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 57169,
+    "secondary_id": 100090,
+    "names": [
+     "OBJECT D",
+     "RASSVET-3 24"
+    ],
+    "miss_distance_km": 0.9252644738001883,
+    "miss_distance_km_socrates": 1.136,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 57026,
+    "secondary_id": 63027,
+    "names": [
+     "OBJECT Y",
+     "GLOBAL-31"
+    ],
+    "miss_distance_km": 0.9302877216249689,
+    "miss_distance_km_socrates": 1.142,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 48426,
+    "secondary_id": 62112,
+    "names": [
+     "TIANQI-12",
+     "GUANGCHUAN 02"
+    ],
+    "miss_distance_km": 0.7877603265276577,
+    "miss_distance_km_socrates": 1.351,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 42961,
+    "secondary_id": 31448,
+    "names": [
+     "IRIDIUM 132",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.5101273727821118,
+    "miss_distance_km_socrates": 1.657,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 69410,
+    "secondary_id": 9798,
+    "names": [
+     "QIANFAN-192",
+     "COSMOS 886 DEB"
+    ],
+    "miss_distance_km": 0.6787270644528874,
+    "miss_distance_km_socrates": 0.673,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 60544,
+    "secondary_id": 69895,
+    "names": [
+     "CAPELLA-15 (ACADIA-5)",
+     "MIKROGLOB-1 (PIRX-1)"
+    ],
+    "miss_distance_km": 0.9034899204699082,
+    "miss_distance_km_socrates": 0.611,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 63600,
+    "secondary_id": 4818,
+    "names": [
+     "SHIYAN-27 OBJECT B",
+     "THORAD AGENA D DEB"
+    ],
+    "miss_distance_km": 0.534824678358715,
+    "miss_distance_km_socrates": 0.629,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 62261,
+    "secondary_id": 1684,
+    "names": [
+     "SENTINEL-1C",
+     "TITAN 3C TRANSTAGE DEB"
+    ],
+    "miss_distance_km": 0.7105810666860062,
+    "miss_distance_km_socrates": 1.068,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 67147,
+    "secondary_id": 33836,
+    "names": [
+     "KUIPER-00221",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.8054841306971955,
+    "miss_distance_km_socrates": 2.393,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 56191,
+    "secondary_id": 56898,
+    "names": [
+     "HAWK-7A",
+     "STARLINK-6205"
+    ],
+    "miss_distance_km": 0.9535339637396179,
+    "miss_distance_km_socrates": 0.095,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 44350,
+    "secondary_id": 40695,
+    "names": [
+     "FORMOSAT 7-4",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.48488340632469196,
+    "miss_distance_km_socrates": 0.343,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 65992,
+    "secondary_id": 25892,
+    "names": [
+     "SDA_1682",
+     "COSMOS 2366"
+    ],
+    "miss_distance_km": 0.9161446195835368,
+    "miss_distance_km_socrates": 0.612,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 55145,
+    "secondary_id": 49924,
+    "names": [
+     "ONEWEB-0560",
+     "COSMOS 2499 DEB"
+    ],
+    "miss_distance_km": 0.9467334384353195,
+    "miss_distance_km_socrates": 0.959,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 52845,
+    "secondary_id": 64880,
+    "names": [
+     "STARLINK-4168",
+     "GEOSCAN 1 (RS92S1)"
+    ],
+    "miss_distance_km": 0.5795251205051097,
+    "miss_distance_km_socrates": 2.214,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 68582,
+    "secondary_id": 31914,
+    "names": [
+     "KUIPER-00236",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.9916040567770835,
+    "miss_distance_km_socrates": 0.795,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 68939,
+    "secondary_id": 3174,
+    "names": [
+     "KUIPER-00436",
+     "OV1-14"
+    ],
+    "miss_distance_km": 0.8111462426658352,
+    "miss_distance_km_socrates": 2.229,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 68421,
+    "secondary_id": 18958,
+    "names": [
+     "VIREON-2",
+     "COSMOS 1933"
+    ],
+    "miss_distance_km": 0.9746844923755614,
+    "miss_distance_km_socrates": 1.107,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 65183,
+    "secondary_id": 68756,
+    "names": [
+     "STARLINK-34939",
+     "VOLGA R/B"
+    ],
+    "miss_distance_km": 0.906583034269571,
+    "miss_distance_km_socrates": 1.859,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 51960,
+    "secondary_id": 62648,
+    "names": [
+     "STARLINK-3691",
+     "LIME"
+    ],
+    "miss_distance_km": 0.5589691773055809,
+    "miss_distance_km_socrates": 1.201,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 59728,
+    "secondary_id": 42671,
+    "names": [
+     "SHIYAN-23 (SY-23)",
+     "CZ-4C DEB"
+    ],
+    "miss_distance_km": 0.7499670174530053,
+    "miss_distance_km_socrates": 0.891,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 54053,
+    "secondary_id": 62681,
+    "names": [
+     "STARLINK-5176",
+     "FLOCK 4G-17"
+    ],
+    "miss_distance_km": 0.3261999269078161,
+    "miss_distance_km_socrates": 1.568,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 43574,
+    "secondary_id": 30448,
+    "names": [
+     "IRIDIUM 154",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.727631511715463,
+    "miss_distance_km_socrates": 2.291,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 66736,
+    "secondary_id": 69013,
+    "names": [
+     "FLOCK 4H-33",
+     "CAS500-2"
+    ],
+    "miss_distance_km": 0.9239166428040471,
+    "miss_distance_km_socrates": 0.975,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 2872,
+    "secondary_id": 2825,
+    "names": [
+     "SURCAL 159",
+     "THOR AGENA D R/B"
+    ],
+    "miss_distance_km": 0.9541284130799028,
+    "miss_distance_km_socrates": 1.014,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 59773,
+    "secondary_id": 68635,
+    "names": [
+     "COSMOS 2576",
+     "CANVAS"
+    ],
+    "miss_distance_km": 0.7940107239972203,
+    "miss_distance_km_socrates": 1.923,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 62366,
+    "secondary_id": 30222,
+    "names": [
+     "TIANQI-34",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.23308267377503755,
+    "miss_distance_km_socrates": 0.331,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 43765,
+    "secondary_id": 69125,
+    "names": [
+     "HAWK-A",
+     "STARLINK-37722"
+    ],
+    "miss_distance_km": 0.8448480244198312,
+    "miss_distance_km_socrates": 1.194,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 49445,
+    "secondary_id": 54692,
+    "names": [
+     "STARLINK-3122",
+     "JILIN-1 GAOFEN 03D47"
+    ],
+    "miss_distance_km": 0.5970861777745493,
+    "miss_distance_km_socrates": 0.674,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 37849,
+    "secondary_id": 12767,
+    "names": [
+     "SUOMI NPP",
+     "COSMOS 1275 DEB"
+    ],
+    "miss_distance_km": 0.7678708809643032,
+    "miss_distance_km_socrates": 0.699,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 100062,
+    "secondary_id": 39807,
+    "names": [
+     "PRAETORIAN SDA_504",
+     "COSMOS 1823 DEB"
+    ],
+    "miss_distance_km": 0.8716583357249728,
+    "miss_distance_km_socrates": 1.103,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 61558,
+    "secondary_id": 55513,
+    "names": [
+     "QIANFAN-25",
+     "CZ-6A DEB"
+    ],
+    "miss_distance_km": 0.8027033377453635,
+    "miss_distance_km_socrates": 0.932,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 48684,
+    "secondary_id": 67261,
+    "names": [
+     "STARLINK-2741",
+     "OBJECT P"
+    ],
+    "miss_distance_km": 0.2978478040494856,
+    "miss_distance_km_socrates": 2.42,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 39011,
+    "secondary_id": 7198,
+    "names": [
+     "YAOGAN-16 01A",
+     "DELTA 1 DEB"
+    ],
+    "miss_distance_km": 0.8097225032936954,
+    "miss_distance_km_socrates": 0.718,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 37744,
+    "secondary_id": 15472,
+    "names": [
+     "GLOBALSTAR M089",
+     "COSMOS 1620"
+    ],
+    "miss_distance_km": 0.8804360724870399,
+    "miss_distance_km_socrates": 0.711,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 68421,
+    "secondary_id": 18958,
+    "names": [
+     "VIREON-2",
+     "COSMOS 1933"
+    ],
+    "miss_distance_km": 0.8529809349734425,
+    "miss_distance_km_socrates": 1.215,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 43679,
+    "secondary_id": 66745,
+    "names": [
+     "STARS-AO",
+     "AC1-002"
+    ],
+    "miss_distance_km": 0.3934470225450886,
+    "miss_distance_km_socrates": 1.35,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 49027,
+    "secondary_id": 26128,
+    "names": [
+     "TIANQI-15",
+     "CZ-4B DEB"
+    ],
+    "miss_distance_km": 0.463228160997459,
+    "miss_distance_km_socrates": 0.306,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 57490,
+    "secondary_id": 42225,
+    "names": [
+     "FENGYUN 3F",
+     "COSMOS 1275 DEB"
+    ],
+    "miss_distance_km": 0.8801956571586773,
+    "miss_distance_km_socrates": 0.831,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 53479,
+    "secondary_id": 59128,
+    "names": [
+     "STARLINK-4436",
+     "TRANSPORTER-10 OBJECT AG"
+    ],
+    "miss_distance_km": 0.5417485555892827,
+    "miss_distance_km_socrates": 0.597,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 62653,
+    "secondary_id": 63232,
+    "names": [
+     "PAUSAT-1",
+     "SPHINX/FRAZIER"
+    ],
+    "miss_distance_km": 0.40586801280823126,
+    "miss_distance_km_socrates": 0.081,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 61567,
+    "secondary_id": 138,
+    "names": [
+     "QIANFAN-34",
+     "THOR ABLESTAR DEB"
+    ],
+    "miss_distance_km": 0.9485502869127543,
+    "miss_distance_km_socrates": 0.94,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 65952,
+    "secondary_id": 27653,
+    "names": [
+     "KUIPER-00123",
+     "PSLV DEB"
+    ],
+    "miss_distance_km": 0.9633992799749806,
+    "miss_distance_km_socrates": 1.064,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 68196,
+    "secondary_id": 5150,
+    "names": [
+     "YAOGAN-50 02",
+     "THORAD AGENA D DEB"
+    ],
+    "miss_distance_km": 0.7805982887967741,
+    "miss_distance_km_socrates": 0.589,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 64559,
+    "secondary_id": 68995,
+    "names": [
+     "PADRE",
+     "ICEYE-X78"
+    ],
+    "miss_distance_km": 0.4861689627709854,
+    "miss_distance_km_socrates": 0.468,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 59250,
+    "secondary_id": 38013,
+    "names": [
+     "STARLINK-31407",
+     "ASAP-S"
+    ],
+    "miss_distance_km": 0.536770092781227,
+    "miss_distance_km_socrates": 1.776,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 55435,
+    "secondary_id": 20436,
+    "names": [
+     "STARLINK-5626",
+     "SPOT 2"
+    ],
+    "miss_distance_km": 0.7777054039209801,
+    "miss_distance_km_socrates": 1.765,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 63233,
+    "secondary_id": 100742,
+    "names": [
+     "LIZZIESAT-3 (LS-3)",
+     "TIANYI-52"
+    ],
+    "miss_distance_km": 0.9163098314770791,
+    "miss_distance_km_socrates": 1.159,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 64570,
+    "secondary_id": 15402,
+    "names": [
+     "ICEYE-X54",
+     "DELTA 1 R/B(2)"
+    ],
+    "miss_distance_km": 0.6198163054484723,
+    "miss_distance_km_socrates": 0.824,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 61222,
+    "secondary_id": 1814,
+    "names": [
+     "KINEIS-3E",
+     "FR 1"
+    ],
+    "miss_distance_km": 0.5261651527827826,
+    "miss_distance_km_socrates": 0.598,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 52129,
+    "secondary_id": 100610,
+    "names": [
+     "STARLINK-3661",
+     "FRAMSAT-1"
+    ],
+    "miss_distance_km": 0.5527907273679123,
+    "miss_distance_km_socrates": 1.298,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 28493,
+    "secondary_id": 19211,
+    "names": [
+     "NANOSAT-1",
+     "SL-14 R/B"
+    ],
+    "miss_distance_km": 0.9707280492470022,
+    "miss_distance_km_socrates": 0.943,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 43189,
+    "secondary_id": 68454,
+    "names": [
+     "S-NET C",
+     "AISSAT 4"
+    ],
+    "miss_distance_km": 0.26150034269575706,
+    "miss_distance_km_socrates": 1.905,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 62100,
+    "secondary_id": 64878,
+    "names": [
+     "STARLINK-33566",
+     "INNOSAT 16 (RS92S7)"
+    ],
+    "miss_distance_km": 0.9348832237819195,
+    "miss_distance_km_socrates": 2.576,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 43784,
+    "secondary_id": 26366,
+    "names": [
+     "SNUGLITE",
+     "SIMSAT 2"
+    ],
+    "miss_distance_km": 0.9670593015521853,
+    "miss_distance_km_socrates": 0.836,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 66294,
+    "secondary_id": 49467,
+    "names": [
+     "SEMI-1L",
+     "AVUM R/B"
+    ],
+    "miss_distance_km": 0.8607688961822474,
+    "miss_distance_km_socrates": 1.137,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 62704,
+    "secondary_id": 69904,
+    "names": [
+     "FIREFLY-2",
+     "KITA-53"
+    ],
+    "miss_distance_km": 0.6284985123219707,
+    "miss_distance_km_socrates": 0.785,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 68408,
+    "secondary_id": 69010,
+    "names": [
+     "LPNTSAT-001 (IOD-1)",
+     "DRISHTI"
+    ],
+    "miss_distance_km": 0.7569442756316054,
+    "miss_distance_km_socrates": 0.209,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 60089,
+    "secondary_id": 55214,
+    "names": [
+     "SVOM",
+     "CZ-6A DEB"
+    ],
+    "miss_distance_km": 0.9649719378198948,
+    "miss_distance_km_socrates": 1.192,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 63300,
+    "secondary_id": 25490,
+    "names": [
+     "KINEIS-4E",
+     "TAURUS R/B"
+    ],
+    "miss_distance_km": 0.7370211782600641,
+    "miss_distance_km_socrates": 0.721,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 64568,
+    "secondary_id": 66658,
+    "names": [
+     "IRIDE-MS2-HEO-3",
+     "COSMIC"
+    ],
+    "miss_distance_km": 0.5387936875218614,
+    "miss_distance_km_socrates": 0.519,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 100709,
+    "secondary_id": 8539,
+    "names": [
+     "QIANFAN 16 OBJECT H",
+     "DELTA 1 DEB"
+    ],
+    "miss_distance_km": 0.7638409936049857,
+    "miss_distance_km_socrates": 0.76,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 29268,
+    "secondary_id": 41186,
+    "names": [
+     "ARIRANG-2 (KOMPSAT-2)",
+     "ORBCOMM FM115"
+    ],
+    "miss_distance_km": 0.9738974674148662,
+    "miss_distance_km_socrates": 0.166,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 100682,
+    "secondary_id": 35929,
+    "names": [
+     "GLOBAL-36",
+     "IRIDIUM 33 DEB"
+    ],
+    "miss_distance_km": 0.804831421953504,
+    "miss_distance_km_socrates": 0.975,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 39467,
+    "secondary_id": 59654,
+    "names": [
+     "ALICE",
+     "STARLINK-31589"
+    ],
+    "miss_distance_km": 0.6014603713179895,
+    "miss_distance_km_socrates": 1.484,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 53632,
+    "secondary_id": 42670,
+    "names": [
+     "STARLINK-4606",
+     "CZ-4C DEB"
+    ],
+    "miss_distance_km": 0.8119705701015506,
+    "miss_distance_km_socrates": 0.338,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 66679,
+    "secondary_id": 69016,
+    "names": [
+     "LILIUM-2",
+     "RAVEN"
+    ],
+    "miss_distance_km": 0.6799573725666681,
+    "miss_distance_km_socrates": 0.514,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 60485,
+    "secondary_id": 100301,
+    "names": [
+     "TOMORROW-S2",
+     "STARLINK-38267"
+    ],
+    "miss_distance_km": 0.8058086230717332,
+    "miss_distance_km_socrates": 2.65,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 61014,
+    "secondary_id": 15332,
+    "names": [
+     "GEESAT-3 04",
+     "SL-14 R/B"
+    ],
+    "miss_distance_km": 0.7607515228692306,
+    "miss_distance_km_socrates": 0.836,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 40717,
+    "secondary_id": 18959,
+    "names": [
+     "DMC3-FM3",
+     "SL-14 R/B"
+    ],
+    "miss_distance_km": 0.8338191812740787,
+    "miss_distance_km_socrates": 0.748,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 41898,
+    "secondary_id": 19261,
+    "names": [
+     "TANSAT",
+     "SL-8 DEB"
+    ],
+    "miss_distance_km": 0.5107170067482252,
+    "miss_distance_km_socrates": 0.558,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 100655,
+    "secondary_id": 40028,
+    "names": [
+     "OBJECT E",
+     "POPSAT-HIP-1"
+    ],
+    "miss_distance_km": 0.8596747606957483,
+    "miss_distance_km_socrates": 1.194,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 64840,
+    "secondary_id": 68476,
+    "names": [
+     "LEMUR-2-HUBBLE-5",
+     "LEMUR-2-JULIA-JOEL"
+    ],
+    "miss_distance_km": 0.5699616706022258,
+    "miss_distance_km_socrates": 0.445,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 43711,
+    "secondary_id": 55386,
+    "names": [
+     "SHIYAN-6 01 (SY-6 01)",
+     "STARLINK-5555"
+    ],
+    "miss_distance_km": 0.5793156430861367,
+    "miss_distance_km_socrates": 2.508,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 64058,
+    "secondary_id": 29899,
+    "names": [
+     "TIANQI-16",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.3766275598917781,
+    "miss_distance_km_socrates": 0.378,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 47388,
+    "secondary_id": 100266,
+    "names": [
+     "STARLINK-2109",
+     "STARLINK-38242"
+    ],
+    "miss_distance_km": 0.9577502854297292,
+    "miss_distance_km_socrates": 1.114,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 44881,
+    "secondary_id": 33061,
+    "names": [
+     "TIANYAN 01",
+     "ORBCOMM FM41"
+    ],
+    "miss_distance_km": 0.7368564716360102,
+    "miss_distance_km_socrates": 0.79,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 54779,
+    "secondary_id": 60468,
+    "names": [
+     "STARLINK-5447",
+     "TRANSPORTER-11 OBJECT A"
+    ],
+    "miss_distance_km": 0.40411528336728675,
+    "miss_distance_km_socrates": 2.052,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 69313,
+    "secondary_id": 58433,
+    "names": [
+     "STARLINK-37676",
+     "CZ-6A DEB"
+    ],
+    "miss_distance_km": 0.4721038137599933,
+    "miss_distance_km_socrates": 1.793,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 46495,
+    "secondary_id": 52855,
+    "names": [
+     "SALSAT",
+     "STARLINK-4209"
+    ],
+    "miss_distance_km": 0.8544309484831494,
+    "miss_distance_km_socrates": 2.634,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 63222,
+    "secondary_id": 100462,
+    "names": [
+     "AEROCUBE 18B",
+     "OBJECT E"
+    ],
+    "miss_distance_km": 0.778478688136861,
+    "miss_distance_km_socrates": 0.381,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 66734,
+    "secondary_id": 68427,
+    "names": [
+     "FLOCK 4H-31",
+     "EMISAR"
+    ],
+    "miss_distance_km": 0.5313673146837092,
+    "miss_distance_km_socrates": 2.35,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 56995,
+    "secondary_id": 68457,
+    "names": [
+     "AAC-HSI-SAT2",
+     "TRANSPORTER-16 OBJECT AT"
+    ],
+    "miss_distance_km": 0.6655211615769491,
+    "miss_distance_km_socrates": 2.174,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 53607,
+    "secondary_id": 55045,
+    "names": [
+     "STARLINK-4591",
+     "CONTINUUM-1"
+    ],
+    "miss_distance_km": 0.4601712240449606,
+    "miss_distance_km_socrates": 1.148,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 51786,
+    "secondary_id": 57014,
+    "names": [
+     "STARLINK-3638",
+     "OBJECT L"
+    ],
+    "miss_distance_km": 0.7366449629823292,
+    "miss_distance_km_socrates": 1.513,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 53291,
+    "secondary_id": 54689,
+    "names": [
+     "STARLINK-4166",
+     "DONGPO 10"
+    ],
+    "miss_distance_km": 0.8801290362621124,
+    "miss_distance_km_socrates": 0.554,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 69934,
+    "secondary_id": 43486,
+    "names": [
+     "LEMUR-2-DELOITTE-4",
+     "CZ-2D R/B"
+    ],
+    "miss_distance_km": 0.8371881839644268,
+    "miss_distance_km_socrates": 0.267,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 58276,
+    "secondary_id": 60091,
+    "names": [
+     "GENMAT-1",
+     "STARLINK-31441"
+    ],
+    "miss_distance_km": 0.5205236807210222,
+    "miss_distance_km_socrates": 1.69,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 45625,
+    "secondary_id": 63635,
+    "names": [
+     "GAOFEN-9 02",
+     "STARLINK-33854"
+    ],
+    "miss_distance_km": 0.9075561533028194,
+    "miss_distance_km_socrates": 2.557,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 66770,
+    "secondary_id": 69016,
+    "names": [
+     "LILIUM-3",
+     "RAVEN"
+    ],
+    "miss_distance_km": 0.850224389345206,
+    "miss_distance_km_socrates": 0.745,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 65319,
+    "secondary_id": 35703,
+    "names": [
+     "FFLY03",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.5587850684521681,
+    "miss_distance_km_socrates": 1.686,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 59104,
+    "secondary_id": 66656,
+    "names": [
+     "PE2_FLT2  (TYVAK-0262)",
+     "OBJECT G"
+    ],
+    "miss_distance_km": 0.7231163505990236,
+    "miss_distance_km_socrates": 0.643,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 53024,
+    "secondary_id": 62642,
+    "names": [
+     "STARLINK-4289",
+     "FLOCK 4G-29"
+    ],
+    "miss_distance_km": 0.6908863873367339,
+    "miss_distance_km_socrates": 1.804,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 61898,
+    "secondary_id": 46971,
+    "names": [
+     "OBJECT E",
+     "IRIDIUM 33 DEB"
+    ],
+    "miss_distance_km": 0.6307899499718544,
+    "miss_distance_km_socrates": 1.079,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 64850,
+    "secondary_id": 49467,
+    "names": [
+     "STARLINK-34757",
+     "AVUM R/B"
+    ],
+    "miss_distance_km": 0.9519035622072176,
+    "miss_distance_km_socrates": 2.589,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 59488,
+    "secondary_id": 61872,
+    "names": [
+     "STARLINK-31754",
+     "OBJECT D"
+    ],
+    "miss_distance_km": 0.7366724636080239,
+    "miss_distance_km_socrates": 2.554,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 52502,
+    "secondary_id": 57196,
+    "names": [
+     "STARLINK-3912",
+     "HORS 2"
+    ],
+    "miss_distance_km": 0.7988688516614549,
+    "miss_distance_km_socrates": 2.389,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 60577,
+    "secondary_id": 63355,
+    "names": [
+     "LEMUR-2-LLOYD",
+     "LEMUR-2-NEUROSPICY"
+    ],
+    "miss_distance_km": 0.5568249187187797,
+    "miss_distance_km_socrates": 1.159,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 60242,
+    "secondary_id": 100885,
+    "names": [
+     "CURIUM ONE",
+     "TRANSPORTER-18 OBJECT C"
+    ],
+    "miss_distance_km": 0.8075572039490586,
+    "miss_distance_km_socrates": 1.2,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 65319,
+    "secondary_id": 35703,
+    "names": [
+     "FFLY03",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.4542774335120411,
+    "miss_distance_km_socrates": 1.5,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 67199,
+    "secondary_id": 40057,
+    "names": [
+     "STARLINK-36268",
+     "VELOX-I"
+    ],
+    "miss_distance_km": 0.5638865987512844,
+    "miss_distance_km_socrates": 0.737,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 53778,
+    "secondary_id": 58663,
+    "names": [
+     "STARLINK-4709",
+     "TIANMU-1 22"
+    ],
+    "miss_distance_km": 0.33314601362787993,
+    "miss_distance_km_socrates": 0.177,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 42842,
+    "secondary_id": 64724,
+    "names": [
+     "LEMUR-2-DEMBITZ",
+     "STARLINK-34393"
+    ],
+    "miss_distance_km": 0.9976684767557249,
+    "miss_distance_km_socrates": 0.831,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 53722,
+    "secondary_id": 63237,
+    "names": [
+     "STARLINK-4700",
+     "TEVEL2-9"
+    ],
+    "miss_distance_km": 0.9340845034426045,
+    "miss_distance_km_socrates": 1.136,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 42837,
+    "secondary_id": 53727,
+    "names": [
+     "LEMUR-2-GREENBERG",
+     "STARLINK-4701"
+    ],
+    "miss_distance_km": 0.9210610736114403,
+    "miss_distance_km_socrates": 1.261,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 66759,
+    "secondary_id": 69006,
+    "names": [
+     "TRANSPORTER-15 OBJECT CX",
+     "JEN-1"
+    ],
+    "miss_distance_km": 0.8696911084467878,
+    "miss_distance_km_socrates": 0.994,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 48333,
+    "secondary_id": 37181,
+    "names": [
+     "STARLINK-2518",
+     "CZ-4B R/B"
+    ],
+    "miss_distance_km": 0.9063511803092659,
+    "miss_distance_km_socrates": 1.011,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 39088,
+    "secondary_id": 61159,
+    "names": [
+     "SAPPHIRE",
+     "CZ-6A DEB"
+    ],
+    "miss_distance_km": 0.6646006562505814,
+    "miss_distance_km_socrates": 0.377,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 53542,
+    "secondary_id": 62656,
+    "names": [
+     "STARLINK-4489",
+     "TRANSPORTER-12 OBJECT AZ"
+    ],
+    "miss_distance_km": 0.788440124828142,
+    "miss_distance_km_socrates": 0.809,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 52581,
+    "secondary_id": 55111,
+    "names": [
+     "STARLINK-3915",
+     "ASTROCAST-0403"
+    ],
+    "miss_distance_km": 0.6135117010312294,
+    "miss_distance_km_socrates": 1.695,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 49401,
+    "secondary_id": 66732,
+    "names": [
+     "DRUMS",
+     "FLOCK 4H-29"
+    ],
+    "miss_distance_km": 0.46452083923207227,
+    "miss_distance_km_socrates": 1.57,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 43711,
+    "secondary_id": 57241,
+    "names": [
+     "SHIYAN-6 01 (SY-6 01)",
+     "STARLINK-6349"
+    ],
+    "miss_distance_km": 0.6765349743687126,
+    "miss_distance_km_socrates": 0.677,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 35933,
+    "secondary_id": 43413,
+    "names": [
+     "BEESAT-1",
+     "CZ-2D DEB"
+    ],
+    "miss_distance_km": 0.27138873641349476,
+    "miss_distance_km_socrates": 0.31,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 59786,
+    "secondary_id": 40978,
+    "names": [
+     "STARLINK-31862",
+     "ATLAS 5 CENTAUR R/B"
+    ],
+    "miss_distance_km": 0.7486308464721076,
+    "miss_distance_km_socrates": 0.761,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 43812,
+    "secondary_id": 60243,
+    "names": [
+     "GLOBAL-2",
+     "ROBUSTA-3A (MEDITERRANEE)"
+    ],
+    "miss_distance_km": 0.9573570775180801,
+    "miss_distance_km_socrates": 1.306,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 49427,
+    "secondary_id": 36283,
+    "names": [
+     "STARLINK-3131",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.3960520402858965,
+    "miss_distance_km_socrates": 0.547,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 54858,
+    "secondary_id": 39625,
+    "names": [
+     "STARLINK-5407",
+     "CZ-2C R/B"
+    ],
+    "miss_distance_km": 0.9405299883728059,
+    "miss_distance_km_socrates": 1.266,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 69920,
+    "secondary_id": 44612,
+    "names": [
+     "MARINA",
+     "CZ-2D DEB"
+    ],
+    "miss_distance_km": 0.7492747974220826,
+    "miss_distance_km_socrates": 0.613,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 69916,
+    "secondary_id": 32409,
+    "names": [
+     "KOYO",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.25520318735625686,
+    "miss_distance_km_socrates": 1.3,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 25415,
+    "secondary_id": 4911,
+    "names": [
+     "ORBCOMM FM19",
+     "THORAD AGENA D DEB"
+    ],
+    "miss_distance_km": 0.9787143802159642,
+    "miss_distance_km_socrates": 0.599,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 55921,
+    "secondary_id": 63249,
+    "names": [
+     "STARLINK-5861",
+     "EZIE-C"
+    ],
+    "miss_distance_km": 0.5642889599226559,
+    "miss_distance_km_socrates": 0.882,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 56455,
+    "secondary_id": 37223,
+    "names": [
+     "STARLINK-5987",
+     "RAX (USA 218)"
+    ],
+    "miss_distance_km": 0.7762187058837018,
+    "miss_distance_km_socrates": 1.034,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 49400,
+    "secondary_id": 53558,
+    "names": [
+     "HIBARI",
+     "STARLINK-4494"
+    ],
+    "miss_distance_km": 0.9706941846923883,
+    "miss_distance_km_socrates": 1.116,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 57203,
+    "secondary_id": 100384,
+    "names": [
+     "UTMN 2 (RS27S)",
+     "STARLINK-38138"
+    ],
+    "miss_distance_km": 0.7905369092787347,
+    "miss_distance_km_socrates": 2.357,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 55644,
+    "secondary_id": 21723,
+    "names": [
+     "STARLINK-5502",
+     "COSMOS 397 DEB"
+    ],
+    "miss_distance_km": 0.4958674063821439,
+    "miss_distance_km_socrates": 2.14,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 52115,
+    "secondary_id": 59680,
+    "names": [
+     "STARLINK-3685",
+     "OBJECT D"
+    ],
+    "miss_distance_km": 0.6756426804317195,
+    "miss_distance_km_socrates": 1.022,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 69934,
+    "secondary_id": 26155,
+    "names": [
+     "LEMUR-2-DELOITTE-4",
+     "CZ-4B DEB"
+    ],
+    "miss_distance_km": 0.7364450357356088,
+    "miss_distance_km_socrates": 1.367,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 54043,
+    "secondary_id": 60278,
+    "names": [
+     "YAOGAN-36 02B",
+     "STARLINK-32156"
+    ],
+    "miss_distance_km": 0.7253117549602459,
+    "miss_distance_km_socrates": 2.208,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 58660,
+    "secondary_id": 60287,
+    "names": [
+     "TIANMU-1 19",
+     "STARLINK-32114"
+    ],
+    "miss_distance_km": 0.5110192481759769,
+    "miss_distance_km_socrates": 0.515,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 24278,
+    "secondary_id": 21287,
+    "names": [
+     "JAS-2 (FO-29)",
+     "DELTA 1 DEB"
+    ],
+    "miss_distance_km": 0.7794773312851035,
+    "miss_distance_km_socrates": 0.639,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 54686,
+    "secondary_id": 68159,
+    "names": [
+     "DONGPO 08",
+     "STARLINK-37053"
+    ],
+    "miss_distance_km": 0.9581056025571808,
+    "miss_distance_km_socrates": 1.703,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 57187,
+    "secondary_id": 62682,
+    "names": [
+     "SVYATOBOR 1 (RS60S)",
+     "FOREST-3"
+    ],
+    "miss_distance_km": 0.6711755307342631,
+    "miss_distance_km_socrates": 0.71,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 59545,
+    "secondary_id": 62684,
+    "names": [
+     "STARLINK-31582",
+     "IRIS-F2"
+    ],
+    "miss_distance_km": 0.7291087016384264,
+    "miss_distance_km_socrates": 1.32,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 39444,
+    "secondary_id": 68759,
+    "names": [
+     "FUNCUBE-1 (AO-73)",
+     "COSMOS 2611"
+    ],
+    "miss_distance_km": 0.826273252738238,
+    "miss_distance_km_socrates": 1.522,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 59122,
+    "secondary_id": 59925,
+    "names": [
+     "NUSAT-44 (MARIA MITCHELL)",
+     "STARLINK-31959"
+    ],
+    "miss_distance_km": 0.7939057164679492,
+    "miss_distance_km_socrates": 1.955,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 67369,
+    "secondary_id": 43263,
+    "names": [
+     "BLACKCAT",
+     "CZ-4C DEB"
+    ],
+    "miss_distance_km": 0.7331422973947715,
+    "miss_distance_km_socrates": 1.394,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 62740,
+    "secondary_id": 100366,
+    "names": [
+     "STARLINK-32805",
+     "OBJECT A"
+    ],
+    "miss_distance_km": 0.8677887727780267,
+    "miss_distance_km_socrates": 1.951,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 68999,
+    "secondary_id": 69924,
+    "names": [
+     "FOREST-18 (MANGOSHRIKHAND)",
+     "CENTAURI-9"
+    ],
+    "miss_distance_km": 0.6449431026379411,
+    "miss_distance_km_socrates": 0.621,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 48674,
+    "secondary_id": 21809,
+    "names": [
+     "STARLINK-2712",
+     "USA 77"
+    ],
+    "miss_distance_km": 0.9221862187292372,
+    "miss_distance_km_socrates": 2.682,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 57392,
+    "secondary_id": 11752,
+    "names": [
+     "LEO 3",
+     "SL-8 DEB"
+    ],
+    "miss_distance_km": 0.7115047967559723,
+    "miss_distance_km_socrates": 0.754,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 58179,
+    "secondary_id": 34452,
+    "names": [
+     "STARLINK-30819",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.630618078848667,
+    "miss_distance_km_socrates": 2.68,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 65319,
+    "secondary_id": 35703,
+    "names": [
+     "FFLY03",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.9403568286363214,
+    "miss_distance_km_socrates": 2.073,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 68754,
+    "secondary_id": 40799,
+    "names": [
+     "COSMOS 2609",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.7724851117505465,
+    "miss_distance_km_socrates": 1.352,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 59100,
+    "secondary_id": 29944,
+    "names": [
+     "ICEYE-X38",
+     "FENGYUN 1C DEB"
+    ],
+    "miss_distance_km": 0.8872118011576777,
+    "miss_distance_km_socrates": 1.651,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 59100,
+    "secondary_id": 24529,
+    "names": [
+     "ICEYE-X38",
+     "PEGASUS DEB"
+    ],
+    "miss_distance_km": 0.5937905580090213,
+    "miss_distance_km_socrates": 0.448,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 55676,
+    "secondary_id": 37223,
+    "names": [
+     "STARLINK-5300",
+     "RAX (USA 218)"
+    ],
+    "miss_distance_km": 0.9023366979057963,
+    "miss_distance_km_socrates": 1.34,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 41185,
+    "secondary_id": 34366,
+    "names": [
+     "ORBCOMM FM113",
+     "IRIDIUM 33 DEB"
+    ],
+    "miss_distance_km": 0.8260754090242127,
+    "miss_distance_km_socrates": 1.015,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 65319,
+    "secondary_id": 35703,
+    "names": [
+     "FFLY03",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.6308151893794381,
+    "miss_distance_km_socrates": 1.519,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 62663,
+    "secondary_id": 65393,
+    "names": [
+     "FLOCK 4G-5",
+     "STARLINK-35097"
+    ],
+    "miss_distance_km": 0.8445884880962267,
+    "miss_distance_km_socrates": 2.636,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 42921,
+    "secondary_id": 66782,
+    "names": [
+     "ORS-5 SENSORSAT",
+     "LEMUR-2-FINNIAN"
+    ],
+    "miss_distance_km": 0.9812516623857785,
+    "miss_distance_km_socrates": 1.046,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 39427,
+    "secondary_id": 49175,
+    "names": [
+     "TRITON-1",
+     "STARLINK-3087"
+    ],
+    "miss_distance_km": 0.8633533799746793,
+    "miss_distance_km_socrates": 1.752,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 28058,
+    "secondary_id": 37312,
+    "names": [
+     "CHUANGXIN 1 (CX-1)",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.8254656527568697,
+    "miss_distance_km_socrates": 0.763,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 66659,
+    "secondary_id": 17429,
+    "names": [
+     "JACK K",
+     "ARIANE 1 DEB"
+    ],
+    "miss_distance_km": 0.47592254223247343,
+    "miss_distance_km_socrates": 0.689,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 59067,
+    "secondary_id": 35334,
+    "names": [
+     "SITRO-AIS 26",
+     "CZ-4B DEB"
+    ],
+    "miss_distance_km": 0.4781396396414511,
+    "miss_distance_km_socrates": 1.731,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 40136,
+    "secondary_id": 34314,
+    "names": [
+     "LING QIAO",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.8122848469326208,
+    "miss_distance_km_socrates": 0.811,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 53061,
+    "secondary_id": 60485,
+    "names": [
+     "STARLINK-4308",
+     "TOMORROW-S2"
+    ],
+    "miss_distance_km": 0.8772941988163216,
+    "miss_distance_km_socrates": 2.132,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 69911,
+    "secondary_id": 7850,
+    "names": [
+     "TRANSPORTER-17 OBJECT AU",
+     "DELTA 1 DEB"
+    ],
+    "miss_distance_km": 0.8870197467593182,
+    "miss_distance_km_socrates": 1.319,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 67390,
+    "secondary_id": 27136,
+    "names": [
+     "CONNECTA IOT-16",
+     "PSLV DEB"
+    ],
+    "miss_distance_km": 0.965157302070825,
+    "miss_distance_km_socrates": 1.087,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 65319,
+    "secondary_id": 35703,
+    "names": [
+     "FFLY03",
+     "COSMOS 2251 DEB"
+    ],
+    "miss_distance_km": 0.92287416523789,
+    "miss_distance_km_socrates": 1.712,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 49396,
+    "secondary_id": 35344,
+    "names": [
+     "TEIKYOSAT-4 (OORURI)",
+     "PSLV DEB"
+    ],
+    "miss_distance_km": 0.8371625164086323,
+    "miss_distance_km_socrates": 2.517,
+    "same_element_sets": false
+   },
+   {
+    "primary_id": 25397,
+    "secondary_id": 42408,
+    "names": [
+     "TECHSAT 1B (GO-32)",
+     "NOAA 16 DEB"
+    ],
+    "miss_distance_km": 0.8687670130505079,
+    "miss_distance_km_socrates": 0.928,
+    "same_element_sets": false
+   }
+  ],
+  "run_id": "20261009T2252Z",
+  "events_in_run": 2497,
+  "events_with_an_operational_object": 2092,
+  "coverage_by_kind": {
+   "one object cannot manoeuvre": {
+    "celestrak_rows": 293,
+    "also_in_our_run": 92
+   },
+   "two working satellites of different fleets": {
+    "celestrak_rows": 467,
+    "also_in_our_run": 44
+   },
+   "two satellites of the same fleet": {
+    "celestrak_rows": 511,
+    "also_in_our_run": 1
+   }
+  },
+  "celestrak_data_from": "2026-10-08T08:00:05.426Z"
+ },
+ "summary": "On CelesTrak's 200 closest conjunctions, from the same element sets, our closest-approach distance differs by a median of 0.4 m and the time by less than a millisecond (CelesTrak publishes the distance to the nearest metre). CelesTrak's list was computed from orbit data about a day older than our latest run's. Of its close passes in our window, 31% of those where one object cannot manoeuvre are also in our run, against 9% for two working satellites of different fleets and 0% for two satellites of the same fleet: predictions for satellites that manoeuvre do not survive a day of new data.",
+ "report": "b_trust/out/VALIDATION_REPORT.md"
+}

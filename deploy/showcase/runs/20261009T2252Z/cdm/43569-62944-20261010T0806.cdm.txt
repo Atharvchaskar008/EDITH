@@ -1,0 +1,56 @@
+COMMENT ===================================================================
+COMMENT CCSDS 508.0-B-1 CONJUNCTION DATA MESSAGE (CDM)
+COMMENT NOTICE: CDM-style export from public TLE data and not a certified message.
+COMMENT State vectors are in True Equator, Mean Equinox (TEME) reference frame.
+COMMENT ===================================================================
+CCSDS_CDM_VERS = 1.0
+CREATION_DATE = 2026-10-09T23:03:53Z
+ORIGINATOR = FUSION-SKN
+MESSAGE_ID = 43569-62944-20261010T0806
+COMMENT -------------------------------------------------------------------
+COMMENT RELATIVE METADATA AND CONJUNCTION PARAMETERS
+COMMENT -------------------------------------------------------------------
+TCA = 2026-10-10T08:06:04.639400Z
+MISS_DISTANCE = 209.737
+RELATIVE_SPEED = 7510.390
+RELATIVE_POSITION_R = -209.660
+RELATIVE_POSITION_T = -4.952
+RELATIVE_POSITION_N = 2.724
+COLLISION_PROBABILITY = 2.685588e-05
+COLLISION_PROBABILITY_METHOD = MAXIMUM_PC
+COMMENT -------------------------------------------------------------------
+COMMENT TARGET OBJECT (OBJECT1)
+COMMENT -------------------------------------------------------------------
+OBJECT = OBJECT1
+OBJECT_DESIGNATOR = 43569
+CATALOG_NAME = SATCAT
+OBJECT_NAME = IRIDIUM 160
+INTERNATIONAL_DESIGNATOR = UNKNOWN
+REF_FRAME = TEME
+X = -1459.296559
+Y = 222.834479
+Z = 6992.885943
+X_DOT = -7.223384
+Y_DOT = -1.192964
+Z_DOT = -1.466296
+CR_R = 1.962e+04
+CT_T = 1.794e+04
+CN_N = 5.610e+02
+COMMENT -------------------------------------------------------------------
+COMMENT CHASER OBJECT (OBJECT2)
+COMMENT -------------------------------------------------------------------
+OBJECT = OBJECT2
+OBJECT_DESIGNATOR = 62944
+CATALOG_NAME = SATCAT
+OBJECT_NAME = DMSP 5D-2 F14 DEB
+INTERNATIONAL_DESIGNATOR = UNKNOWN
+REF_FRAME = TEME
+X = -1459.248550
+Y = 222.826046
+Z = 6992.681949
+X_DOT = -4.509934
+Y_DOT = 5.801393
+Z_DOT = -1.116832
+CR_R = 4.853e+03
+CT_T = 8.472e+04
+CN_N = 3.921e+03

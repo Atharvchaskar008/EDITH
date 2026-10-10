@@ -1,0 +1,115 @@
+{
+  "headline": {
+    "primary_name": "FENGYUN 1B",
+    "secondary_name": "METEOR 2-17 DEB",
+    "pair_label": "FENGYUN 1B vs METEOR 2-17 DEB",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 16.1,
+    "hours_until_closest_approach_text": "16.1 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T14:59:55.349277Z (16.1 hours remaining)",
+      "value": "2026-10-10T14:59:55.349277Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.329 km (329 m)",
+      "value": 0.3286583273066945
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "11.17 km/s (11170 m/s)",
+      "value": 11.16961812462559
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "2.24e-06",
+      "value": 2.2425190608456275e-06
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "1.06e-05",
+      "value": 1.0566921648870908e-05
+    },
+    {
+      "label": "Age of FENGYUN 1B orbit data",
+      "value_text": "1.4 days",
+      "value": 1.4069967721875
+    },
+    {
+      "label": "Age of METEOR 2-17 DEB orbit data",
+      "value_text": "4.2 days",
+      "value": 4.1583101721875
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 1.0566921673140174e-05,
+      "miss_distance_km": 0.32865832698552316
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 1.0566921670574998e-05,
+      "miss_distance_km": 0.32865832717209414
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 1.0566921653211658e-05,
+      "miss_distance_km": 0.32865832722522864
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 1.0566921649627844e-05,
+      "miss_distance_km": 0.3286583272849997
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 1.0566921676621456e-05,
+      "miss_distance_km": 0.3286583269708641
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 1.0566921649686808e-05,
+      "miss_distance_km": 0.32865832728361866
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 1.0566921669366231e-05,
+      "miss_distance_km": 0.3286583270472229
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 1.0566921655843653e-05,
+      "miss_distance_km": 0.3286583271876195
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 1.0566921663655059e-05,
+      "miss_distance_km": 0.32865832706725456
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 1.0566921648870908e-05,
+      "miss_distance_km": 0.3286583273066945
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:52Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

@@ -1,0 +1,56 @@
+COMMENT ===================================================================
+COMMENT CCSDS 508.0-B-1 CONJUNCTION DATA MESSAGE (CDM)
+COMMENT NOTICE: CDM-style export from public TLE data and not a certified message.
+COMMENT State vectors are in True Equator, Mean Equinox (TEME) reference frame.
+COMMENT ===================================================================
+CCSDS_CDM_VERS = 1.0
+CREATION_DATE = 2026-10-09T23:03:53Z
+ORIGINATOR = FUSION-SKN
+MESSAGE_ID = 68692-37567-20261010T1034
+COMMENT -------------------------------------------------------------------
+COMMENT RELATIVE METADATA AND CONJUNCTION PARAMETERS
+COMMENT -------------------------------------------------------------------
+TCA = 2026-10-10T10:34:28.846447Z
+MISS_DISTANCE = 398.616
+RELATIVE_SPEED = 12817.707
+RELATIVE_POSITION_R = -15.607
+RELATIVE_POSITION_T = -212.070
+RELATIVE_POSITION_N = 337.161
+COLLISION_PROBABILITY = 2.056235e-05
+COLLISION_PROBABILITY_METHOD = MAXIMUM_PC
+COMMENT -------------------------------------------------------------------
+COMMENT TARGET OBJECT (OBJECT1)
+COMMENT -------------------------------------------------------------------
+OBJECT = OBJECT1
+OBJECT_DESIGNATOR = 68692
+CATALOG_NAME = SATCAT
+OBJECT_NAME = JILIN GAOFEN OBJECT B
+INTERNATIONAL_DESIGNATOR = UNKNOWN
+REF_FRAME = TEME
+X = -1470.634086
+Y = 936.096172
+Z = -6709.536407
+X_DOT = 7.397361
+Y_DOT = 0.045025
+Z_DOT = -1.603342
+CR_R = 1.073e+04
+CT_T = 1.924e+05
+CN_N = 1.449e+03
+COMMENT -------------------------------------------------------------------
+COMMENT CHASER OBJECT (OBJECT2)
+COMMENT -------------------------------------------------------------------
+OBJECT = OBJECT2
+OBJECT_DESIGNATOR = 37567
+CATALOG_NAME = SATCAT
+OBJECT_NAME = CZ-4C DEB
+INTERNATIONAL_DESIGNATOR = UNKNOWN
+REF_FRAME = TEME
+X = -1470.845664
+Y = 935.758693
+Z = -6709.520990
+X_DOT = -3.060479
+Y_DOT = 6.746083
+Z_DOT = 1.562570
+CR_R = 1.260e+04
+CT_T = 2.295e+05
+CN_N = 9.625e+03

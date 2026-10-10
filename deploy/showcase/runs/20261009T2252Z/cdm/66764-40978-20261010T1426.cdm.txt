@@ -1,0 +1,56 @@
+COMMENT ===================================================================
+COMMENT CCSDS 508.0-B-1 CONJUNCTION DATA MESSAGE (CDM)
+COMMENT NOTICE: CDM-style export from public TLE data and not a certified message.
+COMMENT State vectors are in True Equator, Mean Equinox (TEME) reference frame.
+COMMENT ===================================================================
+CCSDS_CDM_VERS = 1.0
+CREATION_DATE = 2026-10-09T23:03:53Z
+ORIGINATOR = FUSION-SKN
+MESSAGE_ID = 66764-40978-20261010T1426
+COMMENT -------------------------------------------------------------------
+COMMENT RELATIVE METADATA AND CONJUNCTION PARAMETERS
+COMMENT -------------------------------------------------------------------
+TCA = 2026-10-10T14:26:43.275512Z
+MISS_DISTANCE = 646.258
+RELATIVE_SPEED = 14123.722
+RELATIVE_POSITION_R = 274.265
+RELATIVE_POSITION_T = 221.372
+RELATIVE_POSITION_N = 541.686
+COLLISION_PROBABILITY = 8.943817e-06
+COLLISION_PROBABILITY_METHOD = MAXIMUM_PC
+COMMENT -------------------------------------------------------------------
+COMMENT TARGET OBJECT (OBJECT1)
+COMMENT -------------------------------------------------------------------
+OBJECT = OBJECT1
+OBJECT_DESIGNATOR = 66764
+CATALOG_NAME = SATCAT
+OBJECT_NAME = NAHLA
+INTERNATIONAL_DESIGNATOR = UNKNOWN
+REF_FRAME = TEME
+X = -3383.002597
+Y = -480.573401
+Z = 5972.690017
+X_DOT = -6.596169
+Y_DOT = 1.059756
+Z_DOT = -3.642523
+CR_R = 2.817e+04
+CT_T = 5.763e+05
+CN_N = 3.569e+03
+COMMENT -------------------------------------------------------------------
+COMMENT CHASER OBJECT (OBJECT2)
+COMMENT -------------------------------------------------------------------
+OBJECT = OBJECT2
+OBJECT_DESIGNATOR = 40978
+CATALOG_NAME = SATCAT
+OBJECT_NAME = ATLAS 5 CENTAUR R/B
+INTERNATIONAL_DESIGNATOR = UNKNOWN
+REF_FRAME = TEME
+X = -3383.376605
+Y = -481.096776
+Z = 5972.752039
+X_DOT = 4.242583
+Y_DOT = -6.015854
+Z_DOT = 2.008736
+CR_R = 1.263e+04
+CT_T = 5.617e+04
+CN_N = 4.863e+03

@@ -1,0 +1,72 @@
+{
+  "headline": {
+    "primary_name": "STARLINK-5007",
+    "secondary_name": "STARLINK-34140",
+    "pair_label": "STARLINK-5007 vs STARLINK-34140",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 24.0,
+    "hours_until_closest_approach_text": "24.0 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T22:51:20.508004Z (24.0 hours remaining)",
+      "value": "2026-10-10T22:51:20.508004Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.751 km (751 m)",
+      "value": 0.751146818731485
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "3.56 km/s (3564 m/s)",
+      "value": 3.564327443919402
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "1.92e-07",
+      "value": 1.9169604041537766e-07
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "1.53e-05",
+      "value": 1.5327295192902444e-05
+    },
+    {
+      "label": "Age of STARLINK-5007 orbit data",
+      "value_text": "2.0 days",
+      "value": 2.0079053944907406
+    },
+    {
+      "label": "Age of STARLINK-34140 orbit data",
+      "value_text": "2.5 days",
+      "value": 2.470914944490741
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 1.5327295192902444e-05,
+      "miss_distance_km": 0.751146818731485
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [
+    "STARLINK-5007 and STARLINK-34140: new AMBER risk close approach detected. Closest approach in 24 h at 0.75 km."
+  ],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:52Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

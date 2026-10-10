@@ -1,0 +1,138 @@
+{
+  "headline": {
+    "primary_name": "STARLINK-4398",
+    "secondary_name": "FENGYUN 1C DEB",
+    "pair_label": "STARLINK-4398 vs FENGYUN 1C DEB",
+    "risk_level": "RED",
+    "hours_until_closest_approach": 13.4,
+    "hours_until_closest_approach_text": "13.4 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T12:15:56.365319Z (13.4 hours remaining)",
+      "value": "2026-10-10T12:15:56.365319Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.306 km (306 m)",
+      "value": 0.3062636910391128
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "13.30 km/s (13302 m/s)",
+      "value": 13.302317784342055
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "4.52e-07",
+      "value": 4.5167142057030594e-07
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "2.73e-04",
+      "value": 0.0002726995389896786
+    },
+    {
+      "label": "Age of STARLINK-4398 orbit data",
+      "value_text": "1.7 days",
+      "value": 1.7062353430439814
+    },
+    {
+      "label": "Age of FENGYUN 1C DEB orbit data",
+      "value_text": "1.6 days",
+      "value": 1.5842761330439814
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1442Z",
+      "pc_max": 0.0002726995432716716,
+      "miss_distance_km": 0.306263690929989
+    },
+    {
+      "run_id": "20261009T1450Z",
+      "pc_max": 0.000272699543233647,
+      "miss_distance_km": 0.30626369093425826
+    },
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 0.00027269953313122265,
+      "miss_distance_km": 0.30626369116025826
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 0.0002726995432427189,
+      "miss_distance_km": 0.3062636910002989
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 0.00027269953193830834,
+      "miss_distance_km": 0.3062636910471752
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 0.0002726995389896786,
+      "miss_distance_km": 0.3062636910391128
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 0.0002726995389896786,
+      "miss_distance_km": 0.3062636910391128
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 0.0002726995432260382,
+      "miss_distance_km": 0.3062636909334772
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 0.0002726995335061459,
+      "miss_distance_km": 0.30626369105770385
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 0.0002726995530564528,
+      "miss_distance_km": 0.3062636909828211
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 0.00027269953351960686,
+      "miss_distance_km": 0.3062636910619295
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 0.0002726995389896786,
+      "miss_distance_km": 0.3062636910391128
+    }
+  ],
+  "plan": {
+    "decision": "MANEUVER",
+    "has_maneuver": true,
+    "recommended_burn_time": "2026-10-10T11:29:05.640698Z",
+    "direction_in_words": "opposite the direction of travel",
+    "size_mm_s": 18.7,
+    "size_text": "18.7 mm/s (0.0187 m/s)",
+    "miss_before_km": 0.3062636910391128,
+    "miss_before_text": "0.31 km",
+    "miss_after_km": 0.3909173855716727,
+    "miss_after_text": "0.39 km",
+    "pc_before": 4.5167142057030594e-07,
+    "pc_before_text": "4.5e-07",
+    "pc_after": 4.4145044169848744e-07,
+    "pc_after_text": "4.4e-07",
+    "secondary_conjunctions_created": 0,
+    "return_burn": "Scheduled at 2026-10-10T13:02:47.089940Z with size 18.7 mm/s"
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:50Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

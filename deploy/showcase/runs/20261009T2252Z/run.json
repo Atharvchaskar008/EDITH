@@ -1,0 +1,53 @@
+{
+ "run_id": "20261009T2252Z",
+ "t0": "2026-10-09T22:52:37.351985Z",
+ "mode": "ALL_LEO",
+ "window_hours": 24.0,
+ "synthetic_injected": false,
+ "status": "DONE",
+ "catalog": {
+  "groups": {
+   "iridium-NEXT": 80,
+   "active": 16695,
+   "cosmos-2251-debris": 588,
+   "iridium-33-debris": 109,
+   "fengyun-1c-debris": 1979
+  },
+  "bad_records": 0,
+  "spacetrack": 29678,
+  "downloaded": 30497,
+  "dropped_old": 53,
+  "dropped_not_leo": 766,
+  "injected": 0,
+  "stored_copies": {
+   "active": 3.2
+  },
+  "objects": 29678,
+  "primaries": 80,
+  "operational": 15904
+ },
+ "screen": {
+  "objects_screened": 29678,
+  "workers": 11,
+  "candidates": 9844,
+  "events": 2497
+ },
+ "levels": {
+  "RED": 76,
+  "AMBER": 259,
+  "GREEN": 2162
+ },
+ "plans": {
+  "maneuver": 17,
+  "monitor": 318
+ },
+ "addons": {
+  "alerts": {
+   "NEW": 9
+  },
+  "briefings": 335,
+  "cdm": 335
+ },
+ "duration_s": 677.8,
+ "events": 2497
+}

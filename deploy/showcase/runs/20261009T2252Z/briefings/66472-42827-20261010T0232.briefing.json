@@ -1,0 +1,158 @@
+{
+  "headline": {
+    "primary_name": "STARLINK-35567",
+    "secondary_name": "OBJECT C",
+    "pair_label": "STARLINK-35567 vs OBJECT C",
+    "risk_level": "RED",
+    "hours_until_closest_approach": 3.7,
+    "hours_until_closest_approach_text": "3.7 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T02:32:37.537235Z (3.7 hours remaining)",
+      "value": "2026-10-10T02:32:37.537235Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.696 km (696 m)",
+      "value": 0.6961849314880577
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "9.82 km/s (9823 m/s)",
+      "value": 9.823405615004155
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "1.26e-06",
+      "value": 1.2614607685535696e-06
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "1.78e-04",
+      "value": 0.00017831778614537397
+    },
+    {
+      "label": "Age of STARLINK-35567 orbit data",
+      "value_text": "1.0 days",
+      "value": 1.0338111542939814
+    },
+    {
+      "label": "Age of OBJECT C orbit data",
+      "value_text": "0.8 days",
+      "value": 0.8438703442939814
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1038Z",
+      "pc_max": 3.285333420055819e-05,
+      "miss_distance_km": 0.6961849315250069
+    },
+    {
+      "run_id": "20261009T1051Z",
+      "pc_max": 3.285333420448541e-05,
+      "miss_distance_km": 0.6961849316408755
+    },
+    {
+      "run_id": "20261009T1145Z",
+      "pc_max": 0.00017831778580608976,
+      "miss_distance_km": 0.6961849314443562
+    },
+    {
+      "run_id": "20261009T1210Z",
+      "pc_max": 0.00017831779110462055,
+      "miss_distance_km": 0.6961849315015919
+    },
+    {
+      "run_id": "20261009T1442Z",
+      "pc_max": 0.00017831778772682956,
+      "miss_distance_km": 0.6961849315189966
+    },
+    {
+      "run_id": "20261009T1450Z",
+      "pc_max": 0.00017831779110462055,
+      "miss_distance_km": 0.6961849315015919
+    },
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 0.00017831778600303427,
+      "miss_distance_km": 0.6961849315724048
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 0.00017831778943954278,
+      "miss_distance_km": 0.6961849315680066
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 0.00017831778729099476,
+      "miss_distance_km": 0.6961849315481073
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 0.00017831778614537397,
+      "miss_distance_km": 0.6961849314880577
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 0.00017831778614537397,
+      "miss_distance_km": 0.6961849314880577
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 0.00017831779088924832,
+      "miss_distance_km": 0.6961849315066586
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 0.00017831778439299996,
+      "miss_distance_km": 0.6961849314988646
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 0.00017831778603761365,
+      "miss_distance_km": 0.6961849314991279
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 0.00017831779032341508,
+      "miss_distance_km": 0.6961849314569404
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 0.00017831778614537397,
+      "miss_distance_km": 0.6961849314880577
+    }
+  ],
+  "plan": {
+    "decision": "MANEUVER",
+    "has_maneuver": true,
+    "recommended_burn_time": "2026-10-10T01:45:29.558442Z",
+    "direction_in_words": "opposite the direction of travel",
+    "size_mm_s": 43.3,
+    "size_text": "43.3 mm/s (0.0433 m/s)",
+    "miss_before_km": 0.6961849314880577,
+    "miss_before_text": "0.70 km",
+    "miss_after_km": 0.9901110682222167,
+    "miss_after_text": "0.99 km",
+    "pc_before": 1.2614607685535696e-06,
+    "pc_before_text": "1.3e-06",
+    "pc_after": 9.948411463830878e-07,
+    "pc_after_text": "9.9e-07",
+    "secondary_conjunctions_created": 0,
+    "return_burn": "Scheduled at 2026-10-10T03:19:45.516028Z with size 43.3 mm/s"
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

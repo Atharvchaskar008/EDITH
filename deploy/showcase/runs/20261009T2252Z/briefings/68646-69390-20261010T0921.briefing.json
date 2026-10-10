@@ -1,0 +1,145 @@
+{
+  "headline": {
+    "primary_name": "QIANFAN-119",
+    "secondary_name": "QIANFAN-173",
+    "pair_label": "QIANFAN-119 vs QIANFAN-173",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 10.5,
+    "hours_until_closest_approach_text": "10.5 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T09:21:38.009472Z (10.5 hours remaining)",
+      "value": "2026-10-10T09:21:38.009472Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.524 km (524 m)",
+      "value": 0.5239539047621584
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "5.08 km/s (5084 m/s)",
+      "value": 5.084212905735273
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "5.16e-05",
+      "value": 5.1616358569095404e-05
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "7.05e-05",
+      "value": 7.047717233794383e-05
+    },
+    {
+      "label": "Age of QIANFAN-119 orbit data",
+      "value_text": "1.1 days",
+      "value": 1.0924595077777777
+    },
+    {
+      "label": "Age of QIANFAN-173 orbit data",
+      "value_text": "1.5 days",
+      "value": 1.4626089877777777
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1038Z",
+      "pc_max": 8.993348424479226e-05,
+      "miss_distance_km": 0.5239539046699572
+    },
+    {
+      "run_id": "20261009T1051Z",
+      "pc_max": 8.993348561723187e-05,
+      "miss_distance_km": 0.523953904610534
+    },
+    {
+      "run_id": "20261009T1145Z",
+      "pc_max": 7.047717231855038e-05,
+      "miss_distance_km": 0.5239539046701653
+    },
+    {
+      "run_id": "20261009T1210Z",
+      "pc_max": 7.047717203455587e-05,
+      "miss_distance_km": 0.5239539046379388
+    },
+    {
+      "run_id": "20261009T1442Z",
+      "pc_max": 7.047717288518067e-05,
+      "miss_distance_km": 0.5239539047223537
+    },
+    {
+      "run_id": "20261009T1450Z",
+      "pc_max": 7.047717203455587e-05,
+      "miss_distance_km": 0.5239539046379388
+    },
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 7.047717256221632e-05,
+      "miss_distance_km": 0.5239539045920159
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 7.04771724703255e-05,
+      "miss_distance_km": 0.5239539046763542
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 7.047717262029396e-05,
+      "miss_distance_km": 0.523953904608036
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 7.047717234670366e-05,
+      "miss_distance_km": 0.5239539045715438
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 7.047717233794383e-05,
+      "miss_distance_km": 0.5239539047621584
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 7.047717245627234e-05,
+      "miss_distance_km": 0.5239539046730115
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 7.047717232557614e-05,
+      "miss_distance_km": 0.5239539048665495
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 7.047717254985843e-05,
+      "miss_distance_km": 0.5239539046911491
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 7.047717291788259e-05,
+      "miss_distance_km": 0.5239539047385038
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 7.047717233794383e-05,
+      "miss_distance_km": 0.5239539047621584
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

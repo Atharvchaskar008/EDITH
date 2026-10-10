@@ -1,0 +1,115 @@
+{
+  "headline": {
+    "primary_name": "YAOGAN-36 01A",
+    "secondary_name": "HORS 5",
+    "pair_label": "YAOGAN-36 01A vs HORS 5",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 17.4,
+    "hours_until_closest_approach_text": "17.4 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T16:13:07.786630Z (17.4 hours remaining)",
+      "value": "2026-10-10T16:13:07.786630Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.275 km (275 m)",
+      "value": 0.2746849158306493
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "10.83 km/s (10826 m/s)",
+      "value": 10.825861796898188
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "2.04e-05",
+      "value": 2.0445515544752805e-05
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "3.08e-05",
+      "value": 3.075623225688035e-05
+    },
+    {
+      "label": "Age of YAOGAN-36 01A orbit data",
+      "value_text": "1.4 days",
+      "value": 1.3887175074768519
+    },
+    {
+      "label": "Age of HORS 5 orbit data",
+      "value_text": "1.5 days",
+      "value": 1.515187987476852
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 3.0756232357285907e-05,
+      "miss_distance_km": 0.27468491564881414
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 3.07562322951361e-05,
+      "miss_distance_km": 0.27468491570813164
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 3.075623230178406e-05,
+      "miss_distance_km": 0.27468491559244773
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 3.075623222765581e-05,
+      "miss_distance_km": 0.27468491566892483
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 3.075623225688035e-05,
+      "miss_distance_km": 0.2746849158306493
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 3.07562323554373e-05,
+      "miss_distance_km": 0.2746849156735204
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 3.075623230246291e-05,
+      "miss_distance_km": 0.27468491564651515
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 3.0756232296656305e-05,
+      "miss_distance_km": 0.2746849156760112
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 3.07562323083074e-05,
+      "miss_distance_km": 0.2746849155349698
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 3.075623225688035e-05,
+      "miss_distance_km": 0.2746849158306493
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "headline": {
+    "primary_name": "CHUANGXIN 19 (CX-19)",
+    "secondary_name": "DELTA 1 DEB",
+    "pair_label": "CHUANGXIN 19 (CX-19) vs DELTA 1 DEB",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 19.3,
+    "hours_until_closest_approach_text": "19.3 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T18:08:51.066498Z (19.3 hours remaining)",
+      "value": "2026-10-10T18:08:51.066498Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.185 km (185 m)",
+      "value": 0.18532857683017823
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "14.55 km/s (14546 m/s)",
+      "value": 14.545582356419654
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "7.54e-05",
+      "value": 7.544333217704497e-05
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "7.78e-05",
+      "value": 7.778443836835476e-05
+    },
+    {
+      "label": "Age of CHUANGXIN 19 (CX-19) orbit data",
+      "value_text": "1.4 days",
+      "value": 1.4458055129861112
+    },
+    {
+      "label": "Age of DELTA 1 DEB orbit data",
+      "value_text": "1.5 days",
+      "value": 1.4698449729861112
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 7.778443835812364e-05,
+      "miss_distance_km": 0.18532857685233103
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 7.77844383678127e-05,
+      "miss_distance_km": 0.1853285768309246
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 7.778443836884274e-05,
+      "miss_distance_km": 0.185328576829668
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 7.77844383616804e-05,
+      "miss_distance_km": 0.1853285768332297
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 7.778443836535386e-05,
+      "miss_distance_km": 0.18532857683132542
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 7.778443835812364e-05,
+      "miss_distance_km": 0.18532857685233103
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 7.778443836793777e-05,
+      "miss_distance_km": 0.1853285768306392
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 7.778443835169438e-05,
+      "miss_distance_km": 0.18532857686018706
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 7.778443836835476e-05,
+      "miss_distance_km": 0.18532857683017823
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

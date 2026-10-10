@@ -1,0 +1,125 @@
+{
+  "headline": {
+    "primary_name": "NAHLA",
+    "secondary_name": "ATLAS 5 CENTAUR R/B",
+    "pair_label": "NAHLA vs ATLAS 5 CENTAUR R/B",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 15.6,
+    "hours_until_closest_approach_text": "15.6 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T14:26:43.275512Z (15.6 hours remaining)",
+      "value": "2026-10-10T14:26:43.275512Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.646 km (646 m)",
+      "value": 0.6462584891847726
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "14.12 km/s (14124 m/s)",
+      "value": 14.123721732897627
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "8.94e-06",
+      "value": 8.943816807575286e-06
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "1.76e-05",
+      "value": 1.7640943170813925e-05
+    },
+    {
+      "label": "Age of NAHLA orbit data",
+      "value_text": "1.9 days",
+      "value": 1.8657804428703704
+    },
+    {
+      "label": "Age of ATLAS 5 CENTAUR R/B orbit data",
+      "value_text": "1.6 days",
+      "value": 1.6065662028703704
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1442Z",
+      "pc_max": 1.7640943120612416e-05,
+      "miss_distance_km": 0.6462584893630685
+    },
+    {
+      "run_id": "20261009T1450Z",
+      "pc_max": 1.764094312209074e-05,
+      "miss_distance_km": 0.6462584891551791
+    },
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 1.7640943169688167e-05,
+      "miss_distance_km": 0.6462584892671441
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 1.764094312209074e-05,
+      "miss_distance_km": 0.6462584891551791
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 1.764094316563588e-05,
+      "miss_distance_km": 0.6462584892662064
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 1.7640943138658013e-05,
+      "miss_distance_km": 0.6462584892608706
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 1.7640943168151266e-05,
+      "miss_distance_km": 0.6462584892725297
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 1.764094316563588e-05,
+      "miss_distance_km": 0.6462584892662064
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 1.764094316563588e-05,
+      "miss_distance_km": 0.6462584892662064
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 1.7640943120612416e-05,
+      "miss_distance_km": 0.6462584893630685
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 1.76409431110442e-05,
+      "miss_distance_km": 0.6462584892496825
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 1.7640943170813925e-05,
+      "miss_distance_km": 0.6462584891847726
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:52Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

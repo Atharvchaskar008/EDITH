@@ -1,0 +1,125 @@
+{
+  "headline": {
+    "primary_name": "PRAETORIAN SDA_503",
+    "secondary_name": "COSMOS 1691 DEB",
+    "pair_label": "PRAETORIAN SDA_503 vs COSMOS 1691 DEB",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 15.2,
+    "hours_until_closest_approach_text": "15.2 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T14:06:24.380123Z (15.2 hours remaining)",
+      "value": "2026-10-10T14:06:24.380123Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.287 km (287 m)",
+      "value": 0.2869543569594695
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "14.60 km/s (14597 m/s)",
+      "value": 14.596616071264776
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "8.15e-06",
+      "value": 8.145240069009911e-06
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "1.67e-05",
+      "value": 1.668903874069468e-05
+    },
+    {
+      "label": "Age of PRAETORIAN SDA_503 orbit data",
+      "value_text": "1.7 days",
+      "value": 1.726142237349537
+    },
+    {
+      "label": "Age of COSMOS 1691 DEB orbit data",
+      "value_text": "1.3 days",
+      "value": 1.2804058273495371
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1442Z",
+      "pc_max": 1.668903874054118e-05,
+      "miss_distance_km": 0.28695435696448585
+    },
+    {
+      "run_id": "20261009T1450Z",
+      "pc_max": 1.668903874146269e-05,
+      "miss_distance_km": 0.28695435695199234
+    },
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 1.668903874131789e-05,
+      "miss_distance_km": 0.2869543569524732
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 1.668903874043135e-05,
+      "miss_distance_km": 0.2869543569622379
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 1.6689038741849978e-05,
+      "miss_distance_km": 0.28695435695395294
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 1.6689038740264525e-05,
+      "miss_distance_km": 0.2869543569650541
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 1.6689038739918295e-05,
+      "miss_distance_km": 0.2869543569694282
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 1.668903874067345e-05,
+      "miss_distance_km": 0.2869543569624534
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 1.6689038739682576e-05,
+      "miss_distance_km": 0.28695435697176486
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 1.6689038740320196e-05,
+      "miss_distance_km": 0.2869543569637627
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 1.6689038739218324e-05,
+      "miss_distance_km": 0.2869543569777424
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 1.668903874069468e-05,
+      "miss_distance_km": 0.2869543569594695
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:52Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

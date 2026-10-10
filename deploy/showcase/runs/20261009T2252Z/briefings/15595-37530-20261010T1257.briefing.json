@@ -1,0 +1,125 @@
+{
+  "headline": {
+    "primary_name": "GEOSAT",
+    "secondary_name": "COSMOS 2251 DEB",
+    "pair_label": "GEOSAT vs COSMOS 2251 DEB",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 14.1,
+    "hours_until_closest_approach_text": "14.1 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T12:57:19.981700Z (14.1 hours remaining)",
+      "value": "2026-10-10T12:57:19.981700Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.324 km (324 m)",
+      "value": 0.324119640735704
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "14.96 km/s (14956 m/s)",
+      "value": 14.956465592830874
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "1.22e-06",
+      "value": 1.2160766855109905e-06
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "1.15e-05",
+      "value": 1.1484360167494582e-05
+    },
+    {
+      "label": "Age of GEOSAT orbit data",
+      "value_text": "1.5 days",
+      "value": 1.4624947430092592
+    },
+    {
+      "label": "Age of COSMOS 2251 DEB orbit data",
+      "value_text": "1.6 days",
+      "value": 1.5520115930092593
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T1442Z",
+      "pc_max": 1.148436016756049e-05,
+      "miss_distance_km": 0.32411964073478094
+    },
+    {
+      "run_id": "20261009T1450Z",
+      "pc_max": 1.148436016721409e-05,
+      "miss_distance_km": 0.32411964073905636
+    },
+    {
+      "run_id": "20261009T1751Z",
+      "pc_max": 1.1484360167548826e-05,
+      "miss_distance_km": 0.3241196407383619
+    },
+    {
+      "run_id": "20261009T1829Z",
+      "pc_max": 1.1484360167472253e-05,
+      "miss_distance_km": 0.3241196407359069
+    },
+    {
+      "run_id": "20261009T1836Z",
+      "pc_max": 1.1484360167592655e-05,
+      "miss_distance_km": 0.3241196407344219
+    },
+    {
+      "run_id": "20261009T1914Z",
+      "pc_max": 1.1484360167335618e-05,
+      "miss_distance_km": 0.32411964073746025
+    },
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 1.1484360167485671e-05,
+      "miss_distance_km": 0.3241196407357092
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 1.1484360167499278e-05,
+      "miss_distance_km": 0.324119640735647
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 1.148436016721409e-05,
+      "miss_distance_km": 0.32411964073905636
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 1.148436016736979e-05,
+      "miss_distance_km": 0.3241196407369966
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 1.1484360167548826e-05,
+      "miss_distance_km": 0.3241196407383619
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 1.1484360167494582e-05,
+      "miss_distance_km": 0.324119640735704
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:52Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}

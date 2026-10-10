@@ -1,0 +1,56 @@
+COMMENT ===================================================================
+COMMENT CCSDS 508.0-B-1 CONJUNCTION DATA MESSAGE (CDM)
+COMMENT NOTICE: CDM-style export from public TLE data and not a certified message.
+COMMENT State vectors are in True Equator, Mean Equinox (TEME) reference frame.
+COMMENT ===================================================================
+CCSDS_CDM_VERS = 1.0
+CREATION_DATE = 2026-10-09T23:03:52Z
+ORIGINATOR = FUSION-SKN
+MESSAGE_ID = 53522-63226-20261010T0252
+COMMENT -------------------------------------------------------------------
+COMMENT RELATIVE METADATA AND CONJUNCTION PARAMETERS
+COMMENT -------------------------------------------------------------------
+TCA = 2026-10-10T02:52:11.178699Z
+MISS_DISTANCE = 115.980
+RELATIVE_SPEED = 12877.520
+RELATIVE_POSITION_R = 93.308
+RELATIVE_POSITION_T = -36.902
+RELATIVE_POSITION_N = -58.164
+COLLISION_PROBABILITY = 1.305329e-04
+COLLISION_PROBABILITY_METHOD = MAXIMUM_PC
+COMMENT -------------------------------------------------------------------
+COMMENT TARGET OBJECT (OBJECT1)
+COMMENT -------------------------------------------------------------------
+OBJECT = OBJECT1
+OBJECT_DESIGNATOR = 53522
+CATALOG_NAME = SATCAT
+OBJECT_NAME = YAOGAN-35 04A
+INTERNATIONAL_DESIGNATOR = UNKNOWN
+REF_FRAME = TEME
+X = -5774.058179
+Y = 1101.004268
+Z = 3559.265815
+X_DOT = -2.480562
+Y_DOT = -6.954226
+Z_DOT = -1.878338
+CR_R = 1.396e+04
+CT_T = 2.480e+05
+CN_N = 1.842e+03
+COMMENT -------------------------------------------------------------------
+COMMENT CHASER OBJECT (OBJECT2)
+COMMENT -------------------------------------------------------------------
+OBJECT = OBJECT2
+OBJECT_DESIGNATOR = 63226
+CATALOG_NAME = SATCAT
+OBJECT_NAME = ETIHAD-SAT
+INTERNATIONAL_DESIGNATOR = UNKNOWN
+REF_FRAME = TEME
+X = -5774.149759
+Y = 1101.074759
+Z = 3559.275590
+X_DOT = 4.059172
+Y_DOT = 0.390108
+Z_DOT = 6.435695
+CR_R = 7.492e+03
+CT_T = 1.361e+05
+CN_N = 1.048e+03

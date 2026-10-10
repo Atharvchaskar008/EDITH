@@ -1,0 +1,95 @@
+{
+  "headline": {
+    "primary_name": "YAOGAN-30 04B",
+    "secondary_name": "TIANYAN 02",
+    "pair_label": "YAOGAN-30 04B vs TIANYAN 02",
+    "risk_level": "AMBER",
+    "hours_until_closest_approach": 21.2,
+    "hours_until_closest_approach_text": "21.2 hours"
+  },
+  "facts": [
+    {
+      "label": "Time of closest approach",
+      "value_text": "2026-10-10T20:06:38.480478Z (21.2 hours remaining)",
+      "value": "2026-10-10T20:06:38.480478Z"
+    },
+    {
+      "label": "Miss distance",
+      "value_text": "0.223 km (223 m)",
+      "value": 0.22346698447024835
+    },
+    {
+      "label": "Relative speed",
+      "value_text": "13.47 km/s (13469 m/s)",
+      "value": 13.468866474505507
+    },
+    {
+      "label": "Collision probability",
+      "value_text": "5.27e-05",
+      "value": 5.2667200378948056e-05
+    },
+    {
+      "label": "Worst-case probability",
+      "value_text": "5.90e-05",
+      "value": 5.899783855948559e-05
+    },
+    {
+      "label": "Age of YAOGAN-30 04B orbit data",
+      "value_text": "1.7 days",
+      "value": 1.6686327159027778
+    },
+    {
+      "label": "Age of TIANYAN 02 orbit data",
+      "value_text": "1.6 days",
+      "value": 1.5565851059027778
+    },
+    {
+      "label": "Uncertainty origin",
+      "value_text": "MEASURED",
+      "value": "MEASURED"
+    }
+  ],
+  "risk_history": [
+    {
+      "run_id": "20261009T2040Z",
+      "pc_max": 5.899783855948559e-05,
+      "miss_distance_km": 0.22346698447024835
+    },
+    {
+      "run_id": "20261009T2051Z",
+      "pc_max": 5.89978385602052e-05,
+      "miss_distance_km": 0.22346698446939048
+    },
+    {
+      "run_id": "20261009T2108Z",
+      "pc_max": 5.899783856131235e-05,
+      "miss_distance_km": 0.2234669844616923
+    },
+    {
+      "run_id": "20261009T2118Z",
+      "pc_max": 5.899783855856166e-05,
+      "miss_distance_km": 0.22346698447222452
+    },
+    {
+      "run_id": "20261009T2236Z",
+      "pc_max": 5.899783856024567e-05,
+      "miss_distance_km": 0.22346698446392374
+    },
+    {
+      "run_id": "20261009T2252Z",
+      "pc_max": 5.899783855948559e-05,
+      "miss_distance_km": 0.22346698447024835
+    }
+  ],
+  "plan": {
+    "decision": "MONITOR",
+    "has_maneuver": false,
+    "reason": "Active monitoring in progress. Risk currently within tolerable threshold; burn will be computed if tracking uncertainties narrow towards higher risk."
+  },
+  "alerts": [],
+  "footer": {
+    "generated_time": "2026-10-09T23:03:51Z",
+    "run_id": "20261009T2252Z",
+    "disclaimer": "Decision support from public data. Not for operational use."
+  }
+}
