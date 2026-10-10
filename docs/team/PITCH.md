@@ -328,24 +328,35 @@ If you forget everything else, say these.
 
 ## Which tool does what
 
-Part 11 names these while you point. This table is the full list.
+Part 11 names these while you point. This table is the full list: what each one gives us, and what we gain from it.
 
-| Tool | What it does | Where it shows on the dashboard |
+| Tool | What it gives us | How that helps |
 |---|---|---|
-| Requests | Downloads the orbit data from CelesTrak and Space-Track | "Objects watched" |
-| Pydantic | Checks every record and every result against one data model | Every number on the page |
-| sgp4 (compiled C++) | Predicts where each object is, every 10 seconds for 24 hours | "Close passes ahead" |
-| NumPy (compiled C) | Holds all the positions as arrays, so one instruction handles 30,000 objects | "Close passes ahead" |
-| SciPy KD-tree | Finds the pairs that are near each other without comparing every pair | "Close passes ahead" |
-| Python processes | Split the search across the laptop's cores | The run finishing in about 7 minutes |
-| Our probability code, on NumPy and SciPy | Collision probability and its worst case | Level, Risk, "to check" |
-| SciPy integrator | Flies each candidate burn under the Earth's real gravity | The burn card and "Every burn tried" |
-| LightGBM | Forecasts where a pass's risk will end; trained on 162,634 warnings from the European Space Agency | The ring in "Risk, run by run" |
-| Matplotlib | Draws the chart of our probability against the European Space Agency's | The second picture under Proof |
-| APScheduler | Starts a run every six hours | "Last run ... Next ..." |
-| FastAPI and Uvicorn | Serve the results to the page | The whole page |
-| HTML, CSS and JavaScript, no framework | The dashboard and its pictures, drawn as SVG | The whole page |
-| pytest and GitHub Actions | 123 tests on every change, on four versions of Python | Not on the dashboard; the badge on GitHub |
-| Render | Hosts the public show-only site | The public link |
+| Python | The language that joins everything | One person built and tested the whole engine quickly. The heavy maths does not run in Python itself |
+| sgp4 (compiled C++) | The standard model that turns public orbit data into a position at any time | 1.5 million positions a second on one core, 18 times plain Python. It is also the only model that reads this data correctly |
+| NumPy (compiled C) | All positions held as arrays | One instruction handles 30,000 objects. sgp4 and SciPy both use the same arrays, so nothing is copied |
+| SciPy KD-tree | Finds which objects are near each other | 40 ms where checking every pair takes 60 s. Over a day: 6 minutes, not 145 hours |
+| SciPy minimiser | The exact moment and distance of closest approach | Our distances match CelesTrak's to 0.35 m |
+| SciPy integrator | Flies an orbit under the Earth's real gravity after a burn | Every recommended burn is worked out exactly, not estimated |
+| Python processes | The search and the burn checks spread over all cores | A three-day search fell from 32 minutes to 7; "Plan now" from 47 seconds to 20 |
+| Pydantic | One definition for every object, pass and plan | A bad record is rejected, not a crash. Engine, server and teammates' packs all agree on the data |
+| Requests | Downloads from CelesTrak and Space-Track | Retries, and keeps a copy, so a refused download does not stop a run |
+| FastAPI and Uvicorn | The server that hands results to any screen | About 25 routes with little code, each response checked, and a documentation page written for us |
+| APScheduler | The six-hour timer | Runs with no person involved, and never starts two runs at once |
+| LightGBM | A model that forecasts where a pass's risk will end | Trained on 162,634 real warnings from the European Space Agency. It is the forecast ring on the dashboard |
+| pandas, scikit-learn, joblib | Used to train, measure and store that model | The model and its test results can be rebuilt from the data |
+| Matplotlib | The charts in the validation report | Evidence a judge can look at, not just numbers |
+| HTML, CSS and JavaScript, no framework | The dashboard, with pictures drawn as SVG | Three files, nothing to build or install, and it loads at once |
+| pytest and GitHub Actions | 123 tests, run on every change on four versions of Python | A mistake is caught before it reaches the demo. The badge on GitHub proves it |
+| Render | The public show-only site | One link anyone can open, at no cost |
+| Git and GitHub | The history of every change | Teammates' work was merged through pull requests |
+
+The three data sources, and what each is for:
+
+| Source | What it gives us | How that helps |
+|---|---|---|
+| CelesTrak | Current orbit data, and its own published list of close passes | The data for every run, and an outside answer sheet to check our distances against |
+| Space-Track | The full catalogue with all debris, and the history of each object's orbit data | Complete coverage, and the history we used to measure how wrong public data is |
+| European Space Agency warning dataset | 162,634 real collision warnings | We checked our probability against 20,000 of them, and the forecast model learned from all of them |
 
 Longer answers to judges' questions are in `PROJECT_EXPLAINED.md`, sections 8 and 9.
