@@ -1,6 +1,6 @@
 # EDITH: the recorded pitch
 
-A script for one video of about six and a half minutes. Each part says what is on screen, what to click, and what to say. The quoted text is about 980 words, which is six and a half to seven minutes at a normal speaking pace.
+A script for one video of about seven minutes. Each part says what is on screen, what to click, and what to say. The quoted text is about 1,000 words, which is close to seven minutes at a normal speaking pace. The whole video stays on the landing page and the dashboard.
 
 Numbers in [square brackets] change with every run: read them off the screen. Every other number is fixed.
 
@@ -9,9 +9,9 @@ Numbers in [square brackets] change with every run: read them off the screen. Ev
 1. Start the landing page: `node landing\server.js` (http://localhost:3000).
 2. Start the system: `.venv\Scripts\python -m uvicorn fusion.api.main:app --port 8000` (http://localhost:8000).
 3. Press **Run now** and wait about seven minutes, so the passes are fresh.
-4. Open three browser tabs: the landing page, the README on GitHub scrolled to "How it works", and nothing else. Hide the bookmarks bar and set the zoom to 110%.
+4. Open one browser tab, on the landing page. The whole video stays in that tab. Hide the bookmarks bar and set the zoom to 110%.
 5. On the dashboard, find one row that says **Burn ready** and one that says **No safe burn**. You will click these two.
-6. Speak slowly. If you run long, leave out parts 7 and 8.
+6. Speak slowly. The full script runs to about 7:10. Leaving out parts 7 and 8 brings it to about 6:25.
 
 Record on the laptop, not on the public link: only the laptop has the satellite search. Show the public link at the very end.
 
@@ -77,13 +77,13 @@ Record on the laptop, not on the public link: only the laptop has the satellite 
 
 > "And one real case. In 2009 Iridium 33 and Cosmos 2251 collided. We gave EDITH only the data that was public the day before. It found that pass, at the right second, as the most dangerous pass of Iridium 33. It rated it amber, not red, because public data predicted a miss of 584 metres. That is the honest answer, and it is why we rank by the worst case."
 
-### 11. How it works, and why these tools (6:00 to 6:40)
+### 11. Which tool does what (6:00 to 6:50)
 
-**Screen:** switch to the README tab, on the first diagram under "How it works". Scroll to the second diagram halfway through.
+**Do:** click **Priority**, then click the first **Burn ready** row so its card is open, and scroll to the top of the dashboard. Point at each item as you name its tool, in this order: objects watched, close passes ahead, the Risk column, the burn card, the third picture, the "Last run" line.
 
-> "Under the surface there are six steps: download, predict, search, assess, plan, verify. Orbits are predicted with SGP4, the model this data is made for. The search uses a KD-tree, which only compares neighbours: forty milliseconds, where checking every pair takes sixty seconds. The code is Python, but Python only gives the orders. The heavy maths runs in compiled C and C++ inside sgp4, NumPy and SciPy, at one and a half million positions a second. FastAPI serves the results, and the dashboard is plain JavaScript. A full run of the whole sky takes about seven minutes on a laptop."
+> "Every item on this page comes from one tool. The orbits behind this number are downloaded from CelesTrak and Space-Track, and Pydantic checks each record. For the close passes, SGP4, a compiled C++ library, predicts every position; NumPy holds them as arrays; and SciPy's KD-tree finds the neighbours in forty milliseconds, where checking every pair takes sixty seconds. The risk is our own probability maths, on NumPy and SciPy. The burn search flies each candidate orbit with SciPy's integrator. This forecast ring is LightGBM, trained on the European Space Agency's real warnings. APScheduler starts a run every six hours, FastAPI serves the results, and this page is plain JavaScript. Python only gives the orders; the heavy maths is compiled C and C++, which is why the whole sky takes about seven minutes on a laptop."
 
-### 12. Limits and close (6:40 to 7:00)
+### 12. Limits and close (6:50 to 7:10)
 
 **Screen:** open https://edith-guhk.onrender.com in the last few seconds.
 
@@ -118,5 +118,29 @@ Record on the laptop, not on the public link: only the laptop has the satellite 
 | Risk, run by run | The worst-case risk of this pass at each run that saw it. The ring is the model's forecast of where it ends |
 | Warning message (CDM) | The standard message format operators use to warn each other |
 | Proof | Our results against CelesTrak, against the European Space Agency, and our measurement of public data's error |
+
+## Which tool does what
+
+Part 11 names these while you point. This table is the full list, for your own understanding and for questions.
+
+| Tool | What it does | Where it shows on the dashboard |
+|---|---|---|
+| Requests | Downloads the orbit data from CelesTrak and Space-Track | "Objects watched" |
+| Pydantic | Checks every record and every result against one data model | Every number on the page |
+| sgp4 (compiled C++) | Predicts where each object is, every 10 seconds for 24 hours | "Close passes ahead" |
+| NumPy (compiled C) | Holds all the positions as arrays, so one instruction handles 30,000 objects | "Close passes ahead" |
+| SciPy KD-tree | Finds the pairs that are near each other without comparing every pair | "Close passes ahead" |
+| Python processes | Split the search across the laptop's cores | The run finishing in about 7 minutes |
+| Our probability code, on NumPy and SciPy | Collision probability and its worst case | Level, Risk, "to check" |
+| SciPy integrator | Flies each candidate burn under the Earth's real gravity | The burn card and "Every burn tried" |
+| LightGBM | Forecasts where a pass's risk will end; trained on 162,634 warnings from the European Space Agency | The ring in "Risk, run by run" |
+| Matplotlib | Draws the chart of our probability against the European Space Agency's | The second picture under Proof |
+| APScheduler | Starts a run every six hours | "Last run ... Next ..." |
+| FastAPI and Uvicorn | Serve the results to the page | The whole page |
+| HTML, CSS and JavaScript, no framework | The dashboard and its pictures, drawn as SVG | The whole page |
+| pytest and GitHub Actions | 123 tests on every change, on four versions of Python | Not on the dashboard; the badge on GitHub |
+| Render | Hosts the public show-only site | The public link |
+
+If a judge asks "why Python": Python only gives the orders. The heavy maths runs in compiled C and C++ inside sgp4, NumPy and SciPy, at 1.5 million positions a second.
 
 Longer answers to judges' questions are in `PROJECT_EXPLAINED.md`, sections 8 and 9.
