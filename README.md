@@ -15,6 +15,8 @@
 
 EDITH screens every publicly tracked object in low Earth orbit against every other, ranks the close passes by collision probability, and recommends the smallest avoidance burn that makes a dangerous pass safe. It re-runs every six hours without supervision and serves its results through a web API and an operator dashboard.
 
+**Public showcase: https://edith-guhk.onrender.com** opens on the landing page, whose button leads to the dashboard. It shows a recorded run and starts no work of its own; the host sleeps when idle, so the first visit can take a minute.
+
 The Python package is named `fusion`.
 
 ![The operator dashboard with a planned burn open](docs/images/dashboard.png)
