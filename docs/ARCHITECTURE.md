@@ -18,7 +18,7 @@ EDITH is a batch pipeline with a thin web layer on top. Every run reads public o
 | Validation | `fusion/validation.py` | Comparison of our results with CelesTrak SOCRATES |
 | Replay | `fusion/replay/replay_2009.py` | The 2009 Iridium 33 / Cosmos 2251 case, run through the same pipeline |
 | Scheduler | `fusion/monitor/scheduler.py` | Starts a run every 6 hours, never overlapping |
-| API and dashboard | `fusion/api/main.py`, `fusion/api/static/index.html` | FastAPI routes over the latest finished run, and the operator dashboard |
+| API and dashboard | `fusion/api/main.py`, `fusion/api/static/` | FastAPI routes over the latest finished run, work asked for after a run (a burn search, a check of one satellite), and the operator dashboard |
 
 ## Data flow
 
@@ -26,7 +26,7 @@ EDITH is a batch pipeline with a thin web layer on top. Every run reads public o
 2. **Propagate.** SGP4 gives position and velocity for every object on a 10-second grid, in time chunks that bound memory.
 3. **Screen.** At each time step a KD-tree lists pairs within `threshold + 15.5 km/s × step / 2`. A straight-line estimate keeps only pairs whose closest approach falls inside that step. Survivors are refined with a bounded minimiser. Time blocks of 30 minutes are spread across worker processes; results are sorted, so the output does not depend on the worker count.
 4. **Assess.** Each object gets a position uncertainty (measured, per kind of object and data age, when the trust pack is present; an assumed table otherwise). The combined covariance is projected onto the plane perpendicular to the relative velocity and integrated over the hard-body disc. The worst case over every scaling of the covariance sets the risk level.
-5. **Plan.** For red events, a grid of burn times and along-track sizes is evaluated with a linear response model; the smallest burn meeting the safety targets is recomputed exactly.
+5. **Plan.** For every red event where a burn is possible (not two satellites of one fleet, at least one object able to move, enough time left), a grid of burn times and along-track sizes is evaluated with a linear response model; the smallest burn meeting the safety targets is recomputed exactly.
 6. **Verify.** The burned orbit is screened against the whole catalogue for 24 hours. Every amber or red pass found is computed again without the burn. A burn that creates a dangerous pass, or raises the worst-case probability of one the satellite already had by more than 10%, is rejected and the next candidate tried. A return burn a whole number of orbits later restores the original orbit.
 7. **Publish.** Result files are written through temporary names, add-on outputs are attached, and an empty `DONE` file is written last.
 
@@ -55,7 +55,10 @@ EDITH is a batch pipeline with a thin web layer on top. Every run reads public o
 | Rank by worst-case probability | Public data carries no covariance; the worst case does not depend on the assumed size of the uncertainty |
 | Screen every object against every other | Debris-on-debris and dead-on-dead passes are found too; a protected-set mode exists for faster runs |
 | 1 km threshold in full-sky mode | A 5 km threshold yields about 2,300 passes an hour, too many to act on |
-| Burns go first to passes where one object cannot move | A burn is the only remedy there, and predictions for non-manoeuvring objects are the stable ones |
+| A run plans every red pass it can, those where one object cannot move first | A burn is the only remedy there, and predictions for non-manoeuvring objects are the stable ones. Every red pass ends with a burn or a stated reason, so nothing on the list is unexplained |
+| A burn that harms another pass is never recommended | Every dangerous pass found after a burn is computed again without it; clearing one pass by endangering another is not a fix |
+| Red is shown as "to check" | It is judged on the worst case. The chance that any pass of a day is a collision is about 1 in 340 by the best estimates |
+| A show-only mode for the public site | A run needs about 12 cores for 7 minutes; a free host presents one recorded run and starts no work |
 | No burn plan for two satellites of one fleet | Measured along-track error for Starlink is about 12 km after one day; such predictions do not survive new data |
 | Files, not a database | A run is an immutable folder; packs and the server only need to read files |
 | Processes, not threads | The search parallelises cleanly over time blocks; the catalogue is serialised once and shared with workers |

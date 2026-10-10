@@ -67,21 +67,64 @@ A burn is advice. Red means worth an operator's attention on the worst case; the
 
 ## How it works
 
+### One run
+
+Every six hours a run takes the whole of low Earth orbit through six stages and writes one folder of results.
+
 ```mermaid
 flowchart LR
-    S[Scheduler, every 6 h] --> I
-    D[(CelesTrak and Space-Track)] --> I[Ingest]
-    I --> P[Propagate with SGP4]
-    P --> C[Screen with a KD-tree]
-    C --> A[Assess probability]
-    A --> M[Plan burn]
-    M --> V[Verify and plan return]
-    V --> R[(Run folder)]
-    R --> API[FastAPI]
-    API --> UI[Dashboard]
-    A1[History pack: object sizes] -.-> I
-    A2[Trust pack: measured uncertainty] -.-> A
-    A3[Operations pack: alerts, briefings] -.-> R
+    T["Timer<br/>every 6 hours"] --> I
+    SRC[("CelesTrak and<br/>Space-Track")] --> I["1 Ingest<br/>about 29,700 objects"]
+    I --> P["2 Propagate<br/>SGP4, next 24 hours"]
+    P --> S["3 Screen<br/>KD-tree, passes within 1 km"]
+    S --> A["4 Assess<br/>probability and worst case"]
+    A --> M["5 Plan<br/>smallest safe burn"]
+    M --> V["6 Verify<br/>re-screen 24 hours, return burn"]
+    V --> R[("Run folder")]
+    R --> W["After the run<br/>alerts, briefings, warning messages,<br/>check against CelesTrak"]
+    H["History pack<br/>measured object sizes"] -.-> I
+    U["Trust pack<br/>measured uncertainty"] -.-> A
+    O["Operations pack<br/>alerts, briefings, forecast"] -.-> W
+```
+
+### What happens to a red pass
+
+A pass is red when its worst-case probability is 1 in 10,000 or more. Each one ends as a burn that is ready, or with the reason there is none.
+
+```mermaid
+flowchart TD
+    E["Red pass"] --> F{"Two satellites<br/>of one fleet?"}
+    F -- yes --> OF["Own fleet<br/>left to its operator"]
+    F -- no --> C{"Can either<br/>object move?"}
+    C -- no --> CM["Cannot move<br/>warning only"]
+    C -- yes --> TM{"Enough time<br/>before the pass?"}
+    TM -- no --> TS["Too soon"]
+    TM -- yes --> G["Search up to 744 burns<br/>0.5 to 8 orbits early, 1 to 100 mm/s"]
+    G --> X["Compute the next candidate exactly"]
+    X --> RS{"Re-screen against every object:<br/>new or worsened pass?"}
+    RS -- "yes: try another kind of burn" --> X
+    RS -- no --> B["Burn ready<br/>with a return burn"]
+    RS -- "five tried, none clean" --> N["No safe burn"]
+```
+
+### How it is served
+
+The live system does the work. The public site is a small show-only server over one recorded run.
+
+```mermaid
+flowchart LR
+    subgraph LIVE["Live system: a machine with about 12 cores"]
+        PIPE["Pipeline"] --> RUNS[("Run folders")]
+        RUNS --> API["FastAPI server"]
+        API --> DASH["Dashboard"]
+        DASH -- "Plan now, check a satellite" --> API
+    end
+    subgraph PUBLIC["Public showcase: a free host"]
+        REC[("One recorded run")] --> SHOW["Show-only server"]
+        SHOW --> LAND["Landing page at /"]
+        SHOW --> DASH2["Dashboard at /dashboard"]
+    end
+    RUNS -- "scripts/make_showcase.py" --> REC
 ```
 
 | Stage | Method | Code |
@@ -90,7 +133,7 @@ flowchart LR
 | Propagate | Vectorised SGP4 on a 10-second grid | `fusion/core/propagate.py` |
 | Screen | KD-tree neighbour search at each step, a straight-line filter, then exact closest approach; time blocks run in parallel processes | `fusion/core/screen.py` |
 | Assess | Two-dimensional probability in the encounter plane, plus the maximum over every scaling of the covariance | `fusion/risk/pc.py` |
-| Plan | Grid over burn time (0.5 to 8 orbits early) and along-track size (1 to 100 mm/s); the smallest burn meeting the safety targets | `fusion/maneuver/planner.py` |
+| Plan | For every red pass where a burn is possible: a grid over burn time (0.5 to 8 orbits early) and along-track size (1 to 100 mm/s); the smallest burn meeting the safety targets | `fusion/maneuver/planner.py` |
 | Verify | The burned orbit is screened against the whole catalogue for 24 hours, and every dangerous pass found is compared with the same pass without the burn; a return burn restores the orbit | `fusion/maneuver/verify.py` |
 
 The design and its reasons are in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
