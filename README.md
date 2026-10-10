@@ -263,7 +263,7 @@ Open **http://localhost:3000** in your browser.
 |---|---|
 | **http://localhost:8000** | **Operator Dashboard**: Conjunction metrics, priority passes, burn recommendations, what-if planning, single satellite search/pass checker, fleet views, alerts, and 2009 replay |
 | **http://localhost:3000** | **3D Interactive Landing Page**: WebGL Three.js interactive Earth globe with orbital paths, visual impact analysis, and mission brief |
-| **http://localhost:8000/landing** | Sends the visitor on to the landing page's own address (port 3000 locally; `FUSION_STORY_URL` on a public site) |
+| **http://localhost:8000/landing** | Sends the visitor on to the landing page (port 3000 locally) |
 | **http://localhost:8000/docs** | Interactive OpenAPI / Swagger documentation |
 
 The dashboard opens on **Priority**: dangerous passes outside a single operator's fleet. Every row displays **Burn ready** or explains why no burn is proposed. For watched passes, clicking **Plan now** computes a what-if avoidance burn in ~20 seconds.
@@ -306,7 +306,7 @@ Every setting is in `fusion/config.py`. The ones most often changed:
 | `MAX_PLANS_PER_RUN` | 40 | Ceiling on burn searches per run; a 24-hour run needs about 20 |
 | `SCHEDULER_INTERVAL_HOURS` | 6 | Time between automatic runs (each looks 24 hours ahead) |
 
-Environment variables: `FUSION_SCHEDULER=0` disables the automatic runs; `FUSION_RUNS_DIR` moves the runs folder; `FUSION_STORY_URL` is where the dashboard's Story link leads when the landing page is hosted elsewhere; `FUSION_READ_ONLY=1` makes the server show-only, for a small public host (see [docs/OPERATIONS.md](docs/OPERATIONS.md#public-showcase)). Operating details are in [docs/OPERATIONS.md](docs/OPERATIONS.md).
+Environment variables: `FUSION_SCHEDULER=0` disables the automatic runs; `FUSION_RUNS_DIR` moves the runs folder; `FUSION_READ_ONLY=1` makes the server show-only for a small public host: it opens on the landing page, with the dashboard at `/dashboard` (see [docs/OPERATIONS.md](docs/OPERATIONS.md#public-showcase)). Operating details are in [docs/OPERATIONS.md](docs/OPERATIONS.md).
 
 ## Repository layout
 

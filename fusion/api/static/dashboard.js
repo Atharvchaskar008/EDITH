@@ -30,6 +30,7 @@ async function loadTop() {
   reds = r.levels.RED; aboutPriority();
   $("t-burns").textContent = n(r.plans.maneuver);
   $("t-rest").textContent = n(r.levels.AMBER) + " to watch, " + n(r.levels.GREEN) + " safe";
+  written = !!(r.addons && r.addons.briefings);
   $("error").textContent = "";
   idle = "Last run " + clock(r.t0) + ".";
   try {
@@ -390,4 +391,3 @@ setInterval(() => poll().catch(fail), 2000);
 setInterval(() => { if (!runId && !showOnly) refresh(); }, 20000);  // a recorded run does not change
 refresh();
 loadProof().catch(() => {});  // without the validation pack there is no proof section
-get("/addons").then(a => { written = a.briefings_for_latest_run > 0; }).catch(() => {});

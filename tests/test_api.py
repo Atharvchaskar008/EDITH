@@ -322,12 +322,28 @@ def test_a_show_only_server_presents_runs_and_starts_no_work(client, monkeypatch
     assert client.get("/monitor").json()["read_only"] is False
 
 
-def test_the_story_link_leads_to_the_story_pages_own_host(client, monkeypatch):
-    # the story page is a separate site that only starts at the root of its own host
+def test_the_story_page_has_its_own_host_or_the_front_of_a_show_only_site(client, monkeypatch):
+    # live system: the dashboard is the front page, and the story page runs on its own small server
+    assert "<title>EDITH</title>" in client.get("/").text and "<title>EDITH</title>" in client.get("/dashboard").text
     assert client.get("/monitor").json()["story_url"] == "http://localhost:3000/"
     for path in ("/landing", "/landing/", "/landing/anything.js"):
         reply = client.get(path, follow_redirects=False)
         assert reply.status_code in (302, 307) and reply.headers["location"] == "http://localhost:3000/", path
+
+    # show-only site: the story page is the front page and leads on to the dashboard
+    monkeypatch.setattr(main, "READ_ONLY", True)
+    front = client.get("/")
+    assert front.status_code == 200 and "open-dashboard" in front.text and 'href="/static/dashboard.css"' not in front.text
+    assert 'href="/static/dashboard.css"' in client.get("/dashboard").text
+    assert client.get("/monitor").json()["story_url"] == "/"
+    assert client.get("/landing", follow_redirects=False).headers["location"] == "/"
+    # the story page's files are named from the root; nothing outside its folder is served
+    assert client.get("/manifest.json").status_code == 200
+    assert client.get("/no-such-file.js").status_code == 404
+    assert client.get("/..%2F.env").status_code == 404 and client.get("/%2E%2E/requirements.txt").status_code == 404
+    assert client.get("/latest").json()["status"] == "DONE"  # the routes still come first
+
+    # hosted somewhere else
     monkeypatch.setattr(main, "STORY_URL", "https://story.example/")
     assert client.get("/landing", follow_redirects=False).headers["location"] == "https://story.example/"
     assert client.get("/monitor").json()["story_url"] == "https://story.example/"

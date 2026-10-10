@@ -126,11 +126,12 @@ A run needs about 12 cores and several gigabytes for 7 minutes, which no free ho
 
 | Piece | What it is |
 |---|---|
-| `FUSION_STORY_URL` | The public address of the landing page, which is hosted by itself as a static site. The dashboard's Story link and `/landing` lead there |
-| `FUSION_READ_ONLY=1` | Show-only mode. The server presents finished runs; it refuses to start runs, burn searches and satellite checks, and the dashboard hides those controls and shows dates in place of "in 4 h" |
+| `FUSION_READ_ONLY=1` | Show-only mode. The site opens on the landing page, whose button leads to the dashboard at `/dashboard`. The server presents finished runs; it refuses to start runs, burn searches and satellite checks, and the dashboard hides those controls and shows dates in place of "in 4 h" |
 | `deploy/showcase/` | The recorded run, the 2009 replay and the CelesTrak comparison: about 15 MB, in version control |
 | `scripts/make_showcase.py` | Copies the newest finished run into `deploy/showcase/` |
 | `render.yaml` | Settings for Render's free plan: installs `requirements.txt` only and starts the server in show-only mode over `deploy/showcase/runs` |
+
+The landing page only starts at the root of a host, which is why a show-only server gives it the front page. Set `FUSION_STORY_URL` only if the landing page is hosted somewhere else; the dashboard's Story link then leads there.
 
 To put it online: sign in at render.com with the GitHub account that owns the repository, choose New, then Blueprint, pick the repository and apply. Render reads `render.yaml` and redeploys on every push.
 

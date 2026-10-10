@@ -28,8 +28,9 @@ All times are UTC ISO 8601. Distances are km, speeds km/s, delta-v m/s. Results 
 | `GET /addons` | `{"hooks", "packs", "validation_report", "alerts_for_latest_run", "briefings_for_latest_run", "cdm_for_latest_run", "replay_2009"}`. The briefing and CDM entries are counts |
 | `GET /addons/files/{path}` | A file from `addons/` (json, md, png, txt, csv only) |
 | `GET /runs/latest/files/{path}` | A file from the latest run folder: `briefings/<event_id>.briefing.json`, `cdm/<event_id>.cdm.txt`, `summary.json`. Add `?source=replay` for the replay folder |
-| `GET /` | The operator dashboard. Its stylesheet and script are `GET /static/dashboard.css` and `GET /static/dashboard.js` |
-| `GET /landing` | Redirects to the story page's own host: `http://localhost:3000/` by default, or the address in `FUSION_STORY_URL`. The page is a separate site that only starts at the root of a host, so this server does not serve it. `/monitor` gives the same address as `story_url` |
+| `GET /dashboard` | The operator dashboard. Its stylesheet and script are `GET /static/dashboard.css` and `GET /static/dashboard.js` |
+| `GET /` | The front page: the dashboard, or on a show-only server the story page, whose button leads to `/dashboard`. A show-only server also answers the story page's own files from the root (`/_nuxt/...`, `/gl/...` and so on), after every route above |
+| `GET /landing` | Redirects to the story page: `/` on a show-only server, `http://localhost:3000/` otherwise, or the address in `FUSION_STORY_URL`. The page is a separate site that only starts at the root of a host. `/monitor` gives the same address as `story_url` |
 
 The event routes accept `?source=replay` to read the 2009 replay folder instead of the latest run.
 

@@ -37,13 +37,22 @@ from fusion.maneuver.verify import closest_approach_to_orbit
 from fusion.monitor.scheduler import Monitor
 from fusion.risk.pc import assess, encounter_plane
 
-RUNS_ROOT = Path(os.environ.get("FUSION_RUNS_DIR", pipeline.RUNS_ROOT))
+# made absolute here: loading an add-on pack changes the working directory for a moment,
+# and a relative folder would then point nowhere for a request served at the same time
+RUNS_ROOT = Path(os.environ.get("FUSION_RUNS_DIR", pipeline.RUNS_ROOT)).resolve()
 # Show-only: the server presents finished runs and starts no work of its own. For a
 # small public host, which has neither the cores nor the memory for a run.
 READ_ONLY = os.environ.get("FUSION_READ_ONLY", "0") == "1"
-# Where the Story link and /landing go: the story page's own host. Locally that is
-# its small server (node landing/server.js); a public site sets its public address.
-STORY_URL = os.environ.get("FUSION_STORY_URL", "http://localhost:3000/")
+# The story page is a separate site that only starts at the root of a host. A
+# show-only server gives it the root, with the dashboard at /dashboard. Otherwise the
+# root is the dashboard and the story page runs on its own small server
+# (node landing/server.js). FUSION_STORY_URL names another address for it.
+STORY_URL = os.environ.get("FUSION_STORY_URL")
+LANDING_DIR = config.PROJECT_ROOT / "landing"
+
+
+def story_url() -> str:
+    return STORY_URL or ("/" if READ_ONLY else "http://localhost:3000/")
 STATIC_DIR = Path(__file__).parent / "static"
 SERVED_ADDON_TYPES = {".json", ".md", ".png", ".txt", ".csv"}
 
@@ -298,7 +307,7 @@ def monitor_state() -> dict:
         "interval_hours": config.SCHEDULER_INTERVAL_HOURS,
         "scheduler_on": monitor.running,
         "read_only": READ_ONLY,
-        "story_url": STORY_URL,
+        "story_url": story_url(),
     }
 
 
@@ -703,15 +712,35 @@ class _FreshStatic(StaticFiles):
 app.mount("/static", _FreshStatic(directory=STATIC_DIR), name="static")
 
 
-@app.get("/")
+@app.get("/dashboard")
+@app.get("/dashboard/", include_in_schema=False)
 def dashboard_page() -> FileResponse:
     """The operator dashboard; its stylesheet and script are under /static/."""
     return FileResponse(STATIC_DIR / "index.html", headers={"Cache-Control": "no-cache"})
 
 
+@app.get("/")
+def front_page() -> FileResponse:
+    """The first page a visitor sees: the story page on a show-only server, where
+    it leads on to the dashboard, and the dashboard itself otherwise."""
+    if READ_ONLY and (LANDING_DIR / "index.html").is_file():
+        return FileResponse(LANDING_DIR / "index.html", headers={"Cache-Control": "no-cache"})
+    return dashboard_page()
+
+
 @app.get("/landing")
 @app.get("/landing/{path:path}")
 def story_page(path: str = "") -> RedirectResponse:
-    """Send the visitor to the story page. That page is a separate site which only
-    starts at the root of its own host, so it is not served from here."""
-    return RedirectResponse(STORY_URL)
+    """Send the visitor to the story page, wherever it is hosted."""
+    return RedirectResponse(story_url())
+
+
+@app.get("/{path:path}", include_in_schema=False)
+def story_page_file(path: str) -> FileResponse:
+    """A file of the story page. The page names its files from the root of its
+    host. This route is last, so it only sees addresses no other route answers."""
+    root = LANDING_DIR.resolve()
+    target = (root / path).resolve()
+    if path and target.is_file() and target.is_relative_to(root):
+        return FileResponse(target)
+    raise HTTPException(404, "Not found")
