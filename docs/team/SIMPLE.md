@@ -79,7 +79,7 @@ Have the dashboard open before you start. Do not press "Run now" during the talk
 | 1:35 | Point down the Plan column, then click a row that is not "Burn ready" | "Every dangerous pass has a burn ready or says why not: neither can move, too soon, or no safe burn exists. Passes between two satellites of one fleet are left out of this list, because public data is too rough for those." |
 | 2:00 | Type ISS, or the satellite the judge names | "Any satellite, by name. Its close passes for the next 24 hours, checked in seconds." |
 | 2:20 | Click "2009 replay" | "The real 2009 collision, from the data public the day before. EDITH finds it at the right second, as the most dangerous pass of Iridium 33. It rates it amber, because public data predicted a 584 m miss. That error is why we rank by worst case, and why we measured the error of public data ourselves." |
-| 2:45 | Nothing | "It advises people; it does not fly satellites. 122 tests run on GitHub on every push, on four versions of Python." |
+| 2:45 | Nothing | "It advises people; it does not fly satellites. 123 tests run on GitHub on every push, on four versions of Python." |
 
 If a judge asks how you know it is right, click "Proof" under the button: four pictures, each with its number. If a judge asks what an operator would receive, click "Warning message (CDM)" on any plan.
 

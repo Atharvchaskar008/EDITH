@@ -10,7 +10,7 @@
 ![SGP4](https://img.shields.io/badge/SGP4-orbit_model-555555)
 ![Pydantic](https://img.shields.io/badge/Pydantic-data_models-E92063?logo=pydantic&logoColor=white)
 ![LightGBM](https://img.shields.io/badge/LightGBM-risk_trend_model-9ACD32)
-![pytest](https://img.shields.io/badge/pytest-122_tests-0A9EDC?logo=pytest&logoColor=white)
+![pytest](https://img.shields.io/badge/pytest-123_tests-0A9EDC?logo=pytest&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-dashboard-F7DF1E?logo=javascript&logoColor=black)
 
 EDITH screens every publicly tracked object in low Earth orbit against every other, ranks the close passes by collision probability, and recommends the smallest avoidance burn that makes a dangerous pass safe. It re-runs every six hours without supervision and serves its results through a web API and an operator dashboard.
@@ -306,7 +306,7 @@ Every setting is in `fusion/config.py`. The ones most often changed:
 | `MAX_PLANS_PER_RUN` | 40 | Ceiling on burn searches per run; a 24-hour run needs about 20 |
 | `SCHEDULER_INTERVAL_HOURS` | 6 | Time between automatic runs (each looks 24 hours ahead) |
 
-Environment variables: `FUSION_SCHEDULER=0` disables the automatic runs; `FUSION_RUNS_DIR` moves the runs folder. Operating details are in [docs/OPERATIONS.md](docs/OPERATIONS.md).
+Environment variables: `FUSION_SCHEDULER=0` disables the automatic runs; `FUSION_RUNS_DIR` moves the runs folder; `FUSION_READ_ONLY=1` makes the server show-only, for a small public host (see [docs/OPERATIONS.md](docs/OPERATIONS.md#public-showcase)). Operating details are in [docs/OPERATIONS.md](docs/OPERATIONS.md).
 
 ## Repository layout
 
@@ -331,7 +331,9 @@ addons/                     Optional packs, each standalone with its own tests
   c_ops/                    Alerts, briefings, CDM export, risk-trend model
 landing/                    Story page and standalone 3D interactive WebGL visualization server
 tests/                      Test suite for the main system
-scripts/                    Benchmarks, and an end-to-end check of a running server
+scripts/                    Benchmarks, an end-to-end check of a running server, the showcase recorder
+deploy/showcase/            One recorded run, the 2009 replay and the CelesTrak comparison, for the public host
+render.yaml                 The public host's settings: a show-only server over deploy/showcase/
 docs/
   ARCHITECTURE.md           Components, data flow and design decisions
   API.md                    Every route and data shape
@@ -374,7 +376,7 @@ The main system is complete without them; each pack adds a capability through a 
 
 | Area | State |
 |---|---|
-| Engine, pipeline, scheduler, API | Complete; 122 tests, run on GitHub on every push |
+| Engine, pipeline, scheduler, API | Complete; 123 tests, run on GitHub on every push |
 | Validation pack | Complete; 54 tests |
 | Operator Dashboard | Working: conjunction metrics, ranked passes, burn plans with SVG geometry, what-if burns on request, satellite pass lookup, fleet aggregations, alerts, and 2009 replay |
 | 3D Interactive Landing Page | Working: WebGL Three.js interactive Earth globe with orbital tracks, visitor mission walkthrough, and audio effects at http://localhost:3000 |

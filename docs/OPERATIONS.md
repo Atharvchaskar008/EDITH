@@ -120,6 +120,25 @@ Every tunable number is in `fusion/config.py`. The ones most likely to be change
 | `SCHEDULER_INTERVAL_HOURS` | 6 | Time between automatic runs |
 | `RCS_RADIUS_M`, `DEFAULT_RADIUS_M` | 0.15 / 0.4 / 2.0, 5 | Object radius by Space-Track size class, and when unknown |
 
+## Public showcase
+
+A run needs about 12 cores and several gigabytes for 7 minutes, which no free host offers. The public site is therefore show-only: a small server that presents one recorded run and starts no work.
+
+| Piece | What it is |
+|---|---|
+| `FUSION_READ_ONLY=1` | Show-only mode. The server presents finished runs; it refuses to start runs, burn searches and satellite checks, and the dashboard hides those controls and shows dates in place of "in 4 h" |
+| `deploy/showcase/` | The recorded run, the 2009 replay and the CelesTrak comparison: about 15 MB, in version control |
+| `scripts/make_showcase.py` | Copies the newest finished run into `deploy/showcase/` |
+| `render.yaml` | Settings for Render's free plan: installs `requirements.txt` only and starts the server in show-only mode over `deploy/showcase/runs` |
+
+To put it online: sign in at render.com with the GitHub account that owns the repository, choose New, then Blueprint, pick the repository and apply. Render reads `render.yaml` and redeploys on every push.
+
+To refresh what it shows: start a run on the live system, then `.venv\Scripts\python scripts\make_showcase.py`, commit and push.
+
+To try it locally: set `FUSION_READ_ONLY=1`, `FUSION_SCHEDULER=0` and `FUSION_RUNS_DIR=deploy/showcase/runs`, start the server on another port, and run `scripts\check_server.py --url http://127.0.0.1:<port>`.
+
+Measured locally in this mode: 154 MB of memory after a full click-through. Render's free plan stops a service that has had no visitor for 15 minutes; the next visit then waits about a minute while it starts.
+
 ## Known gaps
 
 - **The measured uncertainty understates the real error.** It comes from comparing element sets of the same object with each other (325,558 pairs, 768 objects), not with true positions. ESA's warnings state an along-track uncertainty for debris about 5 times ours. It cannot measure a brand-new element set, and nothing was measured for objects of unknown type (those keep the assumed table; 61 of 1,731 passes in the first run). This is why ranking uses the worst case over every size of uncertainty.
