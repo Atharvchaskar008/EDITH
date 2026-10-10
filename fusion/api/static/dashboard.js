@@ -5,12 +5,12 @@ let idle = "", failed = false;  // what the line beside the Run button says betw
 let showOnly = false;  // a recorded showcase: nothing can be started, and times are dates because the run does not move
 let checked = null, typed = 0;  // the result of checking one satellite, shown when source is "object"
 let fleet = null;  // the fleet whose passes the list shows, when one was picked under Fleets
-let priority = true, reds = null, shown = null;  // Priority: the dangerous passes that are not inside one fleet
+let priority = true, reds = null, shown = null;  // Priority: the red passes that are not inside one fleet
 const PASS_HEAD = "<tr><th>Level</th><th>Objects</th><th>Distance</th><th>Risk</th><th>Plan</th></tr>";
-// why a dangerous pass has no burn, as the list says it; a pass below the action line is simply watched
+// why a red pass has no burn, as the list says it; a pass below the action line is simply watched
 const SETTLED = ["NEITHER_CAN_MOVE", "TOO_SOON", "NO_SAFE_BURN"];  // a new search would give the same answer, so no button
 const WHY = { NEITHER_CAN_MOVE: "Cannot move", SAME_FLEET: "Own fleet", TOO_SOON: "Too soon", NO_SAFE_BURN: "No safe burn", LIMIT: "Not planned" };
-const FLEET_HEAD = "<tr><th>Fleet</th><th>Satellites</th><th>Passes</th><th>Dangerous</th><th>Own fleet</th><th>Burns</th></tr>";
+const FLEET_HEAD = "<tr><th>Fleet</th><th>Satellites</th><th>Passes</th><th>To check</th><th>Own fleet</th><th>Burns</th></tr>";
 const get = async path => { const r = await fetch(path); if (!r.ok) throw new Error(path); return r.json(); };
 const n = x => Number(x).toLocaleString("en-US");
 const esc = s => String(s == null ? "" : s).replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
@@ -26,6 +26,8 @@ async function loadTop() {
   const r = await get("/latest");
   $("t-objects").textContent = n(r.screen.objects_screened);
   $("t-passes").textContent = n(r.events);
+  // real collisions are rare: every pass of the run together, by the best estimate of each
+  $("t-chance").textContent = r.any_collision_chance > 0 ? "together, a " + odds(r.any_collision_chance) + " chance of a collision" : "";
   $("t-red").textContent = n(r.levels.RED);
   reds = r.levels.RED; aboutPriority();
   $("t-burns").textContent = n(r.plans.maneuver);
@@ -51,7 +53,7 @@ async function loadTop() {
 
 function aboutPriority() {
   if (source !== "latest" || !priority || reds == null || shown == null) return;
-  $("about").textContent = shown + " of " + reds + " dangerous. The other " + (reds - shown) + " are inside one fleet.";
+  $("about").textContent = shown + " of " + reds + " to check. The other " + (reds - shown) + " are inside one fleet.";
 }
 
 // one row per fleet: passes to act on, passes inside the fleet (left to its operator), burns planned for it
@@ -210,10 +212,10 @@ function pictures(d, moved, movedWord) {
 
 // a pass found by checking one satellite: it is not in the run, so it has no plan
 function showPass(e) {
-  $("plan").innerHTML = `<p class="big">${e.risk_level === "RED" ? "Dangerous" : e.risk_level === "AMBER" ? "Watch" : "Safe"}</p>` + facts(e) + pictures({ event: e });
+  $("plan").innerHTML = `<p class="big">${e.risk_level === "RED" ? "To check" : e.risk_level === "AMBER" ? "Watch" : "Safe"}</p>` + facts(e) + pictures({ event: e });
 }
 
-// the two documents written for every dangerous pass of a run: the standard warning message and the briefing
+// the two documents written for every red or amber pass of a run: the standard warning message and the briefing
 let written = false;
 function papers(id) {
   if (!written && source !== "replay") return "";
@@ -243,7 +245,7 @@ async function loadPlan() {
   } catch (e) { $("plan").innerHTML = '<p class="why">Cannot load this pass.</p>'; }
 }
 
-// a run plans only its first few dangerous passes; this searches for a burn for any other one
+// a run plans every red pass it can; this shows what a burn would take for a pass the system only watches
 async function askPlan(id) {
   $("ask").disabled = true;
   $("asked").textContent = "Searching for the smallest safe burn. About 20 seconds, up to a minute.";
@@ -297,7 +299,7 @@ function growthPicture(kinds) {
   return sheet(body + ends.map(e => label(right + 6, e.y + 3, e.name, "start", true)).join(""));
 }
 
-// of the 10 most dangerous passes, how many stay in the top 10 when one assumption is changed
+// of the 10 highest-risk passes, how many stay in the top 10 when one assumption is changed
 function keptPicture(rows) {
   const left = 168, full = PW - left - 62, step = 30;
   return sheet(rows.map((r, i) => label(left - 8, 26 + i * step, r.change, "end") +
@@ -315,7 +317,7 @@ async function loadProof() {
   blocks.push(`<h3>Error of public data, by its age</h3>${growthPicture(p.error_growth.kinds)}
     <p>Measured from ${n(p.error_growth.pairs)} pairs of orbit records of ${n(p.error_growth.objects)} objects. After one day: debris ${after("Debris")}, Starlink ${after("Starlink")}.</p>`);
   blocks.push(`<h3>Does the ranking hold?</h3>${keptPicture(p.robustness)}
-    <p>Of the 10 most dangerous passes, how many stay in the top 10 when one assumption changes.</p>`);
+    <p>Of the 10 highest-risk passes, how many stay in the top 10 when one assumption changes.</p>`);
   $("proof").innerHTML = blocks.map(b => "<div>" + b + "</div>").join("");
   ["proof", "proof-title", "report"].forEach(id => { $(id).hidden = false; });
   if (p.report) { $("full-report").hidden = false; $("full-report").href = "/addons/files/" + p.report; }
@@ -377,7 +379,7 @@ async function check(id, name) {
     if (!r.ok) { $("about").textContent = d.detail || "Could not check it."; return; }
     checked = d;
     const risky = d.passes.filter(e => e.risk_level !== "GREEN").length;
-    $("about").textContent = `${d.passes.length} ${d.passes.length === 1 ? "pass" : "passes"} within ${d.threshold_km} km in ${d.hours} hours, ${risky ? risky + " dangerous" : "none dangerous"}. ${n(d.objects_screened)} objects checked in ${d.seconds} s.`;
+    $("about").textContent = `${d.passes.length} ${d.passes.length === 1 ? "pass" : "passes"} within ${d.threshold_km} km in ${d.hours} hours, ${risky ? risky + " to check or watch" : "none to check"}. ${n(d.objects_screened)} objects checked in ${d.seconds} s.`;
     loadEvents();
   } catch (e) { $("about").textContent = "Cannot reach the system."; }
 }

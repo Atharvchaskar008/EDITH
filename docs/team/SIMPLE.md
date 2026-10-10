@@ -74,7 +74,7 @@ Have the dashboard open before you start. Do not press "Run now" during the talk
 | Time | Do | Say |
 |---|---|---|
 | 0:00 | Nothing yet | "About 30,000 tracked objects fly in low orbit at 7.5 km every second. That is 440 million pairs. Nobody can watch them by hand. EDITH does, from public data, every six hours, on a laptop." |
-| 0:25 | Point at the four numbers and the line under the button | "Right now: this many objects, this many close passes in the next 24 hours, this many dangerous. We checked our distances against CelesTrak: they match to 0.35 m." |
+| 0:25 | Point at the four numbers and the line under the button | "Right now: this many objects, this many close passes in the next 24 hours. Collisions are rare: all these passes together make about a 1 in 340 chance of one today. These are the passes worth an operator's check. We checked our distances against CelesTrak: they match to 0.35 m." |
 | 0:50 | Click the first "Burn ready" row | "These two would pass this close. EDITH says which one would move, when, and how hard. It is advice: the burn is ready if better data confirms the risk. First picture: the gap with and without the burn. Second: every burn it tried, with the chosen one ringed. '0 new, 0 worse' means the burn was checked against every other object for 24 hours." |
 | 1:35 | Point down the Plan column, then click a row that is not "Burn ready" | "Every dangerous pass has a burn ready or says why not: neither can move, too soon, or no safe burn exists. Passes between two satellites of one fleet are left out of this list, because public data is too rough for those." |
 | 2:00 | Type ISS, or the satellite the judge names | "Any satellite, by name. Its close passes for the next 24 hours, checked in seconds." |

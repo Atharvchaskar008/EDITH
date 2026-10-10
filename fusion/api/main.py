@@ -311,12 +311,34 @@ def monitor_state() -> dict:
     }
 
 
+_chance_cache: dict[tuple[Path, float], float] = {}
+
+
+def _any_collision_chance(folder: Path) -> Optional[float]:
+    """The chance that at least one of the run's passes is a collision, from the
+    best-estimate probability of each, taken as independent. It puts the count of
+    flagged passes in proportion: real collisions are rare."""
+    path = folder / "events.json"
+    if not path.exists():
+        return None
+    key = (path, path.stat().st_mtime)
+    if key not in _chance_cache:
+        if len(_chance_cache) > 8:
+            _chance_cache.clear()
+        none = 1.0
+        for event in read_json(path, []):
+            none *= 1.0 - min(max(event.get("pc") or 0.0, 0.0), 1.0)
+        _chance_cache[key] = 1.0 - none
+    return _chance_cache[key]
+
+
 @app.get("/latest")
 def latest_summary() -> dict:
+    """The latest finished run's own summary, with `any_collision_chance` added."""
     folder = latest_run()
     if folder is None:
         raise HTTPException(404, "No completed run yet. Start one with POST /run.")
-    return read_json(folder / "run.json", {})
+    return {**read_json(folder / "run.json", {}), "any_collision_chance": _any_collision_chance(folder)}
 
 
 # --- events, plans, alerts ---------------------------------------------------

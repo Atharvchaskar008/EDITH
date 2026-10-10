@@ -66,8 +66,10 @@ def test_event_detail_has_tracks_and_a_consistent_encounter(client):
 def test_monitor_latest_and_track(client):
     state = client.get("/monitor").json()
     assert state["last_run"] == "20261009T1500Z" and state["run_count"] == 1 and not state["running"]
-    assert client.get("/latest").json()["status"] == "DONE"
+    latest = client.get("/latest").json()
     event = client.get("/events").json()[0]
+    # one pass in this run, so the chance of any collision is that pass's own best estimate
+    assert latest["status"] == "DONE" and latest["any_collision_chance"] == pytest.approx(event["pc"])
     track = client.get(f"/objects/{event['primary_id']}/track?hours=1&step_s=60").json()
     assert len(track["positions_km"]) == 61
     assert client.get("/objects/1/track").status_code == 404
