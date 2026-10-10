@@ -383,13 +383,12 @@ docs/
   ARCHITECTURE.md           Components, data flow and design decisions
   API.md                    Every route and data shape
   OPERATIONS.md             Commands, timings, settings and limits
+  GUIDE.md                  The whole project explained end to end, with every part of the dashboard
   images/                   Pictures used in this file
-  team/                     Explainers and the demo script
 .github/workflows/          Tests on GitHub, on Python 3.11 to 3.14
 pyproject.toml              Package metadata and test settings
 requirements.txt            Libraries of the main system
 requirements-addons.txt     Libraries the packs need
-CONTRIBUTING.md             Set-up, conventions and where each kind of change goes
 ```
 
 `data/` is created at run time (`data/runs/` and `data/cache/`) and is not in version control.
