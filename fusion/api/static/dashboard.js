@@ -2,6 +2,7 @@
 const $ = id => document.getElementById(id);
 let picked = null, runId = null, source = "latest", onlyBurns = false;
 let idle = "", failed = false;  // what the line beside the Run button says between runs; a failure stays until the next run
+let showOnly = false;  // a recorded showcase: nothing can be started, and times are dates because the run does not move
 let checked = null, typed = 0;  // the result of checking one satellite, shown when source is "object"
 let fleet = null;  // the fleet whose passes the list shows, when one was picked under Fleets
 let priority = true, reds = null, shown = null;  // Priority: the dangerous passes that are not inside one fleet
@@ -18,7 +19,7 @@ const dist = km => km < 1 ? Math.round(km * 1000) + " m" : km.toFixed(2) + " km"
 const short = km => km < 1 ? Math.round(km * 1000) + " m" : km.toFixed(km < 10 ? 1 : 0) + " km";  // for a picture's axis
 const word = level => level ? level[0] + level.slice(1).toLowerCase() : "";
 const clock = t => new Date(t).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });  // in the viewer's own time
-const when = t => source === "replay" ? new Date(t).toUTCString().slice(5, 22) + " UTC" : "in " + Math.max(0, (new Date(t) - Date.now()) / 3.6e6).toFixed(1) + " h";
+const when = t => source === "replay" || showOnly ? new Date(t).toUTCString().slice(5, 22) + " UTC" : "in " + Math.max(0, (new Date(t) - Date.now()) / 3.6e6).toFixed(1) + " h";
 const fail = () => { $("error").textContent = "Cannot reach the system."; };
 
 async function loadTop() {
@@ -31,7 +32,14 @@ async function loadTop() {
   $("t-rest").textContent = n(r.levels.AMBER) + " to watch, " + n(r.levels.GREEN) + " safe";
   $("error").textContent = "";
   idle = "Last run " + clock(r.t0) + ".";
-  try { const m = await get("/monitor"); if (m.scheduler_on && m.next_run) idle += " Next " + clock(m.next_run) + "."; } catch (e) { /* the line is shorter without it */ }
+  try {
+    const m = await get("/monitor");
+    if (m.scheduler_on && m.next_run) idle += " Next " + clock(m.next_run) + ".";
+    if (m.read_only) {
+      showOnly = true; idle = "Recorded run, " + new Date(r.t0).toUTCString().slice(5, 22) + " UTC. The live system runs every six hours.";
+      $("run").hidden = true; document.querySelector(".find input").hidden = true;
+    }
+  } catch (e) { /* the line is shorter without it */ }
   if (!runId && !failed) $("status").textContent = idle;
   try {
     const v = await get("/validation");
@@ -225,7 +233,7 @@ async function loadPlan() {
     else {
       html = `<p class="big">${p.decision === "MONITOR" ? "Watch" : "No action"}</p>${facts(d.event)}<p class="why">${esc(p.rationale)}</p>`;
       if (whatIf) html += "<h2>What if it moved</h2>" + burn(whatIf, d.event);
-      else if (source !== "replay" && !p.requested_at && !SETTLED.includes(p.reason)) html += '<div class="ask"><button id="ask">Plan now</button><span id="asked"></span></div>';
+      else if (source !== "replay" && !showOnly && !p.requested_at && !SETTLED.includes(p.reason)) html += '<div class="ask"><button id="ask">Plan now</button><span id="asked"></span></div>';
       html += papers(id) + pictures(d, whatIf, "if it moved");
     }
     $("plan").innerHTML = html;
@@ -378,7 +386,7 @@ $("showFleets").onclick = () => show("fleets", false, "showFleets");
 $("showReplay").onclick = () => show("replay", false, "showReplay");
 
 setInterval(() => poll().catch(fail), 2000);
-setInterval(() => { if (!runId) refresh(); }, 20000);
+setInterval(() => { if (!runId && !showOnly) refresh(); }, 20000);  // a recorded run does not change
 refresh();
 loadProof().catch(() => {});  // without the validation pack there is no proof section
 get("/addons").then(a => { written = a.briefings_for_latest_run > 0; }).catch(() => {});

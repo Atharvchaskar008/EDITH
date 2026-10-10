@@ -305,6 +305,23 @@ def test_proof_needs_the_validation_pack(client):
     assert client.get("/proof").status_code == 404
 
 
+def test_a_show_only_server_presents_runs_and_starts_no_work(client, monkeypatch):
+    monkeypatch.setattr(main, "READ_ONLY", True)
+    event_id = client.get("/events").json()[0]["event_id"]
+    assert client.get("/monitor").json()["read_only"] is True
+    for method, path in (("post", "/run"), ("post", f"/events/{event_id}/plan"), ("get", "/objects/search?q=test"), ("get", "/objects/90001/passes")):
+        refused = getattr(client, method)(path)
+        assert refused.status_code == 403 and "recorded showcase" in refused.json()["detail"], path
+    assert main.runner.current is None
+    # everything that only reads a finished run still answers
+    assert client.get("/latest").json()["status"] == "DONE"
+    assert client.get(f"/events/{event_id}").json()["plan"]["decision"] == "MANEUVER"
+    assert client.get("/fleets").json()[0]["satellites"] is None  # the full catalogue is not loaded
+    assert client.get("/").status_code == 200
+    monkeypatch.setattr(main, "READ_ONLY", False)
+    assert client.get("/monitor").json()["read_only"] is False
+
+
 def test_landing_page_is_served(client):
     response = client.get("/landing")
     assert response.status_code == 200 and "EDITH" in response.text  # the page's own wording is its owner's to change

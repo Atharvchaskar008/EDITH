@@ -38,6 +38,9 @@ from fusion.monitor.scheduler import Monitor
 from fusion.risk.pc import assess, encounter_plane
 
 RUNS_ROOT = Path(os.environ.get("FUSION_RUNS_DIR", pipeline.RUNS_ROOT))
+# Show-only: the server presents finished runs and starts no work of its own. For a
+# small public host, which has neither the cores nor the memory for a run.
+READ_ONLY = os.environ.get("FUSION_READ_ONLY", "0") == "1"
 STATIC_DIR = Path(__file__).parent / "static"
 SERVED_ADDON_TYPES = {".json", ".md", ".png", ".txt", ".csv"}
 
@@ -175,11 +178,17 @@ monitor = Monitor(lambda: runner.start(RunRequest(quick=True)))
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
-    if os.environ.get("FUSION_SCHEDULER", "1") == "1":
+    if os.environ.get("FUSION_SCHEDULER", "1") == "1" and not READ_ONLY:
         monitor.start()
         on_request.warm_up()
     yield
     monitor.stop()
+
+
+def _live_only(what: str) -> None:
+    """Refuse work that a show-only server must not start."""
+    if READ_ONLY:
+        raise HTTPException(403, f"This is a recorded showcase. {what} needs the live system.")
 
 
 app = FastAPI(title="Fusion", lifespan=lifespan)
@@ -252,6 +261,7 @@ def _find(items: list[dict], event_id: str, what: str) -> dict:
 
 @app.post("/run")
 def start_run(request: RunRequest = RunRequest()) -> dict:
+    _live_only("Starting a run")
     run_id, already = runner.start(request)
     return {"run_id": run_id, "already_running": already}
 
@@ -284,6 +294,7 @@ def monitor_state() -> dict:
         "next_run": monitor.next_run(),
         "interval_hours": config.SCHEDULER_INTERVAL_HOURS,
         "scheduler_on": monitor.running,
+        "read_only": READ_ONLY,
     }
 
 
@@ -365,7 +376,7 @@ def list_fleets(source: str = "latest") -> list[dict]:
     plans = {p.get("event_id"): p for p in _plans(folder)}
     try:
         sizes: dict[str, int] = {}
-        for obj in on_request.catalog(folder) if source == "latest" else []:
+        for obj in on_request.catalog(folder) if source == "latest" and not READ_ONLY else []:
             name = fleet_of(obj)
             sizes[name] = sizes.get(name, 0) + 1
     except HTTPException:
@@ -409,6 +420,7 @@ def request_plan(event_id: str) -> dict:
     """Search now for a burn for one event of the latest run; about half a minute
     against the full catalogue. A run plans only its first few red events. If the
     system's rules say to watch this event, the burn comes back marked `what_if`."""
+    _live_only("A burn search")
     folder = latest_run()
     if folder is None:
         raise HTTPException(404, "No completed run yet")
@@ -514,6 +526,7 @@ def find_objects(q: str, limit: int = 8) -> list[dict]:
     """Objects of the latest run whose name contains `q`, or whose catalogue number
     is `q`. Exact and leading matches first, then satellites that can manoeuvre,
     then the oldest catalogue number (so "ISS" gives its first module, 25544)."""
+    _live_only("Finding an object")
     folder = latest_run()
     if folder is None:
         raise HTTPException(404, "No completed run yet")
@@ -537,6 +550,7 @@ def object_passes(norad_id: int, hours: float = config.QUICK_WINDOW_HOURS, thres
     latest run's orbit data: every pass within `threshold_km` in the next `hours`,
     most dangerous first. A run lists only passes within 1 km; this answers "what
     about this satellite?" for any object, in a few seconds."""
+    _live_only("Checking a satellite")
     folder = latest_run()
     if folder is None:
         raise HTTPException(404, "No completed run yet")
