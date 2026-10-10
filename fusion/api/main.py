@@ -21,7 +21,7 @@ from typing import Any, Optional
 import numpy as np
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -41,6 +41,9 @@ RUNS_ROOT = Path(os.environ.get("FUSION_RUNS_DIR", pipeline.RUNS_ROOT))
 # Show-only: the server presents finished runs and starts no work of its own. For a
 # small public host, which has neither the cores nor the memory for a run.
 READ_ONLY = os.environ.get("FUSION_READ_ONLY", "0") == "1"
+# Where the Story link and /landing go: the story page's own host. Locally that is
+# its small server (node landing/server.js); a public site sets its public address.
+STORY_URL = os.environ.get("FUSION_STORY_URL", "http://localhost:3000/")
 STATIC_DIR = Path(__file__).parent / "static"
 SERVED_ADDON_TYPES = {".json", ".md", ".png", ".txt", ".csv"}
 
@@ -295,6 +298,7 @@ def monitor_state() -> dict:
         "interval_hours": config.SCHEDULER_INTERVAL_HOURS,
         "scheduler_on": monitor.running,
         "read_only": READ_ONLY,
+        "story_url": STORY_URL,
     }
 
 
@@ -706,23 +710,8 @@ def dashboard_page() -> FileResponse:
 
 
 @app.get("/landing")
-def landing_page() -> FileResponse:
-    """The public-facing story page (landing/index.html); it reads its live numbers from /latest."""
-    page = config.PROJECT_ROOT / "landing" / "index.html"
-    if not page.exists():
-        raise HTTPException(404, "The landing page is not in this checkout")
-    return FileResponse(page)
-
-
 @app.get("/landing/{path:path}")
-def landing_assets(path: str) -> FileResponse:
-    """Assets for the landing page (3D models, fonts, styles, bundles, json)."""
-    landing_root = (config.PROJECT_ROOT / "landing").resolve()
-    target = (landing_root / path).resolve()
-    if target.is_file() and str(target).startswith(str(landing_root)):
-        return FileResponse(target)
-    index = landing_root / "index.html"
-    if index.is_file():
-        return FileResponse(index)
-    raise HTTPException(404, "Not found")
-
+def story_page(path: str = "") -> RedirectResponse:
+    """Send the visitor to the story page. That page is a separate site which only
+    starts at the root of its own host, so it is not served from here."""
+    return RedirectResponse(STORY_URL)

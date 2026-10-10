@@ -10,7 +10,7 @@ All times are UTC ISO 8601. Distances are km, speeds km/s, delta-v m/s. Results 
 |---|---|
 | `POST /run` | Starts a run. Body (all optional): `{"synthetic": false, "quick": false, "mode": null}`. Returns `{"run_id", "already_running"}`. If a run is in progress, returns that run's id with `already_running: true` |
 | `GET /run/{run_id}/status` | `{"run_id", "status", "stage", "percent", "log", "error"}`. `status` is `RUNNING`, `DONE` or `FAILED` |
-| `GET /monitor` | `{"running", "current_run", "last_run", "run_count", "next_run", "interval_hours", "scheduler_on", "read_only"}`. `read_only` is true on a show-only server (`FUSION_READ_ONLY=1`), which presents finished runs and answers 403 to `POST /run`, `POST /events/{id}/plan`, `GET /objects/search` and `GET /objects/{id}/passes` |
+| `GET /monitor` | `{"running", "current_run", "last_run", "run_count", "next_run", "interval_hours", "scheduler_on", "read_only", "story_url"}`. `read_only` is true on a show-only server (`FUSION_READ_ONLY=1`), which presents finished runs and answers 403 to `POST /run`, `POST /events/{id}/plan`, `GET /objects/search` and `GET /objects/{id}/passes` |
 | `GET /latest` | The latest run's `run.json`: mode, window, statistics, risk-level counts, duration. 404 before the first run |
 | `GET /events?limit=50&level=RED&plan=MANEUVER&fleet=STARLINK` | List of events, highest worst-case probability first. `level`, `plan`, `fleet` and `own_fleet` are optional filters; `fleet` keeps the events that involve a working satellite of that fleet, and `own_fleet=false` leaves out passes between two satellites of one fleet. Each event carries `own_fleet` (true or false). Each event carries `plan_decision` (`MANEUVER`, `MONITOR` or `null` for green events), so a table can mark the passes with a burn planned without a second request |
 | `GET /events/{event_id}` | `{"event", "plan", "what_if_plan", "track", "encounter"}` (see below) |
@@ -29,7 +29,7 @@ All times are UTC ISO 8601. Distances are km, speeds km/s, delta-v m/s. Results 
 | `GET /addons/files/{path}` | A file from `addons/` (json, md, png, txt, csv only) |
 | `GET /runs/latest/files/{path}` | A file from the latest run folder: `briefings/<event_id>.briefing.json`, `cdm/<event_id>.cdm.txt`, `summary.json`. Add `?source=replay` for the replay folder |
 | `GET /` | The operator dashboard. Its stylesheet and script are `GET /static/dashboard.css` and `GET /static/dashboard.js` |
-| `GET /landing` | The story page for visitors (`landing/index.html`), which reads its live numbers from `/latest` |
+| `GET /landing` | Redirects to the story page's own host: `http://localhost:3000/` by default, or the address in `FUSION_STORY_URL`. The page is a separate site that only starts at the root of a host, so this server does not serve it. `/monitor` gives the same address as `story_url` |
 
 The event routes accept `?source=replay` to read the 2009 replay folder instead of the latest run.
 

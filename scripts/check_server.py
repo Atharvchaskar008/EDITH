@@ -122,12 +122,18 @@ def main() -> int:
             check(name, good(call(path)[1]))
         except urllib.error.HTTPError as error:
             check(name, False, f"{error.code}: it needs the add-on packs and its own build step")
-    for path in ("/", "/static/dashboard.css", "/static/dashboard.js", "/landing", "/docs"):
+    for path in ("/", "/static/dashboard.css", "/static/dashboard.js", "/docs"):
         try:
             code = call(path)[0]
         except urllib.error.HTTPError as error:
             code = error.code
         check("page " + path, code == 200)
+    story = monitor.get("story_url") or "/landing"
+    try:  # the story page is hosted by itself; the dashboard only links to it
+        with urllib.request.urlopen(urllib.request.Request(story if "://" in story else args.url + story, headers={"User-Agent": "Mozilla/5.0"}), timeout=60) as reply:
+            check("story page", reply.status == 200, story)
+    except (urllib.error.URLError, OSError) as error:
+        check("story page", False, f"{story} does not answer: {error}")
 
     print("\n" + ("ALL CHECKS PASSED" if not failed else "FAILED: " + ", ".join(failed)))
     return 1 if failed else 0

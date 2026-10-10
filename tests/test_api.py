@@ -322,6 +322,12 @@ def test_a_show_only_server_presents_runs_and_starts_no_work(client, monkeypatch
     assert client.get("/monitor").json()["read_only"] is False
 
 
-def test_landing_page_is_served(client):
-    response = client.get("/landing")
-    assert response.status_code == 200 and "EDITH" in response.text  # the page's own wording is its owner's to change
+def test_the_story_link_leads_to_the_story_pages_own_host(client, monkeypatch):
+    # the story page is a separate site that only starts at the root of its own host
+    assert client.get("/monitor").json()["story_url"] == "http://localhost:3000/"
+    for path in ("/landing", "/landing/", "/landing/anything.js"):
+        reply = client.get(path, follow_redirects=False)
+        assert reply.status_code in (302, 307) and reply.headers["location"] == "http://localhost:3000/", path
+    monkeypatch.setattr(main, "STORY_URL", "https://story.example/")
+    assert client.get("/landing", follow_redirects=False).headers["location"] == "https://story.example/"
+    assert client.get("/monitor").json()["story_url"] == "https://story.example/"

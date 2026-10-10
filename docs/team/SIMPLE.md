@@ -65,7 +65,7 @@ Python only gives the orders. The heavy maths runs in compiled C and C++ librari
 
 - Start: `.venv\Scripts\python -m uvicorn fusion.api.main:app --port 8000`
 - Dashboard: http://localhost:8000. It opens on "Priority": the dangerous passes that are not inside one fleet. Click a "Burn ready" row: the burn, and three pictures (the gap with and without the burn, every burn tried, the risk run by run). Under "All", click an amber "Watch" row and press "Plan now" to see what a burn would take. Type ISS in the box. Click "Fleets". Click "2009 replay".
-- Story page: http://localhost:8000/landing
+- Story page: `node landing\server.js`, then http://localhost:3000 (the dashboard's "Story" link opens it)
 
 ## What to say in 3 minutes
 

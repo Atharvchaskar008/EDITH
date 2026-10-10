@@ -34,6 +34,7 @@ async function loadTop() {
   idle = "Last run " + clock(r.t0) + ".";
   try {
     const m = await get("/monitor");
+    if (m.story_url) $("story").href = m.story_url;
     if (m.scheduler_on && m.next_run) idle += " Next " + clock(m.next_run) + ".";
     if (m.read_only) {
       showOnly = true; idle = "Recorded run, " + new Date(r.t0).toUTCString().slice(5, 22) + " UTC. The live system runs every six hours.";

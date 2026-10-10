@@ -23,7 +23,7 @@ Fill in `.env` with a free Space-Track login to get the full catalogue, includin
 | One run from the terminal | `.venv\Scripts\python -m fusion.pipeline` |
 | Start the server | `.venv\Scripts\python -m uvicorn fusion.api.main:app --port 8000` |
 | Open the dashboard | http://localhost:8000 |
-| Open the landing page (EDITH) | http://localhost:8000/landing |
+| Open the landing page (EDITH) | `node landing\server.js`, then http://localhost:3000 (the dashboard's Story link leads there) |
 | Build the 2009 collision replay | `.venv\Scripts\python -m fusion.replay.replay_2009` (about 1 minute; needs teammate A's pack) |
 | Compare with CelesTrak's own list | `.venv\Scripts\python -m fusion.validation` (downloads 6 MB when its copy is over 12 hours old) |
 | Run the trust pack's own tests | `cd addons\b_trust` then `..\..\.venv\Scripts\python -m pytest -q` |
@@ -126,6 +126,7 @@ A run needs about 12 cores and several gigabytes for 7 minutes, which no free ho
 
 | Piece | What it is |
 |---|---|
+| `FUSION_STORY_URL` | The public address of the landing page, which is hosted by itself as a static site. The dashboard's Story link and `/landing` lead there |
 | `FUSION_READ_ONLY=1` | Show-only mode. The server presents finished runs; it refuses to start runs, burn searches and satellite checks, and the dashboard hides those controls and shows dates in place of "in 4 h" |
 | `deploy/showcase/` | The recorded run, the 2009 replay and the CelesTrak comparison: about 15 MB, in version control |
 | `scripts/make_showcase.py` | Copies the newest finished run into `deploy/showcase/` |
