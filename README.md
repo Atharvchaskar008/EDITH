@@ -433,4 +433,5 @@ The main system is complete without them; each pack adds a capability through a 
 - Real warning messages: the ESA Collision Avoidance Challenge dataset, [Zenodo record 4463683](https://zenodo.org/records/4463683).
 - Libraries: `sgp4`, NumPy, SciPy, Pydantic, FastAPI, APScheduler, LightGBM.
 
-Built by Team Fusion for a 2026 hackathon. No licence has been chosen yet; until a licence file is added, all rights are reserved by the authors.
+Built by Team Dranzer for Fusion SKN 2026 hackathon. No licence has been chosen yet; until a licence file is added, all rights are reserved by the authors.
+
